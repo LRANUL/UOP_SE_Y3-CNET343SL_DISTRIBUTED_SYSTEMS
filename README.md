@@ -1,3 +1,5 @@
+[![Board Status](https://dev.azure.com/10673986/8f17b5aa-34ab-4851-b9dd-d47f9248f1d7/8bc15181-b653-4551-ae5d-c34ba94b9939/_apis/work/boardbadge/58c82f53-69a5-4278-8722-9ff1828279ae?columnOptions=1)](https://dev.azure.com/10673986/8f17b5aa-34ab-4851-b9dd-d47f9248f1d7/_boards/board/t/8bc15181-b653-4551-ae5d-c34ba94b9939/Microsoft.RequirementCategory/)
+
 # UOP_SE_Y3-CNET343SL_DISTRIBUTED_SYSTEMS
 
 ## License
