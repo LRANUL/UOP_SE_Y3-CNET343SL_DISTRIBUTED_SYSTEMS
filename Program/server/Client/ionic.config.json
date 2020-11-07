@@ -1,0 +1,7 @@
+{
+  "name": "Client",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
