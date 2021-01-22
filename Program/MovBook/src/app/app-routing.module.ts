@@ -3,13 +3,13 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home-nav-page/home-nav-page.module').then( m => m.HomeNavPagePageModule)
-  },,
-  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home-nav-page/home-nav-page.module').then( m => m.HomeNavPagePageModule)
   },
   {
     path: 'login',
@@ -23,7 +23,6 @@ const routes: Routes = [
     path: 'administrator',
     loadChildren: () => import('./account/administrator-nav-page/administrator-nav-page.module').then( m => m.AdministratorNavPagePageModule)
   },
-  
   {
     path: 'manager',
     loadChildren: () => import('./account/manager-nav-page/manager-nav-page.module').then( m => m.ManagerNavPagePageModule)

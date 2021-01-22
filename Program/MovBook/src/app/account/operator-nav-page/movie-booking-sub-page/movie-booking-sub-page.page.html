@@ -1,9 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>movie-booking-sub-page</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-split-pane>
+  <ion-menu contentId="content" type="push">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>MovBook</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-button size="full">Dashboard</ion-button>
+    <ion-button size="full">Bookings</ion-button>
 
-<ion-content>
-
-</ion-content>
+    <ion-button size="full">Profile</ion-button>
+    <ion-button size="full">Settings</ion-button>
+  </ion-menu>
+</ion-split-pane>
+<div class="ion-page" id="content" main>
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+</div>

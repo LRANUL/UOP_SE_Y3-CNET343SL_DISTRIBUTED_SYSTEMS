@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, RouterEvent } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-operator-nav-page',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OperatorNavPagePage implements OnInit {
 
-  constructor() { }
+  Pages = [
+    {
+      title: 'Dashboard',
+      url: '/operator/dashboard'
+    },
+    {
+      title: 'Booking',
+      url: '/operator/movie-booking'
+    }
+  ]
+
+  pageRoute = '';
+
+  constructor(private router: Router,private menu: MenuController) {
+    this.router.events.subscribe((event: RouterEvent) => {
+      this.pageRoute = event.url;
+    })
+  }
 
   ngOnInit() {
+    this.menu.open('start');
   }
 
 }
