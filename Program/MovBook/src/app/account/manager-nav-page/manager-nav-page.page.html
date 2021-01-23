@@ -9,9 +9,9 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-menu-toggle auto-hide="false" *ngFor="let p of managerContentSubPages">
-          <ion-item [routerLink]="p.url" routerDirection="root" [class.active-item]="selectedSubPagePath === p.url">
-            {{ p.title }}
+        <ion-menu-toggle auto-hide="false" *ngFor="let subPage of managerContentSubPages">
+          <ion-item [routerLink]="subPage.url" routerDirection="root" [class.active-item]="selectedSubPagePath === subPage.url">
+            {{ subPage.title }}
           </ion-item>
         </ion-menu-toggle>
       </ion-list>

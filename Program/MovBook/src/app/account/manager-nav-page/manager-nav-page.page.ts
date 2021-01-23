@@ -10,13 +10,21 @@ export class ManagerNavPagePage implements OnInit {
 
   managerContentSubPages = [
     {
-      title: 'Dashboard',
+      title: 'DASHBOARD',
       url: '/manager/dashboard'
     },
     {
-      title: 'Movie Catalog',
+      title: 'BROWSE UPCOMING MOVIES',
+      url: ''
+    },
+    {
+      title: 'MOVIE CATALOG',
       url: '/manager/movie-catalog'
-    }
+    },
+    {
+      title: 'SHOWING LOCATIONS',
+      url: ''
+    },
   ];
 
   selectedSubPagePath = '';
