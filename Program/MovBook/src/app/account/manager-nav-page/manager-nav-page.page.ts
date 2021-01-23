@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, RouterEvent } from '@angular/router';
 
 @Component({
   selector: 'app-manager-nav-page',
@@ -7,7 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManagerNavPagePage implements OnInit {
 
-  constructor() { }
+  managerContentSubPages = [
+    {
+      title: 'Dashboard',
+      url: '/manager/dashboard'
+    },
+    {
+      title: 'Movie Catalog',
+      url: '/manager/movie-catalog'
+    }
+  ];
+
+  selectedSubPagePath = '';
+
+  constructor(
+    private router: Router
+  ) { 
+    this.router.events.subscribe((event: RouterEvent) => {
+      this.selectedSubPagePath = event.url;
+    });
+  }
 
   ngOnInit() {
   }

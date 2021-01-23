@@ -1,9 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>manager-nav-page</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+<ion-split-pane contentId="side-menu-navigation">
+  <ion-menu contentId="side-menu-navigation" type="overlay" side="start">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          MovBook-Manager
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of managerContentSubPages">
+          <ion-item [routerLink]="p.url" routerDirection="root" [class.active-item]="selectedSubPagePath === p.url">
+            {{ p.title }}
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="side-menu-navigation"></ion-router-outlet>
+</ion-split-pane>
