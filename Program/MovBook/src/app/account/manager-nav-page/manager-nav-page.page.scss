@@ -3,6 +3,10 @@ ion-item {
   --inner-border-width: 0;
 }
 
+ion-content{            
+  --background: #374d58;
+}
+
 #side-menu-nav{
   max-width: 15%;
   --ion-background-color: #374d58;
@@ -42,6 +46,7 @@ ion-item {
   color: #2f414b;
 }
 
-.active-item{
+.active-sub-page{
   border-left: 15px solid var(--ion-color-primary);
+  --ion-background-color: #202c33;
 }

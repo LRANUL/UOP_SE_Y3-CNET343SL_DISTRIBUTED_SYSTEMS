@@ -6,7 +6,17 @@ import { BrowseUpcomingMoviesSubPagePage } from './browse-upcoming-movies-sub-pa
 const routes: Routes = [
   {
     path: '',
-    component: BrowseUpcomingMoviesSubPagePage
+    component: BrowseUpcomingMoviesSubPagePage,
+    children: [
+      {
+        path: 'search-movies',
+        loadChildren: () => import('./search-movies-tab-page/search-movies-tab-page.module').then( m => m.SearchMoviesTabPagePageModule)
+      },
+      {
+        path: 'movie-waitlist',
+        loadChildren: () => import('./movie-waitlist-tab-page/movie-waitlist-tab-page.module').then( m => m.MovieWaitlistTabPagePageModule)
+      }
+    ]
   }
 ];
 

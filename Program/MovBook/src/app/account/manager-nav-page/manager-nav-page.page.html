@@ -57,7 +57,7 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="false">
-          <ion-item [routerLink]="'/manager/dashboard'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/dashboard')" class="sub-page-items" id="dashboard-item">
+          <ion-item [routerLink]="'/manager/dashboard'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/dashboard')" class="sub-page-items">
             <ion-label>
               <ion-img src="assets/images/account/manager/side-menu-nav-icons/dashboard.png" class="sub-page-item-content side-menu-nav-icon"></ion-img>
             </ion-label>
@@ -66,7 +66,7 @@
             </ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="'/manager/browse-upcoming-movies'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/browse-upcoming-movies')" class="sub-page-items">
+          <ion-item [routerLink]="'/manager/browse-upcoming-movies/search-movies'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/browse-upcoming-movies')" class="sub-page-items">
             <ion-label>
               <ion-img src="assets/images/account/manager/side-menu-nav-icons/browse-upcoming-movies.png" class="sub-page-item-content side-menu-nav-icon" style="margin-bottom: 5px;"></ion-img>
             </ion-label>
@@ -78,7 +78,7 @@
             </ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="'/manager/movie-catalog'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/movie-catalog')" class="sub-page-items">
+          <ion-item [routerLink]="'/manager/movie-catalog'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/movie-catalog')" class="sub-page-items">
             <ion-label>
               <ion-img src="assets/images/account/manager/side-menu-nav-icons/movie-catalog.png" class="sub-page-item-content side-menu-nav-icon"></ion-img>
             </ion-label>
@@ -87,7 +87,7 @@
             </ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="'/manager/cinema-halls'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/cinema-halls')" class="sub-page-items">
+          <ion-item [routerLink]="'/manager/cinema-halls'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/cinema-halls')" class="sub-page-items">
             <ion-label>
               <ion-img src="assets/images/account/manager/side-menu-nav-icons/cinema-halls.png" class="sub-page-item-content side-menu-nav-icon"></ion-img>
             </ion-label>
@@ -96,7 +96,7 @@
             </ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="'/manager/food-and-beverages'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/food-and-beverages')" class="sub-page-items">
+          <ion-item [routerLink]="'/manager/food-and-beverages'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/food-and-beverages')" class="sub-page-items">
             <ion-label>
               <ion-img src="assets/images/account/manager/side-menu-nav-icons/food-and-beverages.png" class="sub-page-item-content side-menu-nav-icon"></ion-img>
             </ion-label>
@@ -105,7 +105,7 @@
             </ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="'/manager/manage-notifications'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/manage-notifications')" class="sub-page-items">
+          <ion-item [routerLink]="'/manager/manage-notifications'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/manage-notifications')" class="sub-page-items">
             <ion-label>
               <ion-img src="assets/images/account/manager/side-menu-nav-icons/manage-notifications.png" class="sub-page-item-content side-menu-nav-icon"></ion-img>
             </ion-label>
@@ -117,7 +117,7 @@
             </ion-label>
           </ion-item>
 
-          <ion-item [routerLink]="'/manager/operator-accounts'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/operator-accounts')" class="sub-page-items">
+          <ion-item [routerLink]="'/manager/operator-accounts'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/operator-accounts')" class="sub-page-items">
             <ion-label>
               <ion-img src="assets/images/account/manager/side-menu-nav-icons/operator-accounts.png" class="sub-page-item-content side-menu-nav-icon"></ion-img>
             </ion-label>
@@ -130,7 +130,7 @@
 
       <ion-list style="position: relative;
                       top: 3%;">
-        <ion-item [routerLink]="'/manager/profile'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/profile')" class="sub-page-items">
+        <ion-item [routerLink]="'/manager/profile'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/profile')" class="sub-page-items">
           <ion-label>
             <ion-img src="assets/images/account/manager/side-menu-nav-icons/profile.png" class="sub-page-item-content side-menu-nav-icon"></ion-img>
           </ion-label>
@@ -139,7 +139,7 @@
           </ion-label>
         </ion-item>
 
-        <ion-item [routerLink]="'/manager/settings'" routerDirection="root" [class.active-item]="selectedSubPagePath.startsWith('/manager/settings')" class="sub-page-items">
+        <ion-item [routerLink]="'/manager/settings'" routerDirection="root" [class.active-sub-page]="selectedSubPagePath.startsWith('/manager/settings')" class="sub-page-items">
           <ion-label>
             <ion-img src="assets/images/account/manager/side-menu-nav-icons/settings.png" class="sub-page-item-content side-menu-nav-icon"></ion-img>
           </ion-label>
