@@ -8,25 +8,6 @@ import { Router, RouterEvent } from '@angular/router';
 })
 export class ManagerNavPagePage implements OnInit {
 
-  managerContentSubPages = [
-    {
-      title: 'DASHBOARD',
-      url: '/manager/dashboard'
-    },
-    {
-      title: 'BROWSE UPCOMING MOVIES',
-      url: ''
-    },
-    {
-      title: 'MOVIE CATALOG',
-      url: '/manager/movie-catalog'
-    },
-    {
-      title: 'SHOWING LOCATIONS',
-      url: ''
-    },
-  ];
-
   selectedSubPagePath = '';
 
   constructor(
