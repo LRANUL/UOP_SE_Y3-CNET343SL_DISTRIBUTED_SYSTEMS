@@ -3,6 +3,10 @@ ion-item {
   --inner-border-width: 0;
 }
 
+ion-content{            
+  --background: #374d58;
+}
+
 #side-menu-nav{
   max-width: 15%;
   --ion-background-color: #374d58;
@@ -13,9 +17,9 @@ ion-item {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 40px;
+  left: 35px;
   letter-spacing: 1px;
-  font-size: 16px;
+  font-size: 15px;
   font-family: sans-serif;
 }
 
@@ -42,6 +46,7 @@ ion-item {
   color: #2f414b;
 }
 
-.active-item{
+.active-sub-page{
   border-left: 15px solid var(--ion-color-primary);
+  --ion-background-color: #202c33;
 }
