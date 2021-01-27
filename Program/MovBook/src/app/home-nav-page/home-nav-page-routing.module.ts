@@ -17,12 +17,12 @@ const routes: Routes = [
     loadChildren: () => import('./movies-sub-page/movies-sub-page.module').then( m => m.MoviesSubPagePageModule)
   },
   {
-    path: 'aboutus-sub-page',
-    loadChildren: () => import('./aboutus-sub-page/aboutus-sub-page.module').then( m => m.AboutusSubPagePageModule)
+    path: 'contact-us-sub-page',
+    loadChildren: () => import('./contact-us-sub-page/contact-us-sub-page.module').then( m => m.ContactUsSubPagePageModule)
   },
   {
-    path: 'contactus-sub-page',
-    loadChildren: () => import('./contactus-sub-page/contactus-sub-page.module').then( m => m.ContactusSubPagePageModule)
+    path: 'about-us-sub-page',
+    loadChildren: () => import('./about-us-sub-page/about-us-sub-page.module').then( m => m.AboutUsSubPagePageModule)
   }
 ];
 

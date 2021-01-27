@@ -11,8 +11,6 @@ export class OperatorService {
   }
 
   getMovies() {
-    console.log('T2')
-    console.log(this.http.get("http://localhost:3000/api/movies"))
-    return this.http.get("http://localhost:3000/api/movies");
+    return this.http.get("https://movbook-app.herokuapp.com/api/movies");
   }
 }

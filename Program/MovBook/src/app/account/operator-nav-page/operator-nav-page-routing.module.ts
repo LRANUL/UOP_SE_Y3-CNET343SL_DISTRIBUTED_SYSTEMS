@@ -29,6 +29,14 @@ const routes: Routes = [
   {
     path:'',
     redirectTo:'/operator/dashboard'
+  },
+  {
+    path: 'profile-sub-page',
+    loadChildren: () => import('./profile-sub-page/profile-sub-page.module').then( m => m.ProfileSubPagePageModule)
+  },
+  {
+    path: 'setting-sub-page',
+    loadChildren: () => import('./setting-sub-page/setting-sub-page.module').then( m => m.SettingSubPagePageModule)
   }
 ];
 
