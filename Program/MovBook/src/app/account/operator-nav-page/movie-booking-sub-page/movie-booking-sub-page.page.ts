@@ -11,7 +11,6 @@ export class MovieBookingSubPagePage implements OnInit {
   constructor(private menu: MenuController) { }
 
   ngOnInit() {
-    this.menu.open('start');
   }
 
 }
