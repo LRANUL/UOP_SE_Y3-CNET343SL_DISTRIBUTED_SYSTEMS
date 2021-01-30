@@ -8,6 +8,14 @@ import { Router, RouterEvent } from '@angular/router';
 })
 export class ManagerNavPagePage implements OnInit {
 
+  sideMenuTab = [
+    {
+      title: 'Dashboard',
+      url: '/manager/dashboard',
+      iconPath: ''
+    }
+  ];
+
   selectedSubPagePath = '';
 
   constructor(
