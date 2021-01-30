@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-manager-nav-page',
@@ -8,18 +9,12 @@ import { Router, RouterEvent } from '@angular/router';
 })
 export class ManagerNavPagePage implements OnInit {
 
-  sideMenuTab = [
-    {
-      title: 'Dashboard',
-      url: '/manager/dashboard',
-      iconPath: ''
-    }
-  ];
-
   selectedSubPagePath = '';
 
   constructor(
-    private router: Router
+    private router: Router,
+    private alertController: AlertController,
+    private loadingController: LoadingController
   ) { 
     this.router.events.subscribe((event: RouterEvent) => {
       this.selectedSubPagePath = event.url;
@@ -27,6 +22,64 @@ export class ManagerNavPagePage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  // Alert Box Implementation
+  async alertNotice( title: string, content: string ) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  // Logout Alert Box Implementation
+  async logoutAlert( title: string, content: string ) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log("Logout request canceled");
+          }
+        },
+        {
+          text: 'Continue',
+          handler: () => {
+            
+            // Showing loading spinner, logging manager out, and redirecting to the login page
+            this.logoutAlertContinue();
+
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
+  // Logout Alert - 'Continue' Implementation
+  async logoutAlertContinue() {
+    // Loading Spinner
+    const loading = await this.loadingController.create({
+      message: 'Logging Out..',
+      duration: 3000
+    });
+    await loading.present();
+
+    /**
+     * TODO: 
+     * - Update manager user account activity ('accountActivity') to OFFLINE
+     * - Insert current datetime to manager user account activity logout datetime ('logoutDateTime')
+     * - If no errors are occurred, redirect manager user to the login page
+     */
+
+    // Redirecting manager user to login page
+    //this.router.navigate(["/login"]);
   }
 
 }
