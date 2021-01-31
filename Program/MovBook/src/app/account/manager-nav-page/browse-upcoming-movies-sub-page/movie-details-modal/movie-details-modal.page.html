@@ -1,9 +1,285 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>movie-details-modal</ion-title>
+    <ion-title><b>MOVIE DETAILS</b></ion-title>
+    <ion-button 
+      (click)="closeMovieDetailsModal()" 
+      slot="end" 
+      shape="round" 
+      fill="outline" 
+      color="danger" 
+      id="closeMovieDetailsButton">
+      <ion-icon name="close-outline" style="font-size: 30px;"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-card>
+    <ion-card-content>
+      <form>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="5">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h1>
+                      <b>Tenet</b>
+                    </h1>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2>
+                      2020
+                    </h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="3">
+              <ion-row>
+                <div>
+                  <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/imdb-icon.png" 
+                    id="imdbIcon"></ion-img>
+                  <ion-label id="imdbVotes">
+                    <p>Votes: <b>262,974</b></p>
+                  </ion-label>
+                </div>
+              </ion-row>
+            </ion-col>
+            <ion-col size="4">
+              <ion-row>
+                <div>
+                  <div id="imdbRatingWheel">
+                    <div id="imdbRatingValue">
+                      <b>7.5</b>
+                    </div>
+                  </div>
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row style="padding-top: 10px;">
+            <ion-col size="4">
+              <div style="width: 100%; 
+                          height: 100%; 
+                          background-color: rgb(76, 108, 136);
+                          border-radius: 5px;">
+                <ion-img src=""></ion-img>
+              </div>
+            </ion-col>
+            <ion-col size="8">
+              <ion-row>
+                <div style="width: 100%; 
+                            height: 100%; 
+                            background-color: rgb(111, 134, 155);
+                            text-align: justify;">
+                  Armed with only one word, Tenet, and fighting for the survival of the entire world, 
+                  a Protagonist journeys through a twilight world of international espionage on a mission 
+                  that will unfold in something beyond real time.
+                </div>
+              </ion-row>
+              <ion-row>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-label>
+                        <p>Rotten Tomatoes:</p>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col>
+                      <ion-label>
+                        <p>44</p>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-label>
+                        <p>Metascore:</p>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col>
+                      <ion-label>
+                        <p>44</p>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <div style="width: 100%;
+                                border-top: 2px solid #b6b6b6;"></div>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-label style="position: absolute;
+                                      left: 50%;">
+                      <p>Genre:</p>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label>
+                      <p>Sample</p>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-label style="position: absolute;
+                                      left: 50%;">
+                      <p>Duration:</p>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label>
+                      <p>Sample</p>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-label style="position: absolute;
+                                      left: 50%;">
+                      <p>Release Date:</p>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label>
+                      <p>Sample</p>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <div style="width: 100%;
+                              border-top: 2px solid #b6b6b6;"></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <p>Director:</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="margin-left: 5%;">
+                  <ion-label>
+                    <p>Sample</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <p>Writer:</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="margin-left: 5%;">
+                  <ion-label>
+                    <p>Sample</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <p>Actors:</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="margin-left: 5%;">
+                  <ion-label>
+                    <p>Sample</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <div style="width: 100%;
+                              border-top: 2px solid #b6b6b6;"></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <p>Languages:</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="margin-left: 5%;">
+                  <ion-label>
+                    <p>Sample</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row><ion-row>
+                <ion-col>
+                  <ion-label>
+                    <p>Country:</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="margin-left: 5%;">
+                  <ion-label>
+                    <p>Sample</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <div style="width: 100%;
+                              border-top: 2px solid #b6b6b6;"></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <p>Awards:</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="margin-left: 5%;">
+                  <ion-label>
+                    <p>Sample</p>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  
 </ion-content>
