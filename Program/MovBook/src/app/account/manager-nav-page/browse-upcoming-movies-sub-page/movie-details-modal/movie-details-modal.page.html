@@ -282,30 +282,30 @@
     </ion-card-content>
   </ion-card>
 
-  <div id="buttonsGrid">
+  <div id="buttonsGrid" *ngIf="setButtonGridToVisible">
     <ion-grid>
       <ion-row>
-        <ion-col>
+        <ion-col> <!-- TODO: Add route path and connect to the backend -->
           <ion-button size="block" color="green">
             <ion-label>
-              <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-to-waitlist-icon.png" 
+              <ion-img src="assets/images/account/customer/movie-details-modal-icons/buy-tickets-icon.png" 
                 style="width: 25px;
                       margin-left: 0px;"></ion-img>
             </ion-label>
             <ion-label style="margin-left: 10px;">
-              <b>ADD TO WAITLIST</b>
+              <b>BUY TICKETS</b>
             </ion-label>
           </ion-button>
         </ion-col>
         <ion-col>
           <ion-button size="block" color="green">
             <ion-label>
-              <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-to-movie-catalog-icon.png" 
+              <ion-img src="assets/images/account/customer/movie-details-modal-icons/add-to-watchlist-icon.png" 
                 style="width: 25px;
                       margin-left: 0px;"></ion-img>
             </ion-label>
             <ion-label style="margin-left: 10px;">
-              <b>ADD TO MOVIE CATALOG</b>
+              <b>ADD TO WATCHLIST</b>
             </ion-label>
           </ion-button>
         </ion-col>

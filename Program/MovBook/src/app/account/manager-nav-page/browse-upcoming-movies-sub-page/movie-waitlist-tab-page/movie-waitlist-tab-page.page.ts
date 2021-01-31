@@ -36,6 +36,7 @@ export class MovieWaitlistTabPagePage implements OnInit {
     const movieDetailsModal = await this.modalController.create({
       component: MovieDetailsModalPage,
       componentProps: {
+        modalOpenPath: 'Manager-Movie-Details',
         movieId: '<SAMPLE VALUE>'
       },
       // Disabling modal closing from any outside clicks

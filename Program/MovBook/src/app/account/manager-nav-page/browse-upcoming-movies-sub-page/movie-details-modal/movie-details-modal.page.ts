@@ -8,6 +8,8 @@ import { ModalController, NavParams } from '@ionic/angular';
 })
 export class MovieDetailsModalPage implements OnInit {
 
+  setButtonGridToVisible = false;
+  passedModalOpenPath = null;
   passedMovieId = null;
 
   constructor(
@@ -16,6 +18,13 @@ export class MovieDetailsModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // Assigning variable with passed 'modalOpenPath'
+    this.passedModalOpenPath = this.navParams.get('modalOpenPath');
+    // Checking whether the modal open path is correct to show buttons grid
+    if(this.passedModalOpenPath == 'Public|Customer-Movie-Details'){
+      this.setButtonGridToVisible = true;
+    }
+
     // Assigning variable with passed 'movieId'
     this.passedMovieId = this.navParams.get('movieId');
   }
