@@ -1,9 +1,45 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>setting-sub-page</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-grid style="background-color: #374d58">
+    <ion-row>
+      <ion-col size="auto">
+        <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
+        <div class="profilePhoto">
+          <img src="assets\images\operator.jpg" style="border-radius: 50px; width: 150px; height: 150px" />
+          <span class="onlineStatus"></span>
+          <h4>John Steve</h4>
+          <h6>john@movbook.com</h6>
+          <br />
+        </div>
+        <ion-button expand="block" color="button" href="operator/dashboard">Dashboard</ion-button>
+        <ion-button expand="block" color="button" href="operator/movie-booking">Movie Bookings</ion-button>
+        <ion-button expand="block" color="button">Movie Catalogue</ion-button>
 
+        <ion-button expand="block" color="button" style="margin-top: 80%">Profile</ion-button>
+        <ion-button expand="block" color="light" href="operator/settings">Settings</ion-button>
+      </ion-col>
+      <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Account and Profile</b></h1>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <h3>Name: {{Name}}</h3>
+          <br>
+          <h4>Email: {{Email}}</h4>
+          <br>
+          <h4>Address: {{Address}}</h4>
+          <br>
+          <h4>Phone: {{Phone}}</h4>
+          <br>
+          <h4>Role: {{Type}}</h4>
+          </ion-col>
+          <ion-col>
+            <ion-button>Update Password</ion-button>
+            <ion-button>Update Email</ion-button>
+          </ion-col>
+          
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
