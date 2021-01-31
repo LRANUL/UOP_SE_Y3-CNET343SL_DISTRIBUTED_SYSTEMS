@@ -10,22 +10,22 @@
     <form>
       <ion-grid>
         <ion-row>
-          <ion-col>
+          <ion-col size="2">
             <ion-label class="search-movie-form-text">
               Movie Title:
             </ion-label>
           </ion-col>
-          <ion-col>
+          <ion-col size="2">
             <ion-item>
               <ion-input type="text" placeholder="Enter Title" clearInput></ion-input>
             </ion-item>
           </ion-col>
-          <ion-col>
+          <ion-col size="3">
             <ion-label class="search-movie-form-text">
-              Released Year:
+              Released Year (Optional):
             </ion-label>
           </ion-col>
-          <ion-col>
+          <ion-col size="3">
             <ion-item>
               <ion-select value="2021" okText="SELECT" cancelText="DISMISS">
                 <ion-select-option value="2021">2021</ion-select-option>
@@ -35,7 +35,7 @@
               </ion-select>
             </ion-item>
           </ion-col>
-          <ion-col>
+          <ion-col size="2">
             <div>
               <ion-button expand="block" type="submit">
                 <ion-label>
@@ -123,7 +123,9 @@
                                 </ion-row>
                                 <ion-row>
                                   <ion-col>
-                                    <ion-button expand="block" type="submit" style="--border-radius: 40px;">
+                                    <ion-button expand="block" type="submit" 
+                                      (click)="addMovieToWaitListAlert('Confirmation ', 'This movie will be added to the waitlist, do you want to continue?')"
+                                      style="--border-radius: 40px;">
                                       <ion-label>
                                         <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-to-waitlist-icon.png" style="width: 25px;
                                                                                                                                             margin-left: 0px;"></ion-img>
@@ -136,7 +138,7 @@
                                 </ion-row>
                                 <ion-row>
                                   <ion-col>
-                                    <ion-button expand="block" type="submit" style="--border-radius: 40px;">
+                                    <ion-button expand="block" type="submit" (click)="openMovieDetailsModal()" style="--border-radius: 40px;">
                                       <ion-label>
                                         <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/more-details-icon.png" style="width: 25px;
                                                                                                                                             margin-left: 0px;"></ion-img>

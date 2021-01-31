@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavParams, PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-movie-catalog-types-popover',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovieCatalogTypesPopoverPage implements OnInit {
 
-  constructor() { }
+  passedMovieId = null;
+  
+  constructor(
+    private navParams: NavParams,
+    private popoverController: PopoverController
+  ) { }
 
   ngOnInit() {
+    // Assigning variable with passed 'movieId'
+    this.passedMovieId = this.navParams.get('movieId');
+  }
+
+  // Implementation to close 'Movie Catalog Types' popover
+  async closeMoveCatalogTypesPopover(){
+    await this.popoverController.dismiss();
   }
 
 }

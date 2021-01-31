@@ -24,16 +24,6 @@ export class ManagerNavPagePage implements OnInit {
   ngOnInit() {
   }
 
-  // Alert Box Implementation
-  async alertNotice( title: string, content: string ) {
-    const alert = await this.alertController.create({
-      header: title,
-      message: content,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
   // Logout Alert Box Implementation
   async logoutAlert( title: string, content: string ) {
     const alert = await this.alertController.create({
@@ -69,8 +59,7 @@ export class ManagerNavPagePage implements OnInit {
       message: 'Logging Out..',
       duration: 3000
     });
-    await loading.present();
-
+    
     /**
      * TODO: 
      * - Update manager user account activity ('accountActivity') to OFFLINE
@@ -80,6 +69,7 @@ export class ManagerNavPagePage implements OnInit {
 
     // Redirecting manager user to login page
     //this.router.navigate(["/login"]);
+    await loading.present();
   }
 
 }

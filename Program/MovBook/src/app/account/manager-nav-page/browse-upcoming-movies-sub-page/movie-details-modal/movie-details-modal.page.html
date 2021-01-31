@@ -14,8 +14,8 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-card>
+  
+  <ion-card id="movieDetailsCard">
     <ion-card-content>
       <form>
         <ion-grid>
@@ -281,5 +281,36 @@
       </form>
     </ion-card-content>
   </ion-card>
-  
+
+  <div id="buttonsGrid">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button size="block" color="green">
+            <ion-label>
+              <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-to-waitlist-icon.png" 
+                style="width: 25px;
+                      margin-left: 0px;"></ion-img>
+            </ion-label>
+            <ion-label style="margin-left: 10px;">
+              <b>ADD TO WAITLIST</b>
+            </ion-label>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button size="block" color="green">
+            <ion-label>
+              <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-to-movie-catalog-icon.png" 
+                style="width: 25px;
+                      margin-left: 0px;"></ion-img>
+            </ion-label>
+            <ion-label style="margin-left: 10px;">
+              <b>ADD TO MOVIE CATALOG</b>
+            </ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
 </ion-content>
