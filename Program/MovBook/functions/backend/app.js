@@ -36,4 +36,15 @@ app.get('/api/movies' ,(req,res,next)=>{
     })
 });
 
+app.get('/api/operator/email' ,(req,res,next)=>{
+  Movies.find({email: 'email'})
+    .then((data)=>{
+      console.log(data);
+      res.send(data)
+    }).catch(err => {
+      res.status.send({
+        message: err.message
+      })
+    })
+});
 module.exports = app;
