@@ -1,9 +1,124 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>booking1-sub-page</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
-</ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="11"  offset-md="0.5">
+        <ion-header style="font-size: xx-large; padding-top: 10px;">Reserve Your seats</ion-header>
+       <ion-card>
+         <ion-card-header>
+           <ion-grid>
+             <ion-row>
+               <ion-col>
+                <ion-card-title>Move Name</ion-card-title>
+               </ion-col>
+               <ion-col size-md="1"  offset-md="0.5">
+                <span>{{counter.min}} : {{counter.sec}}</span>
+               </ion-col>
+             </ion-row>
+           </ion-grid>  
+         </ion-card-header>
+         <ion-card-content>
+         <ion-grid>
+          <ion-row>
+            <ion-col size-md="4">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                   Location
+                  </ion-col>
+                  <ion-col>
+                    time
+                  </ion-col>
+                  <ion-col>
+                    Emperience
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+         </ion-grid>
+         </ion-card-content>
+       </ion-card>
+       <br>
+       <ion-grid>
+         <ion-row>
+           <ion-col>
+            <ion-img src="../../assets/images/movie-screen.png" style="height: 100px;"></ion-img>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size-md="7"  offset-md="2.5">
+                      <ion-card>
+                        <ion-card-content>
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col>
+                            <img src="../../assets/images/blue.jpg" style="height: 10px;">
+                            Reserved Seats
+                          </ion-col>
+                          <ion-col>
+                            <img src="../../assets/images/pink.jpg" style="height: 10px;">
+                            Selected Seats
+                          </ion-col>
+                          <ion-col>
+                            <img src="../../assets/images/white.png" style="height: 10px;">
+                            Available Seats
+                          </ion-col>
+                          <ion-col>
+                            <img src="../../assets/images/red.jpg" style="height: 10px;">
+                            Unavailable Seats
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>
+                    </ion-card-content>
+                  </ion-card>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+            <br>
+           </ion-col>
+         </ion-row>
+       </ion-grid>
+       <ion-card>
+         <ion-card-header>
+           <ion-card-subtitle>Type Of Ticket</ion-card-subtitle>
+         </ion-card-header>
+         <div>
+         <ion-card-header>
+          <ion-card-subtitle>Adult Tickets</ion-card-subtitle>
+         </ion-card-header>
+         <ion-card-content>
+           
+          
+         </ion-card-content>
+        </div>
+        <div>
+          <ion-card-header>
+           <ion-card-subtitle>Childrens Tickets</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            
+           
+          </ion-card-content>
+         </div>
+       </ion-card>
+       <br>
+       <ion-grid>
+         <ion-row>
+           <ion-col size-md="5"  offset-md="3.5">
+             <ion-grid>
+               <ion-row>
+                 <ion-col>
+                  <ion-button expand="block">Continue</ion-button>
+                 </ion-col>
+                 <ion-col>
+                  <ion-button expand="block"> Cancel</ion-button>
+                 </ion-col>
+               </ion-row>
+             </ion-grid>
+           </ion-col>
+         </ion-row>
+       </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </ion-content>
+  
