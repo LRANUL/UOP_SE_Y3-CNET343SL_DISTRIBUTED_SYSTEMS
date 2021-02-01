@@ -15,7 +15,19 @@ const routes: Routes = [
   {
     path: 'watchlist',
     loadChildren: () => import('./watchlist-sub-page/watchlist-sub-page.module').then( m => m.WatchlistSubPagePageModule)
+  },  {
+    path: 'booking1-sub-page',
+    loadChildren: () => import('./booking1-sub-page/booking1-sub-page.module').then( m => m.Booking1SubPagePageModule)
+  },
+  {
+    path: 'loyality-sub-page',
+    loadChildren: () => import('./loyality-sub-page/loyality-sub-page.module').then( m => m.LoyalitySubPagePageModule)
+  },
+  {
+    path: 'profile-sub-page',
+    loadChildren: () => import('./profile-sub-page/profile-sub-page.module').then( m => m.ProfileSubPagePageModule)
   }
+
 ];
 
 @NgModule({

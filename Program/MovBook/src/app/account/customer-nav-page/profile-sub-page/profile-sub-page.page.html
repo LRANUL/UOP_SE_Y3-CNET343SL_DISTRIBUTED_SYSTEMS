@@ -1,0 +1,75 @@
+
+<ion-content>
+  <div style="padding-top: 30px;">
+    <ion-header style="text-align: center; font-size: xx-large;">Account Information</ion-header>
+  </div>
+  <br>
+  <br>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="4" offset-md="4">
+        <ion-img src="" style="height: 130px;"></ion-img>
+        <br>
+        <ion-button class="center">Change Profile Picture</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid> 
+    <ion-row>
+      <ion-col size-md="10" offset-md="1">
+        <div style="padding-top: 20px; padding-left: 20px;">
+          <ion-header style="font-size: medium;">My Profile details</ion-header>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="10" offset-md="1">
+        <ion-card> 
+          <ion-card-content>
+            First Name:
+            <br>
+            <br>
+            Middle name:
+            <br>
+            <br>
+            Last Name:
+            <br>
+            <br>
+            Email:
+            <br>
+            <br>
+            Mobile Number:
+            <br>
+            <br>
+            Gender:
+            <br>
+            <br>
+            NIC Number:
+            <br>
+            <br>
+            Address:
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="10" offset-md="1">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button color="primary" expand="full" (click)="editprofilemodal()">Edit profile details</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button color="primary" expand="full" (click)="openmodal()">Change Password</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

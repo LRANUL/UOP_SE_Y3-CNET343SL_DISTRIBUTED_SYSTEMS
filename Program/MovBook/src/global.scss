@@ -54,3 +54,10 @@ ion-button{
     --ion-color-shade: var(--ion-color-green-shade);
     --ion-color-tint: var(--ion-color-green-tint);
   }
+
+.my-custom-modal-css .modal-wrapper {
+    height: 100%;
+    top: 2%;
+    position: absolute; 
+    display: block;  
+ }
