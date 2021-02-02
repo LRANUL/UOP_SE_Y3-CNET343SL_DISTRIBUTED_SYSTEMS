@@ -30,10 +30,15 @@ export class Booking1SubPagePage implements OnInit {
 
     if (this.counter.min === 0 && this.counter.sec == 0)
     {
-       this.route.navigateByUrl(''); // put the url you want to navigate to
+       this.route.navigateByUrl('customer/Venue Selection'); // put the url you want to navigate to
        this.counter = { min: 10, sec: 0  }
     }
     }, 1000)
+  }
+
+  cancel()
+  {
+    this.route.navigateByUrl('customer/Venue Selection'); 
   }
 
 

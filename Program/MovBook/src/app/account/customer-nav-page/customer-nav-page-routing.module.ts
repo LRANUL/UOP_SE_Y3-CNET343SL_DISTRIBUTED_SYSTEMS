@@ -15,17 +15,22 @@ const routes: Routes = [
   {
     path: 'watchlist',
     loadChildren: () => import('./watchlist-sub-page/watchlist-sub-page.module').then( m => m.WatchlistSubPagePageModule)
-  },  {
-    path: 'booking1-sub-page',
+  },
+  {
+    path: 'booking',
     loadChildren: () => import('./booking1-sub-page/booking1-sub-page.module').then( m => m.Booking1SubPagePageModule)
   },
   {
-    path: 'loyality-sub-page',
+    path: 'loyality',
     loadChildren: () => import('./loyality-sub-page/loyality-sub-page.module').then( m => m.LoyalitySubPagePageModule)
   },
   {
-    path: 'profile-sub-page',
+    path: 'profile',
     loadChildren: () => import('./profile-sub-page/profile-sub-page.module').then( m => m.ProfileSubPagePageModule)
+  },
+  {
+    path: 'Venue Selection',
+    loadChildren: () => import('./location-and-time-sub-page/location-and-time-sub-page.module').then( m => m.LocationAndTimeSubPagePageModule)
   }
 
 ];
