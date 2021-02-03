@@ -16,9 +16,10 @@ import { MovieCatalogTypesPopoverPageModule } from './account/manager-nav-page/b
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule, 
-    MovieCatalogTypesPopoverPageModule,
-    MovieDetailsModalPageModule
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
+    HttpClientModule, 
+      MovieCatalogTypesPopoverPageModule,
+      MovieDetailsModalPageModule
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 
+import { MovieSearchResult } from 'src/app/models/account/manager';
+import { ManagerService } from 'src/app/services/account/manager.service';
 import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-modal.page';
 
 @Component({
@@ -10,21 +13,44 @@ import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-moda
 })
 export class SearchMoviesTabPagePage implements OnInit {
 
+  searchUpcomingMoviesForm: FormGroup;
+
+  public movieSearchResults: MovieSearchResult;
+  
   constructor(
+    private managerService: ManagerService,
     private modalController: ModalController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+
+    this.searchUpcomingMoviesForm = this.formBuilder.group({
+      movieTitle: new FormControl('', Validators.required),
+      movieReleaseYear: new FormControl('')
+    });
+
+  }
+
+  // Retrieving movie search results from the backend by passing the enter movie title and movie release data
+  getMovieSearchResults(formValue){
+    this.managerService.getMovieSearchResults(formValue.movieTitle, formValue.movieReleaseYear)
+      .subscribe((movieSearchResults: MovieSearchResult) => {
+        this.movieSearchResults = movieSearchResults;
+      },
+      (error: ErrorEvent) => {
+        alert(error);
+      });
   }
 
   // Implementation for opening the 'Movie Details Modal' modal
-  async openMovieDetailsModal(){
+  async openMovieDetailsModal(movieId: string){
     const movieDetailsModal = await this.modalController.create({
       component: MovieDetailsModalPage,
       componentProps: {
-        modalOpenPath: 'Manager-Movie-Details',
-        movieId: '<SAMPLE VALUE>'
+        passingModalOpenPath: 'Manager-Movie-Details',
+        passingMovieId: movieId
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,

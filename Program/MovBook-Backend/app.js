@@ -1,16 +1,20 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+require('dotenv').config();
 
 const beveragesRoutes = require("./routes/beverages");
 const usersRoutes = require("./routes/users");
 const moviesRoutes = require("./routes/movies");
 
+const upcomingMovieSearchResults = require("./routes/upcomingMovieSearchResults");
+
 const app = express();
 
+// Database Connectivity
 mongoose
   .connect(
-    "mongodb+srv://test:test@movbook-db-primary.axmm8.mongodb.net/MovBook-DB-Primary?retryWrites=true&w=majority",
+    process.env.MONGODB_ATLAS_URI_PRIMARY,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
@@ -39,5 +43,7 @@ app.use((req, res, next) => {
 app.use("/api/movies", moviesRoutes);
 app.use("/api/users",usersRoutes);
 app.use("/api/beverages", beveragesRoutes);
+
+app.use("/api/omdb/upcoming-movies/", upcomingMovieSearchResults);
 
 module.exports = app;
