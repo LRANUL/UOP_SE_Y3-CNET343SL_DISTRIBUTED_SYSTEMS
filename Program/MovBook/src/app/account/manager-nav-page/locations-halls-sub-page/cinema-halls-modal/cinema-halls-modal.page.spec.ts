@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CinemaHallsSubPagePage } from './cinema-halls-sub-page.page';
+import { CinemaHallsModalPage } from './cinema-halls-modal.page';
 
-describe('CinemaHallsSubPagePage', () => {
-  let component: CinemaHallsSubPagePage;
-  let fixture: ComponentFixture<CinemaHallsSubPagePage>;
+describe('CinemaHallsModalPage', () => {
+  let component: CinemaHallsModalPage;
+  let fixture: ComponentFixture<CinemaHallsModalPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CinemaHallsSubPagePage ],
+      declarations: [ CinemaHallsModalPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CinemaHallsSubPagePage);
+    fixture = TestBed.createComponent(CinemaHallsModalPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

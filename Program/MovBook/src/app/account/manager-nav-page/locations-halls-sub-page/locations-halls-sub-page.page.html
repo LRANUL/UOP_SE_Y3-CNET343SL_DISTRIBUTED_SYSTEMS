@@ -1,0 +1,193 @@
+<ion-content>
+  <ion-card style="min-height: 97%;
+                  position: relative;
+                  margin-top: 0.9%;">
+    <ion-card-content>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      
+      <!-- CINEMA LOCATIONS TITLE -->
+      <ion-title style="margin-top: 1%;
+                        letter-spacing: 1px;"><b>CINEMA LOCATIONS</b></ion-title>
+
+      <!-- ADD CINEMA LOCATION BUTTON -->
+      <div style="position: absolute;
+                  right: 2%;
+                  top: 1%;">
+        <ion-button style="--border-radius: 40px;" color="tertiary">
+          <ion-label>
+            <ion-img src="assets/images/account/manager/locations-halls-sub-page/add-cinema-location-icon.png" style="width: 25px;
+                                                                                                                margin-right: 5px;"></ion-img>
+          </ion-label>
+          <ion-label>
+            ADD LOCATION
+          </ion-label>
+        </ion-button>
+      </div>
+
+      <!-- SEARCH BY CINEMA LOCATION NAME FORM -->
+      <div>
+        <form>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="10">
+                <ion-item>
+                  <ion-label>
+                    Select Location:
+                  </ion-label>
+                  <ion-select value="cineme-one" okText="SELECT" cancelText="DISMISS">
+                    <ion-select-option value="cineme-one">Cinema One</ion-select-option>
+                    <ion-select-option value="cineme-two">Cinema Two</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <div>
+                  <ion-button expand="block" type="submit">
+                    <ion-label>
+                      <ion-img src="assets/images/account/manager/locations-halls-sub-page/search-icon.png" style="width: 25px;
+                                                                                                                          margin-left: 0px;"></ion-img>
+                    </ion-label>
+                    <ion-label style="margin-left: 10px;">
+                      SEARCH
+                    </ion-label>
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+
+      <!-- CINEMA LOCATION SEARCH RESULTS CONTAINER -->
+      <div>
+        <ion-card style="height: 765px;
+                        background-color: rgb(255, 255, 255);
+                        border-radius: 10px;
+                        overflow-y: auto;">
+          <ion-card-content>
+
+            <!-- SEARCH RESULT CARDS CONTAINER -->
+            <div style="padding-top: 10px;">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="6">
+                    <div style="height: 300px;
+                                border-radius: 10px;
+                                border: 2px solid #ccc;">
+                      <ion-grid>
+                        <ion-col>
+                          <ion-row>
+                            <ion-col>
+                              <div style="width: 300px;
+                                        height: 240px;
+                                        margin-left: 15px;
+                                        background-color: rgb(55, 87, 116);">
+              
+                            </div>
+                            </ion-col>
+                            <ion-col>
+                              <ion-row>
+                                <ion-label>
+                                  <h1>Cinema Name</h1>
+                                </ion-label>
+                              </ion-row>
+                              <ion-row style="margin-top: 10px;">
+                                <ion-label>
+                                  <h2>Cinema Address</h2>
+                                </ion-label>
+                              </ion-row>
+                              <ion-row style="margin-top: 20px;">
+                                <ion-label>
+                                  <h2>No of Halls: <b>2</b></h2>
+                                </ion-label>
+                              </ion-row>
+                              <ion-row style="position: absolute;
+                                              bottom: 0px;">
+                                <ion-button expand="block" 
+                                      (click)="openCinemaLocationsModal()"
+                                      type="submit" 
+                                      style="max-width: 100%;
+                                            --border-radius: 10px;"
+                                      color="green">
+                                  <ion-label>
+                                    <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
+                                                                                                                                        margin-left: 0px;"></ion-img>
+                                  </ion-label>
+                                  <ion-label style="margin-left: 10px;">
+                                    VIEW CINEMA HALLS
+                                  </ion-label>
+                                </ion-button>
+                              </ion-row>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-grid>
+                    </div>
+                  </ion-col>
+                  <ion-col size="6">
+                    <div style="height: 300px;
+                                border-radius: 10px;
+                                border: 2px solid #ccc;
+                                ">
+                      <ion-grid>
+                        <ion-col>
+                          <ion-row>
+                            <ion-col>
+                              <div style="width: 300px;
+                                        height: 240px;
+                                        margin-left: 15px;
+                                        background-color: rgb(55, 87, 116);">
+              
+                            </div>
+                            </ion-col>
+                            <ion-col>
+                              <ion-row>
+                                <ion-label>
+                                  <h1>Cinema Name</h1>
+                                </ion-label>
+                              </ion-row>
+                              <ion-row style="margin-top: 10px;">
+                                <ion-label>
+                                  <h2>Cinema Address</h2>
+                                </ion-label>
+                              </ion-row>
+                              <ion-row style="margin-top: 20px;">
+                                <ion-label>
+                                  <h2>No of Halls: <b>2</b></h2>
+                                </ion-label>
+                              </ion-row>
+                              <ion-row style="position: absolute;
+                                              bottom: 0px;">
+                                <ion-button expand="block" 
+                                      type="submit" 
+                                      style="max-width: 100%;
+                                            --border-radius: 10px;"
+                                      color="green">
+                                  <ion-label>
+                                    <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
+                                                                                                                                        margin-left: 0px;"></ion-img>
+                                  </ion-label>
+                                  <ion-label style="margin-left: 10px;">
+                                    VIEW CINEMA HALLS
+                                  </ion-label>
+                                </ion-button>
+                              </ion-row>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-grid>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

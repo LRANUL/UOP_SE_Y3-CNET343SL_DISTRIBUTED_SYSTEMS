@@ -21,8 +21,8 @@ const routes: Routes = [
         loadChildren: () => import('./movie-catalog-sub-page/movie-catalog-sub-page.module').then( m => m.MovieCatalogSubPagePageModule)
       },
       {
-        path: 'cinema-halls',
-        loadChildren: () => import('./cinema-halls-sub-page/cinema-halls-sub-page.module').then( m => m.CinemaHallsSubPagePageModule)
+        path: 'locations-halls',
+        loadChildren: () => import('./locations-halls-sub-page/locations-halls-sub-page.module').then( m => m.LocationsHallsSubPagePageModule)
       },
       {
         path: 'food-and-beverages',

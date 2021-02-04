@@ -104,17 +104,20 @@
           </ion-item>
 
           <ion-item 
-            [routerLink]="'/manager/cinema-halls'" 
+            [routerLink]="'/manager/locations-halls'" 
             routerDirection="root" 
-            [class.active-sub-page]="selectedSubPagePath === '/manager/cinema-halls'" 
+            [class.active-sub-page]="selectedSubPagePath === '/manager/locations-halls'" 
             class="sub-page-items">
             <ion-label>
               <ion-img 
-                src="assets/images/account/manager/side-menu-nav-icons/cinema-halls.png" 
+                src="assets/images/account/manager/side-menu-nav-icons/locations-and-halls.png" 
                 class="sub-page-item-content side-menu-nav-icon"></ion-img>
             </ion-label>
-            <ion-label class="sub-page-item-content side-menu-nav-heading">
-              <b>CINEMA HALLS</b>
+            <ion-label class="sub-page-item-content side-menu-nav-heading" style="position: absolute;
+                                                                                  top: 38%;
+                                                                                  transform: translateY(-62%);
+                                                                                  line-height: 1.4">
+              <b>CINEMA LOCATIONS<br/>AND HALLS</b>
             </ion-label>
           </ion-item>
 
