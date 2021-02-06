@@ -17,4 +17,15 @@ router.get('' ,(req,res,next)=>{
     })
 });
 
+// Create new User
+router.post("/create", (req, res, next) => {
+  const User = new Users(req.body);
+  User.save()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status().send({ message: err.message });
+    });
+});
 module.exports = router;

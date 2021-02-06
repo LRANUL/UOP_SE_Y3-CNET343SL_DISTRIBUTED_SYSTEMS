@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-require('dotenv').config();
+require("dotenv").config();
 
 const beveragesRoutes = require("./routes/beverages");
 const usersRoutes = require("./routes/users");
@@ -15,13 +15,20 @@ const app = express();
 mongoose
   .connect(
     process.env.MONGODB_ATLAS_URI_PRIMARY,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+// Legacy Server Support Added, Server timeout set to 30 seconds
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000,
+      poolSize: 5,
+      keepAlive: true,
+    }
   )
   .then(() => {
-    console.log("connected to the database");
+    console.log("Connected Successful");
   })
   .catch(() => {
-    console.log("connection failed");
+    console.log("Connection Failed");
   });
 
 app.use(bodyParser.json());
@@ -41,9 +48,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/movies", moviesRoutes);
-app.use("/api/users",usersRoutes);
+app.use("/api/users", usersRoutes);
 app.use("/api/beverages", beveragesRoutes);
-
 app.use("/api/omdb/upcoming-movies/", upcomingMovieSearchResults);
 
 module.exports = app;
