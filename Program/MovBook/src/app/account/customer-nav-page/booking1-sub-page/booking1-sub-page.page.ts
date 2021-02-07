@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+
+
 
 @Component({
   selector: 'app-booking1-sub-page',
@@ -8,11 +11,19 @@ import { Router } from '@angular/router';
 })
 export class Booking1SubPagePage implements OnInit {
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.startTimer();
   }
+
+  Aprice = 800;
+  Cprice = 400;
+  numberoftickets = 6;
+  adulttickets= this.numberoftickets;
+  childrenTickets = 0
+  totalammount = this.numberoftickets * this.Aprice;
+  
 
   counter: {
     min,
@@ -41,5 +52,127 @@ export class Booking1SubPagePage implements OnInit {
     this.route.navigateByUrl('customer/Venue Selection'); 
   }
 
+  async failToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Please select more seats',
+      duration: 2000  
+    });
+    toast.present();
+  }
 
+  addticket()
+  {
+    if(this.adulttickets < this.numberoftickets && this.adulttickets <= this.numberoftickets)
+    {
+      let e = this.adulttickets + 1;
+      this.adulttickets = e;
+      let c = this.childrenTickets -1;
+      this.childrenTickets = c;
+
+      // this is to calculate the total ammount of the tickets
+      let Acal = this.adulttickets * this.Aprice;
+      let Ccal = this.childrenTickets * this.Cprice;
+      this.totalammount = Acal + Ccal;
+    }else if(this.adulttickets < this.numberoftickets)
+    {
+      let e = this.adulttickets + 1;
+      this.adulttickets = e;
+
+       // this is to calculate the total ammount of the tickets
+      let Acal = this.adulttickets * this.Aprice;
+      let Ccal = this.childrenTickets * this.Cprice;
+      this.totalammount = Acal + Ccal;
+    }else{
+      this.failToast();
+    }
+  }
+
+  removeticket()
+  {
+    if(this.adulttickets <= this.numberoftickets && this.childrenTickets == 0 || this.childrenTickets < this.numberoftickets)
+    {
+      let e = this.adulttickets - 1;
+      this.adulttickets = e;
+      let c = this.childrenTickets + 1;
+      this.childrenTickets = c;
+
+       // this is to calculate the total ammount of the tickets
+      let Acal = this.adulttickets * this.Aprice;
+      let Ccal = this.childrenTickets * this.Cprice;
+      this.totalammount = Acal + Ccal;
+    }else if(this.adulttickets < this.numberoftickets && this.childrenTickets == 0 || this.childrenTickets < this.numberoftickets)
+    {
+      let e = this.adulttickets - 1;
+      this.adulttickets = e;
+
+       // this is to calculate the total ammount of the tickets
+      let Acal = this.adulttickets * this.Aprice;
+      let Ccal = this.childrenTickets * this.Cprice;
+      this.totalammount = Acal + Ccal;
+    }
+    else
+    {
+     this.failToast();
+    }
+  }
+
+
+
+  childrenaddticket()
+  {
+    if(this.childrenTickets< this.numberoftickets && this.childrenTickets <= this.numberoftickets)
+    {
+      let e = this.childrenTickets + 1;
+      this.childrenTickets = e;
+      let c = this.adulttickets -1;
+      this.adulttickets = c;
+
+       // this is to calculate the total ammount of the tickets
+      let Acal = this.adulttickets * this.Aprice;
+      let Ccal = this.childrenTickets * this.Cprice;
+      this.totalammount = Acal + Ccal;
+    }else if(this.childrenTickets< this.numberoftickets)
+    {
+      let e = this.childrenTickets + 1;
+      this.childrenTickets = e;
+      
+      // this is to calculate the total ammount of the tickets
+      let Acal = this.adulttickets * this.Aprice;
+      let Ccal = this.childrenTickets * this.Cprice;
+      this.totalammount = Acal + Ccal;
+    }else
+    {
+     this.failToast();
+    }
+    
+  }
+
+  childrenremoveticket()
+  {
+    if(this.childrenTickets <= this.numberoftickets && this.adulttickets == 0 || this.adulttickets < this.numberoftickets)
+    {
+      let e = this.childrenTickets - 1;
+      this.childrenTickets = e;
+      let c = this.adulttickets + 1;
+      this.adulttickets = c;
+
+      // this is to calculate the total ammount of the tickets
+      let Acal = this.adulttickets * this.Aprice;
+      let Ccal = this.childrenTickets * this.Cprice;
+      this.totalammount = Acal + Ccal;
+    }else if(this.childrenTickets < this.numberoftickets && this.adulttickets == 0 || this.adulttickets < this.numberoftickets)
+    {
+      let e = this.childrenTickets- 1;
+      this.childrenTickets = e;
+
+      // this is to calculate the total ammount of the tickets
+      let Acal = this.adulttickets * this.Aprice;
+      let Ccal = this.childrenTickets * this.Cprice;
+      this.totalammount = Acal + Ccal;
+    }
+    else
+    {
+     this.failToast();
+    }
+  }
 }

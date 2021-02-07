@@ -81,24 +81,70 @@
          <ion-card-header>
            <ion-card-subtitle>Type Of Ticket</ion-card-subtitle>
          </ion-card-header>
-         <div>
-         <ion-card-header>
-          <ion-card-subtitle>Adult Tickets</ion-card-subtitle>
-         </ion-card-header>
          <ion-card-content>
-           
-          
+           <ion-grid>
+             <ion-row>
+               <ion-col>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size-md="10">
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col size-md="3">
+                            <ion-item>
+                           <ion-card-subtitle>Adult Tickets: </ion-card-subtitle>
+                         </ion-item>
+                          </ion-col>
+                          <ion-col size-md="4">
+                           <ion-item>
+                             <ion-icon name="remove-outline" (click)="removeticket()"></ion-icon>
+                             <ion-label style="text-align: center;">{{adulttickets}}</ion-label>        
+                             <ion-icon name="add-circle-outline" (click)="addticket()"></ion-icon>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>
+                    </ion-col>
+                    </ion-row>
+                    <ion-row>
+                    <ion-col size-md="10">
+                     <ion-grid>
+                       <ion-row>
+                         <ion-col size-md="3">
+                           <ion-item>
+                          <ion-card-subtitle>Children Tickets: </ion-card-subtitle>
+                        </ion-item>
+                         </ion-col>
+                         <ion-col size-md="4">
+                          <ion-item>
+                            <ion-icon name="remove-outline" (click)=" childrenremoveticket()"></ion-icon>
+                            <ion-label style="text-align: center;">{{childrenTickets}}</ion-label>        
+                            <ion-icon name="add-circle-outline" (click)="childrenaddticket()"></ion-icon>
+                           </ion-item>
+                         </ion-col>
+                       </ion-row>
+                     </ion-grid>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+               </ion-col>
+               <ion-col>
+                <br>
+                <ion-item>
+                  <ion-card-subtitle>Ticket Price for Adult - 800</ion-card-subtitle>
+                </ion-item>
+               <br>
+               <ion-item>
+                <ion-card-subtitle>Ticket Price for child - 600</ion-card-subtitle>
+               </ion-item>     
+               <br>
+               <ion-item>
+                <ion-card-header>Your Total Ammount : Rs.{{totalammount}}</ion-card-header>
+               </ion-item>       
+               </ion-col>
+             </ion-row>
+           </ion-grid>
          </ion-card-content>
-        </div>
-        <div>
-          <ion-card-header>
-           <ion-card-subtitle>Childrens Tickets</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            
-           
-          </ion-card-content>
-         </div>
        </ion-card>
        <br>
        <ion-grid>
