@@ -20,6 +20,7 @@ export class LocationsHallsSubPagePage implements OnInit {
   async openCinemaLocationsModal(cinemaLocationId: string){
     const cinemaLocationsModal = await this.modalController.create({
       component: CinemaHallsModalPage,
+      cssClass: 'cinema-halls-modal',
       componentProps: {
         passingCinemaLocationId: cinemaLocationId
       },

@@ -1,0 +1,18 @@
+ion-item{
+  border: #ccc solid 1px;
+  border-radius: 5px;
+  --ion-background-color: rgb(255, 255, 255);
+}
+
+.add-form-text{
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  letter-spacing: 1px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#addNewHallFormCustomizationSection{
+  display: block;
+}

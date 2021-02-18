@@ -1,6 +1,23 @@
 <ion-header>
   <ion-toolbar>
     <ion-title><b>CINEMA HALLS</b></ion-title>
+    <div style="width: 200px;
+                position: absolute;
+                right: 200px;
+                top: 7px;">
+      <ion-button
+        shape="block"
+        color="tertiary"
+        (click)="openAddHallModal()">
+        <ion-label>
+          <ion-img src="assets/images/account/manager/locations-halls-sub-page/add-cinema-location-icon.png" style="width: 25px;
+                                                                                                                    margin-right: 5px;"></ion-img>
+        </ion-label>
+        <ion-label>
+          ADD HALL
+        </ion-label>
+      </ion-button>
+    </div>
     <ion-button
       (click)="closeCinemaHallsModal()" 
       slot="end" 
@@ -14,5 +31,84 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-card style="height: 685px;">
+    <ion-card-content>
+
+      <div style="width: 100%;
+                  background-color: #ccc;
+                  overflow-x: auto;">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div style="height: 50px;
+                            width: 200px;
+                            background-color: rgb(51, 84, 112);
+                            border-radius: 10px;">
+                  Cinema Hall Name
+                </div>
+              </td>
+              <td>
+                <div style="height: 50px;
+                            width: 80px;
+                            background-color: rgb(51, 84, 112);
+                            border-radius: 10px;">
+                  Cinema Hall Name
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    
+      <div style="margin-top: 10px;
+                  padding-left: 20px;">
+        <ion-label>
+          <h1>
+            Cinema Hall Name
+          </h1>
+        </ion-label>
+      </div>
+
+      <div style="position: absolute;
+                  right: 20px;
+                  margin-top: -25px;">
+        <ion-label>
+          <h2>
+            Total No of Seats: <b>100</b>
+          </h2>
+        </ion-label>
+      </div>
+    
+      <div style="margin-top: 10px;
+                  border-bottom: 2px solid #ccc;
+                  width: 98%;
+                  position: absolute;
+                  left: 50%;
+                  transform: translateX(-50%);"></div>
+                
+      <div style="width: 100%;
+                  margin-top: 20px;
+                  background-color: rgb(202, 126, 126);">
+        <div style="width: 70%;
+                    background-color: #ccc;
+                    position: relative;
+                    left: 50%;
+                    transform: translateX(-50%);">
+TEST
+        </div>
+      </div>
+                
+      <div style="margin-top: 10px;
+                border-bottom: 2px solid #ccc;
+                width: 98%;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);"></div>
+
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
