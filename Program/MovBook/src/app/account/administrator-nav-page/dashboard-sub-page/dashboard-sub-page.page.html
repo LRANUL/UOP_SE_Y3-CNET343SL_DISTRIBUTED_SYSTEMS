@@ -1,9 +1,87 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>dashboard-sub-page</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-grid style="background-color: #374d58">
+    <ion-row>
+      <ion-col size="auto">
+        <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
+        <div class="profilePhoto">
+          <img src="assets\images\admin.png" style="border-radius: 50px; width: 150px; height: 150px" />
+          <span class="onlineStatus"></span>
+          <!-- Replace with {{Name}} and {{email}} plus add a online button-->
+          <h4>{{name_admin}}</h4>
+          <h6>{{email_admin}}</h6>
+          <br />
+        </div>
+        <ion-button expand="block" color="light" href="administrator/dashboard">Dashboard</ion-button>
+        <ion-button expand="block" color="button" href="administrator/manager-accounts">Manager
+          Accounts</ion-button>
+        <ion-button expand="block" color="button" href="administrator/profile-sub-page"
+          style="margin-top: 50%">Profile</ion-button>
+        <ion-button expand="block" color="button" href="administrator/settings-sub-page">Settings</ion-button>
+        <ion-button expand="block" color="button" href="">Logout</ion-button>
+      </ion-col>
 
+      <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;height: 700px">
+
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Database status statistics</b></h1>
+        </ion-row>
+
+        <ion-row style="float:right;margin-right: 50px;">
+          <ion-toggle checked></ion-toggle>
+        </ion-row>
+
+        <ion-row style="height: 150px;">
+          <!--
+          <ion-card *ngFor="let movie of Movies" style="width: 250px;height: 500px;">
+            <ion-img src='{{movie.imgUrl}}'></ion-img>
+            <ion-card-title>{{movie.title}}</ion-card-title>
+            <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
+            <ion-card-content>
+              <p>Rating: {{movie.rating}}⭐</p>
+              <p>{{movie.description}}</p>
+            </ion-card-content>
+          </ion-card>
+          -->
+        </ion-row>
+
+        <ion-row>
+          <h1 style="color: #374d58;"><b>OMDB API status statistics</b></h1>
+        </ion-row>
+
+
+        <ion-row style="float:right; margin-right: 50px">
+          <ion-toggle checked></ion-toggle>
+        </ion-row>
+
+        <ion-row style="height: 150px;">
+          <!--
+          <ion-card *ngFor="let movie of Movies" style="width: 250px;height: 500px;">
+            <ion-img src='{{movie.imgUrl}}'></ion-img>
+            <ion-card-title>{{movie.title}}</ion-card-title>
+            <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
+            <ion-card-content>
+              <p>Rating: {{movie.rating}}⭐</p>
+              <p>{{movie.description}}</p>
+            </ion-card-content>
+          </ion-card>
+-->
+        </ion-row>
+
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Stripe API status statistics</b></h1>
+        </ion-row>
+
+        <ion-row style="float:right; margin-right: 50px">
+          <ion-toggle checked></ion-toggle>
+        </ion-row>
+        
+
+        <ion-row style="height: 150px;">
+               <h6 style="color:black">something something</h6>
+        </ion-row>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
 </ion-content>

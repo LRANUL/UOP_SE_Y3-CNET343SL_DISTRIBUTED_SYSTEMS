@@ -1,0 +1,36 @@
+.sideMenu {
+    background-color: #374d58;
+  }
+  .profilePhoto {
+    color: white;
+    text-align: center;
+  }
+  .pageContent {
+    background-color: #e8e8e8;
+    float: right;
+  }
+  ion-button:hover {
+      --ion-color: light
+  }
+  .onlineStatus {
+    height: 15px;
+    width: 15px;
+    background-color: rgb(37, 182, 8);
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: -10%;
+  }
+
+  ion-toggle {
+    --background: rgb(167, 167, 167);
+    --background-checked: #1bdd3c;
+  
+    --handle-background: #6b6b6b;
+    --handle-background-checked: rgb(255, 255, 255);
+
+    --handle-spacing: 0px;
+    --handle-height: 100%;
+
+    width: 40px;
+    height: 20px;
+  }

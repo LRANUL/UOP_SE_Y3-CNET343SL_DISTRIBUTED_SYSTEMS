@@ -1,9 +1,118 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>manager-accounts-sub-page</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-grid style="background-color: #374d58">
+    <ion-row>
+      <ion-col size="auto">
+        <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
+        <div class="profilePhoto">
+          <img src="assets\images\admin.png" style="border-radius: 50px; width: 150px; height: 150px" />
+          <span class="onlineStatus"></span>
 
+          <h4>{{name_admin}}</h4>
+          <h6>{{email_admin}}</h6>
+
+          <br />
+        </div>
+
+        <ion-button expand="block" color="button" href="administrator/dashboard">Dashboard
+        </ion-button>
+        <ion-button expand="block" color="light" href="administrator/manager-accounts">Manager
+          Accounts</ion-button>
+        <ion-button expand="block" color="button" href="administrator/profile-sub-page"
+          style="margin-top: 50%">Profile</ion-button>
+        <ion-button expand="block" color="button" href="administrator/settings-sub-page">Settings</ion-button>
+        <ion-button expand="block" color="button" href="">Logout</ion-button>
+      </ion-col>
+
+      <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;height: 700px">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Add a new Manager</b></h1>
+        </ion-row>
+        <ion-row style="height: 600px;">
+          <ion-col>
+            <form #employeeForm="ngForm" (Submit)="onSubmit(employeeForm)">
+              <ion-grid>
+                <ion-row color="primary" justify-content-center>
+                  <ion-col>
+                    <div text-center>
+                      <h3 style="color: black;">Create a new account!</h3>
+                    </div>
+                    <div padding>
+                      <ion-item>
+                        <ion-input name="name" type="text" placeholder="Name" #name="ngModel" ngModel></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-input name="email" type="email" placeholder="manager@email.com" #email="ngModel" ngModel>
+                        </ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-input name="password" type="password" placeholder="Password" #password="ngModel" ngModel>
+                        </ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-input name="status" type="text" placeholder="Status" #status="ngModel" ngModel>
+                        </ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-input name="type" type="text" placeholder="Type" #type="ngModel" ngModel>
+                        </ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-input name="phone" type="text" placeholder="Phone No" #phone="ngModel" ngModel></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-input name="address" type="text" placeholder="Address" #address="ngModel" ngModel>
+                        </ion-input>
+                      </ion-item>
+                    </div>
+                    <div padding>
+                      <ion-button size="medium" type="button" expand="block" style="color: rgb(90, 90, 90);"
+                        (click)="resetForm(employeeForm)">Reset</ion-button>
+                      <ion-button size="medium" type="submit" expand="block" style="color: rgb(90, 90, 90);"
+                        (click)="onSubmit(employeeForm)">Register</ion-button>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;height: 700px">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Managers</b></h1>
+        </ion-row>
+        <ion-searchbar style="color: white"></ion-searchbar>
+        <ion-row style="height: 500px;overflow-y: scroll;">
+          <ion-col>
+            <ion-card *ngFor="let admin_details of managerArray "
+              style="background-color: #cccccc;">
+          
+            
+                
+                <img src="assets\images\admin.png"
+                  style="border-radius: 50px; width: 100px; height: 100px;float: right; margin-right: 30px; margin-top: 40px;">
+
+                <h6 style="color: black">ID : {{admin_details._id}}</h6>
+                <h6 style="color: black">Name : {{ admin_details.name }}</h6>
+                <h6 style="color: black">Email : {{ admin_details.email }}</h6>
+                <h6 style="color: black">Status : {{ admin_details.status }}</h6>
+                <h6 style="color: black">Type : {{ admin_details.type }}</h6>
+                <h6 style="color: black">Phone : {{ admin_details.phone }}</h6>
+                <h6 style="color: black">Address : {{ admin_details.address }}</h6>
+              
+                <a [routerLink]="['/administrator-nav-page/settings-sub-page']"> Update Details</a>
+                
+                <ion-button (click)='deleteManagerHTML(admin_details._id)'> Delete Manager </ion-button>
+
+            </ion-card>
+            
+          </ion-col>
+          
+        
+
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

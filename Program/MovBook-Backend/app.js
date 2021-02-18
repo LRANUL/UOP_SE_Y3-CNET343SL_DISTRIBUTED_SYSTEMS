@@ -7,6 +7,8 @@ const beveragesRoutes = require("./routes/beverages");
 const usersRoutes = require("./routes/users");
 const moviesRoutes = require("./routes/movies");
 
+const managerRoutes = require("./routes/managers");
+
 const upcomingMovieSearchResults = require("./routes/upcomingMovieSearchResults");
 
 const app = express();
@@ -51,5 +53,9 @@ app.use("/api/movies", moviesRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/beverages", beveragesRoutes);
 app.use("/api/omdb/upcoming-movies/", upcomingMovieSearchResults);
+
+
+app.use("/api/managers", managerRoutes);
+
 
 module.exports = app;

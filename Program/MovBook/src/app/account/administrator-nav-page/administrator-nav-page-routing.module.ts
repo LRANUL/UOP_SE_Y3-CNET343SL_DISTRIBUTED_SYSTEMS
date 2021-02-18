@@ -15,7 +15,15 @@ const routes: Routes = [
   {
     path: 'manager-accounts',
     loadChildren: () => import('./manager-accounts-sub-page/manager-accounts-sub-page.module').then( m => m.ManagerAccountsSubPagePageModule)
+  },  {
+    path: 'profile-sub-page',
+    loadChildren: () => import('./profile-sub-page/profile-sub-page.module').then( m => m.ProfileSubPagePageModule)
   },
+  {
+    path: 'settings-sub-page',
+    loadChildren: () => import('./settings-sub-page/settings-sub-page.module').then( m => m.SettingsSubPagePageModule)
+  },
+
 ];
 
 @NgModule({
