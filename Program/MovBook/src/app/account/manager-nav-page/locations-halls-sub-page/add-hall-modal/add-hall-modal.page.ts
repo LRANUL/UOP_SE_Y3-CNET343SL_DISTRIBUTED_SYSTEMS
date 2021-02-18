@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController, NavParams, PopoverController } from '@ionic/angular';
+import { HallSeatDetails } from 'src/app/models/account/manager';
 import { AssignHallSeatPopoverPage } from '../assign-hall-seat-popover/assign-hall-seat-popover.page';
+
 import { CinemaHallsModalPage } from '../cinema-halls-modal/cinema-halls-modal.page';
 
 @Component({
@@ -11,13 +13,20 @@ import { CinemaHallsModalPage } from '../cinema-halls-modal/cinema-halls-modal.p
 })
 export class AddHallModalPage implements OnInit {
 
+  // Declaration - FormGroup to handle addNewHallForm Form
   addNewHallForm: FormGroup;
   
+  // Declaration | Initialization - int to store passedCinemaId
   passedCinemaId = null;
 
+  // Declaration | Initialization - string to store and process hallSeatId
   hallSeatId = null;
 
+  // Declaration | Initialization - boolean to store visibility of initial text
   showInitialText: Boolean = true;
+
+  // Declaration - array to store seat details
+  hallSeating: Array<HallSeatDetails> = null;
 
   constructor(
     private navParams: NavParams,
@@ -41,7 +50,8 @@ export class AddHallModalPage implements OnInit {
     this.addNewHallForm = this.formBuilder.group({
       hallName: new FormControl('', Validators.required),
       noOfRows: new FormControl('', Validators.required),
-      noOfColumns: new FormControl('', Validators.required)
+      noOfColumns: new FormControl('', Validators.required),
+      numberSeatAlphabetical: new FormControl(false)
     });
   }
 
@@ -74,6 +84,24 @@ export class AddHallModalPage implements OnInit {
     });
     cinemaHallsModal.present();
   }
+
+
+
+  addToHallSeating(seatDetails: HallSeatDetails){
+
+    for (let hallSeat = 0; hallSeat < this.hallSeating.length; hallSeat++) {
+      if(this.hallSeating[hallSeat].seatId === seatDetails.seatId){
+        // Update existing
+      }
+      else if(this.hallSeating[hallSeat].seatId !== seatDetails.seatId){
+        // add new
+      }
+      
+    }
+    this.hallSeating = <any>seatDetails;
+  }
+
+
 
   // Implementation for opening the 'AssignHallSeat' popover
   async openAssignHallSeatPopover(evt: Event, seatId){
@@ -139,6 +167,14 @@ export class AddHallModalPage implements OnInit {
     this.noOfColumns = passedNoOfColumns;
   }
 
+  // Declaration | Initialization - To enable or disable automatic seat numbering to alphabetical order
+  seatNumberAlphabetical : boolean = false;
+
+  // Function - assigning seat number to alphabetical order to enable or disable based on user interface toggle
+  setSeatNumberAlphabetical(seatNumberAlphabetical: boolean){
+    this.seatNumberAlphabetical = seatNumberAlphabetical;
+  }
+
 
   // Function - splits string by '|' to blocks
   extractStringBlocks(text: string){
@@ -150,6 +186,9 @@ export class AddHallModalPage implements OnInit {
 
   // Function - creating seat layout grid table according to the entered no of rows and columns
   buildSeatLayout() {
+
+    // Resetting 'noOfSeats' value to 0
+    this.noOfSeats = 0;
 
     // If Condition - checking whether user has entered the number of rows and columns
     if(this.noOfRows == 0 && this.noOfColumns == 0){
@@ -165,157 +204,187 @@ export class AddHallModalPage implements OnInit {
     }
     else{
 
-      // Hiding initial text
-      this.showInitialText = false;
-
-      // Retrieving 'seatLayoutGridTable' element
-      let gridTable = <HTMLTableElement>document.getElementById("seatLayoutGridTable");
-
-      // Retrieving the no of rows existing in 'seatLayoutGridTable' element
-      let existingNoOfRows = gridTable.rows.length;
-
-      // If Condition - checking whether the number of rows is greater than or equal to 1
-      if(existingNoOfRows >= 1){
-
-        // For Loop - Iterating through the existing number of rows
-        for (let tableRow = existingNoOfRows; tableRow >= 0; tableRow--) {
-          // Removing each table row
-          gridTable.deleteRow(tableRow-1);
-        }
-  
+      // If Condition - checking whether seatNumberAlphabetical toggle is true and noOfRows is above 26,
+      // because automatic alphabetic seat numbering is not implemented for above 26 rows.
+      if(this.seatNumberAlphabetical == true && this.noOfRows > 26){
+        this.alertNotice("ERROR", "No of Rows is above 26, automatic alphabetic seat numbering not available above 26 rows. Apologies for the inconvenience.");
       }
+      else{
 
-      // Enabling hallSeatId to accept seat layout grid table row number
-      this.hallSeatId = this.hallSeatId + "|";
-      
-      // For Loop - Iterating through the entered number of rows to create the table rows in the seat layout grid table
-      for (let row = 0; row <= this.noOfRows - 1; row++) {
+        // Initialization - assigning new array into 'hallSeating'
+        this.hallSeating = new Array();
 
+        // Hiding initial text
+        this.showInitialText = false;
 
-        // If condition - checking whether row is equal to 0
-        if(row == 0){
-          // Merging row number into hallSeatId
-          this.hallSeatId = this.hallSeatId + (row + 1);
+        // Retrieving 'seatLayoutGridTable' element
+        let gridTable = <HTMLTableElement>document.getElementById("seatLayoutGridTable");
+
+        // Retrieving the no of rows existing in 'seatLayoutGridTable' element
+        let existingNoOfRows = gridTable.rows.length;
+
+        // If Condition - checking whether the number of rows is greater than or equal to 1
+        if(existingNoOfRows >= 1){
+
+          // For Loop - Iterating through the existing number of rows
+          for (let tableRow = existingNoOfRows; tableRow >= 0; tableRow--) {
+            // Removing each table row
+            gridTable.deleteRow(tableRow-1);
+          }
+    
         }
 
-        // Calling 'extractStringBlocks()' function to split 'hallSeatId' string to blocks
-        let hallSeatIdBlockArr = this.extractStringBlocks(this.hallSeatId);
-
-        // Creating new 'hallSeatId' using existing 'cinemaId', and 'hallId'
-        this.hallSeatId = hallSeatIdBlockArr[0] + "|" + hallSeatIdBlockArr[1] + "|" + (row + 1);
-
-
-        // Creating a new element - 'tr' - table row
-        let gridTableRow = document.createElement('tr');
-
-        // Assigning an element id for the created table row
-        gridTableRow.id = 'Row-' + row;
-
-        // Assigning table row into the 'seatLayoutGridTable' element
-        gridTable.appendChild(gridTableRow);
+        // Enabling hallSeatId to accept seat layout grid table row number
+        this.hallSeatId = this.hallSeatId + "|";
         
-        // Retrieving created seat layout grid table row
-        let createdGridTableRow = document.getElementById('Row-' + row);
-
-        // For Loop - Iterating through the entered number of columns to create the table cells in each table row in the seat layout grid table
-        for (let columnCell = 0; columnCell <= this.noOfColumns - 1; columnCell++) {
+        // For Loop - Iterating through the entered number of rows to create the table rows in the seat layout grid table
+        for (let row = 0; row <= this.noOfRows - 1; row++) {
 
 
-          // If condition - checking whether columnCell is equal to 0
-          if(columnCell == 0){
-            // Enabling hallSeatId to accept seat layout grid table column cell
-            this.hallSeatId = this.hallSeatId + "|";
+          // Declaration | Initialization - string to store seat numbering letter in each iteration
+          let currentSeatNumberingLetter: String;
+          
+          // If Condition - checking whether seat number alphabetical toggle is true
+          if(this.seatNumberAlphabetical == true){
+
+            // Initializing array with the alphabetical order
+            let alphabeticalOrder: String[] = [
+              "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+            ];
+            
+            // Assigning current alphabet letter 
+            currentSeatNumberingLetter = alphabeticalOrder[row];
+          }
+          
+
+          // If condition - checking whether row is equal to 0
+          if(row == 0){
+            // Merging row number into hallSeatId
+            this.hallSeatId = this.hallSeatId + (row + 1);
           }
 
           // Calling 'extractStringBlocks()' function to split 'hallSeatId' string to blocks
           let hallSeatIdBlockArr = this.extractStringBlocks(this.hallSeatId);
 
-          // Creating new 'hallSeatId' using existing 'cinemaId', 'hallId', and 'row'
-          this.hallSeatId = hallSeatIdBlockArr[0] + "|" + hallSeatIdBlockArr[1] + "|" +  hallSeatIdBlockArr[2] + "|" + (columnCell + 1);
+          // Creating new 'hallSeatId' using existing 'cinemaId', and 'hallId'
+          this.hallSeatId = hallSeatIdBlockArr[0] + "|" + hallSeatIdBlockArr[1] + "|" + (row + 1);
 
 
-          // Incrementing 'noOfSeats' by one (post-increment) to identify total number of seats
-          this.noOfSeats++;
+          // Creating a new element - 'tr' - table row
+          let gridTableRow = document.createElement('tr');
 
-          // Creating a new element - 'td' - table data
-          let gridTableCell = document.createElement('td');
+          // Assigning an element id for the created table row
+          gridTableRow.id = 'Row-' + row;
 
-          // Assigning an ID (hallSeatId) to the created cell
-          gridTableCell.id = this.hallSeatId;
-
-          // CSS Styles - border color of 'td' element
-          gridTableCell.style.borderColor = "rgb(96, 143, 230)";
-          // CSS Styles - padding bottom of 'td' element
-          gridTableCell.style.paddingBottom = "10px";
-
-          // Creating a new element - 'BUTTON'
-          let button = document.createElement('BUTTON');
-
-          // CSS Styles - background color of 'BUTTON' element
-          button.style.backgroundColor = "rgb(96, 143, 230)";
-
-          // 'BUTTON' event listener, executes when button is clicked
-          button.addEventListener("click", ((event: CustomEvent) => {
-            // Opening 'AssignHallSeatPopoverPage' popover for every button click
-            this.openAssignHallSeatPopover(event, gridTableCell.id);
-          }) as EventListener);
+          // Assigning table row into the 'seatLayoutGridTable' element
+          gridTable.appendChild(gridTableRow);
           
-          // HTML source code within 'BUTTON' element
-          /**
-           * <div>
-           *  <p></p>
-           *  <button></button>
-           * </div>
-           */
-          button.innerHTML = "<div style='border: 2px solid #ffffff;" +
-                                        "background-color: #ffffff;" +
-                                        "border-radius: 5px;'>" +
-            "<p>"+ this.noOfSeats +"</p>" +
-            "<button style='background-color: rgb(50, 195, 159);" +
-                            "border-radius: 5px;" +
-                            "width: 30px;" +
-                            "height: 30px;'>" + columnCell + "</button>" +
-          "</div>";
+          // Retrieving created seat layout grid table row
+          let createdGridTableRow = document.getElementById('Row-' + row);
 
-          // Assigning 'BUTTON' into 'td' element
-          gridTableCell.appendChild(button);
+          // For Loop - Iterating through the entered number of columns to create the table cells in each table row in the seat layout grid table
+          for (let columnCell = 0; columnCell <= this.noOfColumns - 1; columnCell++) {
 
-          // Assigning 'td' into the create table row element
-          createdGridTableRow.appendChild(gridTableCell);
+
+            // If condition - checking whether columnCell is equal to 0
+            if(columnCell == 0){
+              // Enabling hallSeatId to accept seat layout grid table column cell
+              this.hallSeatId = this.hallSeatId + "|";
+            }
+
+            // Calling 'extractStringBlocks()' function to split 'hallSeatId' string to blocks
+            let hallSeatIdBlockArr = this.extractStringBlocks(this.hallSeatId);
+
+            // Creating new 'hallSeatId' using existing 'cinemaId', 'hallId', and 'row'
+            this.hallSeatId = hallSeatIdBlockArr[0] + "|" + hallSeatIdBlockArr[1] + "|" +  hallSeatIdBlockArr[2] + "|" + (columnCell + 1);
+
+
+            // Incrementing 'noOfSeats' by one (post-increment) to identify total number of seats
+            this.noOfSeats++;
+
+            // Creating a new element - 'td' - table data
+            let gridTableCell = document.createElement('td');
+
+            // Assigning an ID (hallSeatId) to the created cell
+            gridTableCell.id = this.hallSeatId;
+
+
+
+            // Creating initial seating objects and populating with the seatId in each iteration
+            let seatDetails = {
+              seatId: gridTableCell.id,
+              seatNumber: '',
+              seatActive: false,
+              seatUnavailable: false
+            };
+
+            // Pushing create 'seatDetails' object to the 'hallSeating' array in each iteration
+            this.hallSeating.push(seatDetails);
+
+
+
+            // CSS Styles - border color of 'td' element
+            gridTableCell.style.borderColor = "rgb(96, 143, 230)";
+            // CSS Styles - padding bottom of 'td' element
+            gridTableCell.style.paddingBottom = "10px";
+
+            // Creating a new element - 'BUTTON'
+            let button = document.createElement('BUTTON');
+
+            // CSS Styles - background color of 'BUTTON' element
+            button.style.backgroundColor = "rgb(96, 143, 230)";
+
+            // 'BUTTON' event listener, executes when button is clicked
+            button.addEventListener("click", ((event: CustomEvent) => {
+              // Opening 'AssignHallSeatPopoverPage' popover for every button click
+              this.openAssignHallSeatPopover(event, gridTableCell.id);
+            }) as EventListener);
+
+
+            // Declaration | Initialization - string to store seat numbering in each iteration 
+            let seatNumbering: String;
+
+            // If Condition - checking whether seat number alphabetical toggle is true or false
+            if(this.seatNumberAlphabetical == true){
+              // Assigning seat number by merging currentSeatNumberingLetter and columnCell value (incremented by 1 and converting to String)
+              seatNumbering = currentSeatNumberingLetter + (columnCell + 1).toString();
+            }
+            else if(this.seatNumberAlphabetical == false){
+              // Assigning seat number using noOfSeats value (incremented by 1 and converting to String)
+              seatNumbering = (this.noOfSeats + 1).toString();
+            }
+            
+
+            // HTML source code within 'BUTTON' element
+            /**
+             * <div>
+             *  <p></p>
+             *  <button></button>
+             * </div>
+             */
+            button.innerHTML = "<div style='border: 2px solid #ffffff;" +
+                                          "background-color: #ffffff;" +
+                                          "border-radius: 5px;'>" +
+              "<p>"+ this.noOfSeats +"</p>" +
+              "<button style='background-color: rgb(50, 195, 159);" +
+                              "border-radius: 5px;" +
+                              "width: 35px;" +
+                              "height: 30px;'>" + seatNumbering + "</button>" +
+            "</div>";
+
+            // Assigning 'BUTTON' into 'td' element
+            gridTableCell.appendChild(button);
+
+            // Assigning 'td' into the create table row element
+            createdGridTableRow.appendChild(gridTableCell);
+          }
         }
       }
     }
   }
 
-  /*
-   var table = <HTMLTableElement>document.getElementById("seatLayoutTable");
-  for(let rowCount = 0; rowCount < 1; rowCount++){
-      let row = table.insertRow(0);
-      for(let columnCount = 0;columnCount < this.noOfColumns;columnCount++) {
-        let tableCell = row.insertCell(columnCount);
-        tableCell.innerHTML = "<div style='border: 2px solid #ccc;'>" +
-          "<ion-button style='margin: 5px; " +
-                          "border: 2px solid #ccc; " +
-                          "width: 30px;" +
-                          "height: 30px;' id='btn'>kk</ion-button>" +
-        "</div>";
-        let button = document.getElementById('btn');
-        button.addEventListener('onclick', this.alertff);
-        tableCell.appendChild(button);
-      }
-    }*/
-
-  // removeRow(){
-  //   let seatLayoutTable = <HTMLTableElement>document.getElementById("seatLayoutTable");
-  //   let noOfRows = seatLayoutTable.rows.length;
-  //   seatLayoutTable.deleteRow(noOfRows-1);
-  // }
-
   addNewHall(form){
 
   }
-
-  
-
 
 }

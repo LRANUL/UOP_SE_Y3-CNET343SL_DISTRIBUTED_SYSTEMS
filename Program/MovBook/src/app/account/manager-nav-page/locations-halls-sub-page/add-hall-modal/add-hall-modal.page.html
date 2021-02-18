@@ -42,7 +42,16 @@
                             </ion-item>
                           </ion-col>
                         </ion-row>
-                        <ion-row style="padding-top: 40px;">
+                        <ion-row>
+                          <ion-col>
+                            <ion-item style="min-width: 100%;">
+                              <ion-label>Automatically Number Seats to Alphabetical Order </ion-label>
+                              <ion-toggle slot="end" color="primary" formControlName="numberSeatAlphabetical" (ionChange)="setSeatNumberAlphabetical($event.detail.checked)"></ion-toggle>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row style="position: relative;
+                                        top: 20px;">
                           <ion-col>
                             <ion-label>
                               <p class="add-form-text" style="font-size: 18px;">No of Seats</p>

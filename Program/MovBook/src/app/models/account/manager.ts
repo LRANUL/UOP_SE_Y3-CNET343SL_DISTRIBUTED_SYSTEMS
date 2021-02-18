@@ -18,3 +18,13 @@ export interface MovieSearchResult {
   ];
   totalResults: string;
 }
+
+/**
+ * Hall Seating Object
+ */
+export interface HallSeatDetails {
+  seatId: string;
+  seatNumber: string;
+  seatActive: Boolean;
+  seatUnavailable: Boolean;
+}
