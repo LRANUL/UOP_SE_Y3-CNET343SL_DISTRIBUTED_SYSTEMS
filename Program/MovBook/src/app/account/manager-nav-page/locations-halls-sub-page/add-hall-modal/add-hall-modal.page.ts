@@ -87,39 +87,119 @@ export class AddHallModalPage implements OnInit {
 
 
 
-  addToHallSeating(seatDetails: HallSeatDetails){
+  updateHallSeating(seatDetails: HallSeatDetails){
 
     for (let hallSeat = 0; hallSeat < this.hallSeating.length; hallSeat++) {
-      if(this.hallSeating[hallSeat].seatId === seatDetails.seatId){
-        // Update existing
-      }
-      else if(this.hallSeating[hallSeat].seatId !== seatDetails.seatId){
-        // add new
-      }
+      if(this.hallSeating[hallSeat].seatActive !== seatDetails.seatActive || 
+        this.hallSeating[hallSeat].seatNumber !== seatDetails.seatNumber || 
+        this.hallSeating[hallSeat].seatUnavailable !== seatDetails.seatUnavailable){
       
+          let updatedSeatButtonElement = document.getElementById("btn|" + seatDetails.seatId);
+          let updatedSeatDivElement = document.getElementById("div|" + seatDetails.seatId);
+          let updatedSeatPElement = document.getElementById("p|" + seatDetails.seatId);
+          let updatedSeatDivButtonElement = document.getElementById("divBtn|" + seatDetails.seatId);
+
+          if(this.hallSeating[hallSeat].seatActive !== seatDetails.seatActive){
+            if(seatDetails.seatActive == true){
+              // CSS Styles - background color of 'divButton' element
+              updatedSeatDivButtonElement.style.backgroundColor = "#0AAA64";
+            }
+            else if(seatDetails.seatActive == false){
+              // CSS Styles - background color of 'divButton' element
+              updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
+            }
+          }
+          else if(this.hallSeating[hallSeat].seatNumber !== seatDetails.seatNumber){
+            // CSS Styles - innerHTML text of 'divButton' element
+            updatedSeatDivButtonElement.innerHTML = seatDetails.seatNumber;
+          }
+          else if(this.hallSeating[hallSeat].seatUnavailable !== seatDetails.seatUnavailable){
+            if(seatDetails.seatUnavailable == true){
+              // CSS Styles - background color of 'divButton' element
+              updatedSeatDivButtonElement.style.backgroundColor = "#D33131";
+            }
+            else if(seatDetails.seatUnavailable == false){
+              // CSS Styles - background color of 'divButton' element
+              updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
+            }
+          }
+          else if(this.hallSeating[hallSeat].seatActive !== seatDetails.seatActive && 
+            this.hallSeating[hallSeat].seatUnavailable !== seatDetails.seatUnavailable){
+            if(seatDetails.seatUnavailable == true){
+              // CSS Styles - background color of 'divButton' element
+              updatedSeatDivButtonElement.style.backgroundColor = "#D33131";
+            }
+            else if(seatDetails.seatUnavailable == false){
+              // CSS Styles - background color of 'divButton' element
+              updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
+            }
+          }
+
+          if(this.hallSeating[hallSeat].seatId === seatDetails.seatId){
+            this.hallSeating[hallSeat].seatActive = seatDetails.seatActive;
+            this.hallSeating[hallSeat].seatNumber = seatDetails.seatNumber;
+            this.hallSeating[hallSeat].seatUnavailable = seatDetails.seatUnavailable;
+          }
+
+
+      }
     }
-    this.hallSeating = <any>seatDetails;
+
+    console.log(this.hallSeating);
+
   }
 
 
 
   // Implementation for opening the 'AssignHallSeat' popover
   async openAssignHallSeatPopover(evt: Event, seatId){
+
+    // Calling 'extractStringBlocks()' function to split 'seatId' string to blocks
+    let seatIdBlockArr = this.extractStringBlocks(seatId.id);
+
+    // Identifying 'seatId' using existing 'cinemaId', 'hallId', 'row', and 'columnCell'
+    let passingSeatId = seatIdBlockArr[1] + "|" + seatIdBlockArr[2] + "|" +  seatIdBlockArr[3] + "|" +  seatIdBlockArr[4];
+
+    let existingSeatActive;
+    let existingSeatNumber;
+    let existingSeatUnavailable;
+
+    // Retrieving existing data from 'hallSeating' array
+    for (let seating = 0; seating < this.hallSeating.length; seating++) {
+      console.log(passingSeatId);
+      console.log(this.hallSeating[seating].seatId);
+      if(passingSeatId == this.hallSeating[seating].seatId){
+        existingSeatActive = this.hallSeating[seating].seatActive;
+        existingSeatNumber = this.hallSeating[seating].seatNumber;
+        existingSeatUnavailable = this.hallSeating[seating].seatUnavailable;
+      }
+      console.log('33 '+existingSeatNumber);
+    }
+
+    // Implementation to open popover
     const assignHallSeatPopover = await this.popoverController.create({
       component: AssignHallSeatPopoverPage,
       componentProps: {
-        seatId: seatId
+        passingSeatId: passingSeatId,
+        passingSeatActive: existingSeatActive,
+        passingSeatNumber: existingSeatNumber,
+        passingSeatUnavailable: existingSeatUnavailable
       },
       event: evt,
       // Disabling popover closing from any outside clicks
       backdropDismiss: false
     });
-
+    // Executing popover open
     assignHallSeatPopover.present();
 
+    // Collecting response data when popover is dismissed
     const { data } = await assignHallSeatPopover.onDidDismiss();
-
     console.log(data);
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // Updating hall seating according to the modifications
+      this.updateHallSeating(data);
+    }
   }
 
   // Implementation to hide or show 'Add New Hall' form customization section
@@ -305,40 +385,6 @@ export class AddHallModalPage implements OnInit {
             // Creating a new element - 'td' - table data
             let gridTableCell = document.createElement('td');
 
-            // Assigning an ID (hallSeatId) to the created cell
-            gridTableCell.id = this.hallSeatId;
-
-
-
-            // Creating initial seating objects and populating with the seatId in each iteration
-            let seatDetails = {
-              seatId: gridTableCell.id,
-              seatNumber: '',
-              seatActive: false,
-              seatUnavailable: false
-            };
-
-            // Pushing create 'seatDetails' object to the 'hallSeating' array in each iteration
-            this.hallSeating.push(seatDetails);
-
-
-
-            // CSS Styles - border color of 'td' element
-            gridTableCell.style.borderColor = "rgb(96, 143, 230)";
-            // CSS Styles - padding bottom of 'td' element
-            gridTableCell.style.paddingBottom = "10px";
-
-            // Creating a new element - 'BUTTON'
-            let button = document.createElement('BUTTON');
-
-            // CSS Styles - background color of 'BUTTON' element
-            button.style.backgroundColor = "rgb(96, 143, 230)";
-
-            // 'BUTTON' event listener, executes when button is clicked
-            button.addEventListener("click", ((event: CustomEvent) => {
-              // Opening 'AssignHallSeatPopoverPage' popover for every button click
-              this.openAssignHallSeatPopover(event, gridTableCell.id);
-            }) as EventListener);
 
 
             // Declaration | Initialization - string to store seat numbering in each iteration 
@@ -351,26 +397,114 @@ export class AddHallModalPage implements OnInit {
             }
             else if(this.seatNumberAlphabetical == false){
               // Assigning seat number using noOfSeats value (incremented by 1 and converting to String)
-              seatNumbering = (this.noOfSeats + 1).toString();
+              seatNumbering = this.noOfSeats.toString();
             }
-            
 
-            // HTML source code within 'BUTTON' element
-            /**
-             * <div>
-             *  <p></p>
-             *  <button></button>
-             * </div>
-             */
-            button.innerHTML = "<div style='border: 2px solid #ffffff;" +
-                                          "background-color: #ffffff;" +
-                                          "border-radius: 5px;'>" +
-              "<p>"+ this.noOfSeats +"</p>" +
-              "<button style='background-color: rgb(50, 195, 159);" +
-                              "border-radius: 5px;" +
-                              "width: 35px;" +
-                              "height: 30px;'>" + seatNumbering + "</button>" +
-            "</div>";
+
+
+            // Creating initial seating objects and populating with the seatId in each iteration
+            let initialSeatDetails = {
+              seatId: this.hallSeatId,
+              seatActive: false,
+              seatNumber: seatNumbering.toString(),
+              seatUnavailable: false
+            };
+
+            // Pushing create 'initialSeatDetails' object to the 'hallSeating' array in each iteration
+            this.hallSeating.push(initialSeatDetails);
+
+
+
+            // CSS Styles - border color of 'td' element
+            gridTableCell.style.borderColor = "rgb(96, 143, 230)";
+
+            // CSS Styles - padding bottom of 'td' element
+            gridTableCell.style.paddingBottom = "10px";
+
+            // Assigning an ID (hallSeatId) to the created cell
+            gridTableCell.id = "td|" + this.hallSeatId;
+
+            // Creating a new element - 'BUTTON'
+            let button = document.createElement('BUTTON');
+
+            // Assigning an ID (hallSeatId) to the created button
+            button.id = "btn|" + this.hallSeatId;
+
+            // CSS Styles - background color of 'BUTTON' element
+            button.style.backgroundColor = "rgb(96, 143, 230)";
+
+            // 'BUTTON' event listener, executes when button is clicked
+            button.addEventListener("click", ((event: CustomEvent) => {
+              // Opening 'AssignHallSeatPopoverPage' popover for every button click
+              this.openAssignHallSeatPopover(event, event.target);
+            }) as EventListener);
+
+
+
+            // Creating a new element - 'div'
+            let div = document.createElement('div');
+
+            // CSS Styles - border of 'DIV' element
+            div.style.border = "2px solid #ffffff";
+
+            // CSS Styles - background color of 'DIV' element
+            div.style.backgroundColor = "#ffffff";
+
+            // CSS Styles - border-radius of 'DIV' element
+            div.style.borderRadius = "5px";
+
+            // Assigning an ID (hallSeatId) to the created div
+            div.id = "div|" + this.hallSeatId;
+
+
+
+            // Creating a new element - 'p'
+            let p = document.createElement('p');
+
+            // Assigning an ID (hallSeatId) to the created p
+            p.id = "p|" + this.hallSeatId;
+
+            // Assigning text into 'p' element
+            let pText = document.createTextNode(this.noOfSeats.toString());
+            
+            // Assigning 'pText' into 'p' element
+            p.appendChild(pText);
+
+
+            
+            // Creating a new element - 'BUTTON'
+            let divButton = document.createElement('BUTTON');
+
+            // CSS Styles - background color of 'divButton' element
+            divButton.style.backgroundColor = "#7A7E7B";
+
+            // CSS Styles - font color of 'divButton' element
+            divButton.style.color = "#ffffff";
+            
+            // CSS Styles - border-radius of 'divButton' element
+            divButton.style.borderRadius = "5px";
+
+            // CSS Styles - border-radius of 'width' element
+            divButton.style.width = "35px";
+
+            // CSS Styles - border-radius of 'height' element
+            divButton.style.height = "30px";
+
+            divButton.innerHTML = seatNumbering.toString();
+
+            // Assigning an ID (hallSeatId) to the created divButton
+            divButton.id = "divBtn|" + this.hallSeatId;
+
+
+
+            // Assigning 'p' into 'div' element
+            div.appendChild(p);
+
+            // Assigning 'divButton' into 'div' element
+            div.appendChild(divButton);
+
+            // Assigning 'div' into 'BUTTON' element
+            button.appendChild(div);
 
             // Assigning 'BUTTON' into 'td' element
             gridTableCell.appendChild(button);
