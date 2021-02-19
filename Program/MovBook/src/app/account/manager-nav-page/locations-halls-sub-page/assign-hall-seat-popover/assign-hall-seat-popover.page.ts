@@ -34,7 +34,6 @@ export class AssignHallSeatPopoverPage implements OnInit {
 
     // Assigning variable with passed 'passingSeatActive'
     this.passedSeatActive = this.navParams.get('passingSeatActive');
-
     
     // Assigning variable with passed 'passingSeatNumber'
     this.passedSeatNumber = this.navParams.get('passingSeatNumber');
@@ -55,18 +54,26 @@ export class AssignHallSeatPopoverPage implements OnInit {
       seatUnavailable: this.passedSeatUnavailable
     })
 
+    // Setting initial seat active toggle value
+    this.setSeatActiveToggle(this.passedSeatActive);
+    // Setting user interface component visibility
+    this.enableField();
+
   }
 
   enableField(){
 
+    let seatNumberInputLabelId = document.getElementById("seatNumberInputLabel");
     let seatNumberInputId = document.getElementById("seatNumberInput");
     let seatUnavailableToggleId = document.getElementById("seatUnavailableToggle");
 
-    if(this.seatActiveToggle == true){console.log('2ff');
+    if(this.seatActiveToggle == true){
+    seatNumberInputLabelId.style.display = "block";
       seatNumberInputId.style.display = "block";
       seatUnavailableToggleId.style.display = "block";
     }
     else{
+      seatNumberInputLabelId.style.display = "none";
       seatNumberInputId.style.display = "none";
       seatUnavailableToggleId.style.display = "none";
     }
@@ -77,7 +84,7 @@ export class AssignHallSeatPopoverPage implements OnInit {
   seatActiveToggle: boolean = this.passedSeatActive;
 
   // Function - assigning seatActiveToggle when toggled in user interface
-  setSeatActiveToggle(seatActiveToggle: boolean){console.log(seatActiveToggle);
+  setSeatActiveToggle(seatActiveToggle: boolean){
     this.seatActiveToggle = seatActiveToggle;
     this.enableField();
   }

@@ -85,68 +85,101 @@ export class AddHallModalPage implements OnInit {
     cinemaHallsModal.present();
   }
 
-
-
+  // Updating hall seating grid table according to the user populated seating attributes
   updateHallSeating(seatDetails: HallSeatDetails){
 
+    // For loop - iterating through the hallSeating array (contain the main seating details)
     for (let hallSeat = 0; hallSeat < this.hallSeating.length; hallSeat++) {
+
+      // If condition - checking whether the main hall seating details array contain different values 
+      // from the user populated values
       if(this.hallSeating[hallSeat].seatActive !== seatDetails.seatActive || 
         this.hallSeating[hallSeat].seatNumber !== seatDetails.seatNumber || 
         this.hallSeating[hallSeat].seatUnavailable !== seatDetails.seatUnavailable){
-      
-          let updatedSeatButtonElement = document.getElementById("btn|" + seatDetails.seatId);
-          let updatedSeatDivElement = document.getElementById("div|" + seatDetails.seatId);
-          let updatedSeatPElement = document.getElementById("p|" + seatDetails.seatId);
-          let updatedSeatDivButtonElement = document.getElementById("divBtn|" + seatDetails.seatId);
 
-          if(this.hallSeating[hallSeat].seatActive !== seatDetails.seatActive){
-            if(seatDetails.seatActive == true){
-              // CSS Styles - background color of 'divButton' element
-              updatedSeatDivButtonElement.style.backgroundColor = "#0AAA64";
-            }
-            else if(seatDetails.seatActive == false){
-              // CSS Styles - background color of 'divButton' element
-              updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
-            }
+        // Retrieving the div button according to the seatId in each iteration
+        let updatedSeatDivButtonElement = document.getElementById("divBtn|" + seatDetails.seatId);
+        
+        // If condition - checking whether the main seat active value is different from the user populated 
+        // seat active value
+        if(this.hallSeating[hallSeat].seatActive != seatDetails.seatActive){
+          // If condition - checking whether the user populated seat active value true or false to update the
+          // seat button color
+          if(seatDetails.seatActive == true){
+            // CSS Styles - updating background color of 'divButton' element
+            updatedSeatDivButtonElement.style.backgroundColor = "#0AAA64";
           }
-          else if(this.hallSeating[hallSeat].seatNumber !== seatDetails.seatNumber){
-            // CSS Styles - innerHTML text of 'divButton' element
-            updatedSeatDivButtonElement.innerHTML = seatDetails.seatNumber;
+          else if(seatDetails.seatActive == false){
+            // CSS Styles - updating background color of 'divButton' element
+            updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
           }
-          else if(this.hallSeating[hallSeat].seatUnavailable !== seatDetails.seatUnavailable){
-            if(seatDetails.seatUnavailable == true){
-              // CSS Styles - background color of 'divButton' element
-              updatedSeatDivButtonElement.style.backgroundColor = "#D33131";
-            }
-            else if(seatDetails.seatUnavailable == false){
-              // CSS Styles - background color of 'divButton' element
-              updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
-            }
+        }
+        
+        // If condition - checking whether the main seat number value is different from the user populated 
+        // seat number value
+        if(this.hallSeating[hallSeat].seatNumber != seatDetails.seatNumber){
+          // CSS Styles - updating innerHTML text of 'divButton' element
+          updatedSeatDivButtonElement.innerHTML = seatDetails.seatNumber;
+        }
+        
+        // If condition - checking whether the main seat unavailable value is different from the user populated 
+        // seat unavailable value
+        if(this.hallSeating[hallSeat].seatUnavailable != seatDetails.seatUnavailable){
+          // If condition - checking whether the user populated seat unavailable value true or false to update the
+          // seat button color
+          if(seatDetails.seatUnavailable == true){
+            // CSS Styles - updating background color of 'divButton' element
+            updatedSeatDivButtonElement.style.backgroundColor = "#D33131";
           }
-          else if(this.hallSeating[hallSeat].seatActive !== seatDetails.seatActive && 
-            this.hallSeating[hallSeat].seatUnavailable !== seatDetails.seatUnavailable){
-            if(seatDetails.seatUnavailable == true){
-              // CSS Styles - background color of 'divButton' element
-              updatedSeatDivButtonElement.style.backgroundColor = "#D33131";
-            }
-            else if(seatDetails.seatUnavailable == false){
-              // CSS Styles - background color of 'divButton' element
-              updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
-            }
+          else if(seatDetails.seatUnavailable == false){
+            // CSS Styles - updating background color of 'divButton' element
+            updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
+          }
+        }
+        
+        // If condition - checking whether the main seat active value and seat unavailable value is different from 
+        // the user populated seat active value and seat unavailable value to update seat button color
+        if(this.hallSeating[hallSeat].seatActive != seatDetails.seatActive && 
+          this.hallSeating[hallSeat].seatUnavailable != seatDetails.seatUnavailable){
+          if(seatDetails.seatUnavailable == true){
+            // CSS Styles - updating background color of 'divButton' element
+            updatedSeatDivButtonElement.style.backgroundColor = "#dd4848";
+          }
+          else if(seatDetails.seatUnavailable == false){
+            // CSS Styles - updating background color of 'divButton' element
+            updatedSeatDivButtonElement.style.backgroundColor = "#0AAA64";
+          }
+        }
+
+        // If condition - checking whether the main seat ID is equal to the response returned seat ID
+        if(this.hallSeating[hallSeat].seatId == seatDetails.seatId){
+
+          // If condition - checking whether the response returned seat active is false and seat unavailable value is false
+          if(seatDetails.seatActive == false && seatDetails.seatUnavailable == true){
+            // CSS Styles - updating background color of 'divButton' element
+            updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
           }
 
-          if(this.hallSeating[hallSeat].seatId === seatDetails.seatId){
+          // If condition - checking whether the response returned seat active value is false
+          if(seatDetails.seatActive == false){
+            // Assigning main seat details to initial values
+            this.hallSeating[hallSeat].seatActive = false;
+            this.hallSeating[hallSeat].seatNumber = "";
+            this.hallSeating[hallSeat].seatUnavailable = false;
+            // CSS Styles - updating background color of 'divButton' element
+            updatedSeatDivButtonElement.style.backgroundColor = "#7A7E7B";
+          }
+          else{
+            // Assigning response returned to the main seat details array
             this.hallSeating[hallSeat].seatActive = seatDetails.seatActive;
             this.hallSeating[hallSeat].seatNumber = seatDetails.seatNumber;
             this.hallSeating[hallSeat].seatUnavailable = seatDetails.seatUnavailable;
           }
-
+        }
 
       }
     }
-
     console.log(this.hallSeating);
-
   }
 
 
@@ -160,20 +193,21 @@ export class AddHallModalPage implements OnInit {
     // Identifying 'seatId' using existing 'cinemaId', 'hallId', 'row', and 'columnCell'
     let passingSeatId = seatIdBlockArr[1] + "|" + seatIdBlockArr[2] + "|" +  seatIdBlockArr[3] + "|" +  seatIdBlockArr[4];
 
+    // Declaring variables to store existing seat detail value to pass to the popover
     let existingSeatActive;
     let existingSeatNumber;
     let existingSeatUnavailable;
 
     // Retrieving existing data from 'hallSeating' array
     for (let seating = 0; seating < this.hallSeating.length; seating++) {
-      console.log(passingSeatId);
-      console.log(this.hallSeating[seating].seatId);
+
+      // If condition - checking whether the seat IDs are equal to assign the correct values
       if(passingSeatId == this.hallSeating[seating].seatId){
         existingSeatActive = this.hallSeating[seating].seatActive;
         existingSeatNumber = this.hallSeating[seating].seatNumber;
         existingSeatUnavailable = this.hallSeating[seating].seatUnavailable;
       }
-      console.log('33 '+existingSeatNumber);
+      
     }
 
     // Implementation to open popover
