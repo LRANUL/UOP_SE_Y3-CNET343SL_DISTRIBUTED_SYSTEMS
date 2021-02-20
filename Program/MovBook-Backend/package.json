@@ -20,6 +20,7 @@
     "firebase-functions": "^3.11.0",
     "heroku": "^7.47.11",
     "mongoose": "^5.11.13",
+    "mongoose-unique-validator": "^2.0.3",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
