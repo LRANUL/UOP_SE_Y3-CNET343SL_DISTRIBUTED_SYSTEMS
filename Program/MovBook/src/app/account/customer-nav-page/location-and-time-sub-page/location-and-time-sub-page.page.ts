@@ -13,6 +13,9 @@ export class LocationAndTimeSubPagePage implements OnInit {
   ngOnInit() {
   }
 
+  //get the movie name through the url and then acess it here
+  
+
   gotourl()
   {
    this.route.navigateByUrl('customer/booking');

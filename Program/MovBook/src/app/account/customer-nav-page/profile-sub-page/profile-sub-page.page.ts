@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { CustomerService, profile } from 'src/app/services/account/customer.service';
 import { EditProfileComponentComponent } from './edit-profile-component/edit-profile-component.component';
 import { PasswordChangeComponentComponent } from './password-change-component/password-change-component.component';
 
@@ -10,10 +12,25 @@ import { PasswordChangeComponentComponent } from './password-change-component/pa
 })
 export class ProfileSubPagePage implements OnInit {
 
-  constructor( private modalctrl: ModalController) { }
+  constructor( private modalctrl: ModalController, private customerService: CustomerService) { }
+
+  public users : Observable<profile[]>;
+
+  user: profile = {
+    email: '',
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    NIC: '',
+    address: '',
+    phone: '',
+  }
 
   ngOnInit() {
+    this.getuser(this.temoryid);
   }
+
+  temoryid: string = "60155dbebcf0056ec421613c";
 
   async editprofilemodal()
   {
@@ -32,6 +49,19 @@ export class ProfileSubPagePage implements OnInit {
   await modal.present();
   }
 
-
-
+  getuser(id: any)
+  {
+    this.customerService.getUser(id).subscribe(profiles => {
+      this.user = 
+      {
+        email: profiles.users.email,
+        firstName: profiles.users.name,
+        middleName: '',
+        lastName: '',
+        NIC: '',
+        address: profiles.users.address,
+        phone: profiles.users.phone,
+      };
+    });
+  }
 }
