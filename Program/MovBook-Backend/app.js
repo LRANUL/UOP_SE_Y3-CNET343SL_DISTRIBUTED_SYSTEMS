@@ -55,7 +55,7 @@ app.use("/api/users", usersRoutes);
 app.use("/api/beverages", beveragesRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
 app.use("/api/booking-history", bookingHistory);
-app.use("/api/omdb/upcoming-movies/", upcomingMovieSearchResults);
+app.use("/api/omdb/upcoming-movies", upcomingMovieSearchResults);
 app.use("/api/managers", managerRoutes);
 app.use("/api/cinema-hall", cinemaHallRoutes);
 
