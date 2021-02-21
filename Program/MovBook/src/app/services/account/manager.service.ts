@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MovieSearchResult } from 'src/app/models/account/manager';
+import { CinemaHall, HallSeatDetails, MovieSearchResult } from 'src/app/models/account/manager';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -18,10 +18,20 @@ export class ManagerService {
   // Retrieve movie search results from the backend according to the entered movie title and (optional) movie release year
   getMovieSearchResults(movieTitle: string, movieReleaseYear: string): Observable<MovieSearchResult> {
     if(movieReleaseYear == ""){
-      return this.httpClient.get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/" + movieTitle);
+      return this.httpClient
+        .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/" + movieTitle);
     }
     else if(movieReleaseYear != ""){
-      return this.httpClient.get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/" + movieTitle + "/" + movieReleaseYear);
+      return this.httpClient
+        .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/" + movieTitle + "/" + movieReleaseYear);
     }
   }
+
+  // Passing new cinema hall details to the backend
+  addNewCinemaHall(cinemaHall: CinemaHall) {
+    return this.httpClient.post(this.BASE_URL + "api/cinema-hall/", cinemaHall);
+  }
+
+  
+
 }

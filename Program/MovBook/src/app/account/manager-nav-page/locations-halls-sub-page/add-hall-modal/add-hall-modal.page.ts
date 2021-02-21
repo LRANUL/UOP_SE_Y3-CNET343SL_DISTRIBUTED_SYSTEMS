@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { HallSeatDetails } from 'src/app/models/account/manager';
+import { ManagerService } from 'src/app/services/account/manager.service';
 import { AssignHallSeatPopoverPage } from '../assign-hall-seat-popover/assign-hall-seat-popover.page';
 
 import { CinemaHallsModalPage } from '../cinema-halls-modal/cinema-halls-modal.page';
@@ -33,7 +34,8 @@ export class AddHallModalPage implements OnInit {
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private alertController: AlertController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private managerService: ManagerService
   ) { }
 
   ngOnInit() {
@@ -179,7 +181,7 @@ export class AddHallModalPage implements OnInit {
 
       }
     }
-    console.log(this.hallSeating);
+    // console.log(this.hallSeating);
   }
 
 
@@ -228,7 +230,9 @@ export class AddHallModalPage implements OnInit {
 
     // Collecting response data when popover is dismissed
     const { data } = await assignHallSeatPopover.onDidDismiss();
-    console.log(data);
+
+    //console.log(data);
+
     // If Condition - checking whether there is data in the response 'data' object
     if(data != null){
       // Updating hall seating according to the modifications
@@ -551,8 +555,79 @@ export class AddHallModalPage implements OnInit {
     }
   }
 
-  addNewHall(form){
+  // Confirm Box Implementation
+  async confirmBoxAddNewHall (title: string, content: string, newCinemaHallForm) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log("Confirm Box: Request denied");
+          }
+        },
+        {
+          text: 'Continue',
+          handler: () => {
+            console.log("Confirm Box: Request accepted");
 
+            // Calling 'addNewHall()' function to add the hall details
+            this.addNewHall(newCinemaHallForm);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // Function - adding new cinema hall details into the database by sending the
+  // details to the server-side
+  addNewHall(newCinemaHallForm){
+
+    // If condition - checking whether the 'hallSeating' array is null or not
+    if(this.hallSeating == null){
+      // Showing error message box
+      this.alertNotice("ERROR", "Create Hall Seating Layout");
+    }
+    else{
+      // Preparing details of new cinema hall, by combining the user entered form 
+      // data and seat details array to an object
+      let newCinemaHallDetails = {
+        hallName: newCinemaHallForm.hallName,
+        noOfRows: newCinemaHallForm.noOfRows,
+        noOfColumns: newCinemaHallForm.noOfColumns,
+        seatingDetails: this.hallSeating
+      }
+
+      // Disabling form submit button until response from server-side is returned
+      this.addNewHallForm.invalid;
+      this.managerService.addNewCinemaHall(newCinemaHallDetails).subscribe((res) => {
+        console.log('Success', res);
+
+        // Showing success message box to user
+        this.alertNotice("Added", "New Cinema Hall Successfully Added");
+
+        alert("New Cinema Hall Successfully Added");
+
+        // Enabling form submit
+        this.addNewHallForm.valid;
+
+        // Closing AddHallModal modal
+        this.closeAddHallModal();
+      }, (error) => {
+        console.log('Error', error);
+
+        // Showing error message box to user
+        this.alertNotice("ERROR", "Unable to add New Cinema Hall");
+
+        alert("Unable to add New Cinema Hall");
+
+        // Enabling form submit
+        this.addNewHallForm.valid;
+      });
+    }
   }
 
 }

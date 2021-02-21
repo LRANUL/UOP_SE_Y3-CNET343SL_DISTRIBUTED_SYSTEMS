@@ -20,11 +20,21 @@ export interface MovieSearchResult {
 }
 
 /**
- * Hall Seating Object
+ * MODEL- Hall Seating
  */
 export interface HallSeatDetails {
   seatId: string;
   seatNumber: string;
   seatActive: Boolean;
   seatUnavailable: Boolean;
+}
+
+/**
+ * MODEL - Cinema Hall 
+ */
+export interface CinemaHall {
+  hallName: string;
+  noOfRows: number;
+  noOfColumns: number;
+  seatingDetails: Array<HallSeatDetails>
 }
