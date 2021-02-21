@@ -1,5 +1,5 @@
 // Importing model to query from the mongoDB database
-const cinemaHallModel = require("../models/cinema-hall");
+const cinemaHallModel = require("../models/cinema-halls");
 
 // Function - Inserting new cinema hall using route, 'BASE_URL/api/cinema-halls/'
 exports.createCinemaHall = async (req, res, next) => {

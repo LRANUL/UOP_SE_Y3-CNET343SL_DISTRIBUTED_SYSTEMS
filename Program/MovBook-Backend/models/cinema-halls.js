@@ -14,4 +14,4 @@ const cinemaHallSchema = mongoose.Schema({
   }]
 })
 
-module.exports = mongoose.model('cinemaHall', cinemaHallSchema); 
+module.exports = mongoose.model('cinemaHalls', cinemaHallSchema); 

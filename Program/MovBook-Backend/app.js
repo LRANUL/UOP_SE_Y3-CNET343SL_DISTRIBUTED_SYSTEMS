@@ -9,8 +9,8 @@ const moviesRoutes = require("./routes/movies");
 const loyaltyRoutes= require("./routes/loyalty");
 const bookingHistory = require("./routes/bookingHistory");
 const managerRoutes = require("./routes/managers");
-const cinemaHallRoutes = require("./routes/cinema-hall");
-const upcomingMovieSearchResults = require("./routes/upcomingMovieSearchResults");
+const cinemaHallRoutes = require("./routes/cinema-halls");
+const upcomingMovieSearchResults = require("./routes/upcoming-movie-search-results");
 
 const app = express();
 
