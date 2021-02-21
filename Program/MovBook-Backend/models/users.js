@@ -8,9 +8,9 @@ const userSchema =mongoose.Schema({ // removed the required in some fields for t
   status: {type : String},
   type: {type : String  },
   address: {type : String},
-  phone: {type : String }
+  phone: {type : Number }
 })
 
 
 userSchema.plugin(uniqueValidator);
-module.exports = mongoose.model('Users',userSchema); 
+module.exports = mongoose.model('User',userSchema); 
