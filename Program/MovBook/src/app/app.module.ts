@@ -14,6 +14,7 @@ import { MovieDetailsModalPageModule } from './account/manager-nav-page/browse-u
 import { MovieCatalogTypesPopoverPageModule } from './account/manager-nav-page/browse-upcoming-movies-sub-page/movie-catalog-types-popover/movie-catalog-types-popover.module';
 import { AddHallModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/add-hall-modal/add-hall-modal.module';
 import { AssignHallSeatPopoverPageModule } from './account/manager-nav-page/locations-halls-sub-page/assign-hall-seat-popover/assign-hall-seat-popover.module';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import { AssignHallSeatPopoverPageModule } from './account/manager-nav-page/loca
       MovieCatalogTypesPopoverPageModule,
       MovieDetailsModalPageModule,
       AddHallModalPageModule,
-      AssignHallSeatPopoverPageModule
+      AssignHallSeatPopoverPageModule,
+      ReactiveFormsModule
   ],
   providers: [
     StatusBar,
