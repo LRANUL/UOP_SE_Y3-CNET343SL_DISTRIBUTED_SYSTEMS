@@ -45,9 +45,11 @@ router.post("/signup",(req , res, next)=>{
         res.status(500).json({ error:err })
       });
 });
+
+
 //get user data with id
-router.get('/:id' ,(req,res,next)=>{
-  Users.findById(req.params.id)
+router.get('/:email' ,(req,res,next)=>{
+  Users.findOne({email: req.params.email})
     .then((data)=>{
       console.log(data);
       if(data)
@@ -67,17 +69,10 @@ router.get('/:id' ,(req,res,next)=>{
     })
 });
 
-//update the user doesn't work
+//update the user 
 router.put('/:id' ,(req,res,next)=>{
-  console.log("dsvsvs");
-  const user = new Users({
-    email: user.email,
-    name: user.Fname, 
-    address: user.Address, 
-    phone: user.Mnumber
-  });
-  console.log("sdvdsvdsv");
-  Users.updateOne({_id: req.params.id}, user).then((data) => {
+  Users.updateOne({email: req.params.id}, {name: req.body.Fname, address: req.body.Address, phone: req.body.Mnumber})
+  .then((data) => {
     console.log(data);
   })
 });

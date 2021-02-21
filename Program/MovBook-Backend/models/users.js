@@ -8,7 +8,7 @@ const userSchema =mongoose.Schema({ // removed the required in some fields for t
   status: {type : String},
   type: {type : String  },
   address: {type : String},
-  phone: {type : Number }
+  phone: {type : String }
 })
 
 

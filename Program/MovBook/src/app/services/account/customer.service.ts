@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 export interface profile{
   id?: string,
@@ -19,6 +20,13 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
+  public updatedBookedtickets:[] = [];
+  private currentBookedtickets = new Subject();
+  
+  gettickets(){
+    return this.currentBookedtickets.asObservable();
+  }
+
 
 getUser(id:string)
 {
@@ -35,6 +43,14 @@ updateuser(value, id)
 getloyality(email:string)
 {
   return this.http.get<{message: string, users}>('http://localhost:5000/api/loyalty/' + email)
+}
+
+getbookinghistory(email: string)
+{
+  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-history/' + email).subscribe(res=>{
+  this.updatedBookedtickets= res.tickets;
+  this.currentBookedtickets.next([...this.updatedBookedtickets]);
+})
 }
 
 }

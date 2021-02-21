@@ -33,7 +33,7 @@ export class EditProfileComponentComponent implements OnInit {
   UAddress;
   Uemail;
 
-  temoryid = "60155dbebcf0056ec421613c";
+  temoryid = "Katherine@movbook.com";
 
   closemodal()
   {
@@ -65,15 +65,6 @@ export class EditProfileComponentComponent implements OnInit {
 
   userupdate()
   {
-    this.profile = {
-    email: this.Uemail,
-    Fname: this.UFname,
-    Mname: this.UMname,
-    Lname: this.UMname,
-    NIC: this.UNIC,
-    Address: this.UAddress,
-    Mnumber: this.UMnumber
-    }
     this.customerService.updateuser(this.profile, this.temoryid);
     this.modalcntrl.dismiss();
   }
