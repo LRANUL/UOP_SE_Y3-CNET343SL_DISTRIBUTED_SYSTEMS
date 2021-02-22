@@ -10,6 +10,7 @@ const loyaltyRoutes= require("./routes/loyalty");
 const bookingHistory = require("./routes/bookingHistory");
 const managerRoutes = require("./routes/managers");
 const cinemaHallRoutes = require("./routes/cinema-halls");
+const cinemaLocationRoutes = require("./routes/cinema-locations");
 const upcomingMovieSearchResults = require("./routes/upcoming-movie-search-results");
 
 const app = express();
@@ -58,5 +59,6 @@ app.use("/api/booking-history", bookingHistory);
 app.use("/api/omdb/upcoming-movies", upcomingMovieSearchResults);
 app.use("/api/managers", managerRoutes);
 app.use("/api/cinema-hall", cinemaHallRoutes);
+app.use("/api/cinema-location", cinemaLocationRoutes);
 
 module.exports = app;
