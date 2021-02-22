@@ -9,17 +9,23 @@ import { NavParams, PopoverController } from '@ionic/angular';
 })
 export class AssignHallSeatPopoverPage implements OnInit {
 
+  // Declaration - FormGroup to handle assignSeatForm Form
   assignSeatForm: FormGroup;
 
+  // Declaration | Initialization - storing passed seatId value
   passedSeatId: string = null;
 
+  // Declaration | Initialization - storing passed seatActive value
   passedSeatActive: boolean = null;
 
+  // Declaration | Initialization - storing passed seatNumber value
   passedSeatNumber: string = null;
 
+  // Declaration | Initialization - storing passed seatUnavailable value
   passedSeatUnavailable: boolean = null;
 
-  responseDate = null;
+  // Declaration | Initialization - storing passed seatActive value
+  responseData = null;
 
   constructor(
     private navParams: NavParams,
@@ -41,6 +47,7 @@ export class AssignHallSeatPopoverPage implements OnInit {
     // Assigning variable with passed 'passingSeatUnavailable'
     this.passedSeatUnavailable = this.navParams.get('passingSeatUnavailable');
 
+    // Assigning form validation
     this.assignSeatForm = this.formBuilder.group({
       seatActive: new FormControl(false, Validators.required),
       seatNumber: new FormControl('', Validators.required),
@@ -61,14 +68,21 @@ export class AssignHallSeatPopoverPage implements OnInit {
 
   }
 
+  // Function - Changing visibility of elements
   enableField(){
 
+    // Retrieving seatNumberInputLabel element
     let seatNumberInputLabelId = document.getElementById("seatNumberInputLabel");
+
+    // Retrieving seatNumberInput element
     let seatNumberInputId = document.getElementById("seatNumberInput");
+
+    // Retrieving seatUnavailableToggle element
     let seatUnavailableToggleId = document.getElementById("seatUnavailableToggle");
 
+    // If condition - checking whether seatActiveToggle is equal to true
     if(this.seatActiveToggle == true){
-    seatNumberInputLabelId.style.display = "block";
+      seatNumberInputLabelId.style.display = "block";
       seatNumberInputId.style.display = "block";
       seatUnavailableToggleId.style.display = "block";
     }
@@ -89,23 +103,25 @@ export class AssignHallSeatPopoverPage implements OnInit {
     this.enableField();
   }
 
-  
-
-
+  // Function - Preparing response data according to the user populated preferences
   assignHallSeatDetails(formValue){
-    this.responseDate = {
+
+    // Assigning user populated preferences
+    this.responseData = {
       seatId: this.passedSeatId,
       seatActive: formValue.seatActive,
       seatNumber: formValue.seatNumber,
       seatUnavailable: formValue.seatUnavailable
     };
 
+    // Closing 'assignHallSeatPopover' popover
     this.closeAssignHallSeatPopover();
 
   }
 
+  // Function - Implementation to close 'closeAssignHallSeatPopover' popover
   async closeAssignHallSeatPopover(){
-    await this.popoverController.dismiss(this.responseDate);
+    await this.popoverController.dismiss(this.responseData);
   }
 
 }

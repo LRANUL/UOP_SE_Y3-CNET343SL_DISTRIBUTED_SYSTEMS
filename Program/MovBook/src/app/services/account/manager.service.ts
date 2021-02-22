@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CinemaHall, HallSeatDetails, MovieSearchResult } from 'src/app/models/account/manager';
+import { 
+  CinemaHall, 
+  CinemaLocation, 
+  MovieSearchResult 
+} from 'src/app/models/account/manager';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -27,11 +31,15 @@ export class ManagerService {
     }
   }
 
-  // Passing new cinema hall details to the backend
-  addNewCinemaHall(cinemaHall: CinemaHall) {
+  // Passing new cinema hall details to the server-side
+  addNewCinemaHall(cinemaHall: CinemaHall){
     return this.httpClient.post(this.BASE_URL + "api/cinema-hall/", cinemaHall);
   }
 
+  // Passing new cinema location details to the server-side
+  addNewCinemaLocation(cinemaLocation: CinemaLocation){
+    return this.httpClient.post(this.BASE_URL + "api/cinema-location", cinemaLocation);
+  }
   
 
 }

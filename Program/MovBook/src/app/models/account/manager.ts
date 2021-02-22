@@ -38,3 +38,13 @@ export interface CinemaHall {
   noOfColumns: number;
   seatingDetails: Array<HallSeatDetails>
 }
+
+/**
+ * MODEL - Cinema Location
+ */
+export interface CinemaLocation {
+  locationName: string;
+  locationAddressStreetAddress: string,
+  locationAddressCity: string,
+  locationAddressPostalCode: number
+}

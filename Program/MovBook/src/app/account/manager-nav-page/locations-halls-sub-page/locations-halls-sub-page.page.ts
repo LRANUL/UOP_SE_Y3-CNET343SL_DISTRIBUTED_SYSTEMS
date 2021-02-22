@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { AddLocationModalPage } from './add-location-modal/add-location-modal.page';
 import { CinemaHallsModalPage } from './cinema-halls-modal/cinema-halls-modal.page';
 
 @Component({
@@ -14,6 +15,17 @@ export class LocationsHallsSubPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  // Implementation for opening the 'Add Location' modal
+  async openAddLocationModal(){
+    const addLocationModal = await this.modalController.create({
+      component: AddLocationModalPage,
+      cssClass: 'add-location-modal',
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    addLocationModal.present();
   }
 
   // Implementation for opening the 'Cinema Locations Modal' modal

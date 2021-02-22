@@ -7,7 +7,7 @@
       shape="round" 
       fill="outline" 
       color="danger" 
-      id="closeAddHallButton">
+      id="closeAddHallModalButton">
       <ion-icon name="close-outline" style="font-size: 30px;"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -134,7 +134,7 @@
                       min-height: 40px;
                       --border-radius: 4px;
                       position: absolute;"
-                [disabled]="!addNewHallForm"
+                [disabled]="!addNewHallForm.valid"
                 type="submit">
             <ion-label>
               <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
@@ -156,8 +156,7 @@
                     --border-radius: 10px;
                     position: absolute;
                     right: 10px;"
-              color="green"
-              [disabled]="!addNewHallForm.valid">
+              color="green">
           <ion-label>
             <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
                                                                                                               margin-left: 0px;" id="visibilityButtonImage"></ion-img>

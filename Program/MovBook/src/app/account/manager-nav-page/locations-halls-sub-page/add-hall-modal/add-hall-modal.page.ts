@@ -603,6 +603,8 @@ export class AddHallModalPage implements OnInit {
 
       // Disabling form submit button until response from server-side is returned
       this.addNewHallForm.invalid;
+
+      // Passing data to the server-side
       this.managerService.addNewCinemaHall(newCinemaHallDetails).subscribe((res) => {
         console.log('Success', res);
 
