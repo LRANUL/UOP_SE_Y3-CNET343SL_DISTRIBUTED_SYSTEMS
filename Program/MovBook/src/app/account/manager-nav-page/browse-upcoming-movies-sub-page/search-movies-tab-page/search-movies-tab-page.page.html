@@ -27,11 +27,8 @@
           </ion-col>
           <ion-col size="3">
             <ion-item>
-              <ion-select value="2021" okText="SELECT" cancelText="DISMISS" formControlName="movieReleaseYear">
-                <ion-select-option value="2021">2021</ion-select-option>
-                <ion-select-option value="2020">2020</ion-select-option>
-                <ion-select-option value="2019">2019</ion-select-option>
-                <ion-select-option value="2018">2018</ion-select-option>
+              <ion-select okText="SELECT" cancelText="DISMISS" formControlName="movieReleaseYear">
+                <ion-select-option *ngFor="let year of movieReleaseYearsArray" value="{{year}}">{{year}}</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>

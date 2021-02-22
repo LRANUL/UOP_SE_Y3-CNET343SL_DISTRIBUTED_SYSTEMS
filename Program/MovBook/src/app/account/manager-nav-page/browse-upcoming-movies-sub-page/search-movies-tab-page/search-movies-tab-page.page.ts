@@ -28,6 +28,9 @@ export class SearchMoviesTabPagePage implements OnInit {
 
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerSearchUpcomingMovies' block
   loadingSpinnerSearchUpcomingMovies: Boolean = false;
+
+  // Declaration | Initialization - to store generate movie release years (fives earlier from current year)
+  movieReleaseYearsArray = new Array();
   
   constructor(
     private managerService: ManagerService,
@@ -44,6 +47,8 @@ export class SearchMoviesTabPagePage implements OnInit {
       movieReleaseYear: new FormControl('')
     });
 
+    this.generateMovieReleaseYears();
+
   }
 
   // Alert Box Implementation
@@ -54,6 +59,25 @@ export class SearchMoviesTabPagePage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+  // Generating five years using current date for 'movieReleaseYear' ion select
+  generateMovieReleaseYears() {
+
+    // Retrieving current date from localhost
+    let currentDate = new Date();
+
+    // Extracting current year from current date
+    let currentYear = currentDate.getFullYear();
+
+    // For loop - iterating through to generate movieReleaseYearsArray values
+    for (let yearDecrementCount = 0; yearDecrementCount < 5; yearDecrementCount++) {
+      
+      // Pushing current year to array with post decrement in each iteration
+      this.movieReleaseYearsArray.push(currentYear--);
+      
+    }
+
   }
 
   // Retrieving movie search results from the backend by passing the enter movie title and movie release data
