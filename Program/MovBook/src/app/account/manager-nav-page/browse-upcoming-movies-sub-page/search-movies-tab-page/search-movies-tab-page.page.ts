@@ -51,7 +51,7 @@ export class SearchMoviesTabPagePage implements OnInit {
 
   }
 
-  // Alert Box Implementation
+  // Function -  Alert Box Implementation
   async alertNotice (title: string, content: string) {
     const alert = await this.alertController.create({
       header: title,
@@ -61,7 +61,7 @@ export class SearchMoviesTabPagePage implements OnInit {
     await alert.present();
   }
 
-  // Generating five years using current date for 'movieReleaseYear' ion select
+  // Function -  Generating five years using current date for 'movieReleaseYear' ion select
   generateMovieReleaseYears() {
 
     // Retrieving current date from localhost
@@ -80,7 +80,21 @@ export class SearchMoviesTabPagePage implements OnInit {
 
   }
 
-  // Retrieving movie search results from the backend by passing the enter movie title and movie release data
+  // Function - Implementation to reset 'search-movies-tab' to initial state
+  resetSearchUpcomingMoviesForm(){
+
+    // Resetting 'searchUpcomingMoviesForm'
+    this.searchUpcomingMoviesForm.reset();
+
+    // Resetting 'noOfResultsFoundText'
+    this.noOfResultsFoundText = null;
+
+    // Resetting 'movieSearchResults'
+    this.movieSearchResults = null;
+
+  }
+
+  // Function - Retrieving movie search results from the backend by passing the enter movie title and movie release data
   getMovieSearchResults(formValue){
 
     // Resetting boolean values to initial state
@@ -144,7 +158,7 @@ export class SearchMoviesTabPagePage implements OnInit {
       });
   }
 
-  // Implementation for opening the 'Movie Details Modal' modal
+  // Function - Implementation for opening the 'Movie Details Modal' modal
   async openMovieDetailsModal(movieId: string){
     const movieDetailsModal = await this.modalController.create({
       component: MovieDetailsModalPage,
@@ -158,7 +172,7 @@ export class SearchMoviesTabPagePage implements OnInit {
     movieDetailsModal.present();
   }
 
-  // Add Movie to Waitlist Alert Box Implementation
+  // Function - Add Movie to Waitlist Alert Box Implementation
   async addMovieToWaitListAlert( title: string, content: string ) {
     const alert = await this.alertController.create({
       header: title,
