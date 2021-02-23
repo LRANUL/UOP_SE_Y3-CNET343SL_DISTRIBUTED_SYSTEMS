@@ -53,18 +53,18 @@ export class LocationsHallsSubPagePage implements OnInit {
     }
   }
 
-  // Function - Implementation for opening the 'Cinema Locations Modal' modal
-  async openCinemaLocationsModal(cinemaLocationId: string){
-    const cinemaLocationsModal = await this.modalController.create({
+  // Function - Implementation for opening the 'Cinema Halls Modal' modal
+  async openCinemaHallsModal(cinemaLocationObjectId: string){
+    const cinemaHallsModal = await this.modalController.create({
       component: CinemaHallsModalPage,
       cssClass: 'cinema-halls-modal',
       componentProps: {
-        passingCinemaLocationId: cinemaLocationId
+        passingCinemaLocationObjectId: cinemaLocationObjectId
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,
     });
-    cinemaLocationsModal.present();
+    cinemaHallsModal.present();
   }
 
   // Function - Retrieving cinema locations from the server-side
@@ -81,7 +81,7 @@ export class LocationsHallsSubPagePage implements OnInit {
 
       // Disabling 'loadingSpinnerCinemaLocations' loading spinner
       this.loadingSpinnerCinemaLocations = false;
-
+      console.log(res);
     });
   }
 

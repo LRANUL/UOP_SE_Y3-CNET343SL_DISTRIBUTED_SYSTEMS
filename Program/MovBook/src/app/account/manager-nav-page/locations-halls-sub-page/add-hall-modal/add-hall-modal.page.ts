@@ -17,8 +17,8 @@ export class AddHallModalPage implements OnInit {
   // Declaration - FormGroup to handle addNewHallForm Form
   addNewHallForm: FormGroup;
   
-  // Declaration | Initialization - int to store passedCinemaLocationId
-  passedCinemaLocationId = null;
+  // Declaration | Initialization - int to store passedCinemaLocationObjectId
+  passedCinemaLocationObjectId = null;
 
   // Declaration | Initialization - string to store and process hallSeatId
   hallSeatId = null;
@@ -39,12 +39,11 @@ export class AddHallModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Assigning variable with passed 'cinemaLocationId'
-    // TODO: Pass cinemaLocationId from parent page
-    this.passedCinemaLocationId = "0000000010";//this.navParams.get('passingCinemaId');
+    // Assigning variable with passed 'passingCinemaLocationObjectId'
+    this.passedCinemaLocationObjectId = this.navParams.get('passingCinemaLocationObjectId');
 
-    // Merging passedCinemaId into hallSeatId
-    this.hallSeatId = this.passedCinemaLocationId;
+    // Merging passedCinemaLocationObjectId into hallSeatId
+    this.hallSeatId = this.passedCinemaLocationObjectId;
 
     // Merging hallId into hallSeatId
     this.hallSeatId = this.hallSeatId + "|" + "0001";
@@ -78,9 +77,6 @@ export class AddHallModalPage implements OnInit {
     const cinemaHallsModal = await this.modalController.create({
       component: CinemaHallsModalPage,
       cssClass: 'cinema-halls-modal',
-      componentProps: {
-        passingCinemaId: this.passedCinemaLocationId
-      },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false
     });
@@ -595,12 +591,13 @@ export class AddHallModalPage implements OnInit {
       // Preparing details of new cinema hall, by combining the user entered form 
       // data and seat details array to an object
       let newCinemaHallDetails = {
+        cinemaLocationObjectId: this.passedCinemaLocationObjectId,
         hallName: newCinemaHallForm.hallName,
         noOfRows: newCinemaHallForm.noOfRows,
         noOfColumns: newCinemaHallForm.noOfColumns,
         seatingDetails: this.hallSeating
       }
-
+      console.log(newCinemaHallDetails);
       // Disabling form submit button until response from server-side is returned
       this.addNewHallForm.invalid;
 

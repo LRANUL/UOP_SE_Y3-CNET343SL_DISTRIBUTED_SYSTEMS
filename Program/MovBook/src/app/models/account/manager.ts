@@ -33,10 +33,11 @@ export interface HallSeatDetails {
  * MODEL - Cinema Hall 
  */
 export interface CinemaHall {
+  cinemaLocationObjectId: string;
   hallName: string;
   noOfRows: number;
   noOfColumns: number;
-  seatingDetails: Array<HallSeatDetails>
+  seatingDetails: Array<HallSeatDetails>;
 }
 
 /**
@@ -44,7 +45,7 @@ export interface CinemaHall {
  */
 export interface CinemaLocation {
   locationName: string;
-  locationAddressStreetAddress: string,
-  locationAddressCity: string,
-  locationAddressPostalCode: number
+  locationAddressStreetAddress: string;
+  locationAddressCity: string;
+  locationAddressPostalCode: number;
 }

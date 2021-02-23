@@ -9,8 +9,8 @@ import { AddHallModalPage } from '../add-hall-modal/add-hall-modal.page';
 })
 export class CinemaHallsModalPage implements OnInit {
 
-  // Declaration | Initialization - storing passed cinemaLocationId value
-  passedCinemaLocationId = null;
+  // Declaration | Initialization - storing passed cinemaLocationObjectId value
+  passedCinemaLocationObjectId = null;
 
   constructor(
     private navParams: NavParams,
@@ -18,8 +18,8 @@ export class CinemaHallsModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Assigning variable with passed 'cinemaLocationId'
-    this.passedCinemaLocationId = this.navParams.get('passingCinemaLocationId');
+    // Assigning variable with passed 'passingCinemaLocationObjectId'
+    this.passedCinemaLocationObjectId = this.navParams.get('passingCinemaLocationObjectId');
   }
 
   // Function - Implementation to close 'Cinema Halls' modal
@@ -34,12 +34,19 @@ export class CinemaHallsModalPage implements OnInit {
       component: AddHallModalPage,
       cssClass: 'cinema-halls-modal',
       componentProps: {
-        passedCinemaLocationId: this.passedCinemaLocationId
+        passingCinemaLocationObjectId: this.passedCinemaLocationObjectId
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,
     });
     addHallModal.present();
+  }
+
+  // Function - Retrieving cinema hall details
+  retrieveCinemaHallDetails(){
+
+
+
   }
 
 }

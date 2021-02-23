@@ -115,12 +115,10 @@
                                   <h2>No of Halls: <b>2</b></h2>
                                 </ion-label>
                               </ion-row>
-                              <ion-row style="position: absolute;
-                                              bottom: 0px;">
+                              <ion-row style="margin-top: 5%;">
                                 <ion-button expand="block" 
-                                      (click)="openCinemaLocationsModal()"
-                                      type="submit" 
-                                      style="max-width: 100%;
+                                      (click)="openCinemaHallsModal(cinemaLocation._id)"
+                                      style="min-width: 100%;
                                             --border-radius: 10px;"
                                       color="green">
                                   <ion-label>
@@ -131,6 +129,30 @@
                                     VIEW CINEMA HALLS
                                   </ion-label>
                                 </ion-button>
+                              </ion-row>
+                              <ion-row>
+                                <ion-col size="6">
+                                  <ion-button expand="block" 
+                                    (click)="openCinemaHallsModal()"
+                                    style="min-width: 100%;
+                                          --border-radius: 10px;"
+                                    color="medium">
+                                    <ion-label>
+                                      EDIT LOCATION
+                                    </ion-label>
+                                  </ion-button>
+                                </ion-col>
+                                <ion-col size="6">
+                                  <ion-button expand="block" 
+                                    (click)="openCinemaHallsModal()"
+                                    style="min-width: 100%;
+                                          --border-radius: 10px;"
+                                    color="warning">
+                                    <ion-label>
+                                      REMOVE LOCATION
+                                    </ion-label>
+                                  </ion-button>
+                                </ion-col>
                               </ion-row>
                             </ion-col>
                           </ion-row>
