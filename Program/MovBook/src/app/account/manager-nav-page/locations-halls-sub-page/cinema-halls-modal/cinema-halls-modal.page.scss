@@ -1,3 +1,32 @@
 #closeCinemaHallsButton{
   margin-right: 20px;
 }
+
+.seatingGridTableTableData{
+  padding-right: 10px;
+}
+
+.seatingGridTableOuterDiv{
+  border: 2px solid #ffffff;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+.seatingGridTableOuterDivP{
+  text-align: center;
+}
+
+.seatingGridTableInnerDiv{
+  background-color: #7A7E7B;
+  color: #ffffff;
+  border-radius: 5px;
+  width: 35px;
+  height: 30px;
+}
+
+.seatingGridTableInnerDivP{
+  text-align: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
