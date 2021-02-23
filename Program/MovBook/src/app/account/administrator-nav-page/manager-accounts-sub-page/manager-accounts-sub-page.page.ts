@@ -51,7 +51,6 @@ export class ManagerAccountsSubPagePage implements OnInit,OnDestroy {
       }
     );
 
-    
     //pass the data to the list
       this.employeeService.getManagerDetails();
       this.managerSubscription = this.employeeService.getListner().subscribe((res:[])=>{

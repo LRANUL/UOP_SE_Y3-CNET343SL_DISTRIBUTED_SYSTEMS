@@ -4,7 +4,7 @@
       <ion-col size="auto">
         <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
         <div class="profilePhoto">
-          <img src="assets\images\admin.png" style="border-radius: 50px; width: 150px; height: 150px" />
+          <img src="assets\images\account\admin\admin.png" style="border-radius: 50px; width: 150px; height: 150px" />
           <span class="onlineStatus"></span>
           <!-- Replace with {{Name}} and {{email}} plus add a online button-->
           <h4>{{name_admin}}</h4>
@@ -31,17 +31,12 @@
         </ion-row>
 
         <ion-row style="height: 150px;">
-          <!--
-          <ion-card *ngFor="let movie of Movies" style="width: 250px;height: 500px;">
-            <ion-img src='{{movie.imgUrl}}'></ion-img>
-            <ion-card-title>{{movie.title}}</ion-card-title>
-            <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
-            <ion-card-content>
-              <p>Rating: {{movie.rating}}⭐</p>
-              <p>{{movie.description}}</p>
-            </ion-card-content>
+          
+          <ion-card *ngIf="chart" style="width: 800px;background-color: rgb(180, 180, 180);">
+            <canvas id="canvas">{{ chart }}</canvas>
+            
           </ion-card>
-          -->
+          
         </ion-row>
 
         <ion-row>
@@ -54,17 +49,11 @@
         </ion-row>
 
         <ion-row style="height: 150px;">
-          <!--
-          <ion-card *ngFor="let movie of Movies" style="width: 250px;height: 500px;">
-            <ion-img src='{{movie.imgUrl}}'></ion-img>
-            <ion-card-title>{{movie.title}}</ion-card-title>
-            <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
-            <ion-card-content>
-              <p>Rating: {{movie.rating}}⭐</p>
-              <p>{{movie.description}}</p>
-            </ion-card-content>
+          <ion-card *ngIf="chart" style="width: 800px; background-color: rgb(180, 180, 180);">
+            <canvas id="canvas">{{ chart }}</canvas>
+            
           </ion-card>
--->
+
         </ion-row>
 
         <ion-row>
@@ -77,7 +66,10 @@
         
 
         <ion-row style="height: 150px;">
-               <h6 style="color:black">something something</h6>
+          <ion-card *ngIf="chart" style="width: 800px;background-color: rgb(180, 180, 180);">
+            <canvas id="canvas">{{ chart }}</canvas>
+            
+          </ion-card>
         </ion-row>
 
       </ion-col>

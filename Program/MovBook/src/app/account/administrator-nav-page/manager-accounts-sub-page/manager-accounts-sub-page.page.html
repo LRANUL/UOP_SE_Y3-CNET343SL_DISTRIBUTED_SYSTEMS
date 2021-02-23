@@ -4,7 +4,7 @@
       <ion-col size="auto">
         <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
         <div class="profilePhoto">
-          <img src="assets\images\admin.png" style="border-radius: 50px; width: 150px; height: 150px" />
+          <img src="assets\images\account\admin\admin.png" style="border-radius: 50px; width: 150px; height: 150px" />
           <span class="onlineStatus"></span>
 
           <h4>{{name_admin}}</h4>
@@ -48,14 +48,7 @@
                         <ion-input name="password" type="password" placeholder="Password" #password="ngModel" ngModel>
                         </ion-input>
                       </ion-item>
-                      <ion-item>
-                        <ion-input name="status" type="text" placeholder="Status" #status="ngModel" ngModel>
-                        </ion-input>
-                      </ion-item>
-                      <ion-item>
-                        <ion-input name="type" type="text" placeholder="Type" #type="ngModel" ngModel>
-                        </ion-input>
-                      </ion-item>
+                      
                       <ion-item>
                         <ion-input name="phone" type="text" placeholder="Phone No" #phone="ngModel" ngModel></ion-input>
                       </ion-item>
@@ -90,18 +83,16 @@
           
             
                 
-                <img src="assets\images\admin.png"
+                <img src="assets\images\account\admin\manager.png"
                   style="border-radius: 50px; width: 100px; height: 100px;float: right; margin-right: 30px; margin-top: 40px;">
 
                 <h6 style="color: black">ID : {{admin_details._id}}</h6>
                 <h6 style="color: black">Name : {{ admin_details.name }}</h6>
                 <h6 style="color: black">Email : {{ admin_details.email }}</h6>
-                <h6 style="color: black">Status : {{ admin_details.status }}</h6>
-                <h6 style="color: black">Type : {{ admin_details.type }}</h6>
                 <h6 style="color: black">Phone : {{ admin_details.phone }}</h6>
                 <h6 style="color: black">Address : {{ admin_details.address }}</h6>
               
-                <a [routerLink]="['/administrator-nav-page/settings-sub-page']"> Update Details</a>
+                <ion-button><a [routerLink]="['/administrator/settings-sub-page']"> Update Details</a></ion-button>
                 
                 <ion-button (click)='deleteManagerHTML(admin_details._id)'> Delete Manager </ion-button>
 
