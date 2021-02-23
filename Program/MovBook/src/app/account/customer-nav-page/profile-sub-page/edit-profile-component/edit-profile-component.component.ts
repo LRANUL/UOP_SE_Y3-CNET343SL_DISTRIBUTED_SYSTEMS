@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { CustomerService } from 'src/app/services/account/customer.service';
 
 @Component({
   selector: 'app-edit-profile-component',
@@ -8,11 +9,13 @@ import { ModalController } from '@ionic/angular';
 })
 export class EditProfileComponentComponent implements OnInit {
 
-  constructor(private modalcntrl: ModalController) { }
+  constructor(private modalcntrl: ModalController, private customerService: CustomerService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getuser(this.temoryid);
+  }
 
-  profile = {
+    profile = {
     Fname :'',
     Mname: '',
     Lname: '',
@@ -21,6 +24,16 @@ export class EditProfileComponentComponent implements OnInit {
     Address: '',
     email: ''
   };
+
+  UFname;
+  UMname;
+  ULname;
+  UMnumber;
+  UNIC;
+  UAddress;
+  Uemail;
+
+  temoryid = "Katherine@movbook.com";
 
   closemodal()
   {
@@ -34,9 +47,25 @@ export class EditProfileComponentComponent implements OnInit {
     this.modalcntrl.dismiss();
   }
 
+  getuser(id: string)
+  {
+    this.customerService.getUser(id).subscribe(profiles => {
+      this.profile = 
+      {
+        email: profiles.users.email,
+        Fname: profiles.users.name,
+        Mname: '',
+        Lname: '',
+        NIC: '',
+        Address: profiles.users.address,
+        Mnumber: profiles.users.phone
+      };
+    });
+  }
+
   userupdate()
   {
-   console.log(this.profile.Fname, this.profile.Mname, this.profile.Lname, this.profile.NIC);
+    this.customerService.updateuser(this.profile, this.temoryid);
     this.modalcntrl.dismiss();
   }
 

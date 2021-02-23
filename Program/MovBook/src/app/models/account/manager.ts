@@ -18,3 +18,33 @@ export interface MovieSearchResult {
   ];
   totalResults: string;
 }
+
+/**
+ * MODEL- Hall Seating
+ */
+export interface HallSeatDetails {
+  seatId: string;
+  seatNumber: string;
+  seatActive: Boolean;
+  seatUnavailable: Boolean;
+}
+
+/**
+ * MODEL - Cinema Hall 
+ */
+export interface CinemaHall {
+  hallName: string;
+  noOfRows: number;
+  noOfColumns: number;
+  seatingDetails: Array<HallSeatDetails>
+}
+
+/**
+ * MODEL - Cinema Location
+ */
+export interface CinemaLocation {
+  locationName: string;
+  locationAddressStreetAddress: string,
+  locationAddressCity: string,
+  locationAddressPostalCode: number
+}

@@ -1,5 +1,5 @@
 <ion-list style="min-width: 240px;">
-  <form [formGroup]="assignSeatForm" (ngSubmit)="assignHallSeat(assignSeatForm.value)">
+  <form [formGroup]="assignSeatForm" (ngSubmit)="assignHallSeatDetails(assignSeatForm.value)">
     <ion-item>
       <ion-grid>
         <ion-row>
@@ -23,26 +23,26 @@
         <ion-row>
           <ion-item style="min-width: 100%;">
             <ion-label>Seat Active</ion-label>
-            <ion-toggle slot="end" color="success" formControlName="seatActive"></ion-toggle>
+            <ion-toggle slot="end" color="success" id="seatActiveToggle" formControlName="seatActive" (ionChange)="setSeatActiveToggle($event.detail.checked)"></ion-toggle>
           </ion-item>
         </ion-row>
         <ion-row>
           <ion-col>
             <ion-label style="position: absolute;
                               top: 50%;
-                              transform: translateY(-50%);">
+                              transform: translateY(-50%);" id="seatNumberInputLabel">
               Seat Number: 
             </ion-label>
           </ion-col>
           <ion-col>
-            <ion-item id="seatNumber">
+            <ion-item id="seatNumberInput">
               <ion-input type="text" clearInput formControlName="seatNumber"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-item style="min-width: 100%;">
+            <ion-item style="min-width: 100%;" id="seatUnavailableToggle">
               <ion-label>Seat Unavailable</ion-label>
               <ion-toggle slot="end" color="danger" formControlName="seatUnavailable"></ion-toggle>
             </ion-item>

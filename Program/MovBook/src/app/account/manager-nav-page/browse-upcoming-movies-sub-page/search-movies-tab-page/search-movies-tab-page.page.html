@@ -27,11 +27,8 @@
           </ion-col>
           <ion-col size="3">
             <ion-item>
-              <ion-select value="2021" okText="SELECT" cancelText="DISMISS" formControlName="movieReleaseYear">
-                <ion-select-option value="2021">2021</ion-select-option>
-                <ion-select-option value="2020">2020</ion-select-option>
-                <ion-select-option value="2019">2019</ion-select-option>
-                <ion-select-option value="2018">2018</ion-select-option>
+              <ion-select okText="SELECT" cancelText="DISMISS" formControlName="movieReleaseYear">
+                <ion-select-option *ngFor="let year of movieReleaseYearsArray" value="{{year}}">{{year}}</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>
@@ -53,6 +50,17 @@
     </form>
   </div>
 
+  <!-- RESET BUTTON -->
+  <div style="position: absolute;
+              top: 10px;
+              right: 10px;">
+    <ion-button color="green" fill="outline" size="small" style="--border-radius: 20px;
+                                                                min-height: 45px;
+                                                                min-width: 120px;" (click)="resetSearchUpcomingMoviesForm()">
+      RESET
+    </ion-button>
+  </div>
+
   <!-- MOVIE SEARCH RESULTS CONTAINER -->
   <div>
     <ion-card style="height: 700px;
@@ -72,9 +80,38 @@
                           letter-spacing: 1px;
                           position: absolute;
                           top: 25px;
-                          left: 20%;">
+                          left: 20%;" *ngIf="noOfResultsFoundText">
           <b>{{ movieSearchResults?.totalResults }}</b> results found
         </ion-label>
+
+        <!-- Loading Spinner -->
+        <ion-spinner name="dots" style="height: 100px;
+                                        width: 100px;
+                                        position: absolute;
+                                        left: 50%;
+                                        top: 50%;
+                                        transform: translate(-50%,-50%);
+                                        margin-top: 20px;" *ngIf="loadingSpinnerSearchUpcomingMovies"></ion-spinner>
+
+        <!-- No available movie text message if no movie are available -->
+        <div style="border: 2px solid #ccc;
+                    width: 30%;
+                    height: 40px;
+                    border-radius: 10px;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%,-50%);" *ngIf="noAvailableMovieText">
+          <ion-label style="position: absolute;
+                            left: 50%;
+                            top: 50%;
+                            transform: translate(-50%,-50%);
+                            font-size: 19px;
+                            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                            color: #000000;">
+            No Available Movie(s)
+          </ion-label>
+        </div>
 
         <!-- SEARCH RESULT CARDS CONTAINER -->
         <div style="padding-top: 10px;">
@@ -98,8 +135,31 @@
                                     position: relative;
                                     left: 50%;
                                     transform: translateX(-50%);">
-                                  <ion-img src="{{ movie?.Poster }}" style="width: 100%; 
-                                                                            height: 100%;"></ion-img>
+
+                                  <!-- Checking whether the returned movie details does not have a cover image -->
+                                  <ng-template *ngIf="movie?.Poster == 'N/A';then showCustomBlock; else showCoverImage">
+                                  </ng-template>
+
+                                  <!-- If there is no cover image available - display 'No Cover Image Available' text block -->
+                                  <ng-template #showCustomBlock>
+                                    <div style="width: 100%;
+                                                height: 100%;
+                                                background-color: #f0f0f0">
+                                      <p style="text-align: center;
+                                                font-size: 22px;
+                                                position: relative;
+                                                top: 50%;
+                                                transform: translateY(-50%);
+                                                color: #414141;">No Cover Image Available</p>
+                                    </div>
+                                  </ng-template>
+                                  
+                                  <!-- If there is a cover image available - display returned cover image -->
+                                  <ng-template #showCoverImage>
+                                    <ion-img src="{{ movie?.Poster }}" style="width: 100%; 
+                                                                              height: 100%;"></ion-img>
+                                  </ng-template>
+
                                 </div>
                               </ion-col>
                               <ion-col>

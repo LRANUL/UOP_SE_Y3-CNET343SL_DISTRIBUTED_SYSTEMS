@@ -37,6 +37,7 @@ ion-button{
     --background: #2e8ded;
 }
 
+/* Declaring new color variable */
 :root {
     --ion-color-green: #009595;
     --ion-color-green-rgb: 0,149,149;
@@ -46,6 +47,7 @@ ion-button{
     --ion-color-green-tint: #1aa0a0;
 }
 
+/* Declaring new color variable */
 .ion-color-green {
     --ion-color-base: var(--ion-color-green);
     --ion-color-base-rgb: var(--ion-color-green-rgb);
@@ -62,6 +64,7 @@ ion-button{
     display: block;  
  }
 
+/* CSS styles for cinema halls modal */
 .cinema-halls-modal .modal-wrapper {
     height: 80%;
     width: 60%;
@@ -69,3 +72,13 @@ ion-button{
     position: absolute; 
     display: block;  
 }
+
+/* CSS styles for add cinema locations modal */
+.add-location-modal .modal-wrapper {
+    height: 50%;
+    width: 40%;
+    top: 10%;
+    position: absolute;
+    display: block;
+}
+

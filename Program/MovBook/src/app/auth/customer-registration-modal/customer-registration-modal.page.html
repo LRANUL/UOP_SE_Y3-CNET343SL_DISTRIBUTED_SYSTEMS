@@ -1,9 +1,64 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>customer-registration-modal</ion-title>
+    <ion-title>Registration</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onAddUser()">Submit 
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <form [formGroup]="userform" (submit)="onAddUser()"  *ngIf="!isLoading">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label>E-mail</ion-label>
+            <ion-input type="email" formControlName="email" autocomplete></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label>Password</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label>Re-Enter Password</ion-label>
+            <ion-input type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label>Address</ion-label>
+            <ion-input type="text" formControlName="address"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label>Phone No</ion-label>
+            <ion-input type="number" formControlName="phone"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
