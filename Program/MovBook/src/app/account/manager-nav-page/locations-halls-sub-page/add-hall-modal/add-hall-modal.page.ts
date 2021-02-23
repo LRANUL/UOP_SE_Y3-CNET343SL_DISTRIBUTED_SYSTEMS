@@ -17,8 +17,8 @@ export class AddHallModalPage implements OnInit {
   // Declaration - FormGroup to handle addNewHallForm Form
   addNewHallForm: FormGroup;
   
-  // Declaration | Initialization - int to store passedCinemaId
-  passedCinemaId = null;
+  // Declaration | Initialization - int to store passedCinemaLocationId
+  passedCinemaLocationId = null;
 
   // Declaration | Initialization - string to store and process hallSeatId
   hallSeatId = null;
@@ -39,12 +39,12 @@ export class AddHallModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Assigning variable with passed 'cinemaId'
-    // TODO: Pass cinemaId from parent page
-    this.passedCinemaId = "0000000010";//this.navParams.get('passingCinemaId');
+    // Assigning variable with passed 'cinemaLocationId'
+    // TODO: Pass cinemaLocationId from parent page
+    this.passedCinemaLocationId = "0000000010";//this.navParams.get('passingCinemaId');
 
     // Merging passedCinemaId into hallSeatId
-    this.hallSeatId = this.passedCinemaId;
+    this.hallSeatId = this.passedCinemaLocationId;
 
     // Merging hallId into hallSeatId
     this.hallSeatId = this.hallSeatId + "|" + "0001";
@@ -79,7 +79,7 @@ export class AddHallModalPage implements OnInit {
       component: CinemaHallsModalPage,
       cssClass: 'cinema-halls-modal',
       componentProps: {
-        passingCinemaId: this.passedCinemaId
+        passingCinemaId: this.passedCinemaLocationId
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false

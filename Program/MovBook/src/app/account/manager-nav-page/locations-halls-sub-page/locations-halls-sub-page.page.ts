@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { CinemaLocation } from 'src/app/models/account/manager';
+import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddLocationModalPage } from './add-location-modal/add-location-modal.page';
 import { CinemaHallsModalPage } from './cinema-halls-modal/cinema-halls-modal.page';
 
@@ -10,14 +12,25 @@ import { CinemaHallsModalPage } from './cinema-halls-modal/cinema-halls-modal.pa
 })
 export class LocationsHallsSubPagePage implements OnInit {
 
+  // Declaration - stores list of cinema locations
+  cinemaLocationList = [];
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerCinemaLocations' block
+  loadingSpinnerCinemaLocations: Boolean = false;
+
   constructor(
-    private modalController: ModalController
+    private modalController: ModalController,
+    private managerService: ManagerService
   ) { }
 
   ngOnInit() {
+
+    // Retrieving list of cinema locations upon page load
+    this.retrieveCinemaLocations();
+
   }
 
-  // Implementation for opening the 'Add Location' modal
+  // Function - Implementation for opening the 'Add Location' modal
   async openAddLocationModal(){
     const addLocationModal = await this.modalController.create({
       component: AddLocationModalPage,
@@ -26,9 +39,21 @@ export class LocationsHallsSubPagePage implements OnInit {
       backdropDismiss: false,
     });
     addLocationModal.present();
+
+    // Collecting response data when modal is dismissed
+    const { data } = await addLocationModal.onDidDismiss();
+
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        // Retrieving updated list of cinema locations
+        this.retrieveCinemaLocations();
+      }
+    }
   }
 
-  // Implementation for opening the 'Cinema Locations Modal' modal
+  // Function - Implementation for opening the 'Cinema Locations Modal' modal
   async openCinemaLocationsModal(cinemaLocationId: string){
     const cinemaLocationsModal = await this.modalController.create({
       component: CinemaHallsModalPage,
@@ -40,6 +65,24 @@ export class LocationsHallsSubPagePage implements OnInit {
       backdropDismiss: false,
     });
     cinemaLocationsModal.present();
+  }
+
+  // Function - Retrieving cinema locations from the server-side
+  retrieveCinemaLocations(){
+
+    // Activating 'loadingSpinnerCinemaLocations' loading spinner
+    this.loadingSpinnerCinemaLocations = true;
+
+    // Retrieving list of cinema locations
+    this.managerService.retrieveCinemaLocations().subscribe((res) => {
+
+      // Assigning retrieved list of cinema locations to 'cinemaLocationList' array
+      this.cinemaLocationList = res as CinemaLocation[];
+
+      // Disabling 'loadingSpinnerCinemaLocations' loading spinner
+      this.loadingSpinnerCinemaLocations = false;
+
+    });
   }
 
 }

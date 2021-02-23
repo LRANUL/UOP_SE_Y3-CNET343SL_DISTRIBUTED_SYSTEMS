@@ -29,3 +29,8 @@ exports.createCinemaLocation = async (req, res, next) => {
   })
 };
 
+// Function - Retrieving list of cinema locations using route, 'BASE_URL/api/cinema-locations'
+exports.retrieveListCinemaLocations = async (req, res, next) => {
+  const cinemaLocationDocuments = await cinemaLocationModel.find();
+  res.json(cinemaLocationDocuments);
+};

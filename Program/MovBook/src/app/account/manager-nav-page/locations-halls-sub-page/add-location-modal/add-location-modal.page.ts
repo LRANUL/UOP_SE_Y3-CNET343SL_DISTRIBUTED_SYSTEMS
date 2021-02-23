@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
+import { CinemaLocation } from 'src/app/models/account/manager';
 import { ManagerService } from 'src/app/services/account/manager.service';
 
 @Component({
@@ -10,9 +11,12 @@ import { ManagerService } from 'src/app/services/account/manager.service';
 })
 export class AddLocationModalPage implements OnInit {
 
-  // Declaration - FormGroup to handle addNewLocationForm Form
+  // Declaration - FormGroup to handle addNewLocationForm form
   addNewLocationForm: FormGroup;
   
+  // Declaration | Initialization - Stores status of adding new cinema location details
+  addNewCinemaLocationStatus: Boolean = false;
+
   constructor(
     private modalController: ModalController,
     private formBuilder: FormBuilder,
@@ -32,9 +36,10 @@ export class AddLocationModalPage implements OnInit {
     
   }
 
-  // Implementation to close 'Add Location' modal
+  // Implementation to close 'Add Location' modal and pass latest list of cinema locations back
   async closeAddLocationModal(){
-    await this.modalController.dismiss();
+    console.log(this.addNewCinemaLocationStatus);
+    await this.modalController.dismiss(this.addNewCinemaLocationStatus);
   }
 
   // Alert Box Implementation
@@ -56,6 +61,9 @@ export class AddLocationModalPage implements OnInit {
     this.managerService.addNewCinemaLocation(locationDetailsFormValue).subscribe((res) => {
       console.log('Success', res);
 
+      // Updating 'addNewCinemaLocationStatus' to true
+      this.addNewCinemaLocationStatus = true;
+
       // Showing success message box to user
       this.alertNotice("Added", "New Cinema Location Successfully Added");
 
@@ -64,13 +72,14 @@ export class AddLocationModalPage implements OnInit {
       // Enabling form submit
       this.addNewLocationForm.valid;
 
-      // TODO: Reload cinema locations list
-
       // Closing AddLocationModal modal
-      //this.closeAddLocationModal();
+      this.closeAddLocationModal();
 
     }, (error) => {
       console.log('Error', error);
+
+      // Updating 'addNewCinemaLocationStatus' to false
+      this.addNewCinemaLocationStatus = false;
 
       // Showing error message box to user
       this.alertNotice("ERROR", "Unable to add New Cinema Location");
