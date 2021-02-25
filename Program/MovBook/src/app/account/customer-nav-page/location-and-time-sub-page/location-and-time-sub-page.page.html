@@ -10,7 +10,7 @@
           <ion-row>
             <ion-col>
               <ion-item>
-                <ion-select placeholder="All Locations">
+                <ion-select placeholder="All Locations" [(ngModel)]="location" (ionChange)="getlocation()">
                   <ion-select-option value="Colombo">Colombo</ion-select-option>
                   <ion-select-option value="Panadura">Panadura</ion-select-option>
                 </ion-select>
@@ -18,25 +18,15 @@
             </ion-col>
             <ion-col>
               <ion-item>
-                <ion-select placeholder="Today">
-                  <ion-select-option value="Colombo">Colombo</ion-select-option>
-                  <ion-select-option value="Panadura">Panadura</ion-select-option>
-                </ion-select>
+                 <ion-datetime displayFormat="MM/DD/YYYY" placeholder="Today: {{todayDate}}" (ionChange)="getTime()" [(ngModel)]="date"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
-                <ion-select placeholder="Movie">
-                  <ion-select-option value="Colombo">Colombo</ion-select-option>
-                  <ion-select-option value="Panadura">Panadura</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-select placeholder="Experience">
-                  <ion-select-option value="Colombo">Colombo</ion-select-option>
-                  <ion-select-option value="Panadura">Panadura</ion-select-option>
+                <ion-select placeholder="All Experiences" [(ngModel)]="experience" (ionChange)="getexperience()">
+                  <ion-select-option value="Gold" >Gold Class</ion-select-option>
+                  <ion-select-option value="3D">3D Experience </ion-select-option>
+                  <ion-select-option value="2D">2D Experience </ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>
@@ -54,13 +44,13 @@
                 </ion-header>
               </ion-col>
               <ion-col>
-              <div>
+              <div >
                 <ion-header>
                   <ion-card-title>Cinema Location</ion-card-title>
                 </ion-header>
                 <div>
                   <ion-card-header>
-                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece</ion-card-subtitle>
+                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece:{{showingMovies.showingExperience}}</ion-card-subtitle>
                   </ion-card-header>
                   <ion-card-content>
                     <ion-grid>

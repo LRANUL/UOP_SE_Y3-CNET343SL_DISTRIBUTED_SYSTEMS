@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { CustomerService, profile } from 'src/app/services/account/customer.service';
+import { profile } from 'src/app/models/account/customers';
+import { CustomerService} from 'src/app/services/account/customer.service';
 import { EditProfileComponentComponent } from './edit-profile-component/edit-profile-component.component';
 import { PasswordChangeComponentComponent } from './password-change-component/password-change-component.component';
 

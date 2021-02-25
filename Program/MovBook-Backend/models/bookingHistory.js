@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const beverageSchema =mongoose.Schema({
+const bookingHistorySchema =mongoose.Schema({
   userEmail: {type : String, required:true },
   movieName: {type : String, required:true },
   imgUrl: {type : String, required:true },
@@ -12,4 +12,4 @@ const beverageSchema =mongoose.Schema({
   totalCost: {type : Number, required:true }
 })
 
-module.exports = mongoose.model('bookings',beverageSchema); 
+module.exports = mongoose.model('bookings',bookingHistorySchema); 

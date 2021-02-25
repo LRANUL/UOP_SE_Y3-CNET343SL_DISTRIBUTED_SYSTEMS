@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema =mongoose.Schema({
+const loyaltySchema =mongoose.Schema({
   email: {type : String, required:true },
   pointsAvailable: {type : Number, required:true },
   totalPoints: {type : Number, required:true },
@@ -8,4 +8,4 @@ const userSchema =mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('loyalty',userSchema); 
+module.exports = mongoose.model('loyalty',loyaltySchema); 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { CustomerService } from 'src/app/services/account/customer.service';
 
@@ -9,7 +10,7 @@ import { CustomerService } from 'src/app/services/account/customer.service';
 })
 export class EditProfileComponentComponent implements OnInit {
 
-  constructor(private modalcntrl: ModalController, private customerService: CustomerService) { }
+  constructor(private modalcntrl: ModalController, private customerService: CustomerService, private route: Router) { }
 
   ngOnInit() {
     this.getuser(this.temoryid);
