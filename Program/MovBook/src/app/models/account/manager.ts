@@ -24,6 +24,7 @@ export interface MovieSearchResult {
  */
 export interface HallSeatDetails {
   seatId: string;
+  seatAllocatedPositionNo: string;
   seatNumber: string;
   seatActive: Boolean;
   seatUnavailable: Boolean;

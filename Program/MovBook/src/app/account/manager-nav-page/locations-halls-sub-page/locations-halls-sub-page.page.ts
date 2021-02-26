@@ -81,7 +81,7 @@ export class LocationsHallsSubPagePage implements OnInit {
 
       // Disabling 'loadingSpinnerCinemaLocations' loading spinner
       this.loadingSpinnerCinemaLocations = false;
-      console.log(res);
+
     });
   }
 

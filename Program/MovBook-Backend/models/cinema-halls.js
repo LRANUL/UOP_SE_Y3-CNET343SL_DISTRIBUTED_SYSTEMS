@@ -9,6 +9,7 @@ const cinemaHallSchema = mongoose.Schema({
   seatingGridNoOfColumns: {type : Number, required:true},
   seatingDetails: [{
     seatId: {type : String, required:true},
+    seatAllocatedPositionNo: {type : String, require:true},
     seatActive: {type : Boolean, required:true},
     seatNumber: {type : String, required:true},
     seatUnavailable: {type : Boolean, required:true}

@@ -37,7 +37,7 @@ ion-button{
     --background: #2e8ded;
 }
 
-/* Declaring new color variable */
+/* Declaring new color variable - green | #009595 */
 :root {
     --ion-color-green: #009595;
     --ion-color-green-rgb: 0,149,149;
@@ -47,7 +47,7 @@ ion-button{
     --ion-color-green-tint: #1aa0a0;
 }
 
-/* Declaring new color variable */
+/* Declaring new color variable - green | #009595 */
 .ion-color-green {
     --ion-color-base: var(--ion-color-green);
     --ion-color-base-rgb: var(--ion-color-green-rgb);
@@ -55,7 +55,27 @@ ion-button{
     --ion-color-contrast-rgb: var(--ion-color-green-contrast-rgb);
     --ion-color-shade: var(--ion-color-green-shade);
     --ion-color-tint: var(--ion-color-green-tint);
-  }
+}
+
+/* Declaring new color variable - dark-blue | #335470 */
+:root {
+    --ion-color-dark-blue: #335470;
+    --ion-color-dark-blue-rgb: 51,84,112;
+    --ion-color-dark-blue-contrast: #ffffff;
+    --ion-color-dark-blue-contrast-rgb: 255,255,255;
+    --ion-color-dark-blue-shade: #2d4a63;
+    --ion-color-dark-blue-tint: #47657e;
+}
+
+/* Declaring new color variable - dark-blue | #335470 */
+.ion-color-dark-blue {
+    --ion-color-base: var(--ion-color-dark-blue);
+    --ion-color-base-rgb: var(--ion-color-dark-blue-rgb);
+    --ion-color-contrast: var(--ion-color-dark-blue-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-dark-blue-contrast-rgb);
+    --ion-color-shade: var(--ion-color-dark-blue-shade);
+    --ion-color-tint: var(--ion-color-dark-blue-tint);
+}
 
 .my-custom-modal-css .modal-wrapper {
     height: 100%;

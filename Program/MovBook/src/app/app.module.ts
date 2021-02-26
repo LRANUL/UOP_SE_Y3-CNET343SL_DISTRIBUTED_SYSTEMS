@@ -16,6 +16,7 @@ import { MovieCatalogTypesPopoverPageModule } from './account/manager-nav-page/b
 import { AddHallModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/add-hall-modal/add-hall-modal.module';
 import { AssignHallSeatPopoverPageModule } from './account/manager-nav-page/locations-halls-sub-page/assign-hall-seat-popover/assign-hall-seat-popover.module';
 import { AddLocationModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/add-location-modal/add-location-modal.module';
+import { CinemaHallsModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/cinema-halls-modal/cinema-halls-modal.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,8 @@ import { AddLocationModalPageModule } from './account/manager-nav-page/locations
       MovieDetailsModalPageModule,
       AddHallModalPageModule,
       AssignHallSeatPopoverPageModule,
-      AddLocationModalPageModule
+      AddLocationModalPageModule,
+      CinemaHallsModalPageModule
   ],
   providers: [
     StatusBar,

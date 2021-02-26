@@ -39,7 +39,12 @@ export class ManagerService {
    */
   // POST - Passing new cinema hall details to the server-side
   addNewCinemaHall(cinemaHall: CinemaHall){
-    return this.httpClient.post(this.BASE_URL + "api/cinema-hall/", cinemaHall);
+    return this.httpClient.post(this.BASE_URL + "api/cinema-halls/", cinemaHall);
+  }
+
+  // GET - Retrieving cinema hall details from the server-side
+  retrieveCinemaHalls(cinemaLocationObjectId){
+    return this.httpClient.get(this.BASE_URL + "api/cinema-halls/" + cinemaLocationObjectId);
   }
 
   /**
@@ -47,12 +52,12 @@ export class ManagerService {
    */
   // POST - Passing new cinema location details to the server-side
   addNewCinemaLocation(cinemaLocation: CinemaLocation){
-    return this.httpClient.post(this.BASE_URL + "api/cinema-location", cinemaLocation);
+    return this.httpClient.post(this.BASE_URL + "api/cinema-locations", cinemaLocation);
   }
 
   // GET - Retrieving cinema locations from the server-side
   retrieveCinemaLocations(){
-    return this.httpClient.get(this.BASE_URL + "api/cinema-location");
+    return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
   }
 
 }

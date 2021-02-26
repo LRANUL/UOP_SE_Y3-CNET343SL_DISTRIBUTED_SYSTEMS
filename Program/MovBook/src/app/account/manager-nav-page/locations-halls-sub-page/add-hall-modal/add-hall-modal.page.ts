@@ -17,13 +17,13 @@ export class AddHallModalPage implements OnInit {
   // Declaration - FormGroup to handle addNewHallForm Form
   addNewHallForm: FormGroup;
   
-  // Declaration | Initialization - int to store passedCinemaLocationObjectId
+  // Declaration | Initialization - string variable to store passedCinemaLocationObjectId
   passedCinemaLocationObjectId = null;
 
-  // Declaration | Initialization - string to store and process hallSeatId
+  // Declaration | Initialization - string variable to store and process hallSeatId
   hallSeatId = null;
 
-  // Declaration | Initialization - boolean to store visibility of initial text
+  // Declaration | Initialization - boolean variable to store visibility of initial text
   showInitialText: Boolean = true;
 
   // Declaration - array to store seat details
@@ -46,7 +46,7 @@ export class AddHallModalPage implements OnInit {
     this.hallSeatId = this.passedCinemaLocationObjectId;
 
     // Merging hallId into hallSeatId
-    this.hallSeatId = this.hallSeatId + "|" + "0001";
+    this.hallSeatId = this.hallSeatId + "|" + "0";
   
     this.addNewHallForm = this.formBuilder.group({
       hallName: new FormControl('', Validators.required),
@@ -77,6 +77,9 @@ export class AddHallModalPage implements OnInit {
     const cinemaHallsModal = await this.modalController.create({
       component: CinemaHallsModalPage,
       cssClass: 'cinema-halls-modal',
+      componentProps: {
+        passingCinemaLocationObjectId: this.passedCinemaLocationObjectId
+      },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false
     });
@@ -439,6 +442,7 @@ export class AddHallModalPage implements OnInit {
             // Creating initial seating objects and populating with the seatId in each iteration
             let initialSeatDetails = {
               seatId: this.hallSeatId,
+              seatAllocatedPositionNo: this.noOfSeats.toString(),
               seatActive: false,
               seatNumber: seatNumbering.toString(),
               seatUnavailable: false

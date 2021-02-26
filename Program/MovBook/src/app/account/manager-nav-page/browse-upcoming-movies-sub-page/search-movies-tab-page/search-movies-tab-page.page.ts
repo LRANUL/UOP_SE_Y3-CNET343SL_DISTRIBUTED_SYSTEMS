@@ -148,7 +148,7 @@ export class SearchMoviesTabPagePage implements OnInit {
         }
         // Initializing retrieved values into user defined 'movieSearchResults' variable 
         this.movieSearchResults = movieSearchResults;
-        console.log(this.movieSearchResults);
+      //  console.log(this.movieSearchResults);
       },
       (error: ErrorEvent) => {
 

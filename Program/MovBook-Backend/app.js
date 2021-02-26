@@ -60,8 +60,8 @@ app.use("/api/booking-history", bookingHistory);
 app.use("/api/booking-details", bookingDetails);
 app.use("/api/omdb/upcoming-movies", upcomingMovieSearchResults);
 app.use("/api/managers", managerRoutes);
-app.use("/api/cinema-hall", cinemaHallRoutes);
-app.use("/api/cinema-location", cinemaLocationRoutes);
+app.use("/api/cinema-halls", cinemaHallRoutes);
+app.use("/api/cinema-locations", cinemaLocationRoutes);
 
 
 module.exports = app;

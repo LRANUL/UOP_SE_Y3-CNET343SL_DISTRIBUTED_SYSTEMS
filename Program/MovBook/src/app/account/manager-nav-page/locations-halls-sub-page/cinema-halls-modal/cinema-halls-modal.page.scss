@@ -4,6 +4,7 @@
 
 .seatingGridTableTableData{
   padding-right: 10px;
+  padding-bottom: 10px;
 }
 
 .seatingGridTableOuterDiv{
@@ -17,7 +18,7 @@
 }
 
 .seatingGridTableInnerDiv{
-  background-color: #7A7E7B;
+  background-color: #d6d6d6;
   color: #ffffff;
   border-radius: 5px;
   width: 35px;
@@ -29,4 +30,29 @@
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  color: #000000;
+}
+
+.seatingGridTableInnerDivSeatActive{
+  background-color: #0AAA64;
+  color: #ffffff;
+  border-radius: 5px;
+  width: 35px;
+  height: 30px;
+}
+
+.seatingGridTableInnerDivSeatActive p{
+  color: #ffffff;
+}
+
+.seatingGridTableInnerDivUnavailableSeat{
+  background-color: #D33131;
+  color: #ffffff;
+  border-radius: 5px;
+  width: 35px;
+  height: 30px;
+}
+
+.seatingGridTableInnerDivUnavailableSeat p{
+  color: #ffffff;
 }
