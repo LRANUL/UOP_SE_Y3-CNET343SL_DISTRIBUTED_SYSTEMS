@@ -8,6 +8,7 @@ import { NavParams, PopoverController } from '@ionic/angular';
 })
 export class MovieCatalogTypesPopoverPage implements OnInit {
 
+  // Declaration | Initialization - string variable to store passedMovieId
   passedMovieId = null;
   
   constructor(

@@ -280,7 +280,7 @@
     </ion-card-content>
   </ion-card>
 
-  <div id="buttonsGrid" *ngIf="setButtonGridToVisible">
+  <div id="buttonsGrid" *ngIf="setButtonGridToVisibleCustomer">
     <ion-grid>
       <ion-row>
         <ion-col> <!-- TODO: Add route path and connect to the backend -->
@@ -304,6 +304,25 @@
             </ion-label>
             <ion-label style="margin-left: 10px;">
               <b>ADD TO WATCHLIST</b>
+            </ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div id="buttonsGrid" *ngIf="setButtonGridToVisibleManager">
+    <ion-grid>
+      <ion-row>
+        <ion-col> <!-- TODO: Add route path and connect to the backend -->
+          <ion-button size="block" color="green" (click)="openMovieCatalogTypesPopover($event)">
+            <ion-label>
+              <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-icon.png" 
+                style="width: 25px;
+                      margin-left: 0px;"></ion-img>
+            </ion-label>
+            <ion-label style="margin-left: 10px;">
+              <b>ADD TO MOVIE CATALOG</b>
             </ion-label>
           </ion-button>
         </ion-col>

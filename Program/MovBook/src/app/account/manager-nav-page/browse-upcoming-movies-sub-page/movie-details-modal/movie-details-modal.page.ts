@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, PopoverController } from '@ionic/angular';
+import { MovieCatalogTypesPopoverPage } from '../movie-catalog-types-popover/movie-catalog-types-popover.page';
 
 @Component({
   selector: 'app-movie-details-modal',
@@ -8,21 +9,35 @@ import { ModalController, NavParams } from '@ionic/angular';
 })
 export class MovieDetailsModalPage implements OnInit {
 
-  setButtonGridToVisible = false;
-  passedModalOpenPath = null;
+  // Declaration | Initialization - string variable to store passedMovieId
   passedMovieId = null;
+
+  // Declaration | Initialization - string variable to store passedModalOpenPath
+  passedModalOpenPath = null;
+
+  // Declaration | Initialization - boolean variable to store visibility of 'setButtonGridToVisibleCustomer' block
+  setButtonGridToVisibleCustomer = false;
+
+  // Declaration | Initialization - boolean variable to store visibility of 'setButtonGridToVisibleManager' block
+  setButtonGridToVisibleManager = false;
 
   constructor(
     private navParams: NavParams,
-    private modalController: ModalController 
+    private modalController: ModalController ,
+    private popoverController: PopoverController
   ) { }
 
   ngOnInit() {
     // Assigning variable with passed 'modalOpenPath'
     this.passedModalOpenPath = this.navParams.get('passingModalOpenPath');
-    // Checking whether the modal open path is correct to show buttons grid
+    // Checking whether the modal open path is the customer (and public) path to show buttons grid
     if(this.passedModalOpenPath == 'Public|Customer-Movie-Details'){
-      this.setButtonGridToVisible = true;
+      this.setButtonGridToVisibleCustomer = true;
+    }
+
+    // Checking whether the modal open path is the manager path to show buttons grid
+    if(this.passedModalOpenPath == 'Manager-Movie-Details'){
+      this.setButtonGridToVisibleManager = true;
     }
 
     // Assigning variable with passed 'movieId'
@@ -32,6 +47,18 @@ export class MovieDetailsModalPage implements OnInit {
   // Implementation to close 'Movie Details' modal
   async closeMovieDetailsModal(){
     await this.modalController.dismiss();
+  }
+
+  // Implementation for opening the 'Movie Catalog Types' popover
+  async openMovieCatalogTypesPopover(evt: Event){
+    const movieCatalogTypesPopover = await this.popoverController.create({
+      component: MovieCatalogTypesPopoverPage,
+      componentProps: {
+        movieId: '<SAMPLE VALUE>'
+      },
+      event: evt
+    });
+    movieCatalogTypesPopover.present();
   }
 
 }

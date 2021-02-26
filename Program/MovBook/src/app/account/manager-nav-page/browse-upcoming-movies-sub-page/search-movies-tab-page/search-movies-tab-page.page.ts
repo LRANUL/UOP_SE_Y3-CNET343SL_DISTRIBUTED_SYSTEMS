@@ -26,6 +26,9 @@ export class SearchMoviesTabPagePage implements OnInit {
   // Declaration | Initialization - to handle visibility of 'noAvailableMovieText' block
   noAvailableMovieText: Boolean = false;
 
+  // Declaration | Initialization - to handle visibility of 'initialSearchMovieText' block
+  initialSearchMovieText: Boolean = true;
+
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerSearchUpcomingMovies' block
   loadingSpinnerSearchUpcomingMovies: Boolean = false;
 
@@ -92,12 +95,19 @@ export class SearchMoviesTabPagePage implements OnInit {
     // Resetting 'movieSearchResults'
     this.movieSearchResults = null;
 
+    // Enabling visibility of initial search movie text 
+    this.initialSearchMovieText = true;
+
   }
 
   // Function - Retrieving movie search results from the backend by passing the enter movie title and movie release data
   getMovieSearchResults(formValue){
 
-    // Resetting boolean values to initial state
+    /**
+     * Resetting boolean values to initial state
+     */
+    // Disabling visibility of initial search movie text 
+    this.initialSearchMovieText = false;
 
     // Disabling visibility of no available movie text 
     this.noAvailableMovieText = false;
