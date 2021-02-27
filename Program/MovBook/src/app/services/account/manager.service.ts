@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { 
   CinemaHall, 
   CinemaLocation, 
+  MovieDetails, 
   MovieSearchResult 
 } from 'src/app/models/account/manager';
 import { environment } from 'src/environments/environment';
@@ -22,16 +23,22 @@ export class ManagerService {
   /**
    * Search Upcoming Movies
    */
-  // Retrieve movie search results from the backend according to the entered movie title and (optional) movie release year
+  // GET - Retrieving movie search results from the backend according to the entered movie title and (optional) movie release year
   getMovieSearchResults(movieTitle: string, movieReleaseYear: string): Observable<MovieSearchResult> {
     if(movieReleaseYear == ""){
       return this.httpClient
-        .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/" + movieTitle);
+        .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/search/" + movieTitle);
     }
     else if(movieReleaseYear != ""){
       return this.httpClient
-        .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/" + movieTitle + "/" + movieReleaseYear);
+        .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/search/" + movieTitle + "/" + movieReleaseYear);
     }
+  }
+
+  // GET - Retrieving detailed movie details for one movie by passing the imdbId
+  getMovieDetailsForOneMovie(movieImdbId: string){
+    return this.httpClient
+        .get<MovieDetails>(this.BASE_URL + "api/omdb/upcoming-movies/details/" + movieImdbId);
   }
 
   /**

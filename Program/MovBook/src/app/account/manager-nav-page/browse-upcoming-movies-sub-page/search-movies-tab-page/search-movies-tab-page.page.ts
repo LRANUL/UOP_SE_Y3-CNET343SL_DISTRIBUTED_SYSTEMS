@@ -148,7 +148,7 @@ export class SearchMoviesTabPagePage implements OnInit {
         }
         // Initializing retrieved values into user defined 'movieSearchResults' variable 
         this.movieSearchResults = movieSearchResults;
-      //  console.log(this.movieSearchResults);
+       // console.log(this.movieSearchResults);
       },
       (error: ErrorEvent) => {
 
@@ -169,12 +169,12 @@ export class SearchMoviesTabPagePage implements OnInit {
   }
 
   // Function - Implementation for opening the 'Movie Details Modal' modal
-  async openMovieDetailsModal(movieId: string){
+  async openMovieDetailsModal(movieImdbId: string){
     const movieDetailsModal = await this.modalController.create({
       component: MovieDetailsModalPage,
       componentProps: {
         passingModalOpenPath: 'Manager-Movie-Details',
-        passingMovieId: movieId
+        passingMovieImdbId: movieImdbId
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,
