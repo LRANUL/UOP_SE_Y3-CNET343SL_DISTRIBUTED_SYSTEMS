@@ -2,7 +2,7 @@ export interface movie {
   id? : string,
   movieObjectId: string,
   cinemaHallObjectId: string,
-  cinemalocationObjectId: string,
+  cinemaLocationObjectId: string,
   showingExperience: string,
   showingStartDate: string,
   showingEndDate: string,

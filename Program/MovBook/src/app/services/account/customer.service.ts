@@ -21,7 +21,7 @@ export class CustomerService {
   public moviesUpdated = {
     movieObjectId: '',
     cinemaHallObjectId: '',
-    cinemalocationObjectId: '',
+    cinemaLocationObjectId: '',
     showingExperience: '',
     showingStartDate: '',
     showingEndDate: '',
