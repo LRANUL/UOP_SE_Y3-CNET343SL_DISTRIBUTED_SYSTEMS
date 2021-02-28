@@ -10,6 +10,9 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
 
   // Declaration | Initialization - string variable to store passedMovieId
   passedMovieId = null;
+
+  // Declaration | Initialization - string variable to store passedMovieDetails
+  passedMovieDetails = null;
   
   constructor(
     private navParams: NavParams,
@@ -19,6 +22,9 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
   ngOnInit() {
     // Assigning variable with passed 'movieId'
     this.passedMovieId = this.navParams.get('movieId');
+
+    // Assigning variable with passed 'movieDetails'
+    this.passedMovieDetails = this.navParams.get('movieDetails');
   }
 
   // Implementation to close 'Movie Catalog Types' popover

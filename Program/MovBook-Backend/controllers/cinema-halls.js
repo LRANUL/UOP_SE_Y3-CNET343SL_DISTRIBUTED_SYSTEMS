@@ -39,7 +39,7 @@ exports.retrieveCinemaHalls = async (req, res, next) => {
   // Getting passed 'cinemaLocationObjectId' from the URL
   let cinemaLocationId = req.params.cinemaLocationObjectId;
 
-  // Using mongoDB's findById() functionality to retrieve cinema halls for the cinema location
+  // Using mongoDB's find() functionality to retrieve cinema halls for the cinema location
   await cinemaHallModel.find({ cinemaLocationObjectId: cinemaLocationId }, (error, returnedData) => {
 
     // If condition - checking whether an error has occurred and the relevant message is passed to the client-side

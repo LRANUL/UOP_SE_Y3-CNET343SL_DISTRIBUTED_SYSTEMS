@@ -12,4 +12,5 @@ export class BrowseUpcomingMoviesSubPagePage implements OnInit {
   ngOnInit() {
   }
 
+
 }

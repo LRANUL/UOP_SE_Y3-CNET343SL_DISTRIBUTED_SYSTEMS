@@ -4,6 +4,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlertController, ModalController } from '@ionic/angular';
 
 import { MovieSearchResult } from 'src/app/models/account/manager';
+import { MovieResponse } from 'src/app/models/movie';
+import { MovieDetails } from 'src/app/models/movie-details';
+import { MovieWaitListResponse } from 'src/app/models/movie-wait-list';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-modal.page';
 
@@ -165,7 +168,8 @@ export class SearchMoviesTabPagePage implements OnInit {
         this.alertNotice("ERROR", "Unable to retrieve result(s), apologies for the inconvenience. Please contact administrator.");
 
         console.log("Unable to retrieve results: ", error);
-      });
+      }
+    );
   }
 
   // Function - Implementation for opening the 'Movie Details Modal' modal
@@ -182,8 +186,102 @@ export class SearchMoviesTabPagePage implements OnInit {
     movieDetailsModal.present();
   }
 
-  // Function - Add Movie to Waitlist Alert Box Implementation
-  async addMovieToWaitListAlert( title: string, content: string ) {
+
+  // Function - Add selected movie into the movie wait list
+  addMovieToMovieWaitList(movieImdbId: string){
+
+    let movieObjectId;
+    // TODO: ADD MOVIE TO MOVIE WAIT LIST
+    /**
+     * Add selected movie into the database
+     */
+    this.managerService.getMovie(movieImdbId)
+      .subscribe((retrievedMovieDetails: any) => {
+      
+      if(retrievedMovieDetails.message == "Movie retrieved"){
+        movieObjectId = retrievedMovieDetails.returnedData._id;
+      }
+      else if(retrievedMovieDetails.message == "Movie not available"){
+
+      
+      }
+
+    });
+    
+    /**
+     * Updating movie wait list with selected movie
+     */
+    // Retrieving movie wait list for manager user
+    this.managerService.getMovieWaitList("0000")
+      .subscribe((retrievedMovieWaitList: MovieWaitListResponse) => {
+
+        // If condition - checking whether there is a movie wait list existing
+        if(retrievedMovieWaitList.message == "No movie wait list available"){
+    
+          // Retrieving the movie details from the omdb api
+          this.managerService.getMovieDetailsForOneMovie(movieImdbId)
+            .subscribe((retrievedMovieDetails: MovieDetails) => {
+  
+            this.managerService.getMovie(movieImdbId)
+              .subscribe((retrievedMovieResponse: MovieResponse) => {
+
+              if(retrievedMovieResponse.message == "Movie not available"){
+                // Adding movie into the database and retrieving the movie object Id
+                this.managerService.createNewMovie(retrievedMovieDetails)
+                  .subscribe((retrievedNewMovieResponse: MovieResponse) => {
+
+                  if(retrievedNewMovieResponse.message == "New movie created"){
+                    retrievedNewMovieResponse.returnedData;
+
+                  }
+                    
+                },
+                (error: ErrorEvent) => {
+                  console.log(error);
+                });
+
+              }
+              
+              if(retrievedMovieResponse.message == "Movie retrieved"){
+                
+              }
+
+            },
+            (error: ErrorEvent) => {
+
+            })
+
+          },
+          (error: ErrorEvent) => {
+
+            // Showing error message box to the user
+            this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
+
+            console.log("Error: ", error);
+
+          });
+
+          // Creating new movie wait list 
+        }
+        else if(retrievedMovieWaitList.message == "Movie wait list retrieved"){
+          // update movie wait list
+        }
+
+      },
+      (error: ErrorEvent) => {
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Error: ", error);
+
+      }
+    );
+
+  }
+
+  // Function - Add Movie to Wait List Alert Box Implementation
+  async addMovieToWaitListAlert( title: string, content: string, movieImdbId: string ) {
     const alert = await this.alertController.create({
       header: title,
       message: content,
@@ -192,15 +290,14 @@ export class SearchMoviesTabPagePage implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            console.log("Add Movie to Waitlist Denied");
+            console.log("Add Movie to Wait List Denied");
           }
         },
         {
           text: 'Continue',
           handler: () => {
             
-            // Add movie details to the waitlist
-            // TODO: Connect to the backend
+            this.addMovieToMovieWaitList(movieImdbId);
 
           }
         }

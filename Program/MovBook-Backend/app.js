@@ -13,6 +13,8 @@ const cinemaHallRoutes = require("./routes/cinema-halls");
 const cinemaLocationRoutes = require("./routes/cinema-locations");
 const upcomingMovieSearchResults = require("./routes/upcoming-movie-search-results");
 const bookingDetails = require("./routes/booking-details");
+const movieWaitLists = require("./routes/movie-wait-lists");
+const movies = require("./routes/movies");
 
 const app = express();
 
@@ -24,6 +26,7 @@ mongoose
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
       serverSelectionTimeoutMS: 30000,
       poolSize: 5,
       keepAlive: true,
@@ -62,6 +65,7 @@ app.use("/api/omdb/upcoming-movies", upcomingMovieSearchResults);
 app.use("/api/managers", managerRoutes);
 app.use("/api/cinema-halls", cinemaHallRoutes);
 app.use("/api/cinema-locations", cinemaLocationRoutes);
-
+app.use("/api/movie-wait-lists", movieWaitLists);
+app.use("/api/movies", movies);
 
 module.exports = app;

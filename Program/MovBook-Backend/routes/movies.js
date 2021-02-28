@@ -1,19 +1,14 @@
 const express = require("express");
-
 const router = express.Router();
 
-const Movies = require("../models/movies");
-// Get all movies
-router.get('' ,(req,res,next)=>{
-  Movies.find({})
-    .then((data)=>{
-      console.log(data);
-      res.send(data)
-    }).catch(err => {
-      res.status.send({
-        message: err.message
-      })
-    })
-});
+// Importing cinema-halls controller to retrieve the functions
+const movieController = require("../controllers/movies");
+
+// POST - Create new cinema hall | Route: 'BASE_URL/api/movies/'
+router.post("/", movieController.createNewMovie);
+
+// GET - Retrieve movie | Route: 'BASE_URL/api/movies/:movieImdbId'
+router.get("/:movieImdbDd", movieController.retrieveMovie);
+
 
 module.exports = router;

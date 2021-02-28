@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams, PopoverController } from '@ionic/angular';
-import { MovieDetails, MovieSearchResult } from 'src/app/models/account/manager';
+import { MovieDetails } from 'src/app/models/movie-details';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { MovieCatalogTypesPopoverPage } from '../movie-catalog-types-popover/movie-catalog-types-popover.page';
 
@@ -67,7 +67,8 @@ export class MovieDetailsModalPage implements OnInit {
     const movieCatalogTypesPopover = await this.popoverController.create({
       component: MovieCatalogTypesPopoverPage,
       componentProps: {
-        movieId: '<SAMPLE VALUE>'
+        movieId: this.passedMovieImdbId,
+        movieDetails: this.MovieDetails
       },
       event: evt
     });

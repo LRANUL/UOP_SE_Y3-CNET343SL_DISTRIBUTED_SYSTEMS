@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { 
-  CinemaHall, 
+  CinemaHall,
   CinemaLocation, 
-  MovieDetails, 
-  MovieSearchResult 
+  MovieSearchResult
 } from 'src/app/models/account/manager';
+import { Movie } from 'src/app/models/movie';
+import { MovieDetails } from 'src/app/models/movie-details';
+import { MovieWaitList, MovieWaitListResponse } from 'src/app/models/movie-wait-list';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -39,6 +41,34 @@ export class ManagerService {
   getMovieDetailsForOneMovie(movieImdbId: string){
     return this.httpClient
         .get<MovieDetails>(this.BASE_URL + "api/omdb/upcoming-movies/details/" + movieImdbId);
+  }
+
+  /**
+   * Movie
+   */
+  // POST - Adding movie into the database by passing to the server-side
+  createNewMovie(movie: Movie){
+    return this.httpClient
+      .post(this.BASE_URL + "api/movies/", movie);
+  }
+  // GET - Retrieving movie from the database by passing the movieImdbId
+  getMovie(movieImdbId: string){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movies/" + movieImdbId);
+  }
+
+  /**
+   * Movie Wait List
+   */
+  // GET - Retrieving movie wait list from the database
+  getMovieWaitList(managerObjectId: string){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movie-wait-lists/" + managerObjectId);
+  }
+  // PUT - Updating movie wait list (adding movies to the movie wait list)
+  updateMovieWaitList(managerObjectId: string, movieObjectId: string){
+    return this.httpClient
+      .put<MovieWaitList>(this.BASE_URL + "api/movie-wait-list/update/" + managerObjectId, movieObjectId);
   }
 
   /**
