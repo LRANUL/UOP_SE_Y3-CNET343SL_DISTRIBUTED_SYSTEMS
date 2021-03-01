@@ -3,7 +3,8 @@ const movieWaitLists = require("../models/movie-wait-lists");
 const movieModel = require("../models/movies");
 
 // Function - Creating a new movie using route, 'BASE_URL/api/movie/'
-exports.createNewMovie = async (req, res, next) => {console.log(req.body);
+exports.createNewMovie = async (req, res, next) => {
+
   // Using mongoDB's save() functionality to create a new movie document (object)
   await new movieModel({
     title: req.body.Title,
@@ -51,15 +52,54 @@ exports.createNewMovie = async (req, res, next) => {console.log(req.body);
 
 };
 
+// Function - Retrieving movieObjectId (_id) using rout 'BASE_URL/api/movie/id/:movieImdbId'
+exports.retrieveMovieObjectId = async (req, res, next) => {
+
+  // Getting passed 'movieImdbId' from the url
+  let passedMovieImdbId = req.params.movieImdbId;
+
+  // Using mongoDB's find() functionality to get the movieObjectId (_id) for the passed movieImdbId
+  await movieModel.find({ imdbId: passedMovieImdbId }, "_id", (error, returnedData) => {
+
+    // If condition - checking whether as error occurred during the query execution
+    if(error){
+      res.status(500).json({
+        message:
+          "Unable to retrieve movie object ID (_id)",
+      });
+    }
+    else{
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if(returnedData.length == 0){
+        res.status(200).json({
+          message:
+            "Movie not available"
+        });
+      }
+      else{
+        res.status(200).json({
+          message:
+            "Movie object ID (_id) retrieved",
+          returnedData
+        });
+      }
+    }
+
+  })
+
+};
 
 // Function - Retrieving movie using route, 'BASE_URL/api/movie/:movieImdbId'
 exports.retrieveMovie = async (req, res, next) => {
 
   // Getting passed 'movieImdbId' from the URL
-  let passedMovieImdbDb = req.params.movieImdbId;
+  let passedMovieImdbId = req.params.movieImdbId;
 
-  await movieModel.find({ imdbID: passedMovieImdbDb }, (error, returnedData) => {
+  // Using mongoDB's findOne() functionality to retrieve one movie document object for the passed movieImdbId
+  await movieModel.findOne({ imdbId: passedMovieImdbId }, (error, returnedData) => {
 
+    // If condition - checking whether as error occurred during the query execution
     if(error){
       res.status(500).json({
         message:
@@ -67,9 +107,9 @@ exports.retrieveMovie = async (req, res, next) => {
       });
     }
     else{
-      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // If condition - checking whether returned data is null (no data is returned)
       // and the relevant message passed to the client-side
-      if(returnedData.length == 0){
+      if(returnedData == null){
         res.status(200).json({
           message:
             "Movie not available"

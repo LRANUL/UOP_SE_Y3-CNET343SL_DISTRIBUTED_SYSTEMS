@@ -1,54 +1,91 @@
 /**
- * MODEL - Ratings - MovieResponse
- */
-export interface Ratings{
-  Source: string;
-  Value: string;
-}
-/**
  * MODEL - Movie - MovieResponse
  */
 export interface Movie {
   _id?: string;
-  Title: string;
-  Year: string;
-  Rated: string;
-  Released: string;
-  Runtime: string;
-  Genre: string;
-  Director: string;
-  Writer: string;
-  Actors: string;
-  Plot: string;
-  Language: string;
-  Country: string;
-  Awards: string;
-  Poster: string;
-  Ratings: [
+  title: string;
+  year: string;
+  rated: string;
+  released: string;
+  runtime: string;
+  genre: string;
+  director: string;
+  writer: string;
+  actors: string;
+  plot: string;
+  language: string;
+  country: string;
+  awards: string;
+  poster: string;
+  ratings: [
     {
-      [key: number]: Ratings;
+      Source: string;
+      Value: string;
     }
   ];
-  Metascore: string;
+  metascore: string;
   imdbRating: string;
   imdbVotes: string;
   imdbID: string;
-  Type: string;
-  DVD: string;
-  BoxOffice: string;
-  Production: string;
-  Website: string;
-  Response: string;
+  type: string;
+  dvd: string;
+  boxOffice: string;
+  production: string;
+  website: string;
+  response: string;
   __v?: number;
 }
+
 /**
  * MODEL - MovieResponse
  */
 export interface MovieResponse {
   message: string;
+  returnedData?: 
+  {
+    _id?: string;
+    title: string;
+    year: string;
+    rated: string;
+    released: string;
+    runtime: string;
+    genre: string;
+    director: string;
+    writer: string;
+    actors: string;
+    plot: string;
+    language: string;
+    country: string;
+    awards: string;
+    poster: string;
+    ratings: [
+      {
+        Source: string;
+        Value: string;
+      }
+    ];
+    metascore: string;
+    imdbRating: string;
+    imdbVotes: string;
+    imdbID: string;
+    type: string;
+    dvd: string;
+    boxOffice: string;
+    production: string;
+    website: string;
+    response: string;
+    __v?: number;
+  }
+}
+
+/**
+ * MODEL - MovieObjectIdResponse
+ */
+export interface MovieObjectIdResponse {
+  message: string;
   returnedData?: [
     {
-      [key: number]: Movie;
+      _id?: string;
     }
   ]
 }

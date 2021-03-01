@@ -7,8 +7,11 @@ const movieController = require("../controllers/movies");
 // POST - Create new cinema hall | Route: 'BASE_URL/api/movies/'
 router.post("/", movieController.createNewMovie);
 
+// GET - Retrieve movie | Route: 'BASE_URL/api/movies/id/:movieImdbId'
+router.get("/id/:movieImdbId", movieController.retrieveMovieObjectId);
+
 // GET - Retrieve movie | Route: 'BASE_URL/api/movies/:movieImdbId'
-router.get("/:movieImdbDd", movieController.retrieveMovie);
+router.get("/:movieImdbId", movieController.retrieveMovie);
 
 
 module.exports = router;

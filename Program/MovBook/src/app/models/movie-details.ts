@@ -1,11 +1,4 @@
 /**
- * MODEL - Ratings - Movie Details
- */
-export interface Ratings{
-  Source: string;
-  Value: string;
-}
-/**
  * MODEL - Movie Details
  */
 export interface MovieDetails {
@@ -24,7 +17,10 @@ export interface MovieDetails {
   Awards: string;
   Poster: string;
   Ratings: [
-    {[key: number]: Ratings}
+    {
+      Source: string;
+      Value: string;
+    }
   ];
   Metascore: string;
   imdbRating: string;

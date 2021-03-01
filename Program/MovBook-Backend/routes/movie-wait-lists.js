@@ -7,11 +7,11 @@ const movieWaitListsController = require("../controllers/movie-wait-lists");
 // GET - Retrieve movie wait list | Route: 'BASE_URL/api/movie-wait-list/:managerObjectId'
 router.get("/:managerObjectId", movieWaitListsController.retrieveMovieWaitList);
 
-// POST - Creating a new movie wait list | Route: 'BASE_URL/api/movie-wait-list/add/:managerObjectId'
-router.post("/add/:managerObjectId", movieWaitListsController.createMovieWaitList);
+// POST - Creating a new movie wait list | Route: 'BASE_URL/api/movie-wait-list/add'
+router.post("/add", movieWaitListsController.createMovieWaitList);
 
-// PUT - Updating a movie wait list | Route: 'BASE_URL/api/movie-wait-list/update/:managerObjectId'
-router.put("/update/:managerObjectId", movieWaitListsController.updateMovieWaitList);
+// PUT - Updating a movie wait list | Route: 'BASE_URL/api/movie-wait-list/add-movie'
+router.put("/add-movie", movieWaitListsController.addMovieToMovieWaitList);
 
 // DELETE - Deleting a movie wait list
 

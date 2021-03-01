@@ -8,7 +8,7 @@ import {
 } from 'src/app/models/account/manager';
 import { Movie } from 'src/app/models/movie';
 import { MovieDetails } from 'src/app/models/movie-details';
-import { MovieWaitList, MovieWaitListResponse } from 'src/app/models/movie-wait-list';
+import { MovieWaitList, AddMovieToMovieWaitList } from 'src/app/models/movie-wait-list';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -47,9 +47,14 @@ export class ManagerService {
    * Movie
    */
   // POST - Adding movie into the database by passing to the server-side
-  createNewMovie(movie: Movie){
+  createNewMovie(movie: MovieDetails){
     return this.httpClient
       .post(this.BASE_URL + "api/movies/", movie);
+  }
+  // GET - Retrieving movieObjectId (_id) from the database by passing the movieImdbId
+  getMovieObjectId(movieImdbId: string){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movies/id/" + movieImdbId);
   }
   // GET - Retrieving movie from the database by passing the movieImdbId
   getMovie(movieImdbId: string){
@@ -65,10 +70,15 @@ export class ManagerService {
     return this.httpClient
       .get(this.BASE_URL + "api/movie-wait-lists/" + managerObjectId);
   }
-  // PUT - Updating movie wait list (adding movies to the movie wait list)
-  updateMovieWaitList(managerObjectId: string, movieObjectId: string){
+  // POST - Creating a new movie wait list
+  createMovieWaitList(movieWaitList: MovieWaitList){
     return this.httpClient
-      .put<MovieWaitList>(this.BASE_URL + "api/movie-wait-list/update/" + managerObjectId, movieObjectId);
+      .post(this.BASE_URL + "api/movie-wait-lists/add", movieWaitList);
+  }
+  // PUT - Updating movie wait list (adding movies to the movie wait list)
+  addMovieToMovieWaitList(AddMovieToMovieWaitList: AddMovieToMovieWaitList){
+    return this.httpClient
+      .put<AddMovieToMovieWaitList>(this.BASE_URL + "api/movie-wait-lists/add-movie", AddMovieToMovieWaitList);
   }
 
   /**
