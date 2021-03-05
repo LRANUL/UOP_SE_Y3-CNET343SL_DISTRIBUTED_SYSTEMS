@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { movie } from 'src/app/models/account/customers';
+import { movie, profile } from 'src/app/models/account/customers';
 
 @Injectable({
   providedIn: 'root'
@@ -34,15 +34,50 @@ export class CustomerService {
     return this.currentmovies.asObservable();
   }
 
+  public locationupdated = {
+    cinemaLocationName: '',
+    cinemaLocationAddress: {
+    streetAddress: '',
+    city: '',
+    postalCode: ''
+    }
+  };
+  private location = new Subject();
+  
+  getlocation()
+  {
+    return this.location.asObservable();
+  }
+
+  public hallupdated = {
+    cinemaLocationObjectId: '',
+    cinemaHallName: '',
+    seatingGridNoOfRows: '',
+    seatingGridNoOfColumns: '',
+    seatingDetails: [{
+      seatId:  '',
+      seatAllocatedPositionNo: '',
+      seatActive: '',
+      seatNumber: '',
+      seatUnavailable: ''
+    }]
+  };
+  private hall = new Subject();
+  
+  gethall()
+  {
+    return this.hall.asObservable();
+  }
+
 
 getUser(id:string) 
 {
-  return this.http.get<{message: string, users}>('http://localhost:5000/api/users/' + id)
+  return this.http.get<{message: string, users: any}>('http://localhost:5000/api/customers/' + id)
 }
 
 updateuser(value, id)
 {
-  this.http.put<{message: string}>('http://localhost:5000/api/users/' + id, value).subscribe((responsestatus) => {
+  this.http.put<{message: string}>('http://localhost:5000/api/customers/' + id, value).subscribe((responsestatus) => {
     console.log(responsestatus);
 });   
 }
@@ -60,12 +95,31 @@ getbookinghistory(email: string)
 })
 }
 
-getmoviedetails(id: string)
+getshowingmoviedetails(id: string)
 {
   return this.http.get<{tickets:movie}>('http://localhost:5000/api/booking-details/' + id).subscribe(res=>{
     this.moviesUpdated = res.tickets;
     this.currentmovies.next(this.moviesUpdated);
   })
+}
+
+retrieveCinemaHall(cinemaHallObjectId){
+  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-halls/hall/' + cinemaHallObjectId).subscribe(res=>{
+    this.hallupdated = res.returnedData;
+    this.hall.next([this.hallupdated]);
+  });;
+}
+
+retrieveCinemaLocation(cinemaLocationObjectId){ 
+  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-locations/location/' + cinemaLocationObjectId).subscribe(res=>{
+    this.locationupdated= res.returnedData;
+    this.location.next([this.locationupdated]);
+  });
+}
+
+getmoviedetails(id: string)
+{
+  // have to write the code to get the movie here
 }
 
 getmovieexperience(exp: string)
@@ -78,10 +132,10 @@ getmovieexperience(exp: string)
 
 getmovielocation(location: string)
 {
-  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-details/experience/location/' + location).subscribe(res=>{
-  this.moviesUpdated= res.tickets;
-  this.currentmovies.next(this.moviesUpdated);
-})
+  return this.http.get<{message : string, returnedData : any}>('http://localhost:5000/api/cinema-locations/find/location/' + location).subscribe(res=>{
+    this.locationupdated= res.returnedData;
+    this.location.next(this.locationupdated);
+  });
 }
 
 }

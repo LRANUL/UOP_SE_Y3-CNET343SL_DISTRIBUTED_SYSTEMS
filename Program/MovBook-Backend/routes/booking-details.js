@@ -14,7 +14,6 @@ router.get('/:id' ,(req,res,next)=>{
           message: "It works",
           tickets: data
         })
-        console.log(data);
       }else
       {
         res.status(404).json({
