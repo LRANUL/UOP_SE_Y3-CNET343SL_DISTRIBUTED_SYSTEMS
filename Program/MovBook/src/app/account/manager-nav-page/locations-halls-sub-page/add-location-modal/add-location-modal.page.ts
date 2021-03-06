@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
-import { CinemaLocation } from 'src/app/models/account/manager';
 import { ManagerService } from 'src/app/services/account/manager.service';
 
 @Component({

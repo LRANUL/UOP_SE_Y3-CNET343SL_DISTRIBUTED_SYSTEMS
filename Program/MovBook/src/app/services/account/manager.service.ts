@@ -1,15 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { 
-  CinemaHall,
-  CinemaLocation, 
-  MovieSearchResult
-} from 'src/app/models/account/manager';
-import { Movie } from 'src/app/models/movie';
-import { MovieDetails } from 'src/app/models/movie-details';
-import { MovieWaitList, AddMovieToMovieWaitList } from 'src/app/models/movie-wait-list';
+import { MovieSearchResult } from 'src/app/models/account/manager/movie-search-result';
+import { CinemaLocation } from 'src/app/models/account/manager/cinema-location';
+import { MovieDetails } from 'src/app/models/account/manager/movie-details';
+import { MovieWaitList, AddMovieToMovieWaitList } from 'src/app/models/account/manager/movie-wait-list';
 import { environment } from 'src/environments/environment';
+import { CinemaHall } from 'src/app/models/account/manager/cinema-hall';
 
 @Injectable({
   providedIn: 'root'

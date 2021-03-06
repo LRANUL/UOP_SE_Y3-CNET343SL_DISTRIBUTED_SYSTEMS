@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CinemaLocation } from 'src/app/models/account/manager';
+import { CinemaLocation } from 'src/app/models/account/manager/cinema-location';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddLocationModalPage } from './add-location-modal/add-location-modal.page';
 import { CinemaHallsModalPage } from './cinema-halls-modal/cinema-halls-modal.page';

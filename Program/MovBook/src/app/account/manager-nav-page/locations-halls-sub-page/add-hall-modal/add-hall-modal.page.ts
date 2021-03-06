@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController, NavParams, PopoverController } from '@ionic/angular';
-import { HallSeatDetails } from 'src/app/models/account/manager';
+import { HallSeatDetails } from 'src/app/models/account/manager/cinema-hall';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AssignHallSeatPopoverPage } from '../assign-hall-seat-popover/assign-hall-seat-popover.page';
 

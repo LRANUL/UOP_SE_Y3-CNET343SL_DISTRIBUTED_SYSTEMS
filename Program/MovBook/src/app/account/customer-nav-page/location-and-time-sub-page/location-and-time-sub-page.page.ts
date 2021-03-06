@@ -2,7 +2,8 @@ import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { movie } from "src/app/models/account/customers";
-import { CinemaHall, CinemaLocation } from "src/app/models/account/manager";
+import { CinemaHall } from "src/app/models/account/manager/cinema-hall";
+import { CinemaLocation } from "src/app/models/account/manager/cinema-location";
 import { CustomerService } from "src/app/services/account/customer.service";
 import { ManagerService } from "src/app/services/account/manager.service";
 
