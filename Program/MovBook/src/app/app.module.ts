@@ -17,6 +17,7 @@ import { AddHallModalPageModule } from './account/manager-nav-page/locations-hal
 import { AssignHallSeatPopoverPageModule } from './account/manager-nav-page/locations-halls-sub-page/assign-hall-seat-popover/assign-hall-seat-popover.module';
 import { AddLocationModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/add-location-modal/add-location-modal.module';
 import { CinemaHallsModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/cinema-halls-modal/cinema-halls-modal.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +30,8 @@ import { CinemaHallsModalPageModule } from './account/manager-nav-page/locations
       AddHallModalPageModule,
       AssignHallSeatPopoverPageModule,
       AddLocationModalPageModule,
-      CinemaHallsModalPageModule
+      CinemaHallsModalPageModule,
+      NgbModule
   ],
   providers: [
     StatusBar,

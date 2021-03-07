@@ -11,13 +11,15 @@ export class ProfileSubPagePage implements OnInit {
 
 
   //sidebar Details & profile Details
-  name_admin:any;
-  email_admin: any;
-  password_admin: any;
-  status_admin: any;
-  type_admin: any;
-  phone_admin: any;
-  address_admin: any; 
+  admin_Prefix: any;
+  admin_FirstName: any;
+  admin_MiddleName: any;
+  admin_LastName: any;
+  admin_Email: any;
+  admin_Phone: any;
+  admin_StreetAddress: any;
+  admin_City: any;
+  admin_PostalCode: any; 
    
 
   constructor(private employeeService: EmployeeService) { }
@@ -25,18 +27,19 @@ export class ProfileSubPagePage implements OnInit {
   ngOnInit() {
 
     //admin profile details
-    var email = "10673333@students.plymouth.ac.uk";
+    var email = "wef";
     this.employeeService.getDetails(email).subscribe(
       (data) => {
         console.log(data);
-        //console.log("*********************");
-        this.name_admin = data['name'];
-        this.email_admin = data['email'];
-        this.password_admin = data['address'];
-        this.status_admin = data['status'];
-        this.type_admin = data['type'];
-        this.phone_admin = data['phone'];
-        this.address_admin = data['address'];
+        this.admin_Prefix = data['Prefix'],
+        this.admin_FirstName = data['FirstName'],
+        this.admin_MiddleName = data['MiddleName'],
+        this.admin_LastName = data['LastName'],
+        this.admin_Email = data['Email'],
+        this.admin_Phone = data['Phone'],
+        this.admin_StreetAddress = data['StreetAddress'],
+        this.admin_City = data['City'],
+        this.admin_PostalCode = data['PostalCode']
       },
       (error) => {
         console.log(error);

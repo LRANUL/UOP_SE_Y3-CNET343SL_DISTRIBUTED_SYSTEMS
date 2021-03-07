@@ -13,90 +13,113 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./manager-accounts-sub-page.page.scss'],
   providers: [EmployeeService],
 })
-export class ManagerAccountsSubPagePage implements OnInit,OnDestroy {
+export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
 
   managerArray: [] = [];
 
-  managerSubscription : Subscription;
+  managerSubscription: Subscription;
 
 
   constructor(private employeeService: EmployeeService) { }
   //constructor() { }
 
-  name_admin:any;
-  email_admin: any;
+  //Angular Page
+  admin_Prefix: any;
+  admin_FirstName: any;
+  admin_LastName: any;
+  admin_Email: any;
 
-  name:any;
-  email:any;
-  password: any;
-  phone: any;
-  address: any;  
 
-  ngOnDestroy(){
+  //Angular Page
+  Prefix: any;
+  FirstName: any;
+  MiddleName: any;
+  LastName: any;
+  Email: any;
+  Password: any;
+  RetypePassword: any;
+  Phone: any;
+  StreetAddress: any;
+  City: any;
+  PostalCode: any;
+
+
+  // name: any;
+  // email: any;
+  // password: any;
+  // phone: any;
+  // address: any;
+
+  ngOnDestroy() {
     this.managerSubscription.unsubscribe();
   }
 
   ngOnInit() {
 
     //sidebar Details
-    var email = "10673333@students.plymouth.ac.uk";
-    this.employeeService.getDetails(email).subscribe(
+    var Email = "wef";
+    this.employeeService.getDetails(Email).subscribe(
       (data) => {
         //console.log(data);
-        this.name_admin = data['name'];
-        this.email_admin = data['email'];
+
+        //name/email = backend
+        // this.name_admin = data['name'];
+        // this.email_admin = data['email'];
+        this.admin_Prefix = data['Prefix'];
+        this.admin_FirstName = data['FirstName'];
+        this.admin_LastName = data['LastName'];
+        this.admin_Email = data['Email'];
       },
-            (error) => {
+      (error) => {
         console.log(error);
       }
     );
 
+    
+
     //pass the data to the list
-      this.employeeService.getManagerDetails();
-      this.managerSubscription = this.employeeService.getListner().subscribe((res:[])=>{
-        this.managerArray=res;
-        this.managerArray=this.employeeService.updatedManagerDetails;
-        console.log();
-      })
-
-
-
-
+    this.employeeService.getManagerDetails();
+    this.managerSubscription = this.employeeService.getListner().subscribe((res: []) => {
+      this.managerArray = res;
+      this.managerArray = this.employeeService.updatedManagerDetails;
+      //console.log();
+    })
   }
-  
+
+
+
+  //submit form
+  onSubmit(form: NgForm) {
+    this.employeeService.postEmployee(form);
+    this.resetForm(form);
+  }
+
+  //deleteManager
+  deleteAManager(id: string) {
+    this.employeeService.deleteManager(id).subscribe(() => {
+      this.employeeService.getManagerDetails()
+    })
+  }
+
   //reset form
-  resetForm(form?:NgForm){
-    if(form)
-    form.reset();
+  resetForm(form?: NgForm) {
+    if (form)
+      form.reset();
     this.employeeService.selectedEmployee = {
-      name:"",
-      email:"",
-      password:"",
-      status:"",
-      type:"",
-      phone:null,
-      address:"",
+      Prefix: "",
+      FirstName: "",
+      MiddleName: "",
+      LastName: "",
+      Email: "",
+      Password: "",
+      RetypePassword: "",
+      Phone: null,
+      StreetAddress: "",
+      City: "",
+      PostalCode: "",
     }
 
   }
-
-  //submit form
-  onSubmit(form : NgForm){
-    
-    //console.log(form.value);
-    //console.log("****************************");
-    this.employeeService.postEmployee(form);
-    this.resetForm(form);
-    
-  }
-
-
-deleteManagerHTML(id : string){
-  this.employeeService.deleteManager(id).subscribe(()=>{
-    this.employeeService.getManagerDetails()
-    //console.log("***********************delete******************")
-  })
-}
 
 
 }

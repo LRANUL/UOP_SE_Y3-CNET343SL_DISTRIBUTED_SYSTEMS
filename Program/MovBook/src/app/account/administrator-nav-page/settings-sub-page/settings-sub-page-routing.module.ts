@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: SettingsSubPagePage
+  },  {
+    path: 'edit-admin',
+    loadChildren: () => import('./edit-admin/edit-admin.module').then( m => m.EditAdminPageModule)
   }
+
 ];
 
 @NgModule({

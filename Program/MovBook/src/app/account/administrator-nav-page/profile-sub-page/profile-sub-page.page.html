@@ -7,8 +7,8 @@
         <div class="profilePhoto">
           <img src="assets\images\account\admin\admin.png" style="border-radius: 50px; width: 150px; height: 150px">
           <span class="onlineStatus"></span>
-          <h4>{{name_admin}}</h4>
-          <h6>{{email_admin}}</h6>
+          <h4>{{admin_Prefix}} {{admin_FirstName}} {{admin_LastName}}</h4>
+          <h6>{{admin_Email}}</h6>
           <br />
         </div>
         <ion-button expand="block" color="button" href="administrator/dashboard">Dashboard
@@ -23,55 +23,42 @@
 
       <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;height: 700px">
 
-        <ion-row>
-          <h1 style="color: #374d58;"><b>Account and Profile</b></h1>
-        </ion-row>
+        <ion-card
+          style="border-radius: 10px;background-color: transparent;margin-left: 100px;margin-right: 100px;margin-top: 100px;">
 
-        <ion-row>
+          <h1 style="color: #374d58;margin-left: 30px;"><b>Account Details</b></h1>
 
-          <ion-row style="margin-top: 30px">
-            <img src="assets\images\account\admin\admin.png" style="border-radius: 50px; width: 200px; height: 200px">
-          </ion-row>
+          <img src="assets\images\account\admin\admin.png"
+            style="border-radius: 50px; width: 200px; height: 200px;float: left;">
 
-          <ion-row>
-            <ion-col style="margin-left: 40px;">
-              <h6 style="color: black;">Name: {{name_admin}}</h6>
 
-              <h6 style="color: black;">Email: {{email_admin}}</h6>
+          <div class="row" style="margin-left: 150px;margin-top: 25px;margin-bottom: 40px;">
 
-              <h6 style="color: black;">Password: {{password_admin}}</h6>
 
-              <h6 style="color: black;">Status: {{status_admin}}</h6>
+            <div class="col-6 col-sm-4"><h5 style="color: black;float: right;">Name : </h5></div>
+            <div class="col-6 col-sm-7"><h5 style="color: black;">{{admin_Prefix}} {{admin_FirstName}} {{admin_MiddleName}} {{admin_LastName}}</h5></div>
 
-              <h6 style="color: black;">Type: {{type_admin}}</h6>
+            
+            <div class="w-100 d-none d-md-block"></div>
 
-              <h6 style="color: black;">Phone: {{phone_admin}}</h6>
+            <div class="col-6 col-sm-4"><h5 style="color: black;float: right;">Email : </h5></div>
+            <div class="col-6 col-sm-7"><h5 style="color: black;">{{admin_Email}}</h5></div>
 
-              <h6 style="color: black;">Address: {{address_admin}}</h6>
-            </ion-col>
-          </ion-row>
+            <div class="w-100 d-none d-md-block"></div>
 
-          <ion-row>
-            <ion-col style="margin-left: 100px">
+            <div class="col-6 col-sm-4"><h5 style="color: black;float: right;">Phone : </h5></div>
+            <div class="col-6 col-sm-7"><h5 style="color: black;">{{admin_Phone}}</h5></div>
 
-              <h3 style="color:black; margin-bottom:20px">Update my Details</h3>
-              <ion-input type="password" style="color:black; background-color:rgb(206, 206, 206);margin-top: 10px;">New
-                Password : </ion-input>
-              <ion-input type="password" style="color:black; background-color:rgb(206, 206, 206);margin-top: 10px;">
-                Retype New Password : </ion-input>
-              <ion-input type="text" style="color:black; background-color:rgb(206, 206, 206);margin-top: 10px;">New
-                Phone : </ion-input>
-              <ion-input type="text" style="color:black; background-color:rgb(206, 206, 206);margin-top: 10px;">New
-                Address : </ion-input>
-                
-              <ion-button style="margin-top: 20px;">Update Account Settings</ion-button>
+            <div class="w-100 d-none d-md-block"></div>
 
-            </ion-col>
-          </ion-row>
+            <div class="col-6 col-sm-4"><h5 style="color: black;float: right;">Address : </h5></div>
+            <div class="col-6 col-sm-7"><h5 style="color: black;">{{admin_StreetAddress}} {{admin_City}} {{admin_PostalCode}}</h5></div>
+            
+          </div>
+      
 
-        </ion-row>
+        </ion-card>
 
-        
 
       </ion-col>
 
