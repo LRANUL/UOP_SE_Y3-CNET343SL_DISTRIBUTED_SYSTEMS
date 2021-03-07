@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { profile } from 'src/app/models/account/customers';
 import { CustomerService } from 'src/app/services/account/customer.service';
 
 @Component({
@@ -16,14 +17,28 @@ export class EditProfileComponentComponent implements OnInit {
     this.getuser(this.temoryid);
   }
 
-    profile = {
-    Fname :'',
-    Mname: '',
-    Lname: '',
-    Mnumber: '',
-    NIC: '',
-    Address: '',
-    email: ''
+    profile: profile = {
+      name:
+      [
+        {
+        prefix: '',
+        lastName: '',
+        firstName: '',
+        middleName: '',
+       }
+      ],
+      email: '',
+      password: '',
+      registeredDateTime: '',
+      address: 
+      [
+      {
+        streetAddress: '',
+        city: '',
+        postalZipCode: '',
+      }
+      ],
+      phone: '',
   };
 
   UFname;
@@ -34,33 +49,40 @@ export class EditProfileComponentComponent implements OnInit {
   UAddress;
   Uemail;
 
-  temoryid = "Katherine@movbook.com";
+  temoryid = "yasuo@movbook.com";
 
   closemodal()
   {
-    this.profile.Fname = "";
-    this.profile.Mname= "";
-    this.profile.Lname = "";
-    this.profile.Mnumber = "";
-    this.profile.NIC = "";
-    this.profile.Address= "";
-    this.profile.email = "";
     this.modalcntrl.dismiss();
   }
 
   getuser(id: string)
   {
     this.customerService.getUser(id).subscribe(profiles => {
+      console.log(profiles);
       this.profile = 
       {
         email: profiles.users.email,
-        Fname: profiles.users.name,
-        Mname: '',
-        Lname: '',
-        NIC: '',
-        Address: profiles.users.address,
-        Mnumber: profiles.users.phone
+        password: profiles.users.email,
+        name: [
+          {
+            prefix: profiles.users.name[0].prefix,
+            firstName: profiles.users.name[0].firstName,
+            middleName: profiles.users.name[0].middleName,
+            lastName : profiles.users.name[0].lastName     
+          }
+        ],
+        registeredDateTime: profiles.users.registeredDateTime,
+        address:[
+          {
+            streetAddress: profiles.users.address[0].streetAddress,
+            city: profiles.users.address[0].city,
+            postalZipCode: profiles.users.address[0].postalZipCode
+          }
+        ],
+        phone: profiles.users.phone,
       };
+      console.log(this.profile);
     });
   }
 

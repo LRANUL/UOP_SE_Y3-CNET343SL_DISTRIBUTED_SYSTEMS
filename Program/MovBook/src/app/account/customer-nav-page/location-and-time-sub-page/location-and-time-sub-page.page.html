@@ -12,13 +12,13 @@
               <ion-item>
                 <ion-select placeholder="All Locations" [(ngModel)]="location" (ionChange)="getlocation()">
                   <ion-select-option value="Colombo">Colombo</ion-select-option>
-                  <ion-select-option value="Panadura">Panadura</ion-select-option>
+                  <ion-select-option value="test">Panadura</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
-                 <ion-datetime displayFormat="MM/DD/YYYY" placeholder="Today: {{todayDate}}" (ionChange)="getTime()" [(ngModel)]="date"></ion-datetime>
+                 <ion-datetime displayFormat="MMM/DD/YYYY" placeholder="Today: {{todayDate}}" (ionChange)="getTime()" [(ngModel)]="date"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
@@ -44,40 +44,21 @@
                 </ion-header>
               </ion-col>
               <ion-col>
-              <div >
+              <div *ngIf="movielocation">
+              <div *ngFor=" let movielocation of movielocation ">
                 <ion-header>
-                  <ion-card-title>Cinema Location</ion-card-title>
+                  <ion-card-title>Cinema Location: {{movielocation.cinemaLocationName}} </ion-card-title>
                 </ion-header>
-                <div>
+                <div *ngFor=" let movie of movies">
                   <ion-card-header>
-                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece:{{showingMovies.showingExperience}}</ion-card-subtitle>
+                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: {{movie.showingExperience}} </ion-card-subtitle>
                   </ion-card-header>
                   <ion-card-content>
                     <ion-grid>
                       <ion-row>
                         <ion-col>
                           <ion-buttons>
-                            <ion-button expand="round" fill="outline" (click)="gotourl()">8:00 am</ion-button>
-                            <hr>
-                            <ion-button expand="round" fill="outline">1:30 pm</ion-button>
-                            <hr>
-                            <ion-button expand="round" fill="outline">4:30 pm</ion-button>
-                          </ion-buttons>
-                        </ion-col>
-                      </ion-row>
-                    </ion-grid>
-                  </ion-card-content>
-                </div>
-                <div>
-                  <ion-card-header>
-                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece</ion-card-subtitle>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <ion-grid>
-                      <ion-row>
-                        <ion-col>
-                          <ion-buttons>
-                            <ion-button expand="round" fill="outline">8:00 am</ion-button>
+                            <ion-button expand="round" fill="outline" (click)="gotourl()">{{movie.showingTime}}</ion-button>
                             <hr>
                             <ion-button expand="round" fill="outline">1:30 pm</ion-button>
                             <hr>
@@ -89,30 +70,6 @@
                   </ion-card-content>
                 </div>
               </div>
-              <div>
-                <ion-header>
-                  <ion-card-title>Cinema Location</ion-card-title>
-                </ion-header>
-                <div>
-                  <ion-card-header>
-                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece</ion-card-subtitle>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <ion-grid>
-                      <ion-row>
-                        <ion-col>
-                          <ion-buttons>
-                            <ion-button expand="round" fill="outline">8:00 am</ion-button>
-                            <hr>
-                            <ion-button expand="round" fill="outline">1:30 pm</ion-button>
-                            <hr>
-                            <ion-button expand="round" fill="outline">4:30 pm</ion-button>
-                          </ion-buttons>
-                        </ion-col>
-                      </ion-row>
-                    </ion-grid>
-                  </ion-card-content>
-                </div>
               </div>
               </ion-col>
             </ion-row>

@@ -71,3 +71,24 @@ exports.retrieveCinemaHalls = async (req, res, next) => {
 
   })
 };
+
+// to get one cinema hall
+exports.retrieveCinemaHall = async (req, res, next) => {
+  cinemaHallModel.findById({_id: req.params.cinemaHallObjectId})
+  .then((returnedData)=>{
+    if(returnedData)
+  {
+    res.status(200).json({
+      message: "Cinema halls Retrieved",
+      returnedData
+    })
+  }else
+  {
+    res.status(404).json({
+      message: "Unable to retrieve cinema hall"
+    })
+  } 
+  }).catch(err => {
+   console.log(err);
+  })
+};

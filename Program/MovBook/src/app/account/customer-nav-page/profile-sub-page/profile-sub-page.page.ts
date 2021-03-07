@@ -18,12 +18,26 @@ export class ProfileSubPagePage implements OnInit {
   public users : Observable<profile[]>;
 
   user: profile = {
+    name:
+    [
+      {
+      prefix: '',
+      lastName: '',
+      firstName: '',
+      middleName: '',
+     }
+    ],
     email: '',
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    NIC: '',
-    address: '',
+    password: '',
+    registeredDateTime: '',
+    address: 
+    [
+    {
+      streetAddress: '',
+      city: '',
+      postalZipCode: ''
+    }
+    ],
     phone: '',
   }
 
@@ -31,14 +45,14 @@ export class ProfileSubPagePage implements OnInit {
     this.getuser(this.temoryid);
   }
 
-  temoryid: string = "Katherine@movbook.com";
+  temoryid: string = "yasuo@movbook.com";
 
   async editprofilemodal()
   {
     const Emodal = await this.modalctrl.create({
       component: EditProfileComponentComponent,
-      cssClass: 'my-custom-modal-css'
-    });
+      cssClass: 'customer-edit-profile-css'
+    }); 
    await Emodal.present();
   }
 
@@ -53,16 +67,30 @@ export class ProfileSubPagePage implements OnInit {
   getuser(id: any)
   {
     this.customerService.getUser(id).subscribe(profiles => {
+      console.log(profiles);
       this.user = 
       {
         email: profiles.users.email,
-        firstName: profiles.users.name,
-        middleName: '',
-        lastName: '',
-        NIC: '',
-        address: profiles.users.address,
+        password: profiles.users.email,
+        name: [
+          {
+            prefix: profiles.users.name[0].prefix,
+            firstName: profiles.users.name[0].firstName,
+            middleName: profiles.users.name[0].middleName,
+            lastName : profiles.users.name[0].lastName    
+          }
+        ],
+        registeredDateTime: profiles.users.registeredDateTime,
+        address:[
+          {
+            streetAddress: profiles.users.address[0].streetAddress,
+            city: profiles.users.address[0].city,
+            postalZipCode: profiles.users.address[0].postalZipCode
+          }
+        ],
         phone: profiles.users.phone,
       };
+      console.log(this.user);
     });
   }
 }

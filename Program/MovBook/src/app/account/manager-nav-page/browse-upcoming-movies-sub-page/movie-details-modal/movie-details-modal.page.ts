@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams, PopoverController } from '@ionic/angular';
-import { MovieDetails } from 'src/app/models/movie-details';
+import { MovieDetails } from 'src/app/models/account/manager/movie-details';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { MovieCatalogTypesPopoverPage } from '../movie-catalog-types-popover/movie-catalog-types-popover.page';
 

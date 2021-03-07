@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { CinemaHall, HallSeatDetails } from 'src/app/models/account/manager';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddHallModalPage } from '../add-hall-modal/add-hall-modal.page';
 

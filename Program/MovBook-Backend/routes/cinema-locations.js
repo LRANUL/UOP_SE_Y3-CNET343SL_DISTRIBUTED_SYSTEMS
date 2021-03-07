@@ -8,11 +8,14 @@ const cinemaLocationsController = require("../controllers/cinema-locations");
 router.post("/", cinemaLocationsController.createCinemaLocation);
 
 // GET - Getting list of cinema hall details | Route: 'BASE_URL/api/cinema-locations'
-router.get("", cinemaLocationsController.retrieveListCinemaLocations)
+router.get("", cinemaLocationsController.retrieveListCinemaLocations);
 
 // GET - Getting one cinema hall details
 
+router.get("/location/:cinemaLocationObjectId", cinemaLocationsController.retrieveCinemaLocation);
 
+
+router.get("/find/location/:location", cinemaLocationsController.retrieveSpecificCinemaLocation);
 // PUT - Updating cinema hall details
 
 

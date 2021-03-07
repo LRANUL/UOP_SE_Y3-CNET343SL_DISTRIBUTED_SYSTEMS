@@ -11,11 +11,25 @@ export interface movie {
 
 export interface profile{
     id?: string,
+    name: 
+    [
+      {
+      prefix: string,
+      lastName: string,
+      firstName: string,
+      middleName: string,
+      }
+    ],
     email: string,
-    firstName: string,
-    middleName: string,
-    lastName: string,
-    NIC: string,
-    address: string,
+    password: string,
+    registeredDateTime: string,
+    address:
+    [
+      {
+      streetAddress: string,
+      city: string,
+      postalZipCode: string
+      }
+    ],
     phone: string,
   }
