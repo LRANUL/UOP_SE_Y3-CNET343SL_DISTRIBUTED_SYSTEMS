@@ -29,22 +29,27 @@ router.get('/:email' ,(req,res,next)=>{
 
 //update the user 
 router.put('/:id' ,(req,res,next)=>{
+  console.log(req.body);
   Users.updateOne({email: req.params.id}, 
     {
     name:
+    [
     {
       prefix: req.body.prefix,
       firstName: req.body.firstName,
       middleName: req.body.middleName,
       lastName: req.body.lastName
-    },
+    }
+    ], 
     address:
+    [
     {
       streetAddress: req.body.streetAddress,
       city: req.body.city,
       postalZipCode: req.body.postalZipCode
-    },
-    phone: req.body.phone
+    }
+    ],
+    phone: req.body.phone 
     })
   .then((data) => {
     console.log(data);

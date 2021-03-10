@@ -11,8 +11,7 @@
             <ion-col>
               <ion-item>
                 <ion-select placeholder="All Locations" [(ngModel)]="location" (ionChange)="getlocation()">
-                  <ion-select-option value="Colombo">Colombo</ion-select-option>
-                  <ion-select-option value="test">Panadura</ion-select-option>
+                  <ion-select-option *ngFor="let cinemaLocation of cinemaLocationList" value="{{cinemaLocation.cinemaLocationName}}">{{cinemaLocation.cinemaLocationName}}</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { profile } from 'src/app/models/account/customers';
 import { CustomerService } from 'src/app/services/account/customer.service';
 
@@ -13,10 +14,8 @@ export class EditProfileComponentComponent implements OnInit {
 
   constructor(private modalcntrl: ModalController, private customerService: CustomerService, private route: Router) { }
 
-  ngOnInit() {
-    this.getuser(this.temoryid);
-  }
-
+  public users : Observable<profile[]>;
+  
     profile: profile = {
       name:
       [
@@ -41,6 +40,10 @@ export class EditProfileComponentComponent implements OnInit {
       phone: '',
   };
 
+  ngOnInit() {
+    this.getuser(this.temoryid);
+  }
+
   UFname;
   UMname;
   ULname;
@@ -49,7 +52,7 @@ export class EditProfileComponentComponent implements OnInit {
   UAddress;
   Uemail;
 
-  temoryid = "yasuo@movbook.com";
+  temoryid = "lolsss@movbook.com";
 
   closemodal()
   {
@@ -91,5 +94,4 @@ export class EditProfileComponentComponent implements OnInit {
     this.customerService.updateuser(this.profile, this.temoryid);
     this.modalcntrl.dismiss();
   }
-
 }
