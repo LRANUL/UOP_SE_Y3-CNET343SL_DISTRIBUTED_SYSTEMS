@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { OperatorService } from 'src/app/services/account/operator.service';
+import { OperatorService } from "./../../service/operator.service";
+
 
 @Component({
   selector: 'app-setting-sub-page',

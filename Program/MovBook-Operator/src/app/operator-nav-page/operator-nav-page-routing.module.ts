@@ -10,19 +10,28 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./dashboard-sub-page/dashboard-sub-page.module').then(m => m.DashboardSubPagePageModule)
+    loadChildren: () =>
+      import('./dashboard-sub-page/dashboard-sub-page.module').then(
+        (m) => m.DashboardSubPagePageModule
+      ),
   },
   {
     path: 'movie-booking',
-    loadChildren: () => import('./movie-booking-sub-page/movie-booking-sub-page.module').then(m => m.MovieBookingSubPagePageModule)
+    loadChildren: () =>
+      import('./movie-booking-sub-page/movie-booking-sub-page.module').then(
+        (m) => m.MovieBookingSubPagePageModule
+      ),
   },
   {
     path: 'settings',
-    loadChildren: () => import('./setting-sub-page/setting-sub-page.module').then( m => m.SettingSubPagePageModule)
+    loadChildren: () =>
+      import('./setting-sub-page/setting-sub-page.module').then(
+        (m) => m.SettingSubPagePageModule
+      ),
   },
   {
-    path:'',
-    redirectTo:'/operator/dashboard'
+    path: '',
+    redirectTo: '/operator/dashboard',
   },
 ];
 
@@ -30,4 +39,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class OperatorNavPagePageRoutingModule { }
+export class OperatorNavPagePageRoutingModule {}
