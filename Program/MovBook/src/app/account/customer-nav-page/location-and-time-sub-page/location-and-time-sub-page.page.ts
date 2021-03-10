@@ -1,6 +1,7 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { empty } from "rxjs";
 import { movie } from "src/app/models/account/customers";
 import { CinemaHall } from "src/app/models/account/manager/cinema-hall";
 import { CinemaLocation } from "src/app/models/account/manager/cinema-location";
@@ -32,6 +33,8 @@ export class LocationAndTimeSubPagePage implements OnInit {
   movies; 
   movielocation;
 
+  cinemaLocationList = [];
+
   moviehall; 
 
   temoryID = "2";
@@ -41,6 +44,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
     const myFormattedDate = this.pipe.transform(now, "mediumDate");
     this.todayDate = myFormattedDate;
 
+    this.getListOfLocations();
     this.getshowingmoviedetails(this.temoryID);
   }
 
@@ -59,15 +63,19 @@ export class LocationAndTimeSubPagePage implements OnInit {
     this.customerService.getshowingmoviedetails(id);
     this.customerService.getmovie().subscribe((moviedetail: movie) => {
       this.movies = moviedetail; // this is the way it should be done to get multiple locations
-      this.hallID = moviedetail[0].cinemaHallObjectId;
-      this.locationID = moviedetail[0].cinemaLocationObjectId;
+      console.log(this.movies);
+      let i;
+       //  this.moviedetails.cinemaExperience = moviedetail[0].showingExperience; // this should come in the hall databse
+      for(i=0 ; i< this.movies.length; i++)
+      {
+        this.hallID = moviedetail[i].cinemaHallObjectId;
+        this.getmoviehall(this.hallID);
+        this.locationID = moviedetail[i].cinemaLocationObjectId;
+        console.log(this.locationID);
+        this.getmovielocation(this.locationID);
+      }
       this.startDate =  moviedetail[0].showingStartDate;
       this.endDate = moviedetail[0].showingEndDate;
-    //  this.moviedetails.cinemaExperience = moviedetail[0].showingExperience; // this should come in the hall databse
-      console.log(this.endDate);
-      console.log(this.hallID);
-      this.getmoviehall(this.hallID);
-      this.getmovielocation(this.locationID);
     });
   }
 
@@ -76,19 +84,25 @@ export class LocationAndTimeSubPagePage implements OnInit {
   this.customerService.retrieveCinemaHall(id);
   this.customerService.gethall().subscribe((movie: CinemaHall) => {
     this.moviehall = movie;
-    console.log(movie);
   });
   }
 
   getmovielocation(id)
-  {
+  { 
    this.customerService.retrieveCinemaLocation(id);
     this.customerService.getlocation().subscribe((movie: CinemaLocation) => {
     this.movielocation = movie;
     console.log(this.movielocation);
-    //this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
-    console.log(movie);
-   })
+   // this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
+   });
+  }
+
+  getListOfLocations()
+  {
+    this.customerService.retrieveAllCinemaLocations().subscribe((val)=>
+    {
+      this.cinemaLocationList = val as CinemaLocation[];
+    });
   }
 
   gotourl() {
@@ -106,7 +120,6 @@ export class LocationAndTimeSubPagePage implements OnInit {
       }
         this.movielocation = movie; 
       //this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
-      console.log(movie);
      })
   }
 

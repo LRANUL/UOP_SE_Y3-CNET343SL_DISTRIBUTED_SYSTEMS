@@ -37,9 +37,14 @@ exports.retrieveListCinemaLocations = async (req, res, next) => {
 
 
 //funtion to retreive single location
-exports.retrieveCinemaLocation = async (req, res, next) => {
-  cinemaLocationModel.findById({_id: req.params.cinemaLocationObjectId})
+exports.retrieveCinemaLocation = (req, res, next) => {
+  let id = req.params.cinemaLocationObjectId;
+  let id2 = id.split(' ').join('')
+  console.log(id);
+  console.log(id2);
+  cinemaLocationModel.findById(id2)
   .then((returnedData)=>{
+    console.log(returnedData);
     if(returnedData)
   {
     res.status(200).json({

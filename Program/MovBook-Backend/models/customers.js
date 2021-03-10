@@ -3,25 +3,21 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 const customerSchema =mongoose.Schema({
     name:
-    [
-      {
+    {
       prefix: {type : String},
-      lastName: {type : String},
       firstName: {type : String},
       middleName: {type : String},
-     }
-    ],
+      lastName: {type : String},
+    },
     email: {type : String, required:true , unique:true},
     password: {type : String, required:true },
     registeredDateTime: {type : String},
     address: 
-    [
     {
       streetAddress: {type : String},
       city: {type : String},
       postalZipCode: {type : String}
-    }
-    ],
+    },
     phone: {type : String}
 })
 

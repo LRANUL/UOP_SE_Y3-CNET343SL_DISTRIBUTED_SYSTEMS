@@ -41,6 +41,7 @@ export class CustomerService {
     postalCode: ''
     }
   };
+
   private location = new Subject();
   
   getlocation()
@@ -68,7 +69,7 @@ export class CustomerService {
     return this.hall.asObservable();
   }
 
-
+ 
 getUser(id:string) 
 {
   return this.http.get<{message: string, users: any}>('http://localhost:5000/api/customers/' + id)
@@ -76,6 +77,7 @@ getUser(id:string)
 
 updateuser(value, id)
 {
+  console.log(value);
   this.http.put<{message: string}>('http://localhost:5000/api/customers/' + id, value).subscribe((responsestatus) => {
     console.log(responsestatus);
 });   
@@ -102,8 +104,8 @@ getshowingmoviedetails(id: string)
   })
 }
 
-retrieveCinemaHall(cinemaHallObjectId){
-  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-halls/hall/' + cinemaHallObjectId).subscribe(res=>{
+retrieveCinemaHall(cinemaLocationObjectId){
+  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-halls/hall/' + cinemaLocationObjectId).subscribe(res=>{
     this.hallupdated = res.returnedData;
     this.hall.next([this.hallupdated]);
   });;
@@ -111,9 +113,13 @@ retrieveCinemaHall(cinemaHallObjectId){
 
 retrieveCinemaLocation(cinemaLocationObjectId){ 
   return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-locations/location/' + cinemaLocationObjectId).subscribe(res=>{
-    this.locationupdated= res.returnedData;
+    this.locationupdated = res.returnedData;
     this.location.next([this.locationupdated]);
   });
+}
+
+retrieveAllCinemaLocations(){
+  return this.http.get("http://localhost:5000/api/cinema-locations");
 }
 
 getmoviedetails(id: string)
