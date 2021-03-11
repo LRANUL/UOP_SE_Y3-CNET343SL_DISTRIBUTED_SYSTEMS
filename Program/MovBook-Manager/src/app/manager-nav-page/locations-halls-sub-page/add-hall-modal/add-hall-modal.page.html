@@ -1,0 +1,230 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><b>ADD HALL</b></ion-title>
+    <ion-button
+      (click)="closeAddHallModal()" 
+      slot="end" 
+      shape="round" 
+      fill="outline" 
+      color="danger" 
+      id="closeAddHallModalButton">
+      <ion-icon name="close-outline" style="font-size: 30px;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- CONTENT CARD -->
+  <ion-card style="height: 685px;">
+    <ion-card-content>
+
+      <form [formGroup]="addNewHallForm" (ngSubmit)="confirmBoxAddNewHall('Confirmation', 
+        'A new cinema hall will be added, do you want to continue?', addNewHallForm.value)">
+
+        <div id="addNewHallFormCustomizationSection">
+          <!-- ADD HALL FORM - MOVIE NAME, No of Rows, No of Columns -->
+          <div>
+            <ion-grid>
+              <ion-col size="6">
+                <ion-row>
+                  <ion-col>
+                    <ion-grid>
+                      <ion-col>
+                        <ion-row>
+                          <ion-col>
+                            <ion-label>
+                              <p class="add-form-text">Movie Hall Name: </p>
+                            </ion-label>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-input type="text" placeholder="Enter Hall Name" clearInput formControlName="hallName"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col>
+                            <ion-item style="min-width: 100%;">
+                              <ion-label>Automatically Number Seats to Alphabetical Order </ion-label>
+                              <ion-toggle slot="end" color="primary" formControlName="numberSeatAlphabetical" (ionChange)="setSeatNumberAlphabetical($event.detail.checked)"></ion-toggle>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row style="position: relative;
+                                        top: 20px;">
+                          <ion-col>
+                            <ion-label>
+                              <p class="add-form-text" style="font-size: 18px;">No of Allocated Seats</p>
+                            </ion-label>
+                          </ion-col>
+                          <ion-col>
+                            <ion-label>
+                              <p class="add-form-text" style="font-size: 18px;"><b>{{ noOfSeats }}</b></p>
+                            </ion-label>
+                          </ion-col>
+                        </ion-row>
+                      </ion-col>
+                    </ion-grid>
+                  </ion-col>
+                  <!-- Vertical Line -->
+                  <div style="border-left: 2px solid #ccc;"></div>
+                  <ion-col style="margin-left: 5px;">
+                    <ion-grid>
+                      <ion-col>
+                        <ion-row>
+                          <ion-col size="6">
+                            <ion-label>
+                              <p class="add-form-text">No of Rows: </p>
+                            </ion-label>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-item>
+                              <ion-input type="number" min="0" max="100" value="number" formControlName="noOfRows" (ionChange)="setNoOfRows($event.target.value)"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <ion-label>
+                              <p class="add-form-text">No of Columns: </p>
+                            </ion-label>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-item>
+                              <ion-input type="number" min="0" max="100" value="number" formControlName="noOfColumns" (ionChange)="setNoOfColumns($event.target.value)"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="12">
+                            <ion-button expand="block" 
+                                  (click)="buildSeatLayout()"
+                                  style="min-width: 100%;
+                                        min-height: 40px;
+                                        --border-radius: 10px;
+                                        position: absolute;
+                                        right: 10px;">
+                              <ion-label>
+                                <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
+                                                                                                                                  margin-left: 0px;"></ion-img>
+                              </ion-label>
+                              <ion-label style="margin-left: 10px;">
+                                BUILD LAYOUT
+                              </ion-label>
+                            </ion-button>
+                          </ion-col>
+                        </ion-row>
+                      </ion-col>
+                    </ion-grid>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-grid>
+          </div>
+
+          <!-- Horizontal Line -->
+          <div style="border-bottom: 2px solid #ccc;"></div>
+        </div>
+
+        <!-- Create New Hall Button -->
+        <div>
+          <ion-button expand="block" 
+                style="min-width: 170px;
+                      min-height: 40px;
+                      --border-radius: 4px;
+                      position: absolute;"
+                [disabled]="!addNewHallForm.valid"
+                type="submit">
+            <ion-label>
+              <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
+                                                                                                                margin-left: 0px;"></ion-img>
+            </ion-label>
+            <ion-label style="margin-left: 10px;">
+              CREATE NEW HALL
+            </ion-label>
+          </ion-button>
+        </div>
+      </form>
+
+      <!-- Add New Hall Form Customization Section Visibility Button -->
+      <div>
+        <ion-button expand="block" 
+              (click)="addNewHallCustomizationVisibility()"
+              style="min-width: 170px;
+                    min-height: 40px;
+                    --border-radius: 10px;
+                    position: absolute;
+                    right: 10px;"
+              color="green">
+          <ion-label>
+            <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
+                                                                                                              margin-left: 0px;" id="visibilityButtonImage"></ion-img>
+          </ion-label>
+          <ion-label style="margin-left: 10px;" id="visibilityButtonText">
+            HIDE CUSTOMIZATION
+          </ion-label>
+        </ion-button>
+      </div>
+
+      <!-- 'Layout of Hall Seating' Heading -->
+      <ion-label>
+        <h1 style="text-align: center;
+                  margin-top: 10px;
+                  font-weight: 600;">Layout of Hall Seating</h1>
+      </ion-label>
+
+      <!-- Hall Seating Layout Section -->
+      <div style="width: 100%;
+                  height: 365px;
+                  overflow: auto;
+                  margin-top: 20px;
+                  background-color: rgb(96, 143, 230);
+                  border-radius: 10px;" id="hallSeatLayoutSection">
+        <!-- Hall Seating Layout Contents Section -->
+        <div style="height: auto;
+                    position: relative;
+                    left: 50%;
+                    transform: translateX(-50%);">
+
+          <!-- Hall Seating Layout Screen Image -->
+          <div>
+            <ion-img src="assets/images/account/manager/locations-halls-sub-page/hall-screen-image.png" style="width: 65%;
+                                                                                                              position: relative;
+                                                                                                              left: 50%;
+                                                                                                              transform: translateX(-50%);
+                                                                                                              margin-bottom: 10px;"></ion-img>
+          </div>
+
+          <!-- Hall Seating Layout Screen Grid Table -->
+          <div style="margin-top: 5px;">
+            <table id="seatLayoutGridTable" style="border: none;
+                                                  background-color: rgb(96, 143, 230);"></table>
+          </div>
+
+          <!-- Hall Seating Layout Initial Text  -->
+          <div style="border: rgb(255, 255, 255) solid 3px;
+                      padding: 15px;
+                      width: 50%;
+                      border-radius: 10px;
+                      position: relative;
+                      left: 50%;
+                      transform: translateX(-50%);" *ngIf="showInitialText">
+            <ion-label style="font-size: 18px;
+                              font-weight: 500;
+                              color: rgb(0, 0, 0);
+                              position: relative;
+                              left: 25%;
+                              transform: translateX(-75%);
+                              font-family: sans-serif">
+              Provide 'No of Row and Columns'
+            </ion-label>
+          </div>
+
+        </div>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

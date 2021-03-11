@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><b>ADD LOCATION</b></ion-title>
+    <ion-button
+      (click)="closeAddLocationModal()" 
+      slot="end" 
+      shape="round" 
+      fill="outline" 
+      color="danger" 
+      id="closeAddLocationModalButton">
+      <ion-icon name="close-outline" style="font-size: 30px;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- CONTENT CARD -->
+  <ion-card>
+    <ion-card-content>
+
+      <ion-label style="font-size: 20px;
+                        color: #000000;">
+        Cinema Location Details
+      </ion-label>
+
+      <div>
+        <form [formGroup]="addNewLocationForm" (ngSubmit)="addNewLocationDetails(addNewLocationForm.value)">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="5">
+                <ion-label id="cinemaLocationNameText">
+                  Cinema Location Name:
+                </ion-label>
+              </ion-col>
+              <ion-col size="7">
+                <ion-item>
+                  <ion-input type="text" placeholder="Name" clearInput formControlName="locationName"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="5">
+                <ion-label id="cinemaLocationAddressText">
+                  Cinema Location Address:
+                </ion-label>
+              </ion-col>
+              <ion-col size="7">
+                <ion-row>
+                  <ion-item style="width: 100%;">
+                    <ion-input type="text" placeholder="Street Address" clearInput formControlName="locationAddressStreetAddress"></ion-input>
+                  </ion-item>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item style="width: 100%;">
+                      <ion-input type="text" placeholder="City" clearInput formControlName="locationAddressCity"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item style="width: 100%;">
+                      <ion-input type="number" placeholder="Postal Code" clearInput formControlName="locationAddressPostalCode"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: 10px;">
+              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!addNewLocationForm.valid" style="min-width: 250px;
+                                                                                                                      min-height: 40px;
+                                                                                                                      position: relative;
+                                                                                                                      left: 50%;
+                                                                                                                      transform: translateX(-50%);">
+                ADD LOCATION
+              </ion-button>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

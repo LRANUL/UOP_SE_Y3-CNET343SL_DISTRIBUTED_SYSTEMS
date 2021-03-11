@@ -3,13 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'operator',
-    loadChildren: () =>
-      import('./operator-nav-page/operator-nav-page.module').then(
-        (m) => m.OperatorNavPagePageModule
-      ),
-  },
-  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
@@ -19,6 +12,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
   },
+  {
+    path: 'operator',
+    loadChildren: () =>
+      import('./operator-nav-page/operator-nav-page.module').then(
+        (m) => m.OperatorNavPagePageModule
+      ),
+  },
 ];
 
 @NgModule({
@@ -27,4 +27,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
