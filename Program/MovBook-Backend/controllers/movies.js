@@ -123,7 +123,5 @@ exports.retrieveMovie = async (req, res, next) => {
         });
       }
     }
-
   })
-
-};
+}

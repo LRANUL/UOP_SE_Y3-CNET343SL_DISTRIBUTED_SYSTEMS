@@ -69,6 +69,41 @@ export class CustomerService {
     return this.hall.asObservable();
   }
 
+  public movieupdated = {
+    title: '',
+    year: '',
+    rated: '',
+    released: '',
+    runtime: '',
+    genre: '',
+    director: '',
+    writer: '',
+    actors: '',
+    plot: '',
+    language: '',
+    country: '',
+    awards: '',
+    poster: '',
+    ratings: [{
+      Source: '',
+      Value: ''
+    }],
+    metascore: '',
+    imdbRating: '',
+    imdbVotes: '',
+    imdbId: '',
+    type: '',
+    dvd: '',
+    boxOffice: '',
+    production: '',
+    website: ''
+    };
+    private movie = new Subject();
+    
+    getmovies()
+    {
+      return this.movie.asObservable();
+    }  
  
 getUser(id:string) 
 {
@@ -143,4 +178,11 @@ getmovielocation(location: string)
   });
 }
 
+getShowingMovies()
+{
+  return this.http.get<{message : string, returnedData : any}>('http://localhost:5000/api/movies').subscribe(res=>{
+    this.movieupdated= res.returnedData;
+    this.movie.next(this.movieupdated);
+ });
+}
 }

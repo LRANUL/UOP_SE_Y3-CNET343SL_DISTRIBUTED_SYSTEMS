@@ -35,7 +35,11 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home-sub-page/home-sub-page.module').then( m => m.HomeSubPagePageModule )
+  },  {
+    path: 'movie-detail-sub-page',
+    loadChildren: () => import('./movie-detail-sub-page/movie-detail-sub-page.module').then( m => m.MovieDetailSubPagePageModule)
   }
+
 ];
 
 @NgModule({

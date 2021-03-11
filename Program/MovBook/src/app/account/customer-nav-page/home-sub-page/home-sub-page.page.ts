@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CustomerService } from 'src/app/services/account/customer.service';
 
 @Component({
   selector: 'app-home-sub-page',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeSubPagePage implements OnInit {
 
-  constructor() { }
+  constructor(private customerService: CustomerService) { }
 
   ngOnInit() {
+    this.getmovie();
   }
 
+  showingmovies;
+
+  sliderConfig =
+  {
+   spaceBetween: 10,
+   centeredSlides: true,
+   slidesPerView: 1.6
+  }
+
+  getmovie()
+  {
+   this.customerService.getShowingMovies();
+   this.customerService.getmovies().subscribe((val)=>{
+    this.showingmovies = val;
+    console.log(this.showingmovies);
+   })
+  }
 }
