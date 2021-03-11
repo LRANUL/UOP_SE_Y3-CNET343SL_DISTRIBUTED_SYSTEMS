@@ -24,3 +24,23 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-menu{
+  --background: #374d58;
+  --radius:25px
+}
+ion-content{
+  --background: #374d58;
+}
+//#e8e8e8;
+ion-button{
+  --background: #2e8ded;
+}
+
+.customer-edit-profile-css .modal-wrapper {
+  height: 100%;
+  top: 2%;
+  position: absolute;
+  display: block;
+}
+

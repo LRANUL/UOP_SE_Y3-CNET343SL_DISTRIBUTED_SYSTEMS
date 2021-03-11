@@ -22,7 +22,7 @@
                 <ion-col>
                     <ion-slides [options]="sliderConfig">
                         <ion-slide *ngFor="let movie of showingmovies">
-                            <ion-card>
+                            <ion-card (click)="showDetails(movie._id)">
                                 <img src="{{movie.poster}}" style="width: 100%; height: 200px;">
                                 <ion-card-header>
                                   <ion-card-subtitle style="text-align: left;">Ratings: {{movie.imdbRating}}</ion-card-subtitle>
@@ -47,19 +47,21 @@
           <ion-row>
               <ion-col>
                 <ion-slides [options]="sliderConfig">
-                    <ion-slide *ngFor="let movie of showingmovies">
-                        <ion-card>
-                            <img src="{{movie.poster}}" style="width: 100%; height: 200px;">
+                    <ion-slide *ngFor="let movie of showingmovies"> 
+                        <ion-card (click)="showDetails(movie._id)">
                             <ion-card-header>
-                              <ion-card-subtitle style="text-align: left;">Ratings: {{movie.imdbRating}}</ion-card-subtitle>
-                              <ion-card-title style="text-align: left;">{{movie.title}}</ion-card-title>
+                            <img src="{{movie.poster}}" style="width: 100%; height: 200px;">
+                            <ion-card-subtitle style="text-align: left;">Ratings: {{movie.imdbRating}}</ion-card-subtitle>
+                            <ion-card-title style="text-align: left;">{{movie.title}}</ion-card-title>
                             </ion-card-header>
+                            <ion-card-content>
                                 <ion-buttons>
                                     <ion-button>
                                         <ion-icon name="calendar-outline" style="padding-right: 10px;"></ion-icon>
                                         Book Ticket
                                     </ion-button>
                                 </ion-buttons>
+                            </ion-card-content>
                           </ion-card>
                     </ion-slide>
                     </ion-slides>
@@ -74,7 +76,7 @@
           <ion-col>
             <ion-slides [options]="sliderConfig">
                 <ion-slide *ngFor="let movie of showingmovies">
-                    <ion-card>
+                    <ion-card (click)="showDetails(movie._id)">
                         <img src="{{movie.poster}}" style="width: 100%; height: 200px;">
                         <ion-card-header>
                           <ion-card-subtitle style="text-align: left;">Ratings: {{movie.imdbRating}}</ion-card-subtitle>

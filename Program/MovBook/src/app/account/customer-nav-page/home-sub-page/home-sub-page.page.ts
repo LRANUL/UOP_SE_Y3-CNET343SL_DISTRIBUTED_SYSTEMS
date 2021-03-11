@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/account/customer.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { CustomerService } from 'src/app/services/account/customer.service';
 })
 export class HomeSubPagePage implements OnInit {
 
-  constructor(private customerService: CustomerService) { }
+  constructor(private customerService: CustomerService, private router: Router) { }
 
   ngOnInit() {
     this.getmovie();
@@ -18,9 +19,9 @@ export class HomeSubPagePage implements OnInit {
 
   sliderConfig =
   {
-   spaceBetween: 10,
+   spaceBetween: 7,
    centeredSlides: true,
-   slidesPerView: 1.6
+   slidesPerView: 3
   }
 
   getmovie()
@@ -30,5 +31,11 @@ export class HomeSubPagePage implements OnInit {
     this.showingmovies = val;
     console.log(this.showingmovies);
    })
+  }
+
+  showDetails(id)
+  {
+    console.log(id);
+    this.router.navigate(['customer/movie details/',id]);
   }
 }

@@ -27,6 +27,27 @@ router.get('',(req,res,next)=>{
     })
 });
 
+//Get - Get one movie
+router.get("/:movieId",(req,res,next)=>{
+    movieModel.findById(req.params.movieId)
+    .then((returnedData)=>{
+      if(returnedData)
+    {
+      res.status(200).json({
+        message: "Movie details Obtained",
+        returnedData
+      })
+    }else
+    {
+      res.status(404).json({
+        message: "The was a issue obtaining movie details"
+      })
+    } 
+    }).catch(err => {
+     console.log(err);
+    })
+});
+
 // POST - Create new cinema hall | Route: 'BASE_URL/api/movies/'
 router.post("/", movieController.createNewMovie);
 

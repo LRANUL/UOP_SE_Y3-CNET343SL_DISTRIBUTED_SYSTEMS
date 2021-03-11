@@ -1,12 +1,10 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { empty } from "rxjs";
 import { movie } from "src/app/models/account/customers";
-import { CinemaHall } from "src/app/models/account/manager/cinema-hall";
-import { CinemaLocation } from "src/app/models/account/manager/cinema-location";
+import { CinemaHall } from "src/app/models/account/cinema-hall";
+import { CinemaLocation } from "src/app/models/account/cinema-location";
 import { CustomerService } from "src/app/services/account/customer.service";
-import { ManagerService } from "src/app/services/account/manager.service";
 
 @Component({
   selector: "app-location-and-time-sub-page",
@@ -30,12 +28,12 @@ export class LocationAndTimeSubPagePage implements OnInit {
   movieid;
   locationID;
   hallID;
-  movies; 
+  movies;
   movielocation;
 
   cinemaLocationList = [];
 
-  moviehall; 
+  moviehall;
 
   temoryID = "2";
 
@@ -88,7 +86,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
   }
 
   getmovielocation(id)
-  { 
+  {
    this.customerService.retrieveCinemaLocation(id);
     this.customerService.getlocation().subscribe((movie: CinemaLocation) => {
     this.movielocation = movie;
@@ -118,7 +116,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
         this.movielocation = "";
         console.log(this.movielocation);
       }
-        this.movielocation = movie; 
+        this.movielocation = movie;
       //this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
      })
   }
