@@ -9,6 +9,7 @@ router.get('' ,(req,res,next)=>{
     .then((data)=>{
       console.log(data);
       res.send(data)
+      res.json({message:'hii'});
     }).catch(err => {
       res.status.send({
         message: err.message

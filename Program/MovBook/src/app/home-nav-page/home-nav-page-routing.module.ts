@@ -23,7 +23,11 @@ const routes: Routes = [
   {
     path: 'about-us-sub-page',
     loadChildren: () => import('./about-us-sub-page/about-us-sub-page.module').then( m => m.AboutUsSubPagePageModule)
+  },  {
+    path: 'loyality-information-sub-page',
+    loadChildren: () => import('./loyality-information-sub-page/loyality-information-sub-page.module').then( m => m.LoyalityInformationSubPagePageModule)
   }
+
 ];
 
 @NgModule({
