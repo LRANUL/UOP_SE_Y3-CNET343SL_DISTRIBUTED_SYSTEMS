@@ -6,31 +6,17 @@
         <div class="profilePhoto">
           <img src="assets\images\operator.jpg" style="border-radius: 50px; width: 150px; height: 150px" />
           <span class="onlineStatus"></span>
-          <h4>John Steve</h4>
-          <h6>john@movbook.com</h6>
+          <h4>{{name}}</h4>
+          <h6>{{email}}</h6>
           <br />
         </div>
         <ion-button expand="block" color="button" href="operator/dashboard">Dashboard</ion-button>
-        <ion-button expand="block" color="light" href="operator/movie-booking">Movie Bookings</ion-button>
-        <ion-button expand="block" color="button" href="operator/manage-stock">Beverages</ion-button>
+        <ion-button expand="block" color="button" href="operator/movie-booking">Movie Bookings</ion-button>
+        <ion-button expand="block" color="light" href="operator/manage-stock">Beverages</ion-button>
         <ion-button expand="block" color="button" href="operator/support">Support</ion-button>
         <ion-button expand="block" color="button" style="margin-top: 80%" href="operator/settings">Settings</ion-button>
       </ion-col>
       <ion-col style="width:80%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
-        <ion-row>
-          <h1 style="color: #374d58;"><b>Movies</b></h1>
-        </ion-row>
-        <ion-row style="height: 280px;overflow-y: scroll;">
-          <ion-card *ngFor="let movie of Movies" style="width: 250px;height: 500px;">
-            <ion-img src='{{movie.imgUrl}}'></ion-img>
-            <ion-card-title>{{movie.title}}</ion-card-title>
-            <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
-            <ion-card-content>
-              <p>Rating: {{movie.rating}}⭐</p>
-              <p>{{movie.description}}</p>
-            </ion-card-content>
-          </ion-card>
-        </ion-row>
         <ion-row>
           <h1 style="color: #374d58;"><b>Beverages</b></h1>
         </ion-row>
@@ -48,22 +34,12 @@
       </ion-col>
       <ion-col size="auto" style="width:200px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
         <ion-row>
-          <h1 style="color: #374d58;"><b>Booking Selection</b></h1>
+          <h1 style="color: #374d58;"><b>Stock Update</b></h1>
         </ion-row>
         <ion-list>
-          <ion-item>
-            <ion-label>Movie Title: {{title}}</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Adult Ticket Quantity: {{adultQuantity}}</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Child Ticket Quantity: {{childQuantity}}</ion-label>
-          </ion-item>
-          <ion-item *ngFor="let selectedBeverage of BeverageSelection">
-            <ion-label>Beverage & Quantity: {{selectedBeverage.name}} {{selectedBeverage.quantity}}</ion-label>
-          </ion-item>
-          <ion-button>Pay Now</ion-button>
+          <ion-item>Selection: {{beverage}}</ion-item>
+          <ion-item>Quantity: <ion-input></ion-input></ion-item>
+          <ion-button>Update</ion-button>
         </ion-list>
       </ion-col>
     </ion-row>

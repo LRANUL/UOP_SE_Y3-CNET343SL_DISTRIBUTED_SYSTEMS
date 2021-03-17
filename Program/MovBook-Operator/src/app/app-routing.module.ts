@@ -19,7 +19,7 @@ const routes: Routes = [
       import('./operator-nav-page/operator-nav-page.module').then(
         (m) => m.OperatorNavPagePageModule
       ),
-      canActivate:[AuthGuard]
+      // canActivate:[AuthGuard]
   },
 ];
 

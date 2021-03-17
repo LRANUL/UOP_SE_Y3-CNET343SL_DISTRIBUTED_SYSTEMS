@@ -12,10 +12,17 @@ import { OperatorService } from "./../../service/operator.service";
 export class MovieBookingSubPagePage implements OnInit {
   Movies: Object;
   Beverages: Object;
+  name: string;
+  email: string;
   constructor(private menu: MenuController,
     public operatorService: OperatorService) {}
 
   ngOnInit() {
+    this.name = localStorage.getItem('name');
+    this.email = localStorage.getItem('email');
+// Remove after getting login credentials
+    this.name = 'John Steve';
+    this.email = 'john@movbook.com';
     this.operatorService.getMovies().subscribe(
       (data) => {
         this.Movies = data;

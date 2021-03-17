@@ -14,14 +14,20 @@ export class SettingSubPagePage implements OnInit {
   Address: any;
   Phone: any;
   Type: any;
+  name: string;
+  email: string;
 
   constructor(
     public operatorService: OperatorService
   ) { }
 
   ngOnInit() {
-    var email = "john@movbook.com";
-    this.operatorService.getProfile(email).subscribe(
+    this.name = localStorage.getItem('name');
+    this.email = localStorage.getItem('email');
+// Remove after getting login credentials
+    this.name = 'John Steve';
+    this.email = 'john@movbook.com';
+    this.operatorService.getProfile(this.email).subscribe(
       (data) => {
         this.Name = data['name'];
         this.Email = data['email'];
