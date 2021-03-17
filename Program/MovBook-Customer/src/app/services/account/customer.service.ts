@@ -105,6 +105,37 @@ export class CustomerService {
       return this.movie.asObservable();
     }
 
+    public movieShowingUpdated = {
+      movieObjectId: '',
+      cinemaHallObjectId: '',
+      cinemaLocationObjectId: '',
+      showingExperience: '',
+      showingStartDate: '',
+      showingEndDate: '',
+      showingTime: ''
+      };
+      private Showingmovie = new Subject();
+
+      getShowingMovie()
+      {
+        return this.Showingmovie.asObservable();
+      }
+
+      public ticketPricesUpdated = {
+        movieObjectId: '',
+        showingTimeSlot:  '',
+        ticketCost: {
+        adult: '',
+        children: '',
+        }
+        };
+        private ticketPrice = new Subject();
+
+        getTicket()
+        {
+          return this.ticketPrice.asObservable();
+        }
+
 getUser(id:string)
 {
   return this.http.get<{message: string, users: any}>('http://localhost:5000/api/customers/' + id)
@@ -186,11 +217,27 @@ getShowingMovies()
  });
 }
 
+getSpecificShowingMovie(showingId: string)
+{
+  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-details/id/' + showingId).subscribe(res=>{
+    this.movieShowingUpdated = res.tickets;
+    this.Showingmovie.next(this.movieShowingUpdated);
+ });
+}
+
 getMovieDetail(movieId)
 {
   return this.http.get<{message : string, returnedData : any}>('http://localhost:5000/api/movies/' + movieId).subscribe(res=>{
     this.movieupdated= res.returnedData;
     this.movie.next(this.movieupdated);
+ });
+}
+
+getTicketPrice(movieId: string)
+{
+  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/ticket-prices/' + movieId).subscribe(res=>{
+    this.ticketPricesUpdated = res.tickets;
+    this.ticketPrice.next(this.ticketPricesUpdated);
  });
 }
 }

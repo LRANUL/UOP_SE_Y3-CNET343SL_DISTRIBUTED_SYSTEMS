@@ -5,6 +5,7 @@ import { movie } from "src/app/models/account/customers";
 import { CinemaHall } from "src/app/models/account/cinema-hall";
 import { CinemaLocation } from "src/app/models/account/cinema-location";
 import { CustomerService } from "src/app/services/account/customer.service";
+import { Movie } from "src/app/models/account/movie";
 
 @Component({
   selector: "app-location-and-time-sub-page",
@@ -29,13 +30,45 @@ export class LocationAndTimeSubPagePage implements OnInit {
   locationID;
   hallID;
   movies;
+  movieDetails : Movie = {
+    title: '',
+    year: '',
+    rated: '',
+    released: '',
+    runtime: '',
+    genre: '',
+    director: '',
+    writer: '',
+    actors: '',
+    plot: '',
+    language: '',
+    country: '',
+    awards: '',
+    poster: '',
+    ratings: [
+      {
+        Source: '',
+        Value: '',
+      }
+    ],
+    metascore: '',
+    imdbRating: '',
+    imdbVotes: '',
+    imdbID: '',
+    type: '',
+    dvd: '',
+    boxOffice: '',
+    production: '',
+    website: '',
+    response: '',
+  };
   movielocation;
 
   cinemaLocationList = [];
 
   moviehall;
 
-  temoryID = "2";
+  temoryID = "603b41f8a6bfd730f4abe8b3";
 
   ngOnInit() {
     const now = Date.now();
@@ -44,6 +77,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
 
     this.getListOfLocations();
     this.getshowingmoviedetails(this.temoryID);
+    this.getMovieAdditionalDetails();
   }
 
   //get the id through the url and then acess it here (remove coment once id is passed)
@@ -55,6 +89,15 @@ export class LocationAndTimeSubPagePage implements OnInit {
   getmoviedetails(id)
   {
    this.customerService.getmoviedetails(id);
+  }
+
+  getMovieAdditionalDetails()
+  {
+    this.customerService.getMovieDetail(this.temoryID);
+    this.customerService.getmovies().subscribe((movie: Movie)=> {
+      this.movieDetails = movie;
+      console.log( this.movieDetails);
+    })
   }
 
   getshowingmoviedetails(id) {
