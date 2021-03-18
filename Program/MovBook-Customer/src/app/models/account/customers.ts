@@ -11,7 +11,7 @@ export interface movie {
 
 export interface profile{
     id?: string,
-    name: 
+    name:
     [
       {
       prefix: string,
@@ -32,4 +32,4 @@ export interface profile{
       }
     ],
     phone: string,
-  }
+}

@@ -25,6 +25,26 @@ router.get('/:id' ,(req,res,next)=>{
       })
 });
 
+router.get('/id/:showingId' ,(req,res,next)=>{
+    booking.findById(req.params.showingId)
+      .then((data)=>{
+        if(data)
+      {
+        res.status(200).json({
+          message: "It works",
+          tickets: data
+        })
+      }else
+      {
+        res.status(404).json({
+          message: "The user does not exist"
+        })
+      } 
+      }).catch(err => {
+       console.log(err);
+      })
+});
+
 //get information with cinemaExperience
 router.get('/experience/:experience' ,(req,res,next)=>{
     booking.find({showingExperience: req.params.experience})

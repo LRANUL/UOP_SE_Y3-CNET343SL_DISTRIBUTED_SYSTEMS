@@ -8,13 +8,13 @@
            <ion-grid>
              <ion-row>
                <ion-col>
-                <ion-card-title>Move Name</ion-card-title>
+                <ion-card-title>{{movieDetails.title}}</ion-card-title>
                </ion-col>
                <ion-col size-md="1"  offset-md="0.5">
                 <span>{{counter.min}} : {{counter.sec}}</span>
                </ion-col>
              </ion-row>
-           </ion-grid>  
+           </ion-grid>
          </ion-card-header>
          <ion-card-content>
          <ion-grid>
@@ -26,10 +26,10 @@
                    Location
                   </ion-col>
                   <ion-col>
-                    time
+                    {{movies.showingTime}}
                   </ion-col>
                   <ion-col>
-                    Emperience
+                    {{movies.showingExperience}}
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -98,7 +98,7 @@
                           <ion-col size-md="4">
                            <ion-item>
                              <ion-icon name="remove-outline" (click)="removeticket()"></ion-icon>
-                             <ion-label style="text-align: center;">{{adulttickets}}</ion-label>        
+                             <ion-label style="text-align: center;">{{adulttickets}}</ion-label>
                              <ion-icon name="add-circle-outline" (click)="addticket()"></ion-icon>
                             </ion-item>
                           </ion-col>
@@ -118,7 +118,7 @@
                          <ion-col size-md="4">
                           <ion-item>
                             <ion-icon name="remove-outline" (click)=" childrenremoveticket()"></ion-icon>
-                            <ion-label style="text-align: center;">{{childrenTickets}}</ion-label>        
+                            <ion-label style="text-align: center;">{{childrenTickets}}</ion-label>
                             <ion-icon name="add-circle-outline" (click)="childrenaddticket()"></ion-icon>
                            </ion-item>
                          </ion-col>
@@ -131,16 +131,16 @@
                <ion-col>
                 <br>
                 <ion-item>
-                  <ion-card-subtitle>Ticket Price for Adult - 800</ion-card-subtitle>
+                  <ion-card-subtitle>Ticket Price for Adult - {{tickets.ticketCost.adult}}</ion-card-subtitle>
                 </ion-item>
                <br>
                <ion-item>
-                <ion-card-subtitle>Ticket Price for child - 600</ion-card-subtitle>
-               </ion-item>     
+                <ion-card-subtitle>Ticket Price for child - {{tickets.ticketCost.children}}</ion-card-subtitle>
+               </ion-item>
                <br>
                <ion-item>
                 <ion-card-header>Your Total Ammount : Rs.{{totalammount}}</ion-card-header>
-               </ion-item>       
+               </ion-item>
                </ion-col>
              </ion-row>
            </ion-grid>
@@ -167,4 +167,4 @@
     </ion-row>
   </ion-grid>
   </ion-content>
-  
+

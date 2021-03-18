@@ -41,7 +41,7 @@ export interface Movie {
  */
 export interface MovieResponse {
   message: string;
-  returnedData?: 
+  returnedData?:
   {
     _id?: string;
     title: string;
@@ -88,4 +88,13 @@ export interface MovieObjectIdResponse {
       _id?: string;
     }
   ]
+}
+
+export interface ticketPrices{
+  movieObjectId: String,
+  showingTimeSlot:  String,
+  ticketCost: {
+    adult: any,
+    children: any,
+  }
 }
