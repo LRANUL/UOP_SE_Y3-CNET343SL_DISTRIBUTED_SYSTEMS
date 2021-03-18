@@ -39,12 +39,12 @@
         <ion-list>
           <ion-item>
             <ion-label>Seasonal promotions</ion-label>
-            <ion-toggle color="warning" [(ngModel)]="promotion"></ion-toggle>
+            <ion-toggle color="warning" [(ngModel)]="promotion" (ngModelChange)="updatePromotion(promotion)"></ion-toggle>
           </ion-item>
         
           <ion-item>
             <ion-label>Maintainence Down</ion-label>
-            <ion-toggle color="danger" [(ngModel)]="maintainence"></ion-toggle>
+            <ion-toggle color="danger" [(ngModel)]="maintainence" (ngModelChange)="updateMaintainence(maintainence)"></ion-toggle>
           </ion-item>
         </ion-list>
       </ion-col>

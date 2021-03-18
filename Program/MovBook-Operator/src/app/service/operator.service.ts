@@ -14,7 +14,19 @@ export class OperatorService {
   getMovies() {
     return this.http.get(this.BASE_URL + "/api/movies");
   }
-
+  getOfferStatus(){
+    return this.http.get(this.BASE_URL + "api/offer-status");
+  }
+  setOfferStatus(value){
+    return this.http.get(this.BASE_URL + "api/offer?value="+value);
+  }
+  getMaintenanceStatus(){
+    return this.http.get(this.BASE_URL + "api/maintenance-status");
+  }
+  setMaintenanceStatus(value)
+  {
+    return this.http.get(this.BASE_URL + "api/maintenance?value="+value);
+  }
   getBeverages() {
     return this.http.get(this.BASE_URL + "/api/beverages");
   }
