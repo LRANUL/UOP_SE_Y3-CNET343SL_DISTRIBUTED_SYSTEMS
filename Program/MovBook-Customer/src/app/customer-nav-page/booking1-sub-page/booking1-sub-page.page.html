@@ -1,3 +1,13 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+      <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+      <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+    <ion-button slot="start" color="light">
+      <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <ion-grid>
     <ion-row>
@@ -23,7 +33,7 @@
               <ion-grid>
                 <ion-row>
                   <ion-col>
-                   Location
+                   Location {{hallDetails.seatingGridNoOfColumns}}
                   </ion-col>
                   <ion-col>
                     {{movies.showingTime}}
@@ -42,6 +52,35 @@
        <ion-grid>
          <ion-row>
            <ion-col>
+             <table style="border: none;
+             position: relative;
+             left: 49%;
+             transform: translateX(-49%);">
+               <tr *ngFor="let in of covertNumberToArray(NoOfRows); let row = index" >
+                 <td class="seatingGridTableTableData" *ngFor="let in of covertNumberToArray(NoOfColumns); let column = index">
+                  <div class="seatingGridTableOuterDiv">
+                    <ng-container *ngFor="let Details of seatData">
+                      <ng-template
+                            *ngIf="Details?.seatId == cinemaLocationId + '|0|' + preIncrementValue(row) + '|' + preIncrementValue(column);
+                                  then showSeatDetails;">
+                          </ng-template>
+                          <ng-template #showSeatDetails>
+                            <div [ngClass]="{
+                                'seatingGridTableInnerDivUnavailableSeat': Details.seatUnavailable,
+                                'seatingGridTableInnerDiv': !Details.seatActive,
+                                'seatingGridTableInnerDiv': !Details.seatUnavailable
+                              }">
+                              <p class="seatingGridTableInnerDivP" *ngIf="!Details.seatUnavailable">
+                                {{ Details.seatNumber }}
+                              </p>
+                            </div>
+                          </ng-template>
+                    </ng-container>
+                  </div>
+                 </td>
+               </tr>
+             </table>
+             <br>
             <ion-img src="../../assets/images/movie-screen.png" style="height: 100px;"></ion-img>
                 <ion-grid>
                   <ion-row>

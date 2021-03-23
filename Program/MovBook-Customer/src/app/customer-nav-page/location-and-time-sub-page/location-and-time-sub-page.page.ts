@@ -105,37 +105,9 @@ export class LocationAndTimeSubPagePage implements OnInit {
     this.customerService.getmovie().subscribe((moviedetail: movie) => {
       this.movies = moviedetail; // this is the way it should be done to get multiple locations
       console.log(this.movies);
-      let i;
-       //  this.moviedetails.cinemaExperience = moviedetail[0].showingExperience; // this should come in the hall databse
-      for(i=0 ; i< this.movies.length; i++)
-      {
-        this.hallID = moviedetail[i].cinemaHallObjectId;
-        this.getmoviehall(this.hallID);
-        this.locationID = moviedetail[i].cinemaLocationObjectId;
-        console.log(this.locationID);
-        this.getmovielocation(this.locationID);
-      }
       this.startDate =  moviedetail[0].showingStartDate;
       this.endDate = moviedetail[0].showingEndDate;
     });
-  }
-
-  getmoviehall(id)
-  {
-  this.customerService.retrieveCinemaHall(id);
-  this.customerService.gethall().subscribe((movie: CinemaHall) => {
-    this.moviehall = movie;
-  });
-  }
-
-  getmovielocation(id)
-  {
-   this.customerService.retrieveCinemaLocation(id);
-    this.customerService.getlocation().subscribe((movie: CinemaLocation) => {
-    this.movielocation = movie;
-    console.log(this.movielocation);
-   // this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
-   });
   }
 
   getListOfLocations()
@@ -152,16 +124,25 @@ export class LocationAndTimeSubPagePage implements OnInit {
 
   getlocation() {
     console.log(this.location)
-    this.customerService.getmovielocation(this.location);
-    this.customerService.getlocation().subscribe((movie: any) => {
-      if(movie == [])
+    if(this.location == "All")
+    {
+      this.getshowingmoviedetails(this.temoryID);
+    }else
+    {
+    this.customerService.getSelectedShowingMovieDetails(this.location);
+    this.customerService.getmovie().subscribe((movies: movie) => {
+      let id = movies[0].movieObjectId;
+      console.log(id);
+      if(id == this.temoryID)
       {
-        this.movielocation = "";
-        console.log(this.movielocation);
+        this.movies = movies;
+      } else
+      {
+       this.movies = "";
       }
-        this.movielocation = movie;
       //this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
      })
+    }
   }
 
   getTime() {
@@ -171,5 +152,24 @@ export class LocationAndTimeSubPagePage implements OnInit {
 
   getexperience() {
     console.log(this.experience);
+    if(this.experience == "All")
+    {
+      this.getshowingmoviedetails(this.temoryID);
+    }else
+    {
+      this.customerService.getmovieexperience(this.experience);
+      this.customerService.getmovie().subscribe((movies: movie) => {
+      let id = movies[0].movieObjectId;
+      console.log(id);
+      if(id == this.temoryID)
+      {
+        this.movies = movies;
+      } else
+      {
+       this.movies = "";
+      }
+      //this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
+     })
+    }
   }
 }

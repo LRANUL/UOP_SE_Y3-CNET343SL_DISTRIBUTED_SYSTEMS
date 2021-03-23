@@ -6,7 +6,13 @@ export interface movie {
   showingExperience: string,
   showingStartDate: string,
   showingEndDate: string,
-  showingTime: string
+  showingTime: string,
+  cinemaLocationName : string,
+  cinemaLocationAddress : {
+    streetAddress : string,
+    city : string,
+    postalCode: any
+  }
 }
 
 export interface profile{

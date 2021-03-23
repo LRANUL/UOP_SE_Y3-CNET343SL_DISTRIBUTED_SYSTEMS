@@ -38,4 +38,10 @@ export class HomeSubPagePage implements OnInit {
     console.log(id);
     this.router.navigate(['customer/movie details/',id]);
   }
+
+  venuSelection(id)
+  {
+    console.log(id);
+    this.router.navigate(['customer/Venue Selection/',id]);
+  }
 }
