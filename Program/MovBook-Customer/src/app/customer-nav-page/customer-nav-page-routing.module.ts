@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./watchlist-sub-page/watchlist-sub-page.module').then( m => m.WatchlistSubPagePageModule)
   },
   {
-    path: 'booking',
+    path: 'booking/:id',
     loadChildren: () => import('./booking1-sub-page/booking1-sub-page.module').then( m => m.Booking1SubPagePageModule)
   },
   {

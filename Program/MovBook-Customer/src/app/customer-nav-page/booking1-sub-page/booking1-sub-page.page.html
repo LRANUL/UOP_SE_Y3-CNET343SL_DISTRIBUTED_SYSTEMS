@@ -33,10 +33,10 @@
               <ion-grid>
                 <ion-row>
                   <ion-col>
-                   Location {{hallDetails.seatingGridNoOfColumns}}
+                   {{movies.cinemaLocationName}} {{movies.cinemaLocationAddress.city}}
                   </ion-col>
                   <ion-col>
-                    {{movies.showingTime}}
+                    {{time}}
                   </ion-col>
                   <ion-col>
                     {{movies.showingExperience}}
@@ -61,20 +61,20 @@
                   <div class="seatingGridTableOuterDiv">
                     <ng-container *ngFor="let Details of seatData">
                       <ng-template
-                            *ngIf="Details?.seatId == cinemaLocationId + '|0|' + preIncrementValue(row) + '|' + preIncrementValue(column);
-                                  then showSeatDetails;">
-                          </ng-template>
-                          <ng-template #showSeatDetails>
-                            <div [ngClass]="{
-                                'seatingGridTableInnerDivUnavailableSeat': Details.seatUnavailable,
-                                'seatingGridTableInnerDiv': !Details.seatActive,
-                                'seatingGridTableInnerDiv': !Details.seatUnavailable
-                              }">
-                              <p class="seatingGridTableInnerDivP" *ngIf="!Details.seatUnavailable">
-                                {{ Details.seatNumber }}
-                              </p>
-                            </div>
-                          </ng-template>
+                        *ngIf="Details?.seatId == cinemaLocationId + '|0|' + preIncrementValue(row) + '|' + preIncrementValue(column);
+                              then showSeatDetails;">
+                      </ng-template>
+                      <ng-template #showSeatDetails>
+                        <div [ngClass]="{
+                          'seatingGridTableInnerDivUnavailableSeat': !Details.seatUnavailable,
+                          'seatingGridTableInnerDiv': Details.seatUnavailable,
+                          'bookedSeatingGridTableInnerDiv': Details.seatStatus && Details.seatUnavailable
+                          }" id="{{ Details?.seatId }}">
+                          <p class="seatingGridTableInnerDivP" *ngIf="Details.seatUnavailable" (click)="bookingTicket(Details.seatId, Details.seatNumber, Details.seatStatus)">
+                            {{Details.seatNumber}}
+                          </p>
+                        </div>
+                      </ng-template>
                     </ng-container>
                   </div>
                  </td>
@@ -84,26 +84,22 @@
             <ion-img src="../../assets/images/movie-screen.png" style="height: 100px;"></ion-img>
                 <ion-grid>
                   <ion-row>
-                    <ion-col size-md="7"  offset-md="2.5">
+                    <ion-col size-md="5"  offset-md="3.5">
                       <ion-card>
                         <ion-card-content>
                       <ion-grid>
                         <ion-row>
                           <ion-col>
-                            <img src="../../assets/images/blue.jpg" style="height: 10px;">
+                            <img src="../../assets/images/red.jpg" style="height: 10px;">
                             Reserved Seats
                           </ion-col>
                           <ion-col>
-                            <img src="../../assets/images/pink.jpg" style="height: 10px;">
+                            <img src="../../assets/images/blue.jpg" style="height: 10px;">
                             Selected Seats
                           </ion-col>
                           <ion-col>
                             <img src="../../assets/images/white.png" style="height: 10px;">
                             Available Seats
-                          </ion-col>
-                          <ion-col>
-                            <img src="../../assets/images/red.jpg" style="height: 10px;">
-                            Unavailable Seats
                           </ion-col>
                         </ion-row>
                       </ion-grid>

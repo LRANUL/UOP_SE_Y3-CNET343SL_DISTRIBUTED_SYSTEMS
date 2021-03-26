@@ -22,6 +22,24 @@
   height: 40px;
 }
 
+.bookedSeatingGridTableInnerDiv{
+  background-color: #D33131;
+  color: #D33131;
+  border: 5px solid #D33131;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.reserveSeatingGridTableInnerDiv{
+  background-color: rgb(96, 143, 230);
+  color: rgb(96, 143, 230);
+  border: 5px solid rgb(96, 143, 230);
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+}
+
 .seatingGridTableInnerDivP{
   text-align: center;
   position: relative;
@@ -29,23 +47,9 @@
   color: #000000;
 }
 
-.seatingGridTableInnerDivSeatActive{
-  background-color: #0AAA64;
-  color: #ffffff;
-  border-radius: 5px;
-  width: 35px;
-  height: 30px;
-}
-
-.seatingGridTableInnerDivSeatActive p{
-  color: #ffffff;
-}
 
 .seatingGridTableInnerDivUnavailableSeat{
   background-color: #374d58;
   color: #374d58;
 }
 
-.seatingGridTableInnerDivUnavailableSeat p{
-  color: #ffffff;
-}

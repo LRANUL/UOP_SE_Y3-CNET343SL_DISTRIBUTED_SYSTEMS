@@ -1,11 +1,12 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { movie } from "src/app/models/account/customers";
 import { CinemaHall } from "src/app/models/account/cinema-hall";
 import { CinemaLocation } from "src/app/models/account/cinema-location";
 import { CustomerService } from "src/app/services/account/customer.service";
 import { Movie } from "src/app/models/account/movie";
+import { NavController } from "@ionic/angular";
 
 @Component({
   selector: "app-location-and-time-sub-page",
@@ -17,7 +18,8 @@ export class LocationAndTimeSubPagePage implements OnInit {
   constructor(
     private route: Router,
     private activatedroute: ActivatedRoute,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private navCtrl: NavController
   ) {}
 
   todayDate;
@@ -68,15 +70,16 @@ export class LocationAndTimeSubPagePage implements OnInit {
 
   moviehall;
 
-  temoryID = "603b41f8a6bfd730f4abe8b3";
+  routedID;
 
   ngOnInit() {
+    this.routedID = this.activatedroute.snapshot.paramMap.get('id');
     const now = Date.now();
     const myFormattedDate = this.pipe.transform(now, "mediumDate");
     this.todayDate = myFormattedDate;
 
     this.getListOfLocations();
-    this.getshowingmoviedetails(this.temoryID);
+    this.getshowingmoviedetails(this.routedID);
     this.getMovieAdditionalDetails();
   }
 
@@ -93,7 +96,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
 
   getMovieAdditionalDetails()
   {
-    this.customerService.getMovieDetail(this.temoryID);
+    this.customerService.getMovieDetail(this.routedID);
     this.customerService.getmovies().subscribe((movie: Movie)=> {
       this.movieDetails = movie;
       console.log( this.movieDetails);
@@ -110,6 +113,13 @@ export class LocationAndTimeSubPagePage implements OnInit {
     });
   }
 
+  showingTime;
+  covertTimeToArray(time)
+  {
+   this.showingTime =time.split(" ")
+    return this.showingTime
+  }
+
   getListOfLocations()
   {
     this.customerService.retrieveAllCinemaLocations().subscribe((val)=>
@@ -118,22 +128,27 @@ export class LocationAndTimeSubPagePage implements OnInit {
     });
   }
 
-  gotourl() {
-    this.route.navigateByUrl("customer/booking");
+  gotourl(id,time) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        Time : time
+      }
+    };
+    this.route.navigate(['customer/booking/',id], navigationExtras);
   }
 
   getlocation() {
     console.log(this.location)
     if(this.location == "All")
     {
-      this.getshowingmoviedetails(this.temoryID);
+      this.getshowingmoviedetails(this.routedID);
     }else
     {
     this.customerService.getSelectedShowingMovieDetails(this.location);
     this.customerService.getmovie().subscribe((movies: movie) => {
       let id = movies[0].movieObjectId;
       console.log(id);
-      if(id == this.temoryID)
+      if(id == this.routedID)
       {
         this.movies = movies;
       } else
@@ -154,14 +169,14 @@ export class LocationAndTimeSubPagePage implements OnInit {
     console.log(this.experience);
     if(this.experience == "All")
     {
-      this.getshowingmoviedetails(this.temoryID);
+      this.getshowingmoviedetails(this.routedID);
     }else
     {
       this.customerService.getmovieexperience(this.experience);
       this.customerService.getmovie().subscribe((movies: movie) => {
       let id = movies[0].movieObjectId;
       console.log(id);
-      if(id == this.temoryID)
+      if(id == this.routedID)
       {
         this.movies = movies;
       } else

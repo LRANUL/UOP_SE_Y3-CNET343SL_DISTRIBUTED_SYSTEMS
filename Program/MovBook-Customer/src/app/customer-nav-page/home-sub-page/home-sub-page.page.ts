@@ -42,6 +42,6 @@ export class HomeSubPagePage implements OnInit {
   venuSelection(id)
   {
     console.log(id);
-    this.router.navigate(['customer/Venue Selection/',id]);
+    this.router.navigateByUrl('customer/Venue Selection/' + id);
   }
 }
