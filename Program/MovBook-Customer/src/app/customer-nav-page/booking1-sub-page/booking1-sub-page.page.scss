@@ -1,0 +1,51 @@
+.seatingGridTableTableData{
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.seatingGridTableOuterDiv{
+  background-color: #374d58;
+}
+
+.seatingGridTableOuterDivP{
+  text-align: center;
+}
+
+.seatingGridTableInnerDiv{
+  background-color: #ffffff;
+  color: #ffffff;
+  border: 5px solid #ffffff;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.seatingGridTableInnerDivP{
+  text-align: center;
+  position: relative;
+  transform: translateY(-50%);
+  color: #000000;
+}
+
+.seatingGridTableInnerDivSeatActive{
+  background-color: #0AAA64;
+  color: #ffffff;
+  border-radius: 5px;
+  width: 35px;
+  height: 30px;
+}
+
+.seatingGridTableInnerDivSeatActive p{
+  color: #ffffff;
+}
+
+.seatingGridTableInnerDivUnavailableSeat{
+  background-color: #374d58;
+  color: #374d58;
+}
+
+.seatingGridTableInnerDivUnavailableSeat p{
+  color: #ffffff;
+}

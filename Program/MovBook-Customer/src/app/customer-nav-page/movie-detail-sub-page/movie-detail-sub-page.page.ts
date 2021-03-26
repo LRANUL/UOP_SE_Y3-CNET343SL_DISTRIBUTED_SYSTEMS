@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from 'src/app/models/account/movie';
 import { CustomerService } from 'src/app/services/account/customer.service';
 
@@ -10,7 +10,7 @@ import { CustomerService } from 'src/app/services/account/customer.service';
 })
 export class MovieDetailSubPagePage implements OnInit {
 
-  constructor(private customerService: CustomerService, private activatedroute: ActivatedRoute) { }
+  constructor(private customerService: CustomerService, private activatedroute: ActivatedRoute, private router: Router) { }
 
   movieId;
 
@@ -68,5 +68,11 @@ export class MovieDetailSubPagePage implements OnInit {
      this.movieDetails = val
      console.log(this.movieDetails);
    })
+  }
+
+  venuSelection(id)
+  {
+    console.log(id);
+    this.router.navigate(['customer/Venue Selection/',id]);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { CinemaHall, seating } from 'src/app/models/account/cinema-hall';
 import { movie } from 'src/app/models/account/customers';
 import { Movie, ticketPrices } from 'src/app/models/account/movie';
 import { CustomerService } from 'src/app/services/account/customer.service';
@@ -13,6 +14,9 @@ import { CustomerService } from 'src/app/services/account/customer.service';
   styleUrls: ['./booking1-sub-page.page.scss'],
 })
 export class Booking1SubPagePage implements OnInit {
+  seatAllocatedPositionNo: any;
+  seatActive: any;
+  seatUnavailable: any;
 
   constructor(private route: Router, private toastCtrl: ToastController, private customerService: CustomerService) { }
 
@@ -57,6 +61,7 @@ export class Booking1SubPagePage implements OnInit {
   // this is the showing movie collection  id
   temoryID = "6034e1156cbbfed01dacc997";
   movieId;
+  hallId;
   movies : movie ={
   movieObjectId: '',
   cinemaHallObjectId: '',
@@ -64,7 +69,13 @@ export class Booking1SubPagePage implements OnInit {
   showingExperience: '',
   showingStartDate: '',
   showingEndDate: '',
-  showingTime: ''
+  showingTime: '',
+  cinemaLocationName : '',
+  cinemaLocationAddress : {
+    streetAddress : '',
+    city : '',
+    postalCode: ''
+  }
   };
 
   tickets: ticketPrices = {
@@ -75,6 +86,27 @@ export class Booking1SubPagePage implements OnInit {
     children: '',
   }
   };
+
+  hallDetails : CinemaHall = {
+    cinemaLocationObjectId: '',
+    hallName: '',
+    seatingGridNoOfRows: '',
+    seatingGridNoOfColumns: '',
+    seatingDetails : [{
+      seatId: '',
+      seatAllocatedPositionNo: '',
+      seatNumber: '',
+      seatActive: '',
+      seatUnavailable: ''
+    }]
+    };
+    NoOfColumns;
+    NoOfRows;
+    seatId;
+    cinemaLocationId;
+    allocatedPos;
+    seatNumber;
+    hall;
 
   Aprice;
   Cprice;
@@ -96,11 +128,15 @@ export class Booking1SubPagePage implements OnInit {
       this.movies = movie;
       console.log( this.movies);
       this.movieId =  movie.movieObjectId;
-      if(this.movieId != undefined)
+      this.hallId = movie.cinemaHallObjectId;
+      if(this.movieId != undefined && this.hallId != undefined)
       {
         console.log(this.movieId);
+        // to get the movie details for this movie
         this.getMovieAdditionalDetails(this.movieId);
+        this.getmoviehall(this.hallId);
       }
+      // to get the price of the movie
       this.getMoviePrices(this.temoryID);
     })
   }
@@ -112,6 +148,62 @@ export class Booking1SubPagePage implements OnInit {
       this.movieDetails = movies;
       console.log( this.movieDetails);
     })
+  }
+
+  seat;
+  value : seating ={
+    seatId: '',
+    seatAllocatedPositionNo: '',
+    seatNumber: '',
+    seatActive: '',
+    seatUnavailable: ''
+  };
+  seatData = new Array();
+  getmoviehall(id)
+  {
+   this.customerService.retrieveCinemaHall(id);
+   this.customerService.gethall().subscribe((hall: CinemaHall)=>{
+     this.hallDetails = hall;
+     this.hall = hall;
+     console.log(hall);
+     console.log(this.hallDetails);
+     this.NoOfColumns = this.hallDetails[0].seatingGridNoOfColumns;
+     this.NoOfRows = this.hallDetails[0].seatingGridNoOfRows;
+     this.cinemaLocationId = this.hallDetails[0].cinemaLocationObjectId
+     let value = hall[0].seatingDetails.length
+     let i = 0;
+     this.seat = -1;
+     for(i ; i <= value; i++)
+     {
+     this.value = {
+    seatId: this.hall[0].seatingDetails[i].seatId,
+    seatAllocatedPositionNo: this.hall[0].seatingDetails[i].seatAllocatedPositionNo,
+    seatNumber: this.hall[0].seatingDetails[i].seatNumber,
+    seatActive:  this.hall[0].seatingDetails[i].seatActive,
+    seatUnavailable:  this.hall[0].seatingDetails[i].seatUnavailable
+    }
+    this.seatData.push(this.value)
+     this.seat = this.seat + 1;
+     }
+     console.log(this.seat);
+     //just makes it a array for testing purposes
+     let val;
+     val = this.covertNumberToArray(this.NoOfColumns)
+     console.log(val);
+
+     console.log(this.NoOfColumns);
+     console.log(this.NoOfRows);
+   })
+  }
+
+  covertNumberToArray(value: number) {
+    // Converting the 'value' parameter to an array and returning
+    return new Array(value);
+  }
+
+  preIncrementValue(value: number){
+    // Pre increment - incrementing one to 'value' before the execution and returning the value
+    return ++value;
   }
 
   getMoviePrices(id)

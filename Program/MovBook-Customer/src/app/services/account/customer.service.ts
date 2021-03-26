@@ -24,7 +24,13 @@ export class CustomerService {
     showingExperience: '',
     showingStartDate: '',
     showingEndDate: '',
-    showingTime: ''
+    showingTime: '',
+    cinemaLocationName : '',
+    cinemaLocationAddress : {
+    streetAddress : '',
+    city : '',
+    postalCode: ''
+  }
   };
   private currentmovies = new Subject();
 
@@ -170,8 +176,16 @@ getshowingmoviedetails(id: string)
   })
 }
 
-retrieveCinemaHall(cinemaLocationObjectId){
-  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-halls/hall/' + cinemaLocationObjectId).subscribe(res=>{
+getSelectedShowingMovieDetails(location: string)
+{
+  return this.http.get<{tickets:movie}>('http://localhost:5000/api/booking-details/location/' + location).subscribe(res=>{
+    this.moviesUpdated = res.tickets;
+    this.currentmovies.next(this.moviesUpdated);
+  })
+}
+
+retrieveCinemaHall(id){
+  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-halls/hall/' + id).subscribe(res=>{
     this.hallupdated = res.returnedData;
     this.hall.next([this.hallupdated]);
   });;
@@ -193,9 +207,9 @@ getmoviedetails(id: string)
   // have to write the code to get the movie here
 }
 
-getmovieexperience(exp: string)
+getmovieexperience(experience: string)
 {
-  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-details/experience/' + exp).subscribe(res=>{
+  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-details/experience/' + experience).subscribe(res=>{
   this.moviesUpdated= res.tickets;
   this.currentmovies.next(this.moviesUpdated);
 })

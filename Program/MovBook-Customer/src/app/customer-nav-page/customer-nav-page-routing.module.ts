@@ -29,7 +29,7 @@ const routes: Routes = [
     loadChildren: () => import('./profile-sub-page/profile-sub-page.module').then( m => m.ProfileSubPagePageModule)
   },
   {
-    path: 'Venue Selection',
+    path: 'Venue Selection/:id',
     loadChildren: () => import('./location-and-time-sub-page/location-and-time-sub-page.module').then( m => m.LocationAndTimeSubPagePageModule)
   },
   {

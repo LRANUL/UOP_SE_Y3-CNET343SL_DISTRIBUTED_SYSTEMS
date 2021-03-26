@@ -49,6 +49,7 @@ router.get('/id/:showingId' ,(req,res,next)=>{
 router.get('/experience/:experience' ,(req,res,next)=>{
     booking.find({showingExperience: req.params.experience})
       .then((data)=>{
+        console.log(data)
         if(data)
       {
         res.status(200).json({
@@ -68,7 +69,7 @@ router.get('/experience/:experience' ,(req,res,next)=>{
 
 //get information with the location (need to make changes)
 router.get('/location/:location' ,(req,res,next)=>{
-    booking.find({location: req.params.location})
+    booking.find({cinemaLocationName: req.params.location})
       .then((data)=>{
         if(data)
       {
