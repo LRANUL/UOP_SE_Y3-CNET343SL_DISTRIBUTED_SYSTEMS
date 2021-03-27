@@ -11,7 +11,7 @@ router.post("/", cinemaHallsController.createCinemaHall);
 router.get("/:cinemaLocationObjectId", cinemaHallsController.retrieveCinemaHalls)
 
 // GET - Getting one cinema hall details
-router.get("/hall/:cinemaHallObjectId", cinemaHallsController.retrieveCinemaHall)
+router.get("/hall/:id", cinemaHallsController.retrieveCinemaHall)
 
 // PUT - Updating cinema hall details
 

@@ -1,0 +1,60 @@
+<ion-app>
+  <ion-menu menuId="menuCustomer" content-id="content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content style="padding-bottom: 0px;" >
+      <ion-list>
+      <ion-menu-toggle>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="home-outline" slot="start"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+          <ion-label>Profile</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="film-outline" slot="start"></ion-icon>
+          <ion-label>Book Tickets</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="ticket-outline" slot="start"></ion-icon>
+          <ion-label>Booked Tickets</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="document-text-outline" slot="start"></ion-icon>
+          <ion-label>Loyality Information</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="bookmark-outline" slot="start"></ion-icon>
+          <ion-label>Wishlist</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+          <ion-label>About Us</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+          <ion-label>Contact Us</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home">
+          <ion-icon name="document-lock-outline" slot="start"></ion-icon>
+          <ion-label>Terms and Conditions</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content"></ion-router-outlet>
+</ion-app>

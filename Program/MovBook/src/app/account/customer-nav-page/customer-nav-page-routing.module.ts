@@ -31,6 +31,14 @@ const routes: Routes = [
   {
     path: 'Venue Selection',
     loadChildren: () => import('./location-and-time-sub-page/location-and-time-sub-page.module').then( m => m.LocationAndTimeSubPagePageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home-sub-page/home-sub-page.module').then( m => m.HomeSubPagePageModule )
+  },
+  {
+    path: 'movie details/:id',
+    loadChildren: () => import('./movie-detail-sub-page/movie-detail-sub-page.module').then( m => m.MovieDetailSubPagePageModule)
   }
 
 ];

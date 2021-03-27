@@ -1,0 +1,89 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+      <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+      <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+    <ion-button slot="start" color="light">
+      <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="10" offset-md="1">
+        <ion-header style="font-size: xx-large; padding-top: 10px;" >Buy Tickets</ion-header>
+        <br>
+        <br>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-select placeholder="All Locations" [(ngModel)]="location" (ionChange)="getlocation()">
+                  <ion-select-option value="All">All</ion-select-option>
+                  <ion-select-option *ngFor="let cinemaLocation of cinemaLocationList" value="{{cinemaLocation.cinemaLocationName}}">{{cinemaLocation.cinemaLocationName}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                 <ion-datetime displayFormat="MMM/DD/YYYY" placeholder="Today: {{todayDate}}" (ionChange)="getTime()" [(ngModel)]="date"></ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-select placeholder="All Experiences" [(ngModel)]="experience" (ionChange)="getexperience()">
+                  <ion-select-option value="All" >All Class</ion-select-option>
+                  <ion-select-option value="Gold" >Gold Class</ion-select-option>
+                  <ion-select-option value="3D Experience">3D Experience </ion-select-option>
+                  <ion-select-option value="2D">2D Experience </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <br>
+        <ion-card>
+          <ion-grid>
+            <ion-row>
+              <ion-col style="padding-left: 30px;">
+                <ion-header>
+                  <ion-card-title> Movie Name: {{movieDetails.title}}</ion-card-title>
+                  <br>
+                  <img src="{{movieDetails.poster}}">
+                </ion-header>
+              </ion-col>
+              <ion-col>
+                <div *ngIf="movies==''" style="padding-top: 50px;">
+                  <ion-header style="text-align: center;">
+                    <ion-card-subtitle style="font-size: 20px;">No movies available for this selection</ion-card-subtitle>
+                  </ion-header>
+                </div>
+                <div *ngFor=" let movie of movies">
+                  <ion-header>
+                    <ion-card-title>Cinema Location: {{movie.cinemaLocationName}} </ion-card-title>
+                  </ion-header>
+                  <ion-card-header>
+                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: </ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col *ngFor="let time of covertTimeToArray(movie.showingTime);">
+                          <ion-buttons>
+                            <ion-button expand="round" fill="outline" (click)="gotourl(movie._id,time)">{{time}}</ion-button>
+                          </ion-buttons>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-card-content>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

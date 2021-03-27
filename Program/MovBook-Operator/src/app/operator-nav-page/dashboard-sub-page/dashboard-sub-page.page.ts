@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MenuController } from "@ionic/angular";
-import { OperatorService } from "./../../../services/account/operator.service";
+import { OperatorService } from "./../../service/operator.service";
 @Component({
   selector: "app-dashboard-sub-page",
   templateUrl: "./dashboard-sub-page.page.html",

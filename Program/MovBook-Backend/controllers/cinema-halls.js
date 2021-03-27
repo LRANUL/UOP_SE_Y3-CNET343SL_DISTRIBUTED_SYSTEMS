@@ -74,7 +74,7 @@ exports.retrieveCinemaHalls = async (req, res, next) => {
 
 // to get one cinema hall
 exports.retrieveCinemaHall = async (req, res, next) => {
-  cinemaHallModel.findById({_id: req.params.cinemaHallObjectId})
+  cinemaHallModel.findById(req.params.id)
   .then((returnedData)=>{
     if(returnedData)
   {
