@@ -19,6 +19,11 @@ export class DashboardSubPagePage implements OnInit {
   @ViewChild('barChart') barChart;
   @ViewChild('barChartStat') barChartStat;
 
+  headers: any;
+  splitStatus:any;
+  splitAddress:any;
+
+
   bars: any;
   colorArray: any;
 
@@ -28,14 +33,18 @@ export class DashboardSubPagePage implements OnInit {
   admin_Email: any;
 
   jsonResponse: any;
+  public headerStat: any;
+  public errorMsg;
 
-  constructor(private employeeService: EmployeeService, private MongoDBStatus: EmployeeService, private omdbStatus: EmployeeService, private StripeStatus: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,  private omdbStatus: EmployeeService, private handle: EmployeeService ) { }
 
   //BarChart Function
   ionViewDidEnter() {
     this.createBarChart();
     this.barChartStatis();
   }
+
+
 
   ngOnInit() {
     //sidebar details
@@ -70,20 +79,61 @@ export class DashboardSubPagePage implements OnInit {
         console.log(res);
         let value = JSON.stringify(res);
         this.jsonResponse = res['Response'];
-        console.log(value);
-        
-        //let temp = res['list']
-        
-      })
+        if(res['Response'] == "True"){
+          var status = "Status Code 200"
+          this.splitStatus = status;
+          this.splitAddress = "api/omdb/upcoming-movies/search/tenet";
+        }
+                
+      });
 
     //  this.StripeStatus.statusStripe().subscribe((res)=>{
     //    console.log(res)
     //  })
-    
 
+    // function splitStr(str){
+    //   var string = str.split(":")
+      
+    //   //console.log(string);
+    //   //console.log(string[0],[1],[2])
+    //   //console.log(string[3])
+    //   var responseStatus = string[3];
+    //   console.log(responseStatus)
+    //   //let headers = string[3]
+    //   this.headers = responseStatus;
+      
+    // }
+        
+
+    this.employeeService.statusOMDB()
+    .subscribe((data) => 
+      this.headerStat = data,
+      error => {
+        this.errorMsg = error;
+        
+        this.headers = this.errorMsg.split(":")
+        this.splitStatus = this.headers[3];
+        this.headers = this.errorMsg.split(":")
+        this.splitAddress = this.headers[2];
+        this.jsonResponse = "Server Error"
+        
+        //console.log(this.errorMsg)
+        //console.log("******************")
+        //let val = JSON.stringify(this.errorMsg);
+        //console.log(val)
+        // var split = this.errorMsg.split(":");
+        // var responseStatus = split[3];
+        // console.log(responseStatus);
+        
+        //var str = error;
+        //splitStr(str);
+        //console.log(x)
+       
+      },
+    );
   }
-  
-  
+
+ 
 
   createBarChart() {
     this.bars = new Chart(this.barChart.nativeElement, {

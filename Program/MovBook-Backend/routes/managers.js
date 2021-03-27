@@ -29,9 +29,10 @@ const Managers = require("../models/managers");
 //     });
 
 // });
+
 router.post("/post", (req, res, next) => { //to add posts to the db
     // const post = req.body;
-    console.log(req)
+    //console.log(req)
     const manager = new Managers({
         Prefix: req.body.Prefix,
         FirstName: req.body.FirstName,
@@ -62,9 +63,22 @@ router.post("/post", (req, res, next) => { //to add posts to the db
 router.get('/get', (req, res, next) => { //to fetch posts from db
     Managers.find()
         .then((documents) => {
-            console.log(documents);
+            //console.log(documents);
             res.status(200).json({
-                message: 'posts  fetched successfully!',
+                message: 'Data Retrieved',
+                ManagerDetails: documents
+            });
+        });
+});
+
+
+//get manager details 
+router.get('/get/:id', (req, res, next) => { //to fetch posts from db
+    Managers.findById(req.params.id)
+        .then((documents) => {
+            //console.log(documents);
+            res.status(200).json({
+                message: 'Data Retrieved',
                 ManagerDetails: documents
             });
         });
@@ -72,53 +86,62 @@ router.get('/get', (req, res, next) => { //to fetch posts from db
 
 
 //update
-// router.put('/update/:id', (req, res) => {
-//     if (!ObjectId.isValid(req.params.id))
-//         return res.status(400).send(`No record with given id : ${req.params.id}`);
+router.put('/update/:id', (req, res) => {
+    //console.log(req.params.id)
+    //console.log("***************dcdscdscsdc***************************************")
+    //console.log(req.body)
+    // if (!ObjectId.isValid(req.params.id))
+    //     return res.status(400).send(`No record with given id : ${req.params.id}`);
 
-//     var managerUpdate = {
-//         Prefix: req.body.Prefix,
-//         FirstName: req.body.FirstName,
-//         MiddleName: req.body.MiddleName,
-//         LastName: req.body.LastName,
-//         Email: req.body.Email,
-//         RetypePassword: req.body.RetypePassword,
-//         Phone: req.body.Phone,
-//         StreetAddress: req.body.Phone,
-//         City: req.body.Phone,
-//         PostalCode: req.body.Phone,
-//     };
-//     Managers.findByIdAndUpdate(req.params.id, { $set: managerUpdate }, { new: true }, (err, doc) => {
-//         if (!err) { res.send(doc); }
-//         else { console.log('Error in Employee Update:' + JSON.stringify(err, undefined, 2)); }
-//     });
-// });
-
-
-
-router.put('update/:id', (req, res, next) => {
-    Managers.updateOne({ Email: req.params.id }, { 
-        // name: req.body.Fname, 
-        // address: req.body.Address, 
-        // phone: req.body.Mnumber 
-
+    const managerUpdate = new Managers({
+        _id:req.params.id,
         Prefix: req.body.Prefix,
         FirstName: req.body.FirstName,
         MiddleName: req.body.MiddleName,
         LastName: req.body.LastName,
         Email: req.body.Email,
-        Password: req.body.Email,
-        RetypePassword: req.body.RetypePassword,
         Phone: req.body.Phone,
-        StreetAddress: req.body.Phone,
-        City: req.body.Phone,
-        PostalCode: req.body.Phone,
-
+        StreetAddress: req.body.StreetAddress,
+        City: req.body.City,
+        PostalCode: req.body.PostalCode,
+    });
+    //console.log("******************************************************")
+    //console.log(managerUpdate)
+    Managers.updateOne({_id:req.params.id},managerUpdate).then(res=>{
+        
+        //console.log(res)
     })
-        .then((data) => {
-            console.log(data);
-        })
+    // Managers.findByIdAndUpdate(req.params.id, { $set: managerUpdate }, { new: true }, (err, doc) => {
+    //     if (!err) { res.send(doc); }
+    //     else { console.log('Error in Employee Update:' + JSON.stringify(err, undefined, 2)); }
+    // });
 });
+
+
+
+// router.put('update/:id', (req, res, next) => {
+//     Managers.updateOne({ Email: req.params.id }, { 
+//         // name: req.body.Fname, 
+//         // address: req.body.Address, 
+//         // phone: req.body.Mnumber 
+
+//         Prefix: req.body.Prefix,
+//         FirstName: req.body.FirstName,
+//         MiddleName: req.body.MiddleName,
+//         LastName: req.body.LastName,
+//         Email: req.body.Email,
+//         Password: req.body.Email,
+//         RetypePassword: req.body.RetypePassword,
+//         Phone: req.body.Phone,
+//         StreetAddress: req.body.Phone,
+//         City: req.body.Phone,
+//         PostalCode: req.body.Phone,
+
+//     })
+//         .then((data) => {
+//             console.log(data);
+//         })
+// });
 
 
 
@@ -126,7 +149,7 @@ router.put('update/:id', (req, res, next) => {
 router.delete("/delete/:id", (req, res, next) => {
     Managers.deleteOne({ _id: req.params.id }).then(result => {
 
-        console.log(req.params.id);
+        //console.log(req.params.id);
         res.status(200).json({ message: 'post deleted!' });
     })
 });
