@@ -1,5 +1,8 @@
-// Importing model to query from the mongoDB database
+// Importing MovieWaitList model to query from the mongoDB database
 const movieWaitListModel = require("../models/movie-wait-lists");
+
+// Importing Movie model to query from the mongoDB database
+const movieModel = require("../models/movies");
 
 // Function - Retrieving movie wait list using route, 'BASE_URL/api/movie-wait-list/:managerObjectId'
 exports.retrieveMovieWaitList = async (req, res, next) => {
