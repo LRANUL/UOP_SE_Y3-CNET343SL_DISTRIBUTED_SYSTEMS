@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const ManagerSchema = mongoose.Schema({
+const AdminSchema = mongoose.Schema({
     Prefix: { type: String, required: true},
     FirstName: { type: String, required: true },
     MiddleName: { type: String, required: true },
@@ -17,5 +17,5 @@ const ManagerSchema = mongoose.Schema({
 })
 
 
-ManagerSchema.plugin(uniqueValidator);
-module.exports = mongoose.model('Manager', ManagerSchema);
+AdminSchema.plugin(uniqueValidator);
+module.exports = mongoose.model('Admin', AdminSchema);

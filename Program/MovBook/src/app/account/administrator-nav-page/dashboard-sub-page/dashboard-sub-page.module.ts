@@ -21,6 +21,6 @@ import { EmployeeService } from '../../../services/account/employee.service';
     HttpClientModule
   ],
   declarations: [DashboardSubPagePage],
-  providers: [EmployeeService]
+  providers: [EmployeeService],
 })
 export class DashboardSubPagePageModule {}

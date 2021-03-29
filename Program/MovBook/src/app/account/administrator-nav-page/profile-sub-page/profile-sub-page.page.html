@@ -11,14 +11,14 @@
           <h6>{{admin_Email}}</h6>
           <br />
         </div>
-        <ion-button expand="block" color="button" href="administrator/dashboard">Dashboard
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','dashboard']">Dashboard
         </ion-button>
-        <ion-button expand="block" color="button" href="administrator/manager-accounts">Manager
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','manager-accounts']">Manager
           Accounts</ion-button>
-        <ion-button expand="block" color="light" href="administrator/profile-sub-page" style="margin-top: 50%">
-          Profile</ion-button>
-        <ion-button expand="block" color="button" href="administrator/settings-sub-page">Settings</ion-button>
-        <ion-button expand="block" color="button" href="">Logout</ion-button>
+        <ion-button expand="block" color="light" [routerLink]="['/','administrator','profile-sub-page']" style="margin-top: 50%">Profile
+        </ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','settings-sub-page']">Settings</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="">Logout</ion-button>
       </ion-col>
 
       <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;height: 700px">

@@ -75,6 +75,27 @@ export class CustomerService {
     return this.hall.asObservable();
   }
 
+  public showinghallupdated = {
+  cinemaHallObjectId : '',
+  cinemaLocationObjectId : '',
+  showingSeatDetails : [
+    {
+      seatId : '',
+      seatNumber: '',
+      seatUnavailable: '',
+      seatStatus : '',
+      seatType : '',
+      customerObjectId : ''
+    }]
+  };
+  private showingcinemahall = new Subject();
+
+  getShowingCinemaHall()
+  {
+    return this.showingcinemahall.asObservable();
+  }
+
+
   public movieupdated = {
     title: '',
     year: '',
@@ -188,7 +209,15 @@ retrieveCinemaHall(id){
   return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-halls/hall/' + id).subscribe(res=>{
     this.hallupdated = res.returnedData;
     this.hall.next([this.hallupdated]);
-  });;
+  });
+}
+
+retrieveShowingCinemaHall(id){
+  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/showing-cinema-hall/' + id).subscribe(res=>{
+    console.log(res.returnedData);
+    this.showinghallupdated = res.returnedData;
+    this.showingcinemahall.next(this.showinghallupdated);
+  });
 }
 
 retrieveCinemaLocation(cinemaLocationObjectId){

@@ -15,6 +15,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^11.2.4",
     "@angular/common": "~10.0.0",
     "@angular/core": "~10.0.0",
     "@angular/forms": "~10.0.0",
@@ -33,7 +34,9 @@
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "mongoose": "^5.11.13",
-    "rxjs": "~6.5.5",
+    "ngx-toastr": "^13.2.0",
+    "rxjs": "^6.5.5",
+    "rxjs-compat": "^6.6.6",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },

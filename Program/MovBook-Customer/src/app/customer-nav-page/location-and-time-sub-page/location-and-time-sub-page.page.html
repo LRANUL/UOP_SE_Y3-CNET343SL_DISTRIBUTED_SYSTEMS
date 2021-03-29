@@ -64,18 +64,14 @@
                     <ion-card-title>Cinema Location: {{movie.cinemaLocationName}} </ion-card-title>
                   </ion-header>
                   <ion-card-header>
-                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: {{movie.showingExperience}} </ion-card-subtitle>
+                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: </ion-card-subtitle>
                   </ion-card-header>
                   <ion-card-content>
                     <ion-grid>
                       <ion-row>
-                        <ion-col>
+                        <ion-col *ngFor="let time of covertTimeToArray(movie.showingTime);">
                           <ion-buttons>
-                            <ion-button expand="round" fill="outline" (click)="gotourl()">{{movie.showingTime}}</ion-button>
-                            <hr>
-                            <ion-button expand="round" fill="outline">1:30 pm</ion-button>
-                            <hr>
-                            <ion-button expand="round" fill="outline">4:30 pm</ion-button>
+                            <ion-button expand="round" fill="outline" (click)="gotourl(movie._id,time)">{{time}}</ion-button>
                           </ion-buttons>
                         </ion-col>
                       </ion-row>

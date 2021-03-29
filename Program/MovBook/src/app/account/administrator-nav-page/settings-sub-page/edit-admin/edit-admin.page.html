@@ -12,12 +12,14 @@
           <h6>{{admin_Email}}</h6>
           <br />
         </div>
-        <ion-button expand="block" color="button" href="administrator/dashboard">Dashboard</ion-button>
-        <ion-button expand="block" color="button" href="administrator/manager-accounts">Manager Accounts</ion-button>
-        <ion-button expand="block" color="button" href="administrator/profile-sub-page" style="margin-top: 50%">Profile
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','dashboard']">Dashboard
         </ion-button>
-        <ion-button expand="block" color="light" href="administrator/settings-sub-page">Settings</ion-button>
-        <ion-button expand="block" color="button" href="">Logout</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','manager-accounts']">Manager
+          Accounts</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','profile-sub-page']" style="margin-top: 50%">Profile
+        </ion-button>
+        <ion-button expand="block" color="light" [routerLink]="['/','administrator','settings-sub-page']">Settings</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="">Logout</ion-button>
       </ion-col>
 
       <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;height: 700px;">
@@ -141,7 +143,8 @@
               <div class="col-6 col-sm-6">
                 <ion-button size="medium" type="button" expand=""
                   style="color: rgb(90, 90, 90);float: left;margin-left: 150px;"
-                  (click)="administrator/settings-sub-page" href="administrator/settings-sub-page">Cancel
+                  (click)="administrator/settings-sub-page" [routerLink]="['/','administrator','settings-sub-page']">Cancel
+                  <!-- [routerLink]="['/','administrator','settings-sub-page','edit-admin',ManagerDetails._id]" -->
                 </ion-button>
               </div>
 

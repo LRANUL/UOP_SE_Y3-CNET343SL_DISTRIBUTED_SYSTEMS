@@ -11,12 +11,14 @@
           <h6>{{admin_Email}}</h6>
           <br />
         </div>
-        <ion-button expand="block" color="button" href="administrator/dashboard">Dashboard</ion-button>
-        <ion-button expand="block" color="button" href="administrator/manager-accounts">Manager Accounts</ion-button>
-        <ion-button expand="block" color="button" href="administrator/profile-sub-page" style="margin-top: 50%">Profile
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','dashboard']">Dashboard
         </ion-button>
-        <ion-button expand="block" color="light" href="administrator/settings-sub-page">Settings</ion-button>
-        <ion-button expand="block" color="button" href="">Logout</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','manager-accounts']">Manager
+          Accounts</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','profile-sub-page']" style="margin-top: 50%">Profile
+        </ion-button>
+        <ion-button expand="block" color="light" [routerLink]="['/','administrator','settings-sub-page']">Settings</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="">Logout</ion-button>
       </ion-col>
 
 
@@ -65,7 +67,9 @@
             <div><br></div>
 
             <ion-button style="margin-left: 70px;margin-top: 20px; margin-bottom: 20px;color: rgb(90, 90, 90);margin-left: 430px;margin-right: 400px;"
-              href="administrator/settings-sub-page/edit-admin" (click)="onSubmit(verifyAdmin)">Verify
+            [routerLink]="['/','administrator','settings-sub-page','edit-admin']"  (click)="onSubmit(verifyAdmin)">Verify
+            <!--[disabled]="!allowSubmit || !this.matchForm.valid"-->
+            <!-- [routerLink]="['/','administrator','settings-sub-page','edit-admin',ManagerDetails._id]" -->
             </ion-button>
           </form>
         </ion-card>
