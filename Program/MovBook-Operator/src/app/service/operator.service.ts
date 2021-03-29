@@ -28,7 +28,7 @@ export class OperatorService {
     return this.http.get(this.BASE_URL + "api/maintenance?value="+value);
   }
   getBeverages() {
-    return this.http.get(this.BASE_URL + "/api/beverages");
+    return this.http.get(this.BASE_URL + "/api/refreshments");
   }
   getProfile(email) {
     return this.http.get(this.BASE_URL + "/api/users?email=" + email);

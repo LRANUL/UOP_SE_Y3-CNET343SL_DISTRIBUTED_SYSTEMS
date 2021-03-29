@@ -20,14 +20,13 @@
         <ion-row>
           <h1 style="color: #374d58;"><b>Beverages</b></h1>
         </ion-row>
-        <ion-row style="height: 280px;overflow-y: scroll;">
-          <ion-card *ngFor="let beverage of Beverages" style="width: 250px;height: 500px;">
-            <ion-img src='{{beverage.imgUrl}}'></ion-img>
+        <ion-row style="height: 500px;overflow-y: scroll;">
+          <ion-card *ngFor="let beverage of Beverages" style="width: 250px;height: 300px;">
+            <ion-img src='{{beverage.imgURL}}' style="height: 200px;"></ion-img>
             <ion-card-title>{{beverage.name}}</ion-card-title>
-            <ion-card-subtitle>{{beverage.price}}</ion-card-subtitle>
             <ion-card-content>
-              <p>Quantity: {{beverage.quantity}}</p>
-              <p>Description: {{beverage.description}}</p>
+              <p>Price (LKR): {{beverage.price}}</p>
+              <p>Quantity: {{beverage.stock}}</p>
             </ion-card-content>
           </ion-card>
         </ion-row>
@@ -38,7 +37,8 @@
         </ion-row>
         <ion-list>
           <ion-item>Selection: {{beverage}}</ion-item>
-          <ion-item>Quantity: <ion-input></ion-input></ion-item>
+          <ion-item>Quantity: <ion-input></ion-input>
+          </ion-item>
           <ion-button>Update</ion-button>
         </ion-list>
       </ion-col>

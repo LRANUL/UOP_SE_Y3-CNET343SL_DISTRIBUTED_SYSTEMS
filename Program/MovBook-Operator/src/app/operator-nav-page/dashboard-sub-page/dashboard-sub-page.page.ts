@@ -23,8 +23,8 @@ export class DashboardSubPagePage implements OnInit {
     this.email = 'john@movbook.com';
     this.operatorService.getMovies().subscribe(
       (data) => {
-        this.Movies = data;
-        console.log(data);
+        this.Movies = data['returnedData'];
+        console.log(data['returnedData']);
       },
       (error) => {
         console.log(error);

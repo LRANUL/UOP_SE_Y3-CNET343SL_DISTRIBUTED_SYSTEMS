@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OperatorService } from 'src/app/service/operator.service';
 
 @Component({
   selector: 'app-manage-stock-sub-page',
@@ -8,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class ManageStockSubPagePage implements OnInit {
   name: string;
   email: string;
+  Beverages: Object;
 
-  constructor() { }
+  constructor(
+    public operatorService: OperatorService
+    
+  ) { }
 
   ngOnInit() {
     this.name = localStorage.getItem('name');
@@ -17,6 +22,15 @@ export class ManageStockSubPagePage implements OnInit {
 // Remove after getting login credentials
     this.name = 'John Steve';
     this.email = 'john@movbook.com';
+    this.operatorService.getBeverages().subscribe(
+      (data) => {
+        this.Beverages = data;
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
 }

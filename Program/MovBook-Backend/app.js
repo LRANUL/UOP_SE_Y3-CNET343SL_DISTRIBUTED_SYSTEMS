@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const beveragesRoutes = require("./routes/beverages");
+const refreshmentsRoutes = require("./routes/refreshments");
 const usersRoutes = require("./routes/users");
 const moviesRoutes = require("./routes/movies");
 const loyaltyRoutes= require("./routes/loyalty");
@@ -61,7 +61,7 @@ app.use((req, res, next) => {
 
 app.use("/api/movies", moviesRoutes);
 app.use("/api/users", usersRoutes);
-app.use("/api/beverages", beveragesRoutes);
+app.use("/api/refreshments", refreshmentsRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
 app.use("/api/ticket-prices", ticketPriceRoutes);
 app.use("/api/showing-cinema-hall", showingCinemaHall)

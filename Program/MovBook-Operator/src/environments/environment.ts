@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  MOVBOOK_BACKEND_URL: "http://localhost:5000/",
+  MOVBOOK_BACKEND_URL: "http://localhost:5000",
   firebase: {
   apiKey: "AIzaSyDgIZg9bO1QslkIm_c00Ivp4Qql-C-lyKI",
   authDomain: "movbook-18609.firebaseapp.com",

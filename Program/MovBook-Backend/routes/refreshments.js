@@ -2,14 +2,13 @@ const express = require("express");
 
 const router = express.Router();
 
-const Beverages = require("../models/beverages");
-// Get all beverages
-router.get('' ,(req,res,next)=>{
-    Beverages.find({})
-    .then((data)=>{
+const Refreshments = require("../models/refreshments");
+// Get all Refreshments
+router.get('', (req, res, next) => {
+  Refreshments.find({})
+    .then((data) => {
       console.log(data);
       res.send(data)
-      res.json({message:'hii'});
     }).catch(err => {
       res.status.send({
         message: err.message
