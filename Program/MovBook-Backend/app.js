@@ -6,8 +6,8 @@ require("dotenv").config();
 const refreshmentsRoutes = require("./routes/refreshments");
 const usersRoutes = require("./routes/users");
 const moviesRoutes = require("./routes/movies");
-const loyaltyRoutes= require("./routes/loyalty");
-const ticketPriceRoutes= require("./routes/ticket-prices");
+const loyaltyRoutes = require("./routes/loyalty");
+const ticketPriceRoutes = require("./routes/ticket-prices");
 const showingCinemaHall = require("./routes/showing-movie-hall");
 const bookingHistory = require("./routes/bookingHistory");
 const customerRoutes = require("./routes/customer");
@@ -26,7 +26,7 @@ const app = express();
 mongoose
   .connect(
     process.env.MONGODB_ATLAS_URI_PRIMARY,
-// Legacy Server Support Added, Server timeout set to 30 seconds
+    // Legacy Server Support Added, Server timeout set to 30 seconds
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

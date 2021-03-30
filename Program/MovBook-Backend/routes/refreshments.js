@@ -16,4 +16,14 @@ router.get('', (req, res, next) => {
     })
 });
 
+// Update Refreshments
+router.put('/update', (req, res, next) => {
+  Refreshments.findOneAndUpdate(
+    { name: req.body.name },
+    { stock: req.body.quantity }).then((data) => {
+      res.send(JSON.stringify("Updated Stock"))
+    }).catch(err => {
+      res.send(JSON.stringify("Not Updated: "+ err))
+    })
+});
 module.exports = router;

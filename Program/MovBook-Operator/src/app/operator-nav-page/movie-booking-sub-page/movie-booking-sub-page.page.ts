@@ -14,6 +14,7 @@ export class MovieBookingSubPagePage implements OnInit {
   Beverages: Object;
   name: string;
   email: string;
+  selectedBeverage: any;
   constructor(private menu: MenuController,
     public operatorService: OperatorService) {}
 
@@ -25,8 +26,8 @@ export class MovieBookingSubPagePage implements OnInit {
     this.email = 'john@movbook.com';
     this.operatorService.getMovies().subscribe(
       (data) => {
-        this.Movies = data;
-        console.log(data);
+        this.Movies = data['returnedData'];
+        console.log(data['returnedData']);
       },
       (error) => {
         console.log(error);
@@ -42,7 +43,20 @@ export class MovieBookingSubPagePage implements OnInit {
       }
     );
   }
-
+  getBeverages() {
+    this.operatorService.getBeverages().subscribe(
+      (data) => {
+        this.Beverages = data;
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  beverageUpdate(beverage) {
+    this.selectedBeverage = beverage.name
+  }
   book(movie) {
     console.log(movie.title);
     this.operatorService.getMovie(movie.title).subscribe(
