@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController } from '@ionic/angular';
+import { ManagerService } from 'src/app/services/account/manager.service';
 
 import { MovieCatalogTypesPopoverPage } from '../movie-catalog-types-popover/movie-catalog-types-popover.page';
 import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-modal.page';
@@ -11,13 +12,33 @@ import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-moda
 })
 export class MovieWaitlistTabPagePage implements OnInit {
 
+  // Declaration | Initialization - to store retrieved movie wait list
+  movieWaitList: String = "";
+
   constructor(
     private modalController: ModalController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private alertController: AlertController,
+    private managerService: ManagerService
   ) { }
 
   ngOnInit() {
+  
+    // Retrieving movie wait list from the backend
+    this.retrieveMovieWaitList();
+
   }
+
+  // Function -  Alert Box Implementation
+  async alertNotice (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
 
   // Implementation for opening the 'Movie Catalog Types' popover
   async openMovieCatalogTypesPopover(evt: Event){
@@ -43,6 +64,27 @@ export class MovieWaitlistTabPagePage implements OnInit {
       backdropDismiss: false,
     });
     movieDetailsModal.present();
+  }
+
+
+  // Function - Retrieving movie wait list from the database
+  retrieveMovieWaitList(){
+
+    /**
+     * Retrieving the movie wait list from the backend
+     */
+    this.managerService.getMovieWaitList("0000")
+      .subscribe((retrievedMovieWaitList: any) => {
+        
+        if(retrievedMovieWaitList.message == "Movie wait list retrieved"){
+          this.movieWaitList = retrievedMovieWaitList;
+        }
+        else{
+          this.alertNotice("Error", "Unable to retrieve movie wait list");
+        }
+
+      })
+
   }
 
 }
