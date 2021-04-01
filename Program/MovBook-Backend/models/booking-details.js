@@ -8,6 +8,12 @@ const bookingDetailsSchema =mongoose.Schema({
   showingStartDate: {type : String, required:true },
   showingEndDate: {type : String, required:true },
   showingTime: {type : String, required:true },
+  cinemaLocationName: {type : String, required:true },
+  cinemaLocationAddress: {
+    streetAddress: {type : String, required:true },
+    city: {type : String, required:true },
+    postalCode: {type : String, required:true }
+  }
 })
 
 module.exports = mongoose.model('showingmovie',bookingDetailsSchema); 

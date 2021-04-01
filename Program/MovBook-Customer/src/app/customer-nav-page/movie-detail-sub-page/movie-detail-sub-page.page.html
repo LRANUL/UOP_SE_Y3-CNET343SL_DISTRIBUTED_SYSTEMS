@@ -13,8 +13,8 @@
     <ion-row>
         <ion-col>
             <div class="imgHolder">
-                <img src="{{movieDetails.poster}}" style="width: 100%;">
-                <span>{{movieDetails.title}}  <br>{{movieDetails.runtime}}  IMDB Rating: {{movieDetails.imdbRating}}</span>
+                <img src="{{movieDetails.posterLink}}" style="width: 100%;">
+                <span>{{movieDetails.movieTitle}}  <br>{{movieDetails.movieRuntime}}  IMDB Rating: {{movieDetails.imdb.imdbRating}}</span>
             </div>
             <div>
                 <ion-grid>
@@ -23,7 +23,9 @@
                             <ion-grid>
                                 <ion-row>
                                     <ion-col>
-                                        <ion-title style="font-size: xx-large;">Story Brief</ion-title>
+                                        <ion-label style="font-size: x-large; font-weight: bold;">Story Brief</ion-label>
+                                        <br>
+                                        <br>
                                         <ion-label>{{movieDetails.plot}}</ion-label>
                                         <br>
                                         <br>
@@ -32,13 +34,18 @@
                                         <br>
                                             <ion-button style="text-align: center;" expand="full" (click)="venuSelection(movieDetails._id)">Book Tickets</ion-button>
                                     </ion-col>
-                                    <ion-col offset-md="2">
+                                    <ion-col>
                                         <div>
-                                        <ion-title style="font-size: xx-large;">Cast</ion-title>
+                                        <ion-label style="font-size: x-large; font-weight: bold;">Cast</ion-label>
+                                        <br>
+                                        <br>
                                         <ion-label> Actors: {{movieDetails.actors}}</ion-label>
                                        </div>
                                        <div>
-                                         <ion-title style="font-size: xx-large;">Team</ion-title>
+                                         <br>
+                                         <ion-label style="font-size: x-large; font-weight: bold;">Team</ion-label>
+                                         <br>
+                                         <br>
                                          <ion-label>Director: {{movieDetails.director}}</ion-label>
                                          <br>
                                          <ion-label>Production: {{movieDetails.production}}</ion-label>
@@ -46,8 +53,11 @@
                                          <ion-label>Writter: {{movieDetails.writer}}</ion-label>
                                        </div>
                                        <div>
-                                        <ion-title style="font-size: xx-large;">About Movie</ion-title>
-                                        <ion-label>Released Date: {{movieDetails.released}}</ion-label>
+                                         <br>
+                                        <ion-label style="font-size: x-large; font-weight: bold;">About Movie</ion-label>
+                                        <br>
+                                        <br>
+                                        <ion-label>Released Date: {{movieDetails.releasedDate}}</ion-label>
                                          <br>
                                          <ion-label>Country: {{movieDetails.country}}</ion-label>
                                          <br>

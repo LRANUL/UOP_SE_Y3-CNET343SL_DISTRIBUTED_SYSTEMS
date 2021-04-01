@@ -30,15 +30,17 @@ export class Booking1SubPagePage implements OnInit {
   ngOnInit() {
     this.routedID = this.router.snapshot.paramMap.get('id');
     this.startTimer();
+    console.log(this.time)
     this.getShowingMovie();
   }
 
   movieDetails : Movie = {
-    title: '',
-    year: '',
+    movieStatus: '',
+    movieTitle: '',
     rated: '',
-    released: '',
-    runtime: '',
+    releasedYear: '',
+    releasedDate: '',
+    movieRuntime: '',
     genre: '',
     director: '',
     writer: '',
@@ -47,23 +49,21 @@ export class Booking1SubPagePage implements OnInit {
     language: '',
     country: '',
     awards: '',
-    poster: '',
+    posterLink: '',
     ratings: [
       {
         Source: '',
         Value: '',
       }
     ],
-    metascore: '',
-    imdbRating: '',
-    imdbVotes: '',
-    imdbID: '',
-    type: '',
-    dvd: '',
+    imdb: {
+      imdbID: '',
+      imdbRating: '',
+      imdbVotes: '',
+    },
     boxOffice: '',
     production: '',
-    website: '',
-    response: '',
+    website: ''
   };
 
   // this is the showing movie collection  id
@@ -111,7 +111,7 @@ export class Booking1SubPagePage implements OnInit {
 
   hallDetails : CinemaHall = {
     cinemaLocationObjectId: '',
-    hallName: '',
+    cinemaHallName: '',
     seatingGridNoOfRows: '',
     seatingGridNoOfColumns: '',
     seatingDetails : [{

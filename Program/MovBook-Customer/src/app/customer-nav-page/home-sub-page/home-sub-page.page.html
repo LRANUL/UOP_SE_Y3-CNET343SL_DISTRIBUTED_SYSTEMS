@@ -15,94 +15,82 @@
         <ion-grid>
             <ion-row>
               <ion-col style="text-align: left;">
-                  <ion-title> Showing Movies</ion-title>
+                  <ion-title style="font-size: larger;"> Showing Movies</ion-title>
               </ion-col>
           </ion-row>
           <ion-row>
               <ion-col>
                   <ion-slides [options]="sliderConfig">
-                      <ion-slide *ngFor="let movie of showingmovies">
-                          <ion-card>
-                            <ion-card-content (click)="showDetails(movie._id)">
-                              <img src="{{movie.poster}}" style="width: 100%; height: 200px;">
-                              <ion-card-header>
-                                <ion-card-subtitle style="text-align: left;">Ratings: {{movie.imdbRating}}</ion-card-subtitle>
-                                <ion-card-title style="text-align: left;">{{movie.title}}</ion-card-title>
-                              </ion-card-header>
-                              </ion-card-content>
-                              <ion-card-content>
-                                  <ion-buttons  (click)="venuSelection(movie._id)">
-                                      <ion-button>
-                                          <ion-icon name="calendar-outline" style="padding-right: 10px;"></ion-icon>
-                                          Book Ticket
-                                      </ion-button>
-                                  </ion-buttons>
-                                </ion-card-content>
-                            </ion-card>
+                      <ion-slide *ngFor="let movie of nowShowingMovies">
+                        <ion-card>
+                          <ion-card-content (click)="showDetails(movie._id)">
+                            <img src="{{movie.posterLink}}" style="width: 100%; height: 200px;">
+                            <ion-card-subtitle style="text-align: left;">Ratings: {{movie.rated}}</ion-card-subtitle>
+                            <ion-card-title style="text-align: left; font-size: larger;">{{movie.movieTitle}}</ion-card-title>
+                           </ion-card-content>
+                            <ion-card-content>
+                                    <ion-button (click)="venuSelection(movie._id)">
+                                        <ion-icon name="calendar-outline" style="padding-right: 5px;"></ion-icon>
+                                        Book Ticket
+                                    </ion-button>
+                            </ion-card-content>
+                          </ion-card>
                       </ion-slide>
                       </ion-slides>
               </ion-col>
           </ion-row>
-          <ion-row>
+        <ion-row>
               <ion-col>
-                <ion-title> Upcoming Movies</ion-title>
+                <ion-title style="font-size: larger;"> Upcoming Movies</ion-title>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
               <ion-slides [options]="sliderConfig">
-                  <ion-slide *ngFor="let movie of showingmovies">
-                      <ion-card>
-                        <ion-card-content (click)="showDetails(movie._id)">
-                          <ion-card-header>
-                          <img src="{{movie.poster}}" style="width: 100%; height: 200px;">
-                          <ion-card-subtitle style="text-align: left;">Ratings: {{movie.imdbRating}}</ion-card-subtitle>
-                          <ion-card-title style="text-align: left;">{{movie.title}}</ion-card-title>
-                          </ion-card-header>
-                         </ion-card-content>
-                          <ion-card-content>
-                              <ion-buttons>
-                                  <ion-button (click)="venuSelection(movie._id)">
-                                      <ion-icon name="calendar-outline" style="padding-right: 10px;"></ion-icon>
-                                      Book Ticket
-                                  </ion-button>
-                              </ion-buttons>
-                          </ion-card-content>
-                        </ion-card>
+                  <ion-slide *ngFor="let movie of upcomingShowingMovies">
+                    <ion-card>
+                      <ion-card-content (click)="showDetails(movie._id)">
+                        <img src="{{movie.posterLink}}" style="width: 100%; height: 200px;">
+                        <ion-card-subtitle style="text-align: left;">Ratings: {{movie.rated}}</ion-card-subtitle>
+                        <ion-card-title style="text-align: left; font-size: larger;">{{movie.movieTitle}}</ion-card-title>
+                       </ion-card-content>
+                        <ion-card-content>
+                                <ion-button (click)="venuSelection(movie._id)">
+                                    <ion-icon name="calendar-outline" style="padding-right: 5px;"></ion-icon>
+                                    Book Ticket
+                                </ion-button>
+                        </ion-card-content>
+                      </ion-card>
                   </ion-slide>
                   </ion-slides>
             </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-title> Shown Movies</ion-title>
+            <ion-title style="font-size: larger;"> Waitlisted Movies</ion-title>
         </ion-col>
     </ion-row>
     <ion-row>
-        <ion-col>
-          <ion-slides [options]="sliderConfig">
-              <ion-slide *ngFor="let movie of showingmovies">
-                  <ion-card>
-                    <ion-card-content (click)="showDetails(movie._id)">
-                      <img src="{{movie.poster}}" style="width: 100%; height: 200px;">
-                      <ion-card-header>
-                        <ion-card-subtitle style="text-align: left;">Ratings: {{movie.imdbRating}}</ion-card-subtitle>
-                        <ion-card-title style="text-align: left;">{{movie.title}}</ion-card-title>
-                      </ion-card-header>
-                    </ion-card-content>
+      <ion-col>
+        <ion-slides [options]="sliderConfig">
+            <ion-slide *ngFor="let movie of waitListedMovies">
+                <ion-card>
+                  <ion-card-content (click)="showDetails(movie._id)">
+                    <img src="{{movie.posterLink}}" style="width: 100%; height: 200px;">
+                    <ion-card-subtitle style="text-align: left;">Ratings: {{movie.rated}}</ion-card-subtitle>
+                    <ion-card-title style="text-align: left; font-size: larger;">{{movie.movieTitle}}</ion-card-title>
+                   </ion-card-content>
                     <ion-card-content>
-                          <ion-buttons>
-                              <ion-button (click)="venuSelection(movie._id)">
-                                  <ion-icon name="calendar-outline" style="padding-right: 10px;"></ion-icon>
-                                  Book Ticket
-                              </ion-button>
-                          </ion-buttons>
-                      </ion-card-content>
-                    </ion-card>
-              </ion-slide>
-              </ion-slides>
-        </ion-col>
-    </ion-row>
+                            <ion-button (click)="venuSelection(movie._id)">
+                                <ion-icon name="calendar-outline" style="padding-right: 5px;"></ion-icon>
+                                Book Ticket
+                            </ion-button>
+                    </ion-card-content>
+                  </ion-card>
+            </ion-slide>
+            </ion-slides>
+      </ion-col>
+  </ion-row>
         </ion-grid>
     </ion-col>
 </ion-row>
@@ -124,12 +112,12 @@
                           </ion-col>
                       </ion-row>
                       <ion-row>
-                          <ion-col>
+                          <ion-col (click)="aboutUs()">
                               <ion-label>About Us</ion-label>
                           </ion-col>
                       </ion-row>
                       <ion-row>
-                          <ion-col>
+                          <ion-col (click)="openmodal()">
                               <ion-label>Contact Us</ion-label>
                           </ion-col>
                       </ion-row>

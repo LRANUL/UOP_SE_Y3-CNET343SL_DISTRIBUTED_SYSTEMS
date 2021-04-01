@@ -67,7 +67,7 @@ router.get('/experience/:experience' ,(req,res,next)=>{
       })
 });
 
-//get information with the location (need to make changes)
+//get information with the location
 router.get('/location/:location' ,(req,res,next)=>{
     booking.find({cinemaLocationName: req.params.location})
       .then((data)=>{
