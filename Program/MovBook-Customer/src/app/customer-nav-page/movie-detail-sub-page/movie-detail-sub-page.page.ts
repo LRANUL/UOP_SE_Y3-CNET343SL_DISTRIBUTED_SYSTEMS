@@ -27,11 +27,12 @@ export class MovieDetailSubPagePage implements OnInit {
   }
 
   movieDetails : Movie = {
-    title: '',
-    year: '',
+    movieStatus: '',
+    movieTitle: '',
     rated: '',
-    released: '',
-    runtime: '',
+    releasedYear: '',
+    releasedDate: '',
+    movieRuntime: '',
     genre: '',
     director: '',
     writer: '',
@@ -40,23 +41,21 @@ export class MovieDetailSubPagePage implements OnInit {
     language: '',
     country: '',
     awards: '',
-    poster: '',
+    posterLink: '',
     ratings: [
       {
         Source: '',
-        Value: ''
+        Value: '',
       }
     ],
-    metascore: '',
-    imdbRating: '',
-    imdbVotes: '',
-    imdbID: '',
-    type: '',
-    dvd: '',
+    imdb: {
+      imdbID: '',
+      imdbRating: '',
+      imdbVotes: '',
+    },
     boxOffice: '',
     production: '',
-    website: '',
-    response: ''
+    website: ''
   };
 
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { movie} from 'src/app/models/account/customers';
+import { bookedTickets, movie} from 'src/app/models/account/customers';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  public updatedBookedtickets:[] = [];
+  public updatedBookedtickets : bookedTickets
   private currentBookedtickets = new Subject();
 
   gettickets(){
@@ -181,11 +181,11 @@ getloyality(email:string)
   return this.http.get<{message: string, users}>('http://localhost:5000/api/loyalty/' + email)
 }
 
-getbookinghistory(email: string)
+getbookinghistory(id: string)
 {
-  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-history/' + email).subscribe(res=>{
-  this.updatedBookedtickets= res.tickets;
-  this.currentBookedtickets.next([...this.updatedBookedtickets]);
+  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-history/' + id).subscribe(res=>{
+  this.updatedBookedtickets = res.tickets;
+  this.currentBookedtickets.next(this.updatedBookedtickets);
 })
 }
 

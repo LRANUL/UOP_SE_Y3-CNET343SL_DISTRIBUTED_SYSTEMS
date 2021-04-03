@@ -33,22 +33,18 @@ router.put('/:id' ,(req,res,next)=>{
   Users.updateOne({email: req.params.id}, 
     {
     name:
-    [
     {
       prefix: req.body.prefix,
       firstName: req.body.firstName,
       middleName: req.body.middleName,
       lastName: req.body.lastName
-    }
-    ], 
+    }, 
     address:
-    [
     {
       streetAddress: req.body.streetAddress,
       city: req.body.city,
       postalZipCode: req.body.postalZipCode
-    }
-    ],
+    },
     phone: req.body.phone 
     })
   .then((data) => {

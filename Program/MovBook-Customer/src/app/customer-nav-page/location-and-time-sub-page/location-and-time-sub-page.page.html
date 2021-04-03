@@ -48,15 +48,15 @@
             <ion-row>
               <ion-col style="padding-left: 30px;">
                 <ion-header>
-                  <ion-card-title> Movie Name: {{movieDetails.title}}</ion-card-title>
+                  <ion-card-title style="font-size: larger;"> Movie Name: {{movieDetails.movieTitle}}</ion-card-title>
                   <br>
-                  <img src="{{movieDetails.poster}}">
+                  <img src="{{movieDetails.posterLink}}">
                 </ion-header>
               </ion-col>
               <ion-col>
                 <div *ngIf="movies==''" style="padding-top: 50px;">
                   <ion-header style="text-align: center;">
-                    <ion-card-subtitle style="font-size: 20px;">No movies available for this selection</ion-card-subtitle>
+                    <ion-card-subtitle style="font-size: 20px;">The movie hall is not available</ion-card-subtitle>
                   </ion-header>
                 </div>
                 <div *ngFor=" let movie of movies">
@@ -70,9 +70,7 @@
                     <ion-grid>
                       <ion-row>
                         <ion-col *ngFor="let time of covertTimeToArray(movie.showingTime);">
-                          <ion-buttons>
-                            <ion-button expand="round" fill="outline" (click)="gotourl(movie._id,time)">{{time}}</ion-button>
-                          </ion-buttons>
+                            <ion-button (click)="gotourl(movie._id,time)">{{time}}</ion-button>
                         </ion-col>
                       </ion-row>
                     </ion-grid>

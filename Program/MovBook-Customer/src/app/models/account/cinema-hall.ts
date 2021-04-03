@@ -3,7 +3,7 @@
  */
 export interface CinemaHall {
   cinemaLocationObjectId: string;
-  hallName: string;
+  cinemaHallName: string;
   seatingGridNoOfRows: any,
   seatingGridNoOfColumns: any,
   seatingDetails: [{

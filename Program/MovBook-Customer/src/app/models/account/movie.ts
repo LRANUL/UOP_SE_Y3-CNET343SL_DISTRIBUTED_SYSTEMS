@@ -3,11 +3,12 @@
  */
 export interface Movie {
   _id?: string;
-  title: string;
-  year: string;
+  movieStatus: string;
+  movieTitle: string;
   rated: string;
-  released: string;
-  runtime: string;
+  releasedYear: string;
+  releasedDate: string;
+  movieRuntime: string;
   genre: string;
   director: string;
   writer: string;
@@ -16,24 +17,21 @@ export interface Movie {
   language: string;
   country: string;
   awards: string;
-  poster: string;
+  posterLink: string;
   ratings: [
     {
       Source: string;
       Value: string;
     }
   ];
-  metascore: string;
-  imdbRating: string;
-  imdbVotes: string;
-  imdbID: string;
-  type: string;
-  dvd: string;
+  imdb: {
+    imdbID: string;
+    imdbRating: string;
+    imdbVotes: string;
+  }
   boxOffice: string;
   production: string;
   website: string;
-  response: string;
-  __v?: number;
 }
 
 /**

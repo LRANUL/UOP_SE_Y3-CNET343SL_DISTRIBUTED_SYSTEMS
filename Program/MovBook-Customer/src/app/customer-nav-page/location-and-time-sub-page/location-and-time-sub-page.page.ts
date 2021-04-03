@@ -33,37 +33,36 @@ export class LocationAndTimeSubPagePage implements OnInit {
   hallID;
   movies;
   movieDetails : Movie = {
-    title: '',
-    year: '',
-    rated: '',
-    released: '',
-    runtime: '',
-    genre: '',
-    director: '',
-    writer: '',
-    actors: '',
-    plot: '',
-    language: '',
-    country: '',
-    awards: '',
-    poster: '',
-    ratings: [
-      {
-        Source: '',
-        Value: '',
-      }
-    ],
-    metascore: '',
+  movieStatus: '',
+  movieTitle: '',
+  rated: '',
+  releasedYear: '',
+  releasedDate: '',
+  movieRuntime: '',
+  genre: '',
+  director: '',
+  writer: '',
+  actors: '',
+  plot: '',
+  language: '',
+  country: '',
+  awards: '',
+  posterLink: '',
+  ratings: [
+    {
+      Source: '',
+      Value: '',
+    }
+  ],
+  imdb: {
+    imdbID: '',
     imdbRating: '',
     imdbVotes: '',
-    imdbID: '',
-    type: '',
-    dvd: '',
-    boxOffice: '',
-    production: '',
-    website: '',
-    response: '',
-  };
+  },
+  boxOffice: '',
+  production: '',
+  website: ''
+}
   movielocation;
 
   cinemaLocationList = [];
@@ -109,6 +108,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
       this.movies = moviedetail; // this is the way it should be done to get multiple locations
       console.log(this.movies);
       this.startDate =  moviedetail[0].showingStartDate;
+      console.log(this.startDate);
       this.endDate = moviedetail[0].showingEndDate;
     });
   }
