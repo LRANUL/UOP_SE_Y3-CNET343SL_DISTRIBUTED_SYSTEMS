@@ -15,9 +15,9 @@ const routes: Routes = [
   },
   {
     path: 'manager',
-    loadChildren: () => import('./manager-nav-page/manager-nav-page.module').then( m => m.ManagerNavPagePageModule),
+    loadChildren: () => import('./account/manager-nav-page/manager-nav-page.module').then( m => m.ManagerNavPagePageModule)
     // canActivate:[AuthGuard]
-  },
+  }
 ];
 
 @NgModule({
