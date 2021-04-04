@@ -48,8 +48,11 @@ router.get("/:movieId",(req,res,next)=>{
     })
 });
 
-// POST - Create new cinema hall | Route: 'BASE_URL/api/movies/'
-router.post("/", movieController.createNewMovie);
+// POST - Add new movie under 'WaitListed' | Route: 'BASE_URL/api/movies/add-movie-as-wait-listed'
+router.post("/add-movie-as-wait-listed", movieController.addMovieAsWaitListed);
+
+// POST - Add new movie under 'WaitListed' | Route: 'BASE_URL/api/movies/add-movie-as-upcoming'
+router.post("/add-movie-as-upcoming", movieController.addMovieAsUpcoming);
 
 // GET - Retrieve movie | Route: 'BASE_URL/api/movies/id/:movieImdbId'
 router.get("/id/:movieImdbId", movieController.retrieveMovieObjectId);
