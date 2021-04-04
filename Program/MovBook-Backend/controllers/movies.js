@@ -29,7 +29,7 @@ exports.addMovieAsWaitListed = async (req, res, next) => {
       }
     ],
     imdb: {
-      imdbID: req.body.imdbID,
+      imdbId: req.body.imdbID,
       imdbVotes: req.body.imdbVotes,
       imdbRating : req.body.imdbRating
     },
@@ -107,14 +107,14 @@ exports.addMovieAsUpcoming = async (req, res, next) => {
 
 };
 
-// Function - Retrieving movieObjectId (_id) using rout 'BASE_URL/api/movie/id/:movieImdbId'
+// Function - Retrieving movieObjectId (_id) using rout 'BASE_URL/api/movies/movie-id/:movieImdbId'
 exports.retrieveMovieObjectId = async (req, res, next) => {
 
   // Getting passed 'movieImdbId' from the url
   let passedMovieImdbId = req.params.movieImdbId;
 
   // Using mongoDB's find() functionality to get the movieObjectId (_id) for the passed movieImdbId
-  await movieModel.find({ imdbId: passedMovieImdbId }, "_id", (error, returnedData) => {
+  await movieModel.find({ 'imdb.imdbId': passedMovieImdbId }, "_id", (error, returnedData) => {
 
     // If condition - checking whether as error occurred during the query execution
     if(error){
@@ -145,14 +145,14 @@ exports.retrieveMovieObjectId = async (req, res, next) => {
 
 };
 
-// Function - Retrieving movie using route, 'BASE_URL/api/movie/:movieImdbId'
+// Function - Retrieving movie using route, 'BASE_URL/api/movies/movie-details/:movieImdbId'
 exports.retrieveMovie = async (req, res, next) => {
 
   // Getting passed 'movieImdbId' from the URL
   let passedMovieImdbId = req.params.movieImdbId;
 
   // Using mongoDB's findOne() functionality to retrieve one movie document object for the passed movieImdbId
-  await movieModel.findOne({ imdbId: passedMovieImdbId }, (error, returnedData) => {
+  await movieModel.findOne({ 'imdb.imdbId': passedMovieImdbId }, (error, returnedData) => {
 
     // If condition - checking whether as error occurred during the query execution
     if(error){

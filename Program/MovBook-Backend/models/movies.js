@@ -25,7 +25,7 @@ const movieSchema = mongoose.Schema({
     }
   ],
   imdb: {
-    imdbID: {type : String, required:true},
+    imdbId: {type : String, required:true},
     imdbVotes: {type : String, required:true},
     imdbRating : {type : String, required:true}
     

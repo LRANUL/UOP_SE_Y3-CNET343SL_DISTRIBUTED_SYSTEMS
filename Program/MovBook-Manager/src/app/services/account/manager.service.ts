@@ -56,12 +56,12 @@ export class ManagerService {
   // GET - Retrieving movieObjectId (_id) from the database by passing the movieImdbId
   getMovieObjectId(movieImdbId: string){
     return this.httpClient
-      .get(this.BASE_URL + "api/movies/id/" + movieImdbId);
+      .get(this.BASE_URL + "api/movies/movie-id/" + movieImdbId);
   }
   // GET - Retrieving movie from the database by passing the movieImdbId
-  getMovie(movieImdbId: string){
+  getMovieDetailsFromDB(movieImdbId: string){
     return this.httpClient
-      .get(this.BASE_URL + "api/movies/" + movieImdbId);
+      .get(this.BASE_URL + "api/movies/movie-details/" + movieImdbId);
   }
 
   /**

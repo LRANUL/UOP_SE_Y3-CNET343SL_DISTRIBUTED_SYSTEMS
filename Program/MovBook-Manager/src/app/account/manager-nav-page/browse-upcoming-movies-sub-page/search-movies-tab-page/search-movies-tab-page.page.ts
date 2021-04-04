@@ -189,43 +189,83 @@ export class SearchMoviesTabPagePage implements OnInit {
 
   // Function - Add selected movie into the movie wait list
   addMovieToMovieWaitList(movieImdbId: string){
-    
+
     /**
      * Adding movie under movie status, 'WaitListed'
      */
-    // Retrieving the movie details from the omdb api
-    this.managerService.getMovieDetailsForOneMovie(movieImdbId)
-      .subscribe((retrievedMovieDetails: MovieDetails) => {
+    // Checking whether the selected movie is already added
+    this.managerService.getMovieDetailsFromDB(movieImdbId)
+      .subscribe((movieAvailability: any) => {
 
-        if(retrievedMovieDetails.Response === "True"){
-          
-          // Add movie to the database under 'WaitListed'
-          this.managerService.addMovieAsWaitListed(retrievedMovieDetails)
-            .subscribe((retrievedMovieResponse: any) => {
+        if(movieAvailability.message === "Movie retrieved"){
 
-              if(retrievedMovieResponse.message === "Movie Added As WaitListed"){
+          let movieExistsMessage = null;
 
-                // Showing successful message box to the user
-                this.alertNotice("MOVIE ADDED", `"${retrievedMovieResponse.returnedData.movieTitle}" was added as 'WaitListed'`);
+          if(movieAvailability.returnedData.movieStatus === "WaitListed"){
+            movieExistsMessage = `"${movieAvailability.returnedData.movieTitle}", is already added to wait list.`;
+          }
+          else if(movieAvailability.returnedData.movieStatus === "Upcoming"){
+            movieExistsMessage = `"${movieAvailability.returnedData.movieTitle}", is already added to movie catalog (Upcoming).`;
+          }
+          else if(movieAvailability.returnedData.movieStatus === "NowShowing"){
+            movieExistsMessage = `"${movieAvailability.returnedData.movieTitle}", is already added to movie catalog (Now Showing).`;
+          }
 
-              }
+          // Showing error message box to the user
+          this.alertNotice("Movie Exists", movieExistsMessage);
 
-            }, (error: ErrorEvent) => {
+          console.log("Selected movie was already added.");
+        }
+        else if(movieAvailability.message === "Movie not available"){
+
+          // Retrieving the movie details from the omdb api
+          this.managerService.getMovieDetailsForOneMovie(movieImdbId)
+          .subscribe((retrievedMovieDetails: MovieDetails) => {
+
+            if(retrievedMovieDetails.Response === "True"){
+              
+              // Add movie to the database under 'WaitListed'
+              this.managerService.addMovieAsWaitListed(retrievedMovieDetails)
+                .subscribe((retrievedMovieResponse: any) => {
+
+                  if(retrievedMovieResponse.message === "Movie Added As WaitListed"){
+
+                    // Showing successful message box to the user
+                    this.alertNotice("Movie Added", `"${retrievedMovieResponse.returnedData.movieTitle}" added as 'WaitListed'`);
+
+                  }
+                  else{
+                    // Showing error message box to the user
+                    this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
+
+                    console.log("Unable to add movie");
+                  }
+
+                }, (error: ErrorEvent) => {
+                  // Showing error message box to the user
+                  this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
+
+                  console.log("Unable to add movie ", error);
+                }
+              );
+
+            }
+            else{
               // Showing error message box to the user
               this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
-              console.log("Unable to retrieve movie details: ", error);
+              console.log("Unable to retrieve movie details");
             }
-          );
+
+          },
+          (error: ErrorEvent) => {
+            // Showing error message box to the user
+            this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
+
+            console.log("Unable to retrieve results: ", error);
+          });
 
         }
-        else{
-          // Showing error message box to the user
-          this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
-
-          console.log("Unable to retrieve movie details");
-        }
-
       },
       (error: ErrorEvent) => {
         // Showing error message box to the user

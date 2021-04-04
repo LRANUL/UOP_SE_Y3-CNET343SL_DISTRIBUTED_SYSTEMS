@@ -54,11 +54,11 @@ router.post("/add-movie-as-wait-listed", movieController.addMovieAsWaitListed);
 // POST - Add new movie under 'WaitListed' | Route: 'BASE_URL/api/movies/add-movie-as-upcoming'
 router.post("/add-movie-as-upcoming", movieController.addMovieAsUpcoming);
 
-// GET - Retrieve movie | Route: 'BASE_URL/api/movies/id/:movieImdbId'
-router.get("/id/:movieImdbId", movieController.retrieveMovieObjectId);
+// GET - Retrieve movie | Route: 'BASE_URL/api/movies/movie-id/:movieImdbId'
+router.get("/movie-id/:movieImdbId", movieController.retrieveMovieObjectId);
 
-// GET - Retrieve movie | Route: 'BASE_URL/api/movies/:movieImdbId'
-router.get("/:movieImdbId", movieController.retrieveMovie);
+// GET - Retrieve movie | Route: 'BASE_URL/api/movies/movie-details/:movieImdbId'
+router.get("/movie-details/:movieImdbId", movieController.retrieveMovie);
 
 
 module.exports = router;
