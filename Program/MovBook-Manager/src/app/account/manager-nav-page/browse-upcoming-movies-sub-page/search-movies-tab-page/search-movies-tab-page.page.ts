@@ -225,7 +225,7 @@ export class SearchMoviesTabPagePage implements OnInit {
             if(retrievedMovieDetails.Response === "True"){
               
               // Add movie to the database under 'WaitListed'
-              this.managerService.addMovieAsWaitListed(retrievedMovieDetails)
+              this.managerService.addMovie(retrievedMovieDetails, "WaitListed")
                 .subscribe((retrievedMovieResponse: any) => {
 
                   if(retrievedMovieResponse.message === "Movie Added As WaitListed"){

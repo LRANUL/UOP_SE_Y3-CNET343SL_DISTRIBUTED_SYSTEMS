@@ -1,4 +1,4 @@
-<ion-list style="min-width: 200px;">
+<ion-list style="min-width: 200px">
   <form>
     <ion-item>
       <ion-grid>
@@ -11,7 +11,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-label style="font-size: 20px;">
+            <ion-label style="font-size: 20px">
               <b>Select a category:</b>
             </ion-label>
           </ion-col>
@@ -22,10 +22,10 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-button 
-              color="tertiary" 
-              expand="block" 
-              (click)="addMovieToUpcomingAlert('Confirmation ', 'This movie will be added to the movie catalog (Upcoming), do you want to continue?', passedMovieId)"
+            <ion-button
+              color="tertiary"
+              expand="block"
+              (click)="addMovieToUpcomingAlert('Confirmation ', 'This movie will be added to the movie catalog (Upcoming), do you want to continue?', passedMovieId, 'Upcoming')"
             >
               UPCOMING SHOW
             </ion-button>
@@ -37,7 +37,11 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-button color="tertiary" expand="block">
+            <ion-button 
+              color="tertiary" 
+              expand="block"
+              (click)="addMovieToNowShowingAlert('Confirmation ', 'This movie will be added to the movie catalog (Now Showing), do you want to continue?', passedMovieId, 'NowShowing')"  
+            >
               NOW SHOWING
             </ion-button>
           </ion-col>

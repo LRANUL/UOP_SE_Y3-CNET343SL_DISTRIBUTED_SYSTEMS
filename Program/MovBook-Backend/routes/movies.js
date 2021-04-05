@@ -48,11 +48,8 @@ router.get("/:movieId",(req,res,next)=>{
     })
 });
 
-// POST - Add new movie under 'WaitListed' | Route: 'BASE_URL/api/movies/add-movie-as-wait-listed'
-router.post("/add-movie-as-wait-listed", movieController.addMovieAsWaitListed);
-
-// POST - Add new movie under 'WaitListed' | Route: 'BASE_URL/api/movies/add-movie-as-upcoming'
-router.post("/add-movie-as-upcoming", movieController.addMovieAsUpcoming);
+// POST - Add new movie under the relevant movie status | Route: 'BASE_URL/api/movies/add-movie/:movieStatus'
+router.post("/add-movie/:movieStatus", movieController.addMovie);
 
 // GET - Retrieve movie | Route: 'BASE_URL/api/movies/movie-id/:movieImdbId'
 router.get("/movie-id/:movieImdbId", movieController.retrieveMovieObjectId);
@@ -60,7 +57,7 @@ router.get("/movie-id/:movieImdbId", movieController.retrieveMovieObjectId);
 // GET - Retrieve movie | Route: 'BASE_URL/api/movies/movie-details/:movieImdbId'
 router.get("/movie-details/:movieImdbId", movieController.retrieveMovie);
 
-// PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status/:movieImdbId'
-router.put("/update-movie-status/:movieImdbId", movieController.updateMovieStatus);
+// PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status/:newMovieStatus'
+router.put("/update-movie-status/:newMovieStatus", movieController.updateMovieStatus);
 
 module.exports = router;

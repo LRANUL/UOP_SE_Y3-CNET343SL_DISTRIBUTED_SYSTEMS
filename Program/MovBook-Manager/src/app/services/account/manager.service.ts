@@ -43,15 +43,10 @@ export class ManagerService {
   /**
    * Movie
    */
-  // POST - Adding movie under 'WaitListed' into the database by passing to the server-side
-  addMovieAsWaitListed(movie: MovieDetails){
+  // POST - Adding movie into the database by passing to the server-side
+  addMovie(movie: MovieDetails, movieStatus: string){
     return this.httpClient
-      .post(this.BASE_URL + "api/movies/add-movie-as-wait-listed", movie);
-  }
-  // POST - Adding movie under 'Upcoming' into the database by passing to the server-side
-  addMovieAsUpcoming(movie: MovieDetails){
-    return this.httpClient
-      .post(this.BASE_URL + "api/movies/add-movie-as-upcoming", movie);
+      .post(this.BASE_URL + "api/movies/add-movie/" + movieStatus, movie);
   }
   // GET - Retrieving movieObjectId (_id) from the database by passing the movieImdbId
   getMovieObjectId(movieImdbId: string){
@@ -64,9 +59,9 @@ export class ManagerService {
       .get(this.BASE_URL + "api/movies/movie-details/" + movieImdbId);
   }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
-  updateMovieStatus(movieImdbId: string, movieStatus: string){
-  return this.httpClient
-    .put(this.BASE_URL + "api/movies/update-movie-status/" + movieImdbId, movieStatus);
+  updateMovieStatus(movieImdbId: string, newMovieStatus: string){alert(movieImdbId);alert(newMovieStatus);
+    return this.httpClient
+      .put(this.BASE_URL + "api/movies/update-movie-status/" + newMovieStatus, movieImdbId);
   }
 
   /**
