@@ -67,6 +67,20 @@ export class SearchMoviesTabPagePage implements OnInit {
     await alert.present();
   }
 
+  // Function - Implementation for opening the 'Movie Details Modal' modal
+  async openMovieDetailsModal(movieImdbId: string){
+    const movieDetailsModal = await this.modalController.create({
+      component: MovieDetailsModalPage,
+      componentProps: {
+        passingModalOpenPath: 'Manager-Movie-Details',
+        passingMovieImdbId: movieImdbId
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    movieDetailsModal.present();
+  }
+
   // Function -  Generating five years using current date for 'movieReleaseYear' ion select
   generateMovieReleaseYears() {
 
@@ -170,20 +184,6 @@ export class SearchMoviesTabPagePage implements OnInit {
         console.log("Unable to retrieve results: ", error);
       }
     );
-  }
-
-  // Function - Implementation for opening the 'Movie Details Modal' modal
-  async openMovieDetailsModal(movieImdbId: string){
-    const movieDetailsModal = await this.modalController.create({
-      component: MovieDetailsModalPage,
-      componentProps: {
-        passingModalOpenPath: 'Manager-Movie-Details',
-        passingMovieImdbId: movieImdbId
-      },
-      // Disabling modal closing from any outside clicks
-      backdropDismiss: false,
-    });
-    movieDetailsModal.present();
   }
 
 

@@ -41,11 +41,12 @@ export class MovieWaitlistTabPagePage implements OnInit {
   }
 
   // Implementation for opening the 'Movie Catalog Types' popover
-  async openMovieCatalogTypesPopover(evt: Event){
+  async openMovieCatalogTypesPopover(evt: Event, waitListedMovieImdbId: Number, waitListedMovieDetails: any){
     const movieCatalogTypesPopover = await this.popoverController.create({
       component: MovieCatalogTypesPopoverPage,
       componentProps: {
-        movieId: '<SAMPLE VALUE>'
+        movieId: waitListedMovieImdbId,
+        movieDetails: waitListedMovieDetails
       },
       event: evt
     });
@@ -53,12 +54,12 @@ export class MovieWaitlistTabPagePage implements OnInit {
   }
 
   // Implementation for opening the 'Movie Details Modal' modal
-  async openMovieDetailsModal(){
+  async openMovieDetailsModal(movieImdbId: string){
     const movieDetailsModal = await this.modalController.create({
       component: MovieDetailsModalPage,
       componentProps: {
-        modalOpenPath: 'Manager-Movie-Details',
-        movieId: '<SAMPLE VALUE>'
+        passingModalOpenPath: 'Manager-Movie-Details-Wait-List',
+        passingMovieImdbId: movieImdbId
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,
@@ -79,36 +80,46 @@ export class MovieWaitlistTabPagePage implements OnInit {
   // Retrieve all available movies under 'WaitListed'
   retrieveMoviesAsWaitListed(){
 
+    // Assigning 'loadingSpinnerWaitListedMovies' to true (starts loading spinner)
     this.loadingSpinnerWaitListedMovies = true;
 
+    // Assigning 'noMovieAvailableText' to false (removes no movie available text section)
     this.noMovieAvailableText = false;
 
+    // Assigning 'noOfResultsFoundText' to false (removes number of movie available text section)
     this.noOfResultsFoundText = false;
 
-    // Retrieving the movies
+    // Retrieving the wait listed movies
     this.managerService.getMoviesAsMovieStatus("WaitListed")
       .subscribe((retrievedMovieDetailsList: any) => {
 
       if(retrievedMovieDetailsList.message == "Movies retrieved"){
 
+        // Assigning 'loadingSpinnerWaitListedMovies' to false (stops loading spinner)
         this.loadingSpinnerWaitListedMovies = false;
 
+        // Assigning retrieve movie list to 'movieDetailsAsWaitListed' array
         this.movieDetailsAsWaitListed = retrievedMovieDetailsList.returnedData;
 
+        // Assigning 'retrievedNoOfMovies' the array length of 'movieDetailsAsWaitListed'
         this.retrievedNoOfMovies = this.movieDetailsAsWaitListed.length;
         
+        // Assigning 'noOfResultsFoundText' to true (adds number of movie available text section)
         this.noOfResultsFoundText = true;
 
       }
       else if(retrievedMovieDetailsList.message == "No movies available"){
 
+        // Assigning 'loadingSpinnerWaitListedMovies' to false (stops loading spinner)
         this.loadingSpinnerWaitListedMovies = false;
 
+        // Assigning 'noMovieAvailableText' to true (adds no movie available text section)
         this.noMovieAvailableText = true;
 
       }
 
     }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerWaitListedMovies' to false (stops loading spinner)
       this.loadingSpinnerWaitListedMovies = false;
 
       // Showing error message box to the user

@@ -63,7 +63,7 @@ export class ManagerService {
       .get(this.BASE_URL + "api/movies/movie-status/" + movieStatus);
   }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
-  updateMovieStatus(movieImdbId: string, newMovieStatus: string){alert(movieImdbId);alert(newMovieStatus);
+  updateMovieStatus(movieImdbId: string, newMovieStatus: string){
     return this.httpClient
       .put(this.BASE_URL + "api/movies/update-movie-status/" + newMovieStatus, movieImdbId);
   }

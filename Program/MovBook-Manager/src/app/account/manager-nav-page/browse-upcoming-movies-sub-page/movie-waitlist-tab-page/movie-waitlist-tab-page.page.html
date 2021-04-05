@@ -133,7 +133,7 @@
                                   <ion-col>
 
                                     <!-- MOVIE CATALOG TYPE SELECTION - BUTTON -->
-                                    <ion-button expand="block" style="--border-radius: 40px;" (click)="openMovieCatalogTypesPopover($event)">
+                                    <ion-button expand="block" style="--border-radius: 40px;" (click)="openMovieCatalogTypesPopover($event, movie?.imdb.imdbId, movie)">
                                       <ion-label>
                                         <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-to-movie-catalog-icon.png" style="width: 25px;
                                                                                                                                             margin-left: 0px;"></ion-img>
@@ -147,7 +147,7 @@
                                 </ion-row>
                                 <ion-row>
                                   <ion-col>
-                                    <ion-button expand="block" color="tertiary" style="--border-radius: 40px;" (click)="openMovieDetailsModal()">
+                                    <ion-button expand="block" color="tertiary" style="--border-radius: 40px;" (click)="openMovieDetailsModal(movie?.imdb.imdbId)">
                                       <ion-label>
                                         <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/more-details-icon.png" style="width: 25px;
                                                                                                                                             margin-left: 0px;"></ion-img>
