@@ -51,11 +51,14 @@ router.get("/:movieId",(req,res,next)=>{
 // POST - Add new movie under the relevant movie status | Route: 'BASE_URL/api/movies/add-movie/:movieStatus'
 router.post("/add-movie/:movieStatus", movieController.addMovie);
 
-// GET - Retrieve movie | Route: 'BASE_URL/api/movies/movie-id/:movieImdbId'
+// GET - Retrieve movie object ID | Route: 'BASE_URL/api/movies/movie-id/:movieImdbId'
 router.get("/movie-id/:movieImdbId", movieController.retrieveMovieObjectId);
 
-// GET - Retrieve movie | Route: 'BASE_URL/api/movies/movie-details/:movieImdbId'
+// GET - Retrieve movie details | Route: 'BASE_URL/api/movies/movie-details/:movieImdbId'
 router.get("/movie-details/:movieImdbId", movieController.retrieveMovie);
+
+// GET - Retrieve all movie according to the movie status | Route: 'BASE_URL/api/movies/movie-status/:movieStatus'
+router.get("/movie-status/:movieStatus", movieController.retrieveAllMoviesAsStatus);
 
 // PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status/:newMovieStatus'
 router.put("/update-movie-status/:newMovieStatus", movieController.updateMovieStatus);

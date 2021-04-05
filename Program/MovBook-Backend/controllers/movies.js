@@ -133,6 +133,44 @@ exports.retrieveMovie = async (req, res, next) => {
   })
 };
 
+// Function - Retrieve all movie under a particular movie status using route, 'BASE_URL/api/movies/movie-status/:movieStatus'
+exports.retrieveAllMoviesAsStatus = async (req, res, next) => {
+
+  // Getting passed 'movieStatus' from the url
+  let passedMovieStatus = req.params.movieStatus;
+
+  // Using mongoDB's find() functionality to get the movies for the passed movie status
+  await movieModel.find({ movieStatus: passedMovieStatus }, (error, returnedData) => {
+
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve movies",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No movies available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Movies retrieved",
+          returnedData
+        });
+      }
+    }
+
+  })
+
+};
+
 // Function - Update movie status using route, 'BASE_URL/api/movies/update-movie-status/:newMovieStatus'
 exports.updateMovieStatus = async (req, res, next) => {
 

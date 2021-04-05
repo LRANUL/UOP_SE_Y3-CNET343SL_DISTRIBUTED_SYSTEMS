@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController } from '@ionic/angular';
+import { ManagerService } from 'src/app/services/account/manager.service';
 
 import { MovieCatalogTypesPopoverPage } from '../movie-catalog-types-popover/movie-catalog-types-popover.page';
 import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-modal.page';
@@ -11,12 +12,32 @@ import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-moda
 })
 export class MovieWaitlistTabPagePage implements OnInit {
 
+  // Declaration | Initialization - to handle visibility of 'noOfResultsFoundText' block
+  noOfResultsFoundText: Boolean = false;
+
+  // Declaration | Initialization - to handle visibility of 'noMovieAvailableText' block
+  noMovieAvailableText: Boolean = false;
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerWaitListedMovies' block
+  loadingSpinnerWaitListedMovies: Boolean = false;
+
+  // Declaration | Initialization - to handle number of movies retrieved
+  retrievedNoOfMovies: Number = 0;
+
+  // Declaration - To store retrieved movies under 'WaitListed'
+  movieDetailsAsWaitListed = new Array();
+
   constructor(
     private modalController: ModalController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private alertController: AlertController,
+    private managerService: ManagerService
   ) { }
 
   ngOnInit() {
+
+    // Retrieving movies under 'WaitListed' when the page renders
+    this.retrieveMoviesAsWaitListed();
   }
 
   // Implementation for opening the 'Movie Catalog Types' popover
@@ -43,6 +64,59 @@ export class MovieWaitlistTabPagePage implements OnInit {
       backdropDismiss: false,
     });
     movieDetailsModal.present();
+  }
+
+  // Function -  Alert Box Implementation
+  async alertNotice (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  // Retrieve all available movies under 'WaitListed'
+  retrieveMoviesAsWaitListed(){
+
+    this.loadingSpinnerWaitListedMovies = true;
+
+    this.noMovieAvailableText = false;
+
+    this.noOfResultsFoundText = false;
+
+    // Retrieving the movies
+    this.managerService.getMoviesAsMovieStatus("WaitListed")
+      .subscribe((retrievedMovieDetailsList: any) => {
+
+      if(retrievedMovieDetailsList.message == "Movies retrieved"){
+
+        this.loadingSpinnerWaitListedMovies = false;
+
+        this.movieDetailsAsWaitListed = retrievedMovieDetailsList.returnedData;
+
+        this.retrievedNoOfMovies = this.movieDetailsAsWaitListed.length;
+        
+        this.noOfResultsFoundText = true;
+
+      }
+      else if(retrievedMovieDetailsList.message == "No movies available"){
+
+        this.loadingSpinnerWaitListedMovies = false;
+
+        this.noMovieAvailableText = true;
+
+      }
+
+    }, (error: ErrorEvent) => {
+      this.loadingSpinnerWaitListedMovies = false;
+
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to retrieve movie details");
+    });
+
   }
 
 }

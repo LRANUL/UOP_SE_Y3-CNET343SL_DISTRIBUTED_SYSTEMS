@@ -33,7 +33,6 @@ export class ManagerService {
         .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/search/" + movieTitle + "/" + movieReleaseYear);
     }
   }
-
   // GET - Retrieving detailed movie details for one movie by passing the imdbId
   getMovieDetailsForOneMovie(movieImdbId: string){
     return this.httpClient
@@ -57,6 +56,11 @@ export class ManagerService {
   getMovieDetailsFromDB(movieImdbId: string){
     return this.httpClient
       .get(this.BASE_URL + "api/movies/movie-details/" + movieImdbId);
+  }
+  // GET - Retrieving movies by movie status by passing the movieStatus
+  getMoviesAsMovieStatus(movieStatus: string){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movies/movie-status/" + movieStatus);
   }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
   updateMovieStatus(movieImdbId: string, newMovieStatus: string){alert(movieImdbId);alert(newMovieStatus);
