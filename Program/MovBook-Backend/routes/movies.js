@@ -60,5 +60,7 @@ router.get("/movie-id/:movieImdbId", movieController.retrieveMovieObjectId);
 // GET - Retrieve movie | Route: 'BASE_URL/api/movies/movie-details/:movieImdbId'
 router.get("/movie-details/:movieImdbId", movieController.retrieveMovie);
 
+// PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status/:movieImdbId'
+router.put("/update-movie-status/:movieImdbId", movieController.updateMovieStatus);
 
 module.exports = router;

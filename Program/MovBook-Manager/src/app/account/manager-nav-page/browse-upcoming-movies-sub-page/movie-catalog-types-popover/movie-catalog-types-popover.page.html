@@ -1,5 +1,5 @@
 <ion-list style="min-width: 200px;">
-  <form> <!-- TODO: Connect to backend -->
+  <form>
     <ion-item>
       <ion-grid>
         <ion-row>
@@ -22,7 +22,11 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-button color="tertiary" expand="block">
+            <ion-button 
+              color="tertiary" 
+              expand="block" 
+              (click)="addMovieToUpcomingAlert('Confirmation ', 'This movie will be added to the movie catalog (Upcoming), do you want to continue?', passedMovieId)"
+            >
               UPCOMING SHOW
             </ion-button>
           </ion-col>

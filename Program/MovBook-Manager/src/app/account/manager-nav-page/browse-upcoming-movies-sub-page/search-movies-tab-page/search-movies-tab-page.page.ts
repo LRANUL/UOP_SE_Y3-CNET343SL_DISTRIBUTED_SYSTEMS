@@ -211,7 +211,7 @@ export class SearchMoviesTabPagePage implements OnInit {
             movieExistsMessage = `"${movieAvailability.returnedData.movieTitle}", is already added to movie catalog (Now Showing).`;
           }
 
-          // Showing error message box to the user
+          // Showing message box to the user
           this.alertNotice("Movie Exists", movieExistsMessage);
 
           console.log("Selected movie was already added.");

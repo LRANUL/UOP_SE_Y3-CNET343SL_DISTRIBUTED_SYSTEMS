@@ -31,27 +31,27 @@ exports.addMovieAsWaitListed = async (req, res, next) => {
     imdb: {
       imdbId: req.body.imdbID,
       imdbVotes: req.body.imdbVotes,
-      imdbRating : req.body.imdbRating
+      imdbRating: req.body.imdbRating
     },
     boxOffice: req.body.BoxOffice,
     production: req.body.Production,
     website: req.body.Website
   }).save((error, returnedData) => {
 
-    if(error){
+    if (error) {
       res.status(500).json({
         message:
           "Error - Unable to add movie as 'WaitListed'", error
       });
     }
-    else{
+    else {
       res.status(200).json({
         message:
           "Movie Added As WaitListed",
         returnedData
       });
     }
-  
+
   })
 
 };
@@ -62,11 +62,11 @@ exports.addMovieAsUpcoming = async (req, res, next) => {
   // Using mongoDB's save() functionality to create a new movie document (object)
   await new movieModel({
     movieStatus: "Upcoming",
-    title: req.body.Title,
-    year: req.body.Year,
+    movieTitle: req.body.Title,
     rated: req.body.Rated,
-    released: req.body.Released,
-    runtime: req.body.Runtime,
+    releasedYear: req.body.Year,
+    releasedDate: req.body.Released,
+    movieRuntime: req.body.Runtime,
     genre: req.body.Genre,
     director: req.body.Director,
     writer: req.body.Writer,
@@ -75,34 +75,37 @@ exports.addMovieAsUpcoming = async (req, res, next) => {
     language: req.body.Language,
     country: req.body.Country,
     awards: req.body.Awards,
-    poster: req.body.Poster,
-    ratings: req.body.Ratings,
-    metascore: req.body.Metascore,
-    imdbRating: req.body.imdbRating,
-    imdbVotes: req.body.imdbVotes,
-    imdbId: req.body.imdbID,
-    type: req.body.Type,
-    dvd: req.body.DVD,
+    posterLink: req.body.Poster,
+    ratings: [
+      {
+        source: req.body.Ratings.Source,
+        value: req.body.Ratings.Value
+      }
+    ],
+    imdb: {
+      imdbId: req.body.imdbID,
+      imdbVotes: req.body.imdbVotes,
+      imdbRating: req.body.imdbRating
+    },
     boxOffice: req.body.BoxOffice,
     production: req.body.Production,
     website: req.body.Website
   }).save((error, returnedData) => {
-    
-    if(error){
+
+    if (error) {
       res.status(500).json({
         message:
           "Error - Unable to add movie as 'Upcoming'"
       });
     }
-    else{
-
+    else {
       res.status(200).json({
         message:
-          "Movie Added As WaitListed",
+          "Movie Added As Upcoming",
         returnedData
       });
     }
-  
+
   })
 
 };
@@ -116,23 +119,23 @@ exports.retrieveMovieObjectId = async (req, res, next) => {
   // Using mongoDB's find() functionality to get the movieObjectId (_id) for the passed movieImdbId
   await movieModel.find({ 'imdb.imdbId': passedMovieImdbId }, "_id", (error, returnedData) => {
 
-    // If condition - checking whether as error occurred during the query execution
-    if(error){
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
       res.status(500).json({
         message:
           "Unable to retrieve movie object ID (_id)",
       });
     }
-    else{
+    else {
       // If condition - checking whether the length of the returned data is zero (no data is returned)
       // and the relevant message passed to the client-side
-      if(returnedData.length == 0){
+      if (returnedData.length == 0) {
         res.status(200).json({
           message:
             "Movie not available"
         });
       }
-      else{
+      else {
         res.status(200).json({
           message:
             "Movie object ID (_id) retrieved",
@@ -154,23 +157,23 @@ exports.retrieveMovie = async (req, res, next) => {
   // Using mongoDB's findOne() functionality to retrieve one movie document object for the passed movieImdbId
   await movieModel.findOne({ 'imdb.imdbId': passedMovieImdbId }, (error, returnedData) => {
 
-    // If condition - checking whether as error occurred during the query execution
-    if(error){
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
       res.status(500).json({
         message:
           "Unable to retrieve movie",
       });
     }
-    else{
+    else {
       // If condition - checking whether returned data is null (no data is returned)
       // and the relevant message passed to the client-side
-      if(returnedData == null){
+      if (returnedData == null) {
         res.status(200).json({
           message:
             "Movie not available"
         });
       }
-      else{
+      else {
         res.status(200).json({
           message:
             "Movie retrieved",
@@ -179,4 +182,40 @@ exports.retrieveMovie = async (req, res, next) => {
       }
     }
   })
-}
+};
+
+// Function - Update movie status using route, 'BASE_URL/api/movies/update-movie-status/:movieImdbId'
+exports.updateMovieStatus = async (req, res, next) => {
+
+  // Getting passed movie imdb id
+  let passedMovieImdbId = req.params.movieImdbId;
+
+  // Getting passed movie status
+  let passedNewMovieStatus = req.body.newMovieStatus;
+
+  // Using mongoDB's findOneAndUpdate() functionality to update movie status
+  await movieModel.findOneAndUpdate(
+    {
+      'imdb.imdbId': passedMovieImdbId
+    },
+    {
+      movieStatus: passedNewMovieStatus
+    }, (error, returnedData) => {
+
+      // If condition - checking whether an error occurred during the query execution
+      if (error) {
+        res.status(500).json({
+          message:
+            "Unable to update movie status",
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Movie status updated",
+          returnedData
+        });
+      }
+    })
+
+};
