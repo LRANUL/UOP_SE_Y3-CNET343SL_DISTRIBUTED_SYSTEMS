@@ -21,12 +21,15 @@ export class MovieWaitlistTabPagePage implements OnInit {
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerWaitListedMovies' block
   loadingSpinnerWaitListedMovies: Boolean = false;
 
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerRemoveMovie' block
+  loadingSpinnerRemoveMovie: Boolean = false;
+
   // Declaration | Initialization - to handle number of movies retrieved
   retrievedNoOfMovies: Number = 0;
 
   // Declaration - To store retrieved movies under 'WaitListed'
   movieDetailsAsWaitListed = new Array();
-
+  
   constructor(
     private modalController: ModalController,
     private popoverController: PopoverController,
@@ -129,5 +132,78 @@ export class MovieWaitlistTabPagePage implements OnInit {
     });
 
   }
+
+
+  // Function - Remove Wait Listed Movie Alert Box Implementation
+  async removeWaitListedMovieAlert( title: string, content: string, movieImdbId: string ) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log("Remove Movie from Wait List Denied");
+          }
+        },
+        {
+          text: 'Continue',
+          handler: () => {
+            
+            this.removeWaitListedMovie(movieImdbId);
+
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // Function - Remove Wait Listed Movie
+  removeWaitListedMovie(movieImdbId: string){
+
+    // Assigning 'loadingSpinnerRemoveMovie' to true (starts loading spinner)
+    this.loadingSpinnerRemoveMovie = true;
+
+    // Removing movie from wait list from the database
+    this.managerService.removeWaitListedMovie(movieImdbId)
+      .subscribe((movieRemovedResponse: any) => {
+        
+      if(movieRemovedResponse.message == "Movie removed"){
+
+        this.loadingSpinnerRemoveMovie = false;
+
+        // Showing success message box to the user
+        this.alertNotice("Movie Removed", "Movie was removed from the Wait List");
+
+        console.log("Movie was removed from the Wait List");
+
+        // Re-rendering function to retrieve all movies in the wait list
+        this.retrieveMoviesAsWaitListed();
+
+      }
+      else if(movieRemovedResponse.message == "Unable to remove movie"){
+        // Assigning 'loadingSpinnerRemoveMovie' to false (stops loading spinner)
+        this.loadingSpinnerRemoveMovie = false;
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to remove movie, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to remove movie");
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerRemoveMovie' to false (stops loading spinner)
+      this.loadingSpinnerRemoveMovie = false;
+
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to remove movie, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to remove movie");
+    });
+
+  }
+
 
 }

@@ -63,4 +63,7 @@ router.get("/movie-status/:movieStatus", movieController.retrieveAllMoviesAsStat
 // PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status/:newMovieStatus'
 router.put("/update-movie-status/:newMovieStatus", movieController.updateMovieStatus);
 
+// DELETE - Delete wait listed movie | Route: 'BASE_URL/api/movies/remove-wait-listed-movie/:movieImdbId'
+router.delete("/remove-wait-listed-movie/:movieImdbId", movieController.removeWaitListedMovie);
+
 module.exports = router;

@@ -23,7 +23,7 @@
           <b>{{ retrievedNoOfMovies }}</b> Movies Available
         </ion-label>
 
-        <!-- Loading Spinner -->
+        <!-- Loading Spinner - Retrieving movies upon page render -->
         <ion-spinner name="dots" style="height: 100px;
                                         width: 100px;
                                         position: absolute;
@@ -31,6 +31,13 @@
                                         top: 50%;
                                         transform: translate(-50%,-50%);
                                         margin-top: 20px;" *ngIf="loadingSpinnerWaitListedMovies"></ion-spinner>
+
+        <!-- Loading Spinner - Removing movie -->
+        <ion-spinner name="crescent" style="height: 50px;
+                                            width: 50px;
+                                            position: absolute;
+                                            left: 50%;
+                                            transform: translateX(-50%);" *ngIf="loadingSpinnerRemoveMovie"></ion-spinner>
 
         <!-- No available movie text message if no movie are available -->
         <div style="border: 2px solid #ccc;
@@ -71,14 +78,22 @@
                                           left: 0%;">
                             <ion-row>
                               <ion-col>
+
+                                <!-- Remove movie button -->
                                 <div style="position: absolute;
                                             right: -6%;">
-                                  <ion-button color="danger" style="width: 75%; 
-                                                                    height: 80%; 
-                                                                    margin-left: 10%;">
+                                  <ion-button 
+                                    color="danger" 
+                                    style="width: 75%; 
+                                    height: 80%; 
+                                    margin-left: 10%;"
+                                    (click)="removeWaitListedMovieAlert('Remove Movie', 
+                                      'This movie will be removed from the wait list, do you want to continue?', movie?.imdb.imdbId)"
+                                  >
                                     <ion-icon name="close-outline" size="large"></ion-icon>
                                   </ion-button>
                                 </div>
+
                                 <div style="width: 250px;
                                     height: 340px;
                                     border-radius: 10px;

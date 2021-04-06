@@ -9,6 +9,7 @@ import { MovieDetails } from 'src/app/models/account/manager/movie-details';
 import { AddMovieToMovieWaitList, MovieWaitList, MovieWaitListResponse } from 'src/app/models/account/manager/movie-wait-list';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-modal.page';
+import { MovieWaitlistTabPagePage } from '../movie-waitlist-tab-page/movie-waitlist-tab-page.page';
 
 @Component({
   selector: 'app-search-movies-tab-page',
@@ -215,6 +216,7 @@ export class SearchMoviesTabPagePage implements OnInit {
           this.alertNotice("Movie Exists", movieExistsMessage);
 
           console.log("Selected movie was already added.");
+          
         }
         else if(movieAvailability.message === "Movie not available"){
 
