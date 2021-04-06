@@ -7,9 +7,12 @@ const beveragesRoutes = require("./routes/beverages");
 const usersRoutes = require("./routes/users");
 const moviesRoutes = require("./routes/movies");
 const loyaltyRoutes= require("./routes/loyalty");
+const ticketPriceRoutes= require("./routes/ticket-prices");
+const showingCinemaHall = require("./routes/showing-movie-hall");
 const bookingHistory = require("./routes/bookingHistory");
 const customerRoutes = require("./routes/customer");
 const managerRoutes = require("./routes/managers");
+const adminRoutes = require("./routes/admin");
 const cinemaHallRoutes = require("./routes/cinema-halls");
 const cinemaLocationRoutes = require("./routes/cinema-locations");
 const upcomingMovieSearchResults = require("./routes/upcoming-movie-search-results");
@@ -47,7 +50,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With, Content-Type, Accept"
+    "Origin,X-Requested-With, Content-Type, Accept,authorization"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -60,11 +63,14 @@ app.use("/api/movies", moviesRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/beverages", beveragesRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
+app.use("/api/ticket-prices", ticketPriceRoutes);
+app.use("/api/showing-cinema-hall", showingCinemaHall)
 app.use("/api/booking-history", bookingHistory);
 app.use("/api/booking-details", bookingDetails);
 app.use("/api/omdb/upcoming-movies", upcomingMovieSearchResults);
 app.use("/api/customers", customerRoutes);
 app.use("/api/managers", managerRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/cinema-halls", cinemaHallRoutes);
 app.use("/api/cinema-locations", cinemaLocationRoutes);
 app.use("/api/movie-wait-lists", movieWaitLists);

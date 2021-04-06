@@ -1,3 +1,9 @@
+/**
+ * 
+ * DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS
+ * 
+ */
+
 // Importing mongoose to create a model/schema
 const mongoose = require('mongoose');
 

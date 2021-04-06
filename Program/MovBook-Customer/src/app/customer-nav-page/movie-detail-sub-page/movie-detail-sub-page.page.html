@@ -1,9 +1,78 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>movie-detail-sub-page</ion-title>
+      <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+      <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+      <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+    <ion-button slot="start" color="light">
+      <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+<ion-grid>
+    <ion-row>
+        <ion-col>
+            <div class="imgHolder">
+                <img src="{{movieDetails.posterLink}}" style="width: 100%;">
+                <span>{{movieDetails.movieTitle}}  <br>{{movieDetails.movieRuntime}}  IMDB Rating: {{movieDetails.imdb.imdbRating}}</span>
+            </div>
+            <div>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size-md="12" offset-md="0.5">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-label style="font-size: x-large; font-weight: bold;">Story Brief</ion-label>
+                                        <br>
+                                        <br>
+                                        <ion-label>{{movieDetails.plot}}</ion-label>
+                                        <br>
+                                        <br>
+                                        <ion-label>Genre: {{movieDetails.genre}}</ion-label>
+                                        <br>
+                                        <br>
+                                            <ion-button style="text-align: center;" expand="full" (click)="venuSelection(movieDetails._id)">Book Tickets</ion-button>
+                                    </ion-col>
+                                    <ion-col>
+                                        <div>
+                                        <ion-label style="font-size: x-large; font-weight: bold;">Cast</ion-label>
+                                        <br>
+                                        <br>
+                                        <ion-label> Actors: {{movieDetails.actors}}</ion-label>
+                                       </div>
+                                       <div>
+                                         <br>
+                                         <ion-label style="font-size: x-large; font-weight: bold;">Team</ion-label>
+                                         <br>
+                                         <br>
+                                         <ion-label>Director: {{movieDetails.director}}</ion-label>
+                                         <br>
+                                         <ion-label>Production: {{movieDetails.production}}</ion-label>
+                                         <br>
+                                         <ion-label>Writter: {{movieDetails.writer}}</ion-label>
+                                       </div>
+                                       <div>
+                                         <br>
+                                        <ion-label style="font-size: x-large; font-weight: bold;">About Movie</ion-label>
+                                        <br>
+                                        <br>
+                                        <ion-label>Released Date: {{movieDetails.releasedDate}}</ion-label>
+                                         <br>
+                                         <ion-label>Country: {{movieDetails.country}}</ion-label>
+                                         <br>
+                                         <ion-label>Language: {{movieDetails.language}}</ion-label>
+                                         <br>
+                                         <ion-label>Awards: {{movieDetails.awards}}</ion-label>
+                                      </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>
 </ion-content>

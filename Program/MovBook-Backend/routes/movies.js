@@ -27,14 +27,43 @@ router.get('',(req,res,next)=>{
     })
 });
 
-// POST - Create new cinema hall | Route: 'BASE_URL/api/movies/'
-router.post("/", movieController.createNewMovie);
+//Get - Get one movie
+router.get("/:movieId",(req,res,next)=>{
+    movieModel.findById(req.params.movieId)
+    .then((returnedData)=>{
+      if(returnedData)
+    {
+      res.status(200).json({
+        message: "Movie details Obtained",
+        returnedData
+      })
+    }else
+    {
+      res.status(404).json({
+        message: "The was a issue obtaining movie details"
+      })
+    } 
+    }).catch(err => {
+     console.log(err);
+    })
+});
 
-// GET - Retrieve movie | Route: 'BASE_URL/api/movies/id/:movieImdbId'
-router.get("/id/:movieImdbId", movieController.retrieveMovieObjectId);
+// POST - Add new movie under the relevant movie status | Route: 'BASE_URL/api/movies/add-movie/:movieStatus'
+router.post("/add-movie/:movieStatus", movieController.addMovie);
 
-// GET - Retrieve movie | Route: 'BASE_URL/api/movies/:movieImdbId'
-router.get("/:movieImdbId", movieController.retrieveMovie);
+// GET - Retrieve movie object ID | Route: 'BASE_URL/api/movies/movie-id/:movieImdbId'
+router.get("/movie-id/:movieImdbId", movieController.retrieveMovieObjectId);
 
+// GET - Retrieve movie details | Route: 'BASE_URL/api/movies/movie-details/:movieImdbId'
+router.get("/movie-details/:movieImdbId", movieController.retrieveMovie);
+
+// GET - Retrieve all movie according to the movie status | Route: 'BASE_URL/api/movies/movie-status/:movieStatus'
+router.get("/movie-status/:movieStatus", movieController.retrieveAllMoviesAsStatus);
+
+// PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status/:newMovieStatus'
+router.put("/update-movie-status/:newMovieStatus", movieController.updateMovieStatus);
+
+// DELETE - Delete wait listed movie | Route: 'BASE_URL/api/movies/remove-wait-listed-movie/:movieImdbId'
+router.delete("/remove-wait-listed-movie/:movieImdbId", movieController.removeWaitListedMovie);
 
 module.exports = router;

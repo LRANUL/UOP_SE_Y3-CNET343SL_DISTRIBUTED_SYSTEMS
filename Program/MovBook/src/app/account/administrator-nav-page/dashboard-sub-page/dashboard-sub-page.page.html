@@ -11,63 +11,64 @@
           <h6>{{admin_Email}}</h6>
           <br />
         </div>
-        <ion-button expand="block" color="light" href="administrator/dashboard">Dashboard</ion-button>
-        <ion-button expand="block" color="button" href="administrator/manager-accounts">Manager
-          Accounts</ion-button>
-        <ion-button expand="block" color="button" href="administrator/profile-sub-page" style="margin-top: 50%">Profile
+        <ion-button expand="block" color="light" [routerLink]="['/','administrator','dashboard']">Dashboard
         </ion-button>
-        <ion-button expand="block" color="button" href="administrator/settings-sub-page">Settings</ion-button>
-        <ion-button expand="block" color="button" href="">Logout</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','manager-accounts']">Manager
+          Accounts</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','profile-sub-page']" style="margin-top: 50%">Profile
+        </ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','settings-sub-page']">Settings</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="">Logout</ion-button>
       </ion-col>
 
       <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;height: 700px">
 
+
+
+
+
+
         <div class="row">
 
           <!-- Database -->
-          <div class="col-6 col-sm-7">
+          <div class="col-6 col-sm-6">
             <h3 style="color: #374d58;"><b>Database status statistics</b></h3><br>
+            <ion-card style="width: 400px;background-color: rgb(231, 231, 231);">
+              <canvas #barChart></canvas>
+            </ion-card>
+            <br>
+            <ion-card style="width: 400px;background-color: rgb(231, 231, 231);">
+              <canvas #barChartStat></canvas>
+            </ion-card>
             <!-- <h4 style="color: rgb(60, 97, 97);margin-left: 30px;">Database Connected</h4> -->
           </div>
-          <div class="col-6 col-sm-4" >
+
+          <div class="col-6 col-sm-6">
             <h3 style="color: #374d58;"><b>OMDB API status statistics</b></h3>
+            <h5 style="color: #000000;"><b>API Response Status : {{jsonResponse}}</b></h5>
+            <h5 style="color: #000000;"><b>API Response Status : {{splitStatus}}</b></h5>
+            <h5 style="color: #000000;"><b>API Response Status : {{splitAddress}}</b></h5>
+            <br>
+            <!-- <h3 style="color: #374d58;"><b>Users status statistics</b></h3>
             <h4 style="color: #000000;"><b>API Response Status : {{jsonResponse}}</b></h4>
-            
+            <h4 style="color: #000000;"><b>API Response Status : {{splitStatus}}</b></h4>
+            <h4 style="color: #000000;"><b>API Response Status : {{splitAddress}}</b></h4>
+             -->
             <!-- <ion-card style="width: 500px;background-color: rgb(231, 231, 231);margin-left: 300px;margin-right: 200px;">
               <canvas #barChart></canvas>
             </ion-card> -->
           </div>
 
-          <div style="float: right;" class="col-6 col-sm-7">
 
-          </div>
-
-          <!-- OMDB -->
-          <div class="w-100 d-none d-md-block"></div>
-
-          <div class="col-6 col-sm-4">
-            <ion-card style="width: 400px;background-color: rgb(231, 231, 231);">
-              <canvas #barChart></canvas>
-            </ion-card>
-
-            <!-- <h3 style="color: #374d58;"><b>OMDB API status statistics</b></h3> -->
-          </div>
-          <div class="col-6 col-sm-4" style="margin-left: 450px;">saddsad</div>
-
-
-          <!-- Stripe -->
-          <div class="w-100 d-none d-md-block"></div>
-
-          <div class="col-6 col-sm-4">
-            <ion-card style="width: 400px;background-color: rgb(231, 231, 231);">
-              <canvas #barChartStat></canvas>
-            </ion-card>
-          </div>
-          <div class="col-6 col-sm-4" style="margin-left: 450px;"> .col-6 .col-sm-4</div>
+      
 
         </div>
 
 
+
+
+
+        
       </ion-col>
 
     </ion-row>

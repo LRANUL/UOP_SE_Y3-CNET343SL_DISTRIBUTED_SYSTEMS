@@ -185,4 +185,12 @@ getShowingMovies()
     this.movie.next(this.movieupdated);
  });
 }
+
+getMovieDetail(movieId)
+{
+  return this.http.get<{message : string, returnedData : any}>('http://localhost:5000/api/movies/' + movieId).subscribe(res=>{
+    this.movieupdated= res.returnedData;
+    this.movie.next(this.movieupdated);
+ });
+}
 }

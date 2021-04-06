@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import {ReactiveFormsModule} from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { EditManagerPageRoutingModule } from './edit-manager-routing.module';
@@ -13,7 +13,8 @@ import { EditManagerPage } from './edit-manager.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    EditManagerPageRoutingModule
+    EditManagerPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [EditManagerPage]
 })

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './login/auth.guard';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
       import('./operator-nav-page/operator-nav-page.module').then(
         (m) => m.OperatorNavPagePageModule
       ),
+      canActivate:[AuthGuard]
   },
 ];
 
@@ -26,5 +28,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   exports: [RouterModule],
+  providers:[AuthGuard]
 })
 export class AppRoutingModule { }

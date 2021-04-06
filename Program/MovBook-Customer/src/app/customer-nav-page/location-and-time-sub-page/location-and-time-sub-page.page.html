@@ -1,4 +1,13 @@
-
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+      <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+      <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+    <ion-button slot="start" color="light">
+      <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <ion-grid>
     <ion-row>
@@ -11,6 +20,7 @@
             <ion-col>
               <ion-item>
                 <ion-select placeholder="All Locations" [(ngModel)]="location" (ionChange)="getlocation()">
+                  <ion-select-option value="All">All</ion-select-option>
                   <ion-select-option *ngFor="let cinemaLocation of cinemaLocationList" value="{{cinemaLocation.cinemaLocationName}}">{{cinemaLocation.cinemaLocationName}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -23,8 +33,9 @@
             <ion-col>
               <ion-item>
                 <ion-select placeholder="All Experiences" [(ngModel)]="experience" (ionChange)="getexperience()">
+                  <ion-select-option value="All" >All Class</ion-select-option>
                   <ion-select-option value="Gold" >Gold Class</ion-select-option>
-                  <ion-select-option value="3D">3D Experience </ion-select-option>
+                  <ion-select-option value="3D Experience">3D Experience </ion-select-option>
                   <ion-select-option value="2D">2D Experience </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -37,39 +48,34 @@
             <ion-row>
               <ion-col style="padding-left: 30px;">
                 <ion-header>
-                  <ion-card-title> Movie Name: Assasin creed</ion-card-title>
+                  <ion-card-title style="font-size: larger;"> Movie Name: {{movieDetails.movieTitle}}</ion-card-title>
                   <br>
-                  <img src=" " style="height: 150px;">
+                  <img src="{{movieDetails.posterLink}}">
                 </ion-header>
               </ion-col>
               <ion-col>
-              <div *ngIf="movielocation">
-              <div *ngFor=" let movielocation of movielocation ">
-                <ion-header>
-                  <ion-card-title>Cinema Location: {{movielocation.cinemaLocationName}} </ion-card-title>
-                </ion-header>
+                <div *ngIf="movies==''" style="padding-top: 50px;">
+                  <ion-header style="text-align: center;">
+                    <ion-card-subtitle style="font-size: 20px;">The movie hall is not available</ion-card-subtitle>
+                  </ion-header>
+                </div>
                 <div *ngFor=" let movie of movies">
+                  <ion-header>
+                    <ion-card-title>Cinema Location: {{movie.cinemaLocationName}} </ion-card-title>
+                  </ion-header>
                   <ion-card-header>
-                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: {{movie.showingExperience}} </ion-card-subtitle>
+                    <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: </ion-card-subtitle>
                   </ion-card-header>
                   <ion-card-content>
                     <ion-grid>
                       <ion-row>
-                        <ion-col>
-                          <ion-buttons>
-                            <ion-button expand="round" fill="outline" (click)="gotourl()">{{movie.showingTime}}</ion-button>
-                            <hr>
-                            <ion-button expand="round" fill="outline">1:30 pm</ion-button>
-                            <hr>
-                            <ion-button expand="round" fill="outline">4:30 pm</ion-button>
-                          </ion-buttons>
+                        <ion-col *ngFor="let time of covertTimeToArray(movie.showingTime);">
+                            <ion-button (click)="gotourl(movie._id,time)">{{time}}</ion-button>
                         </ion-col>
                       </ion-row>
                     </ion-grid>
                   </ion-card-content>
                 </div>
-              </div>
-              </div>
               </ion-col>
             </ion-row>
           </ion-grid>

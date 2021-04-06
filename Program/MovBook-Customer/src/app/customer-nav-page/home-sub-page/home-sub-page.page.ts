@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { Movie } from 'src/app/models/account/movie';
 import { CustomerService } from 'src/app/services/account/customer.service';
+import { ContactUsComponent } from '../contact-us/contact-us.component';
 
 @Component({
   selector: 'app-home-sub-page',
@@ -8,13 +12,19 @@ import { CustomerService } from 'src/app/services/account/customer.service';
 })
 export class HomeSubPagePage implements OnInit {
 
-  constructor(private customerService: CustomerService) { }
+  constructor(private customerService: CustomerService, private router: Router, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.getmovie();
   }
 
-  showingmovies;
+   nowShowingMovies = new Array();
+   nowShowing;
+   upcomingShowingMovies = new Array();
+   upcoming;
+   movieDetails;
+   waitListedMovies = new Array();
+   waitlisted;
 
   sliderConfig =
   {
@@ -26,9 +36,55 @@ export class HomeSubPagePage implements OnInit {
   getmovie()
   {
    this.customerService.getShowingMovies();
-   this.customerService.getmovies().subscribe((val)=>{
-    this.showingmovies = val;
-    console.log(this.showingmovies);
+   this.customerService.getmovies().subscribe((movieDetails: Movie)=>{
+     let value = Object.keys(movieDetails)
+     let length = value.length;
+     let counter = 0;
+     for(counter; counter < length; counter++)
+     {
+     let status = movieDetails[counter].movieStatus
+     if(status == "NowShowing" && status != "Upcoming")
+      {
+      this.nowShowing = movieDetails[counter];
+      this.nowShowingMovies.push(this.nowShowing);
+      console.log(this.nowShowing);
+      }else if(status == "Upcoming")
+      {
+       this.upcoming = movieDetails[counter];
+       this.upcomingShowingMovies.push(this.upcoming);
+      }
+      else
+      {
+       this.waitlisted = movieDetails[counter];
+       this.waitListedMovies.push(this.waitlisted);
+      }
+     }
    })
+  }
+
+  showDetails(id)
+  {
+    console.log(id);
+    this.router.navigate(['customer/movie details/',id]);
+  }
+
+  venuSelection(id)
+  {
+    console.log(id);
+    this.router.navigate(['customer/Venue Selection/',id]);
+  }
+
+  async openmodal()
+  {
+  const modal = await this.modalCtrl.create({
+    component: ContactUsComponent,
+    cssClass: 'customer-contact-us-css'
+  });
+  await modal.present();
+  }
+
+  aboutUs()
+  {
+    this.router.navigateByUrl('customer/about-us');
   }
 }

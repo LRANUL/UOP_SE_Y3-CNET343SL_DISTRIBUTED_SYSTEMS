@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,8 +15,9 @@ const routes: Routes = [
   },
   {
     path: 'manager',
-    loadChildren: () => import('./manager-nav-page/manager-nav-page.module').then( m => m.ManagerNavPagePageModule)
-  },
+    loadChildren: () => import('./account/manager-nav-page/manager-nav-page.module').then( m => m.ManagerNavPagePageModule)
+    // canActivate:[AuthGuard]
+  }
 ];
 
 @NgModule({
@@ -23,5 +25,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   exports: [RouterModule],
+  providers:[AuthGuard]
 })
 export class AppRoutingModule { }

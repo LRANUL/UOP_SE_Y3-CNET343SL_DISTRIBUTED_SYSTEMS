@@ -1,12 +1,12 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { empty } from "rxjs";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { movie } from "src/app/models/account/customers";
-import { CinemaHall } from "src/app/models/account/manager/cinema-hall";
-import { CinemaLocation } from "src/app/models/account/manager/cinema-location";
+import { CinemaHall } from "src/app/models/account/cinema-hall";
+import { CinemaLocation } from "src/app/models/account/cinema-location";
 import { CustomerService } from "src/app/services/account/customer.service";
-import { ManagerService } from "src/app/services/account/manager.service";
+import { Movie } from "src/app/models/account/movie";
+import { NavController } from "@ionic/angular";
 
 @Component({
   selector: "app-location-and-time-sub-page",
@@ -18,7 +18,8 @@ export class LocationAndTimeSubPagePage implements OnInit {
   constructor(
     private route: Router,
     private activatedroute: ActivatedRoute,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private navCtrl: NavController
   ) {}
 
   todayDate;
@@ -30,22 +31,55 @@ export class LocationAndTimeSubPagePage implements OnInit {
   movieid;
   locationID;
   hallID;
-  movies; 
+  movies;
+  movieDetails : Movie = {
+  movieStatus: '',
+  movieTitle: '',
+  rated: '',
+  releasedYear: '',
+  releasedDate: '',
+  movieRuntime: '',
+  genre: '',
+  director: '',
+  writer: '',
+  actors: '',
+  plot: '',
+  language: '',
+  country: '',
+  awards: '',
+  posterLink: '',
+  ratings: [
+    {
+      Source: '',
+      Value: '',
+    }
+  ],
+  imdb: {
+    imdbID: '',
+    imdbRating: '',
+    imdbVotes: '',
+  },
+  boxOffice: '',
+  production: '',
+  website: ''
+}
   movielocation;
 
   cinemaLocationList = [];
 
-  moviehall; 
+  moviehall;
 
-  temoryID = "2";
+  routedID;
 
   ngOnInit() {
+    this.routedID = this.activatedroute.snapshot.paramMap.get('id');
     const now = Date.now();
     const myFormattedDate = this.pipe.transform(now, "mediumDate");
     this.todayDate = myFormattedDate;
 
     this.getListOfLocations();
-    this.getshowingmoviedetails(this.temoryID);
+    this.getshowingmoviedetails(this.routedID);
+    this.getMovieAdditionalDetails();
   }
 
   //get the id through the url and then acess it here (remove coment once id is passed)
@@ -59,42 +93,31 @@ export class LocationAndTimeSubPagePage implements OnInit {
    this.customerService.getmoviedetails(id);
   }
 
+  getMovieAdditionalDetails()
+  {
+    this.customerService.getMovieDetail(this.routedID);
+    this.customerService.getmovies().subscribe((movie: Movie)=> {
+      this.movieDetails = movie;
+      console.log( this.movieDetails);
+    })
+  }
+
   getshowingmoviedetails(id) {
     this.customerService.getshowingmoviedetails(id);
     this.customerService.getmovie().subscribe((moviedetail: movie) => {
       this.movies = moviedetail; // this is the way it should be done to get multiple locations
       console.log(this.movies);
-      let i;
-       //  this.moviedetails.cinemaExperience = moviedetail[0].showingExperience; // this should come in the hall databse
-      for(i=0 ; i< this.movies.length; i++)
-      {
-        this.hallID = moviedetail[i].cinemaHallObjectId;
-        this.getmoviehall(this.hallID);
-        this.locationID = moviedetail[i].cinemaLocationObjectId;
-        console.log(this.locationID);
-        this.getmovielocation(this.locationID);
-      }
       this.startDate =  moviedetail[0].showingStartDate;
+      console.log(this.startDate);
       this.endDate = moviedetail[0].showingEndDate;
     });
   }
 
-  getmoviehall(id)
+  showingTime;
+  covertTimeToArray(time)
   {
-  this.customerService.retrieveCinemaHall(id);
-  this.customerService.gethall().subscribe((movie: CinemaHall) => {
-    this.moviehall = movie;
-  });
-  }
-
-  getmovielocation(id)
-  { 
-   this.customerService.retrieveCinemaLocation(id);
-    this.customerService.getlocation().subscribe((movie: CinemaLocation) => {
-    this.movielocation = movie;
-    console.log(this.movielocation);
-   // this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
-   });
+   this.showingTime =time.split(" ")
+    return this.showingTime
   }
 
   getListOfLocations()
@@ -105,22 +128,36 @@ export class LocationAndTimeSubPagePage implements OnInit {
     });
   }
 
-  gotourl() {
-    this.route.navigateByUrl("customer/booking");
+  gotourl(id,time) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        Time : time
+      }
+    };
+    this.route.navigate(['customer/booking/',id], navigationExtras);
   }
 
   getlocation() {
     console.log(this.location)
-    this.customerService.getmovielocation(this.location);
-    this.customerService.getlocation().subscribe((movie: any) => {
-      if(movie == [])
+    if(this.location == "All")
+    {
+      this.getshowingmoviedetails(this.routedID);
+    }else
+    {
+    this.customerService.getSelectedShowingMovieDetails(this.location);
+    this.customerService.getmovie().subscribe((movies: movie) => {
+      let id = movies[0].movieObjectId;
+      console.log(id);
+      if(id == this.routedID)
       {
-        this.movielocation = "";
-        console.log(this.movielocation);
+        this.movies = movies;
+      } else
+      {
+       this.movies = "";
       }
-        this.movielocation = movie; 
       //this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
      })
+    }
   }
 
   getTime() {
@@ -130,5 +167,24 @@ export class LocationAndTimeSubPagePage implements OnInit {
 
   getexperience() {
     console.log(this.experience);
+    if(this.experience == "All")
+    {
+      this.getshowingmoviedetails(this.routedID);
+    }else
+    {
+      this.customerService.getmovieexperience(this.experience);
+      this.customerService.getmovie().subscribe((movies: movie) => {
+      let id = movies[0].movieObjectId;
+      console.log(id);
+      if(id == this.routedID)
+      {
+        this.movies = movies;
+      } else
+      {
+       this.movies = "";
+      }
+      //this.moviedetails.movieLocation = movie.returnedData.cinemaLocationName; // no need this just in case
+     })
+    }
   }
 }
