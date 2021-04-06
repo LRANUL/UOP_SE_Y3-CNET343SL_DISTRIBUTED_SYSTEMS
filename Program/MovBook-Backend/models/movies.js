@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 // Creating movie schema
 const movieSchema = mongoose.Schema({
-  title: {type : String, required:true},
   movieStatus: {type : String, required:true},
   movieTitle: {type : String, required:true},
   rated: {type : String, required:true},
@@ -21,18 +20,19 @@ const movieSchema = mongoose.Schema({
   posterLink: {type : String, required:true},
   ratings: [
     {
-      Source: {type : String, required:true},
-      Value: {type : String, required:true}
+      source: {type : String, required:false},
+      value: {type : String, required:false}
     }
   ],
   imdb: {
-    imdbID: {type : String, required:true},
-    imdbRating : {type : String, required:true},
-    imdbVotes: {type : String, required:true}
+    imdbId: {type : String, required:true},
+    imdbVotes: {type : String, required:true},
+    imdbRating : {type : String, required:true}
+    
   },
   boxOffice: {type : String, required:true},
   production: {type : String, required:true},
-  website: {type : String, required:true},
+  website: {type : String, required:true}
 })
 
 module.exports = mongoose.model('movies', movieSchema); 

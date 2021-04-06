@@ -129,7 +129,7 @@
                             font-size: 19px;
                             font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                             color: #000000;">
-            No Available Movie(s)
+            No Movie(s) Available
           </ion-label>
         </div>
 
@@ -139,7 +139,9 @@
             <ion-row>
               <ion-col size="3" *ngFor="let movie of movieSearchResults?.Search">
                 <div style="height: auto;
-                            border-radius: 10px;">
+                            border-radius: 10px;
+                            background-color: #fafafa;
+                            box-shadow: 5px 3px 18px #888888;">
                   <ion-grid>
                     <ion-row>
                       <ion-col>

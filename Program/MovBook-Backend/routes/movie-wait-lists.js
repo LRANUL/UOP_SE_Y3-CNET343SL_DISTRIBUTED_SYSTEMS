@@ -1,3 +1,9 @@
+/**
+ * 
+ * DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS
+ * 
+ */
+
 const express = require("express");
 const router = express.Router();
 
@@ -14,6 +20,5 @@ router.post("/add", movieWaitListsController.createMovieWaitList);
 router.put("/add-movie", movieWaitListsController.addMovieToMovieWaitList);
 
 // DELETE - Deleting a movie wait list
-
 
 module.exports = router;

@@ -9,6 +9,7 @@ import { MovieDetails } from 'src/app/models/account/manager/movie-details';
 import { AddMovieToMovieWaitList, MovieWaitList, MovieWaitListResponse } from 'src/app/models/account/manager/movie-wait-list';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { MovieDetailsModalPage } from '../movie-details-modal/movie-details-modal.page';
+import { MovieWaitlistTabPagePage } from '../movie-waitlist-tab-page/movie-waitlist-tab-page.page';
 
 @Component({
   selector: 'app-search-movies-tab-page',
@@ -65,6 +66,20 @@ export class SearchMoviesTabPagePage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+  // Function - Implementation for opening the 'Movie Details Modal' modal
+  async openMovieDetailsModal(movieImdbId: string){
+    const movieDetailsModal = await this.modalController.create({
+      component: MovieDetailsModalPage,
+      componentProps: {
+        passingModalOpenPath: 'Manager-Movie-Details',
+        passingMovieImdbId: movieImdbId
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    movieDetailsModal.present();
   }
 
   // Function -  Generating five years using current date for 'movieReleaseYear' ion select
@@ -172,310 +187,93 @@ export class SearchMoviesTabPagePage implements OnInit {
     );
   }
 
-  // Function - Implementation for opening the 'Movie Details Modal' modal
-  async openMovieDetailsModal(movieImdbId: string){
-    const movieDetailsModal = await this.modalController.create({
-      component: MovieDetailsModalPage,
-      componentProps: {
-        passingModalOpenPath: 'Manager-Movie-Details',
-        passingMovieImdbId: movieImdbId
-      },
-      // Disabling modal closing from any outside clicks
-      backdropDismiss: false,
-    });
-    movieDetailsModal.present();
-  }
-
 
   // Function - Add selected movie into the movie wait list
   addMovieToMovieWaitList(movieImdbId: string){
 
-    // Declaration - stores 'movieObjectId' that will be retrieved from the database
-    let movieObjectId;
-
     /**
-     * Updating movie wait list with selected movie
+     * Adding movie under movie status, 'WaitListed'
      */
-    // Retrieving movie wait list for manager user
-    this.managerService.getMovieWaitList("0000")
-      .subscribe((retrievedMovieWaitList: any) => {
+    // Checking whether the selected movie is already added
+    this.managerService.getMovieDetailsFromDB(movieImdbId)
+      .subscribe((movieAvailability: any) => {
 
+        if(movieAvailability.message === "Movie retrieved"){
 
-        // If condition - checking whether there is a movie wait list existing
-        if(retrievedMovieWaitList.message == "No movie wait list available"){
-         
+          let movieExistsMessage = null;
+
+          if(movieAvailability.returnedData.movieStatus === "WaitListed"){
+            movieExistsMessage = `"${movieAvailability.returnedData.movieTitle}", is already added to wait list.`;
+          }
+          else if(movieAvailability.returnedData.movieStatus === "Upcoming"){
+            movieExistsMessage = `"${movieAvailability.returnedData.movieTitle}", is already added to movie catalog (Upcoming).`;
+          }
+          else if(movieAvailability.returnedData.movieStatus === "NowShowing"){
+            movieExistsMessage = `"${movieAvailability.returnedData.movieTitle}", is already added to movie catalog (Now Showing).`;
+          }
+
+          // Showing message box to the user
+          this.alertNotice("Movie Exists", movieExistsMessage);
+
+          console.log("Selected movie was already added.");
+          
+        }
+        else if(movieAvailability.message === "Movie not available"){
 
           // Retrieving the movie details from the omdb api
           this.managerService.getMovieDetailsForOneMovie(movieImdbId)
-            .subscribe((retrievedMovieDetails: MovieDetails) => {
+          .subscribe((retrievedMovieDetails: MovieDetails) => {
+
+            if(retrievedMovieDetails.Response === "True"){
               
+              // Add movie to the database under 'WaitListed'
+              this.managerService.addMovie(retrievedMovieDetails, "WaitListed")
+                .subscribe((retrievedMovieResponse: any) => {
 
-            // Retrieving movieObjectId (_id) for the selected movie 
-            this.managerService.getMovieObjectId(movieImdbId)
-              .subscribe((retrievedMovieObjectId: MovieObjectIdResponse) => {
-      
+                  if(retrievedMovieResponse.message === "Movie Added As WaitListed"){
 
-              // If condition - checking whether there is a similar movie document object already existing in the 'movies' collection
-              if(retrievedMovieObjectId.message == "Movie not available"){
-         
-
-                // Adding movie into the 'movies' collection and retrieving the movie object Id
-                this.managerService.createNewMovie(retrievedMovieDetails)
-                  .subscribe((retrievedNewMovieResponse: MovieResponse) => {
-
-                    
-                  // If condition - checking whether the selected movie was added to the 'movies' collection
-                  if(retrievedNewMovieResponse.message == "Created new movie"){
-                 
-                    
-                    // Extracting movieObjectId (_id) from the newly created movie document object
-                    movieObjectId = retrievedNewMovieResponse.returnedData._id;
-
-                    
-                    // Declaration | Initialization - holds a instance of 'MovieWaitList' to pass to the server-side application
-                    let movieWaitListObject: MovieWaitList = {
-                      managerObjectId: "0000",
-                      movieObjectId: [movieObjectId]
-                    }
-
-
-                    // Creating a new movie wait list document object in the 'moviewaitlist' collection 
-                    this.managerService.createMovieWaitList(movieWaitListObject)
-                      .subscribe((retrievedMovieWaitListResponse: any) => {
-
-                        // If condition - checking whether the confirmation of creating movie wait list was returned
-                        if(retrievedMovieWaitListResponse.message == "Created new movie wait list, added movie"){
-
-                          // Showing confirmation of creating movie wait list to the user
-                          this.alertNotice("Movie Added", "Movie wait list created and movie added successfully");
-
-                        }
-
-                      },
-                      (error: ErrorEvent) => {
-                          
-                        // Showing error message box to the user
-                        this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
-
-                        console.log("Error - Unable to add movie to movie wait list: ", error);
-
-                      })
+                    // Showing successful message box to the user
+                    this.alertNotice("Movie Added", `"${retrievedMovieResponse.returnedData.movieTitle}" added as 'WaitListed'`);
 
                   }
-                    
-                },
-                (error: ErrorEvent) => {
-                  
+                  else{
+                    // Showing error message box to the user
+                    this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
+
+                    console.log("Unable to add movie");
+                  }
+
+                }, (error: ErrorEvent) => {
                   // Showing error message box to the user
-                  this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
+                  this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
-                  console.log("Error - Unable to add movie to movie wait list: ", error);
-
-                });
-
-              }
-              else if(retrievedMovieObjectId.message == "Movie object ID (_id) retrieved"){
-                // If the movie already exists in the 'movies' collection, the movieObjectId was retrieved
-
-
-                // Extracting retrieved movieObjectId (_id) and assigning it to 'movieObjectId'
-                movieObjectId = retrievedMovieObjectId.returnedData[0]._id;
-
-
-                // Declaration | Initialization - holds a instance of 'MovieWaitList' to pass to the server-side application
-                let movieWaitListObject: MovieWaitList = {
-                  managerObjectId: "0000",
-                  movieObjectId: [movieObjectId]
+                  console.log("Unable to add movie ", error);
                 }
+              );
 
-
-                // Creating a new movie wait list document object in the 'moviewaitlist' collection
-                this.managerService.createMovieWaitList(movieWaitListObject)
-                  .subscribe((retrievedMovieWaitListResponse: any) => {
-
-                  // If condition - checking whether the confirmation of creating movie wait list was returned
-                  if(retrievedMovieWaitListResponse.message == "Created new movie wait list, added movie"){
-
-                    // Showing confirmation of creating movie wait list to the user
-                    this.alertNotice("Movie Added", "Movie wait list created and movie added successfully");
-
-                  }
-
-                },
-                (error: ErrorEvent) => {
-                          
-                  // Showing error message box to the user
-                  this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
-
-                  console.log("Error - Unable to add movie to movie wait list: ", error);
-
-                })
-
-              }
-
-            },
-            (error: ErrorEvent) => {
-
+            }
+            else{
               // Showing error message box to the user
-              this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
+              this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
-              console.log("Error - Unable to add movie to movie wait list: ", error);
-
-            })
+              console.log("Unable to retrieve movie details");
+            }
 
           },
           (error: ErrorEvent) => {
-
             // Showing error message box to the user
-            this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
+            this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
-            console.log("Error: ", error);
-
+            console.log("Unable to retrieve results: ", error);
           });
 
-
         }
-        else if(retrievedMovieWaitList.message == "Movie wait list retrieved"){
-          // If a movie wait list already exists, then it was retrieved
-
-
-          // Retrieving the movieObjectId from the 'movies' collection
-          this.managerService.getMovieObjectId(movieImdbId)
-            .subscribe((retrievedMovieObjectId: MovieObjectIdResponse) => {
-
-
-            // If condition - checking whether the selected movie was available in the 'movies' collection
-            if(retrievedMovieObjectId.message == "Movie not available"){
-
-
-              // Retrieving the movie details from the omdb api
-              this.managerService.getMovieDetailsForOneMovie(movieImdbId)
-              .subscribe((retrievedMovieDetails: MovieDetails) => {
-
-
-                // Add retrieve movie details into the 'movies' collection
-                this.managerService.createNewMovie(retrievedMovieDetails)
-                  .subscribe((retrievedNewMovieResponse: MovieResponse) => {
-
-                    
-                  // If condition - checking whether the confirmation of adding the movie to the 'movies' collection was returned
-                  if(retrievedNewMovieResponse.message == "Created new movie"){
-
-
-                    // Extracting the movieObjectId (_id) and assigning to the 'movieObjectId'
-                    movieObjectId = retrievedNewMovieResponse.returnedData._id;
-
-
-                    // For loop - iterating through the existing movieObjectId in the movie wait list
-                    for (let movieObjectIdCount = 1; movieObjectIdCount <= retrievedMovieWaitList.returnedData[0].movieObjectId.length; movieObjectIdCount++) {
-                
-                      // If condition - checking whether the selected movie already exists in the movie wait list
-                      if(retrievedMovieWaitList.returnedData[0].movieObjectId[movieObjectIdCount] == movieObjectId){
-                        this.alertNotice("Movie Exists", "Movie is already available in movie wait list");
-                      }
-                      
-                    }
-
-                    
-                    // Declaration | Initialization - holds a instance of 'MovieWaitList' to pass to the server-side application
-                    let newMovieWaitListUpdate: AddMovieToMovieWaitList = {
-                      managerObjectId: "0000",
-                      movieObjectId: movieObjectId
-                    };
-        
-
-                    // Passing selected movieObjectId along with managerObjectId to update the movie wait list
-                    this.managerService.addMovieToMovieWaitList(newMovieWaitListUpdate)
-                      .subscribe((addMovieResponse: any) => {
-                     
-
-                      // If condition - checking whether the confirmation of adding the movie to the movie list was returned
-                      if(addMovieResponse.message == "Movie wait list updated"){
-
-                        // Showing alert box of the confirmation of adding the movie into the movie wait list
-                        this.alertNotice("Movie Added", "Selected movie was successfully added to the movie wait list");
-                      
-                      }
-                      
-                    },
-                    (error: ErrorEvent) => {
-
-                      // Showing error message box to the user
-                      this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
-
-                      console.log("Error: ", error);
-
-                    })
-
-                  }
-
-                })
-                
-              })
-            }
-            else if(retrievedMovieObjectId.message == "Movie object ID (_id) retrieved"){
-            // If selected movie is already available in the 'movies' collection
-
-
-              // Extracting the movieObjectId (_id) and assigning to the 'movieObjectId'
-              movieObjectId = retrievedMovieObjectId.returnedData[0]._id;
-
-
-              // For loop - iterating through the existing movieObjectId in the movie wait list
-              for (let movieObjectIdCount = 1; movieObjectIdCount <= retrievedMovieWaitList.returnedData[0].movieObjectId.length; movieObjectIdCount++) {
-          
-                // If condition - checking whether the selected movie already exists in the movie wait list
-                if(retrievedMovieWaitList.returnedData[0].movieObjectId[movieObjectIdCount] == movieObjectId){
-                  this.alertNotice("Movie Exists", "Movie is already available in movie wait list");
-                }
-                
-              }
-
-              
-              // Declaration | Initialization - holds a instance of 'MovieWaitList' to pass to the server-side application
-              let newMovieWaitListUpdate: AddMovieToMovieWaitList = {
-                managerObjectId: "0000",
-                movieObjectId: movieObjectId
-              };
-  
-
-              // Passing selected movieObjectId along with managerObjectId to update the movie wait list
-              this.managerService.addMovieToMovieWaitList(newMovieWaitListUpdate)
-                .subscribe((addMovieResponse: any) => {
-               
-
-                // If condition - checking whether the confirmation of adding the movie to the movie list was returned
-                if(addMovieResponse.message == "Movie wait list updated"){
-
-                  // Showing alert box of the confirmation of adding the movie into the movie wait list
-                  this.alertNotice("Movie Added", "Selected movie was successfully added to the movie wait list");
-                
-                }
-                
-              },
-              (error: ErrorEvent) => {
-
-                // Showing error message box to the user
-                this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
-
-                console.log("Error: ", error);
-
-              })
-
-            }
-
-          })
-
-        }
-
       },
       (error: ErrorEvent) => {
-
         // Showing error message box to the user
-        this.alertNotice("ERROR", "Unable to add movie to movie wait list, apologies for the inconvenience. Please contact administrator.");
+        this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
-        console.log("Error: ", error);
-
+        console.log("Unable to retrieve results: ", error);
       }
     );
 

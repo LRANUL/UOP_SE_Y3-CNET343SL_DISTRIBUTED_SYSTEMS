@@ -13,15 +13,49 @@
                     overflow-y: auto;">
       <ion-card-content>
 
-        <div>
-          <!-- NO OF MOVIES AVAILABLE -->
-          <ion-label style="color:rgb(0, 0, 0);
-                  font-size: 15px;
-                  letter-spacing: 1px;
-                  position: absolute;
-                  top: 5%;
-                  left: 5%;">
-          <b>4</b> movies available
+        <!-- NO OF MOVIES AVAILABLE -->
+        <ion-label style="color:rgb(0, 0, 0);
+                          font-size: 15px;
+                          letter-spacing: 1px;
+                          position: absolute;
+                          top: 20px;
+                          left: 5%;" *ngIf="noOfResultsFoundText">
+          <b>{{ retrievedNoOfMovies }}</b> Movies Available
+        </ion-label>
+
+        <!-- Loading Spinner - Retrieving movies upon page render -->
+        <ion-spinner name="dots" style="height: 100px;
+                                        width: 100px;
+                                        position: absolute;
+                                        left: 50%;
+                                        top: 50%;
+                                        transform: translate(-50%,-50%);
+                                        margin-top: 20px;" *ngIf="loadingSpinnerWaitListedMovies"></ion-spinner>
+
+        <!-- Loading Spinner - Removing movie -->
+        <ion-spinner name="crescent" style="height: 50px;
+                                            width: 50px;
+                                            position: absolute;
+                                            left: 50%;
+                                            transform: translateX(-50%);" *ngIf="loadingSpinnerRemoveMovie"></ion-spinner>
+
+        <!-- No available movie text message if no movie are available -->
+        <div style="border: 2px solid #ccc;
+                    width: 30%;
+                    height: 40px;
+                    border-radius: 10px;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%,-50%);" *ngIf="noMovieAvailableText">
+          <ion-label style="position: absolute;
+                            left: 50%;
+                            top: 50%;
+                            transform: translate(-50%,-50%);
+                            font-size: 19px;
+                            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                            color: #000000;">
+            No Movie(s) Available
           </ion-label>
         </div>
 
@@ -29,36 +63,68 @@
         <div style="padding-top: 2.5%;">
           <ion-grid>
             <ion-row>
-              <ion-col size="3">
+              <ion-col size="3" *ngFor="let movie of movieDetailsAsWaitListed">
                 <div style="width: 100%;
-                            height: 390px;
-                            background-color: rgb(82, 104, 122);
+                            height: auto;
+                            background-color: #fafafa;
+                            box-shadow: 5px 3px 18px #888888;
                             border-radius: 10px;">
                   <ion-grid>
                     <ion-row>
                       <ion-col>
-                        <div style="background-color: rgb(122, 128, 133);">
+                        <div>
                           <ion-grid style="width: 100%;
                                           position: relative;
                                           left: 0%;">
                             <ion-row>
                               <ion-col>
+
+                                <!-- Remove movie button -->
                                 <div style="position: absolute;
                                             right: -6%;">
-                                  <ion-button color="light">
-                                    <ion-icon name="close-outline" style="width: 30px; 
-                                                                          height: 30px;
-                                                                          color: rgb(255, 0, 0)"></ion-icon>
+                                  <ion-button 
+                                    color="danger" 
+                                    style="width: 75%; 
+                                    height: 80%; 
+                                    margin-left: 10%;"
+                                    (click)="removeWaitListedMovieAlert('Remove Movie', 
+                                      'This movie will be removed from the wait list, do you want to continue?', movie?.imdb.imdbId)"
+                                  >
+                                    <ion-icon name="close-outline" size="large"></ion-icon>
                                   </ion-button>
                                 </div>
+
                                 <div style="width: 250px;
                                     height: 340px;
-                                    background-color: rgb(10, 135, 245);
                                     border-radius: 10px;
                                     position: relative;
                                     left: 50%;
                                     transform: translateX(-50%);">
-                                  POSTER IMAGE
+
+                                  <!-- Checking whether the returned movie details does not have a cover image -->
+                                  <ng-template *ngIf="movie?.posterLink == 'N/A';then showCustomBlock; else showCoverImage">
+                                  </ng-template>
+
+                                  <!-- If there is no cover image available - display 'No Cover Image Available' text block -->
+                                  <ng-template #showCustomBlock>
+                                    <div style="width: 100%;
+                                                height: 100%;
+                                                background-color: #f0f0f0">
+                                      <p style="text-align: center;
+                                                font-size: 22px;
+                                                position: relative;
+                                                top: 50%;
+                                                transform: translateY(-50%);
+                                                color: #414141;">No Cover Image Available</p>
+                                    </div>
+                                  </ng-template>
+                                  
+                                  <!-- If there is a cover image available - display returned cover image -->
+                                  <ng-template #showCoverImage>
+                                    <ion-img src="{{ movie?.posterLink }}" style="width: 100%; 
+                                                                              height: 100%;"></ion-img>
+                                  </ng-template>
+
                                 </div>
                               </ion-col>
                               <ion-col>
@@ -66,7 +132,7 @@
                                   <ion-col>
                                     <ion-label style="font-size: 25px; 
                                                       letter-spacing: 1px;">
-                                      <b>MOVIE NAME</b>
+                                      <b>{{ movie?.movieTitle }}</b>
                                     </ion-label>
                                   </ion-col>
                                 </ion-row>
@@ -74,7 +140,7 @@
                                   <ion-col>
                                     <ion-label style="font-size: 26px; 
                                                       letter-spacing: 1px;">
-                                      RELEASING DATE
+                                      {{ movie?.releasedDate }}
                                     </ion-label>
                                   </ion-col>
                                 </ion-row>
@@ -82,7 +148,7 @@
                                   <ion-col>
 
                                     <!-- MOVIE CATALOG TYPE SELECTION - BUTTON -->
-                                    <ion-button expand="block" style="--border-radius: 40px;" (click)="openMovieCatalogTypesPopover($event)">
+                                    <ion-button expand="block" style="--border-radius: 40px;" (click)="openMovieCatalogTypesPopover($event, movie?.imdb.imdbId, movie)">
                                       <ion-label>
                                         <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-to-movie-catalog-icon.png" style="width: 25px;
                                                                                                                                             margin-left: 0px;"></ion-img>
@@ -96,91 +162,7 @@
                                 </ion-row>
                                 <ion-row>
                                   <ion-col>
-                                    <ion-button expand="block" style="--border-radius: 40px;" (click)="openMovieDetailsModal()">
-                                      <ion-label>
-                                        <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/more-details-icon.png" style="width: 25px;
-                                                                                                                                            margin-left: 0px;"></ion-img>
-                                      </ion-label>
-                                      <ion-label style="margin-left: 10px;">
-                                        VIEW DETAILS
-                                      </ion-label>
-                                    </ion-button>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-col>
-                            </ion-row>
-                          </ion-grid>
-                        </div>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </div>
-              </ion-col>
-              <ion-col size="3">
-                <div style="width: 100%;
-                            height: 390px;
-                            background-color: rgb(82, 104, 122);
-                            border-radius: 10px;">
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col>
-                        <div style="background-color: rgb(122, 128, 133);">
-                          <ion-grid style="width: 100%;
-                                          position: relative;
-                                          left: 0%;">
-                            <ion-row>
-                              <ion-col>
-                                <div style="position: absolute;
-                                            right: -6%;">
-                                  <ion-button color="light">
-                                    <ion-icon name="close-outline" style="width: 30px; 
-                                                                          height: 30px;
-                                                                          color: rgb(255, 0, 0)"></ion-icon>
-                                  </ion-button>
-                                </div>
-                                <div style="width: 250px;
-                                    height: 340px;
-                                    background-color: rgb(10, 135, 245);
-                                    border-radius: 10px;
-                                    position: relative;
-                                    left: 50%;
-                                    transform: translateX(-50%);">
-                                  POSTER IMAGE
-                                </div>
-                              </ion-col>
-                              <ion-col>
-                                <ion-row>
-                                  <ion-col>
-                                    <ion-label style="font-size: 25px; 
-                                                      letter-spacing: 1px;">
-                                      <b>MOVIE NAME</b>
-                                    </ion-label>
-                                  </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                  <ion-col>
-                                    <ion-label style="font-size: 26px; 
-                                                      letter-spacing: 1px;">
-                                      RELEASING DATE
-                                    </ion-label>
-                                  </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                  <ion-col>
-                                    <ion-button expand="block" style="--border-radius: 40px;">
-                                      <ion-label>
-                                        <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/add-to-movie-catalog-icon.png" style="width: 25px;
-                                                                                                                                            margin-left: 0px;"></ion-img>
-                                      </ion-label>
-                                      <ion-label style="margin-left: 10px;">
-                                        ADD TO MOVIE CATALOG
-                                      </ion-label>
-                                    </ion-button>
-                                  </ion-col>
-                                </ion-row>
-                                <ion-row>
-                                  <ion-col>
-                                    <ion-button expand="block" style="--border-radius: 40px;">
+                                    <ion-button expand="block" color="tertiary" style="--border-radius: 40px;" (click)="openMovieDetailsModal(movie?.imdb.imdbId)">
                                       <ion-label>
                                         <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/more-details-icon.png" style="width: 25px;
                                                                                                                                             margin-left: 0px;"></ion-img>

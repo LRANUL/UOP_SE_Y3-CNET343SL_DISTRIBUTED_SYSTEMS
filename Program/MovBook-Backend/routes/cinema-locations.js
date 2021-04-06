@@ -12,14 +12,16 @@ router.get("", cinemaLocationsController.retrieveListCinemaLocations);
 
 // GET - Getting one cinema hall details
 
+// PUT - Updating cinema hall details
+
+// DELETE - Delete cinema hall details
+
+
 router.get("/location/:cinemaLocationObjectId", cinemaLocationsController.retrieveCinemaLocation);
 
 
 router.get("/find/location/:location", cinemaLocationsController.retrieveSpecificCinemaLocation);
-// PUT - Updating cinema hall details
 
-
-// DELETE - Delete cinema hall details
 
 
 module.exports = router;

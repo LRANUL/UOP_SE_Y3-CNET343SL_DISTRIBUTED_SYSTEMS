@@ -43,6 +43,7 @@ export class MovieDetailsModalPage implements OnInit {
 
     // Assigning variable with passed 'modalOpenPath'
     this.passedModalOpenPath = this.navParams.get('passingModalOpenPath');
+
     // Checking whether the modal open path is the customer (and public) path to show buttons grid
     if(this.passedModalOpenPath == 'Public|Customer-Movie-Details'){
       this.setButtonGridToVisibleCustomer = true;
