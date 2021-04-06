@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OperatorService } from 'src/app/service/operator.service';
 
 @Component({
@@ -13,8 +14,8 @@ export class SupportSubPagePage implements OnInit {
   maintainence: boolean;
 
   constructor(
-    public operatorService: OperatorService
-
+    public operatorService: OperatorService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -72,5 +73,21 @@ export class SupportSubPagePage implements OnInit {
         console.log(error);
       }
     );
+  }
+  /** Navigation */
+  goToDashboard() {
+    this.router.navigate(['operator']);
+  }
+  goToBooking() {
+    this.router.navigate(['operator/movie-booking']);
+  }
+  goToStock() {
+    this.router.navigate(['operator/manage-stock']);
+  }
+  goToSupport() {
+    this.router.navigate(['operator/support']);
+  }
+  goToSettings() {
+    this.router.navigate(['operator/settings']);
   }
 }

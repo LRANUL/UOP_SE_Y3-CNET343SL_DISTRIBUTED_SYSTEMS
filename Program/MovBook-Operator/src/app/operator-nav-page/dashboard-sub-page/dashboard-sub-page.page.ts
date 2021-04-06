@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { MenuController } from "@ionic/angular";
 import { OperatorService } from "./../../service/operator.service";
 @Component({
@@ -12,13 +13,14 @@ export class DashboardSubPagePage implements OnInit {
   email: string;
   constructor(
     private menu: MenuController,
-    public operatorService: OperatorService
-  ) {}
+    public operatorService: OperatorService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.name = localStorage.getItem('name');
     this.email = localStorage.getItem('email');
-// Remove after getting login credentials
+    // Remove after getting login credentials
     this.name = 'John Steve';
     this.email = 'john@movbook.com';
     this.operatorService.getMovies().subscribe(
@@ -30,5 +32,21 @@ export class DashboardSubPagePage implements OnInit {
         console.log(error);
       }
     );
+  }
+/** Navigation */
+  goToDashboard() {
+    this.router.navigate(['operator']);
+  }
+  goToBooking() {
+    this.router.navigate(['operator/movie-booking']);
+  }
+  goToStock() {
+    this.router.navigate(['operator/manage-stock']);
+  }
+  goToSupport() {
+    this.router.navigate(['operator/support']);
+  }
+  goToSettings() {
+    this.router.navigate(['operator/settings']);
   }
 }

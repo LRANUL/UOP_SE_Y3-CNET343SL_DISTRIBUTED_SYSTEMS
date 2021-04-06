@@ -12,6 +12,9 @@
   ion-button:hover {
       --ion-color: light
   }
+  ion-content{
+    --background: #374d58 !important;
+  }
   ion-input{
     --background: #f2f2f2;
   }

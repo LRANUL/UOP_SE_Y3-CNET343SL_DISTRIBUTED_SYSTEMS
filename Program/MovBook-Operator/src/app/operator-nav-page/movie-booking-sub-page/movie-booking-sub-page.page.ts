@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { MenuController } from "@ionic/angular";
 import { OperatorService } from "./../../service/operator.service";
 
@@ -16,7 +17,8 @@ export class MovieBookingSubPagePage implements OnInit {
   email: string;
   selectedBeverage: any;
   constructor(private menu: MenuController,
-    public operatorService: OperatorService) {}
+    public operatorService: OperatorService,
+    private router: Router) {}
 
   ngOnInit() {
     this.name = localStorage.getItem('name');
@@ -72,5 +74,22 @@ export class MovieBookingSubPagePage implements OnInit {
   beverages(beverage) {
     console.log(beverage.title);
 
+  }
+
+  /** Navigation */
+  goToDashboard() {
+    this.router.navigate(['operator']);
+  }
+  goToBooking() {
+    this.router.navigate(['operator/movie-booking']);
+  }
+  goToStock() {
+    this.router.navigate(['operator/manage-stock']);
+  }
+  goToSupport() {
+    this.router.navigate(['operator/support']);
+  }
+  goToSettings() {
+    this.router.navigate(['operator/settings']);
   }
 }

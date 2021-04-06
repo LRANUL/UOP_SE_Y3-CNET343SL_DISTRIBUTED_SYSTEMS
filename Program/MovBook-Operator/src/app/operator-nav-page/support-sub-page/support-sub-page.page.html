@@ -10,11 +10,11 @@
           <h6>{{email}}</h6>
           <br />
         </div>
-        <ion-button expand="block" color="button" href="operator/dashboard">Dashboard</ion-button>
-        <ion-button expand="block" color="button" href="operator/movie-booking">Movie Bookings</ion-button>
-        <ion-button expand="block" color="button" href="operator/manage-stock">Beverages</ion-button>
-        <ion-button expand="block" color="light" href="operator/support">Support</ion-button>
-        <ion-button expand="block" color="button" style="margin-top: 80%" href="operator/settings">Settings</ion-button>
+        <ion-button expand="block" color="button" (click)="goToDashboard()">Dashboard</ion-button>
+        <ion-button expand="block" color="button" (click)="goToBooking()">Movie Bookings</ion-button>
+        <ion-button expand="block" color="button" (click)="goToStock()">Beverages</ion-button>
+        <ion-button expand="block" color="light" (click)="goToSupport()">Support</ion-button>
+        <ion-button expand="block" color="button" style="margin-top: 80%" (click)="goToSettings()">Settings</ion-button>
       </ion-col>
       <ion-col style="width:80%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
         <ion-row>

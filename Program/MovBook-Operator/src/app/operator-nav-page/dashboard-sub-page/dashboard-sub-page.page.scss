@@ -9,6 +9,9 @@
   background-color: #e8e8e8;
   float: right;
 }
+ion-content{
+  --background: #374d58 !important;
+}
 ion-button:hover {
     --ion-color: light
 }

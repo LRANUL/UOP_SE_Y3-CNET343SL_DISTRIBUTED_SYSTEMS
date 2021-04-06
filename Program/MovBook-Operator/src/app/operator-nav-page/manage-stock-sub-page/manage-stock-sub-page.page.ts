@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { OperatorService } from 'src/app/service/operator.service';
 
@@ -16,7 +17,8 @@ export class ManageStockSubPagePage implements OnInit {
 
   constructor(
     public operatorService: OperatorService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -68,5 +70,21 @@ export class ManageStockSubPagePage implements OnInit {
         console.log(error);
       }
     );
+  }
+  /** Navigation */
+  goToDashboard() {
+    this.router.navigate(['operator']);
+  }
+  goToBooking() {
+    this.router.navigate(['operator/movie-booking']);
+  }
+  goToStock() {
+    this.router.navigate(['operator/manage-stock']);
+  }
+  goToSupport() {
+    this.router.navigate(['operator/support']);
+  }
+  goToSettings() {
+    this.router.navigate(['operator/settings']);
   }
 }

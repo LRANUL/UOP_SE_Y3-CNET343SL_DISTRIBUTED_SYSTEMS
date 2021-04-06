@@ -31,7 +31,7 @@
           <ion-button type="submit" color="primary" expand="block" [disabled]="!f.valid">
             Login
           </ion-button>
-          <ion-button href="operator/dashboard">Dashboard</ion-button>
+          <ion-button (click)="dashboard()">Dashboard</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
