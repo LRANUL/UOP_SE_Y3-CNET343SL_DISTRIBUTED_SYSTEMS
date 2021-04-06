@@ -5,8 +5,8 @@ export class Employee {
     MiddleName: string;
     LastName: string;
     Email: string;
-    Password: string;
-    RetypePassword: string;
+    Password?: string;
+    RetypePassword?: string;
     Phone: number;
     StreetAddress: string;
     City: string;
