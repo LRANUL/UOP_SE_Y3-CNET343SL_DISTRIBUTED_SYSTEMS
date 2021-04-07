@@ -32,6 +32,13 @@
                                         transform: translate(-50%,-50%);
                                         margin-top: 20px;" *ngIf="loadingSpinnerUpcomingMovies"></ion-spinner>
 
+        <!-- Loading Spinner - Removing movie -->
+        <ion-spinner name="crescent" style="height: 50px;
+                                            width: 50px;
+                                            position: absolute;
+                                            left: 50%;
+                                            transform: translateX(-50%);" *ngIf="loadingSpinnerRemoveMovie"></ion-spinner>
+
         <!-- No available movie text message if no movie are available -->
         <div style="border: 2px solid #ccc;
                     width: 30%;
@@ -80,8 +87,8 @@
                                     style="width: 75%; 
                                     height: 80%; 
                                     margin-left: 10%;"
-                                    (click)="removeWaitListedMovieAlert('Remove Movie', 
-                                      'This movie will be removed from the wait list, do you want to continue?', movie?.imdb.imdbId)"
+                                    (click)="removeUpcomingMovieAlert('Remove Movie', 
+                                      'This movie will be removed from the upcoming movie catalog, do you want to continue?', movie?.imdb.imdbId)"
                                   >
                                     <ion-icon name="close-outline" size="large"></ion-icon>
                                   </ion-button>

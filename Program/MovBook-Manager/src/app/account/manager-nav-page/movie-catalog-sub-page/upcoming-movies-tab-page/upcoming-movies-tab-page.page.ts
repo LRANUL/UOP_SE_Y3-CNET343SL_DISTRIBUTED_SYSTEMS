@@ -18,6 +18,9 @@ export class UpcomingMoviesTabPagePage implements OnInit {
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerUpcomingMovies' block
   loadingSpinnerUpcomingMovies: Boolean = false;
 
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerRemoveMovie' block
+  loadingSpinnerRemoveMovie: Boolean = false;
+
   // Declaration | Initialization - to handle number of movies retrieved
   retrievedNoOfMovies: Number = 0;
 
@@ -99,5 +102,77 @@ export class UpcomingMoviesTabPagePage implements OnInit {
     });
 
   }
+
+  // Function - Remove Upcoming Movie Alert Box Implementation
+  async removeUpcomingMovieAlert( title: string, content: string, movieImdbId: string ) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log("Remove Movie from Upcoming Movies Movie Catalog Denied");
+          }
+        },
+        {
+          text: 'Continue',
+          handler: () => {
+            
+            this.removeUpcomingMovie(movieImdbId);
+
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // Function - Remove Upcoming Movie
+  removeUpcomingMovie(movieImdbId: string){
+
+    // Assigning 'loadingSpinnerRemoveMovie' to true (starts loading spinner)
+    this.loadingSpinnerRemoveMovie = true;
+
+    // Removing movie from Upcoming Movies Movie Catalog from the database
+    this.managerService.removeMovie(movieImdbId)
+      .subscribe((movieRemovedResponse: any) => {
+        
+      if(movieRemovedResponse.message == "Movie removed"){
+
+        this.loadingSpinnerRemoveMovie = false;
+
+        // Showing success message box to the user
+        this.alertNotice("Movie Removed", "Movie was removed from the Upcoming Movies Movie Catalog");
+
+        console.log("Movie was removed from the Upcoming Movies Movie Catalog");
+
+        // Re-rendering function to retrieve all movies in upcoming 
+        this.retrieveMoviesAsUpcoming();
+
+      }
+      else if(movieRemovedResponse.message == "Unable to remove movie"){
+        // Assigning 'loadingSpinnerRemoveMovie' to false (stops loading spinner)
+        this.loadingSpinnerRemoveMovie = false;
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to remove movie, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to remove movie");
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerRemoveMovie' to false (stops loading spinner)
+      this.loadingSpinnerRemoveMovie = false;
+
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to remove movie, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to remove movie");
+    });
+
+  }
+  
 
 }

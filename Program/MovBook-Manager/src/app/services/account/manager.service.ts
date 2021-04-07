@@ -67,10 +67,10 @@ export class ManagerService {
     return this.httpClient
       .put(this.BASE_URL + "api/movies/update-movie-status/" + newMovieStatus, movieImdbId);
   }
-  // DELETE - Remove movie from wait list by passing the movie imdb ID
-  removeWaitListedMovie(movieImdbId: string){
+  // DELETE - Remove movie by passing the movie imdb ID
+  removeMovie(movieImdbId: string){
     return this.httpClient
-      .delete(this.BASE_URL + "api/movies/remove-wait-listed-movie/" + movieImdbId);
+      .delete(this.BASE_URL + "api/movies/remove-movie/" + movieImdbId);
   }
 
   /**

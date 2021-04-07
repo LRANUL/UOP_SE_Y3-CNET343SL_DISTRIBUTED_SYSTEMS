@@ -171,7 +171,7 @@ export class MovieWaitlistTabPagePage implements OnInit {
     this.loadingSpinnerRemoveMovie = true;
 
     // Removing movie from wait list from the database
-    this.managerService.removeWaitListedMovie(movieImdbId)
+    this.managerService.removeMovie(movieImdbId)
       .subscribe((movieRemovedResponse: any) => {
         
       if(movieRemovedResponse.message == "Movie removed"){
