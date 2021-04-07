@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { MovieDetailsModalPage } from '../../browse-upcoming-movies-sub-page/movie-details-modal/movie-details-modal.page';
+import { AddNewShowingModalPage } from '../add-new-showing-modal/add-new-showing-modal.page';
 
 @Component({
   selector: 'app-upcoming-movies-tab-page',
@@ -66,6 +67,20 @@ export class UpcomingMoviesTabPagePage implements OnInit {
       backdropDismiss: false,
     });
     movieDetailsModal.present();
+  }
+
+  // Function - Implementation for opening the 'Add New Showing' modal
+  async openAddNewShowingModal(movieImdbId: string){
+    const addNewShowingModal = await this.modalController.create({
+      component: AddNewShowingModalPage,
+      cssClass: 'add-new-showing-modal',
+      componentProps: {
+        passingMovieImdbId: movieImdbId
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    addNewShowingModal.present();
   }
   
   // Retrieve all available movies under 'Upcoming'

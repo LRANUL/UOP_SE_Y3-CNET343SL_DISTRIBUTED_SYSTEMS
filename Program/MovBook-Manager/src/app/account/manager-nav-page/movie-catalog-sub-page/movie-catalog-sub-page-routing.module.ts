@@ -17,8 +17,7 @@ const routes: Routes = [
         loadChildren: () => import('./now-showing-movies-tab-page/now-showing-movies-tab-page.module').then( m => m.NowShowingMoviesTabPagePageModule)
       }
     ]
-  },
-
+  }
 ];
 
 @NgModule({
