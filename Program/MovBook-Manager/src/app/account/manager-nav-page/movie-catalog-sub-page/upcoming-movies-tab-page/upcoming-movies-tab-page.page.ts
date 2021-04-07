@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
+import { MovieDetailsModalPage } from '../../browse-upcoming-movies-sub-page/movie-details-modal/movie-details-modal.page';
 
 @Component({
   selector: 'app-upcoming-movies-tab-page',
@@ -53,6 +54,20 @@ export class UpcomingMoviesTabPagePage implements OnInit {
     await alert.present();
   }
 
+  // Implementation for opening the 'Movie Details Modal' modal
+  async openMovieDetailsModal(movieImdbId: string){
+    const movieDetailsModal = await this.modalController.create({
+      component: MovieDetailsModalPage,
+      componentProps: {
+        passingModalOpenPath: 'Manager-Movie-Details-Upcoming',
+        passingMovieImdbId: movieImdbId
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    movieDetailsModal.present();
+  }
+  
   // Retrieve all available movies under 'Upcoming'
   retrieveMoviesAsUpcoming(){
 
