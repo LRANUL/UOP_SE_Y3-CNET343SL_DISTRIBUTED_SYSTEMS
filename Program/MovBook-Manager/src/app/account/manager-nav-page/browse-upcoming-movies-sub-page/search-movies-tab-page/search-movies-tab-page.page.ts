@@ -36,6 +36,9 @@ export class SearchMoviesTabPagePage implements OnInit {
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerSearchUpcomingMovies' block
   loadingSpinnerSearchUpcomingMovies: Boolean = false;
 
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerAddMovieWaitList' block
+  loadingSpinnerAddMovieWaitList: Boolean = false;
+
   // Declaration | Initialization - to store generate movie release years (fives earlier from current year)
   movieReleaseYearsArray = new Array();
   
@@ -191,6 +194,9 @@ export class SearchMoviesTabPagePage implements OnInit {
   // Function - Add selected movie into the movie wait list
   addMovieToMovieWaitList(movieImdbId: string){
 
+    // Assigning 'loadingSpinnerAddMovieWaitList' to false (starts loading spinner)
+    this.loadingSpinnerAddMovieWaitList = true;
+
     /**
      * Adding movie under movie status, 'WaitListed'
      */
@@ -216,6 +222,9 @@ export class SearchMoviesTabPagePage implements OnInit {
           this.alertNotice("Movie Exists", movieExistsMessage);
 
           console.log("Selected movie was already added.");
+
+          // Assigning 'loadingSpinnerAddMovieWaitList' to false (stops loading spinner)
+          this.loadingSpinnerAddMovieWaitList = false;
           
         }
         else if(movieAvailability.message === "Movie not available"){
@@ -235,8 +244,14 @@ export class SearchMoviesTabPagePage implements OnInit {
                     // Showing successful message box to the user
                     this.alertNotice("Movie Added", `"${retrievedMovieResponse.returnedData.movieTitle}" added as 'WaitListed'`);
 
+                    // Assigning 'loadingSpinnerAddMovieWaitList' to false (stops loading spinner)
+                    this.loadingSpinnerAddMovieWaitList = false;
+                    
                   }
                   else{
+                    // Assigning 'loadingSpinnerAddMovieWaitList' to false (stops loading spinner)
+                    this.loadingSpinnerAddMovieWaitList = false;
+
                     // Showing error message box to the user
                     this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
@@ -244,6 +259,9 @@ export class SearchMoviesTabPagePage implements OnInit {
                   }
 
                 }, (error: ErrorEvent) => {
+                  // Assigning 'loadingSpinnerAddMovieWaitList' to false (stops loading spinner)
+                  this.loadingSpinnerAddMovieWaitList = false;
+
                   // Showing error message box to the user
                   this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
@@ -253,6 +271,9 @@ export class SearchMoviesTabPagePage implements OnInit {
 
             }
             else{
+              // Assigning 'loadingSpinnerAddMovieWaitList' to false (stops loading spinner)
+              this.loadingSpinnerAddMovieWaitList = false;
+
               // Showing error message box to the user
               this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
@@ -261,6 +282,9 @@ export class SearchMoviesTabPagePage implements OnInit {
 
           },
           (error: ErrorEvent) => {
+            // Assigning 'loadingSpinnerAddMovieWaitList' to false (stops loading spinner)
+            this.loadingSpinnerAddMovieWaitList = false;
+
             // Showing error message box to the user
             this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 
@@ -270,6 +294,9 @@ export class SearchMoviesTabPagePage implements OnInit {
         }
       },
       (error: ErrorEvent) => {
+        // Assigning 'loadingSpinnerAddMovieWaitList' to false (stops loading spinner)
+        this.loadingSpinnerAddMovieWaitList = false;
+
         // Showing error message box to the user
         this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
 

@@ -5,6 +5,14 @@
   <ion-title style="margin-top: 2%;
                     letter-spacing: 1px;"><b>SEARCH BY MOVIE TITLE</b></ion-title>
 
+  <!-- Loading Spinner - Add movie to wait list -->
+  <ion-spinner name="crescent" style="height: 50px;
+                                      width: 50px;
+                                      position: absolute;
+                                      left: 50%;
+                                      top: 3%;
+                                      transform: translateX(-50%);" *ngIf="loadingSpinnerAddMovieWaitList"></ion-spinner>
+
   <!-- SEARCH BY MOVIE NAME FORM -->
   <div style="margin-top: 20px;">
     <form [formGroup]="searchUpcomingMoviesForm" (ngSubmit)="getMovieSearchResults(searchUpcomingMoviesForm.value)">

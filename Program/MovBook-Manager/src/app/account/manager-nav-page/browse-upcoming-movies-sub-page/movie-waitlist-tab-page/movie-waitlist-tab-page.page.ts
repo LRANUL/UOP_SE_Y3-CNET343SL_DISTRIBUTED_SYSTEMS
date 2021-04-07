@@ -183,6 +183,12 @@ export class MovieWaitlistTabPagePage implements OnInit {
 
         console.log("Movie was removed from the Wait List");
 
+        // Checking the length of the 'movieDetailsAsWaitListed' to re-initialize the array
+        if(this.movieDetailsAsWaitListed.length == 1){
+          // Re-initializing array to hold new movies
+          this.movieDetailsAsWaitListed = new Array();
+        }
+
         // Re-rendering function to retrieve all movies in the wait list
         this.retrieveMoviesAsWaitListed();
 

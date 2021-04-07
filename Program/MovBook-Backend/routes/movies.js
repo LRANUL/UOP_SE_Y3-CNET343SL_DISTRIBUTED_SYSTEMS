@@ -60,8 +60,8 @@ router.get("/movie-details/:movieImdbId", movieController.retrieveMovie);
 // GET - Retrieve all movie according to the movie status | Route: 'BASE_URL/api/movies/movie-status/:movieStatus'
 router.get("/movie-status/:movieStatus", movieController.retrieveAllMoviesAsStatus);
 
-// PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status/:newMovieStatus'
-router.put("/update-movie-status/:newMovieStatus", movieController.updateMovieStatus);
+// PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status'
+router.put("/update-movie-status", movieController.updateMovieStatus);
 
 // DELETE - Delete movie | Route: 'BASE_URL/api/movies/remove-movie/:movieImdbId'
 router.delete("/remove-movie/:movieImdbId", movieController.removeMovie);

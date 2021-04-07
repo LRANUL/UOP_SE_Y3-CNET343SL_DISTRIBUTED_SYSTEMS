@@ -64,8 +64,13 @@ export class ManagerService {
   }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
   updateMovieStatus(movieImdbId: string, newMovieStatus: string){
+    // Creating an object to pass the movie details
+    let movieDetails = {
+      movieImdbId: movieImdbId,
+      newMovieStatus: newMovieStatus
+    }
     return this.httpClient
-      .put(this.BASE_URL + "api/movies/update-movie-status/" + newMovieStatus, movieImdbId);
+      .put(this.BASE_URL + "api/movies/update-movie-status", movieDetails);
   }
   // DELETE - Remove movie by passing the movie imdb ID
   removeMovie(movieImdbId: string){

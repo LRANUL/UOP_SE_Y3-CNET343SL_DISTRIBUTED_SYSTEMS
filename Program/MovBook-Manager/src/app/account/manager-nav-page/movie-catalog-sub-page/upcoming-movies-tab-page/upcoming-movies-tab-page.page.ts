@@ -163,6 +163,12 @@ export class UpcomingMoviesTabPagePage implements OnInit {
 
         console.log("Movie was removed from the Upcoming Movies Movie Catalog");
 
+        // Checking the length of the 'movieDetailsAsUpcoming' to re-initialize the array
+        if(this.movieDetailsAsUpcoming.length == 1){
+          // Re-initializing array to hold new movies
+          this.movieDetailsAsUpcoming = new Array();
+        }
+        
         // Re-rendering function to retrieve all movies in upcoming 
         this.retrieveMoviesAsUpcoming();
 
