@@ -209,7 +209,7 @@ exports.updateMovieStatus = async (req, res, next) => {
 
 // Function - Delete wait listed movie | Route: 'BASE_URL/api/movies/remove-wait-listed-movie/:movieImdbId'
 exports.removeWaitListedMovie = async (req, res, next) => {
-  console.log(req);
+
   // Getting passed movieImdbId
   let passedMovieImdbId = req.params.movieImdbId;
 

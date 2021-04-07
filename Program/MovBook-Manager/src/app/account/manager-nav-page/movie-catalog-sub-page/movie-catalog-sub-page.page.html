@@ -7,7 +7,29 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       
+      <ion-tabs style="width: 100%;
+                      min-height: 930px;
+                      --ion-background-color: #f1f1f1;;">
+        <ion-tab-bar slot="top" style="box-shadow: 0px 0px 30px #888888;">
+          <ion-tab-button tab="upcoming-movies" class="header-tab-button">
+            <ion-label>
+              <ion-img src="assets/images/account/manager/movie-catalog-sub-page/upcoming-movies-tab-icon.png" class="header-tab-icon"></ion-img>
+            </ion-label>
+            <ion-label class="header-tab-heading">
+              <b>UPCOMING MOVIES</b>
+            </ion-label>
+          </ion-tab-button>
 
+          <ion-tab-button tab="now-showing-movies" class="header-tab-button">
+            <ion-label>
+              <ion-img src="assets/images/account/manager/movie-catalog-sub-page/now-showing-movies-tab-icon.png" class="header-tab-icon"></ion-img>
+            </ion-label>
+            <ion-label class="header-tab-heading">
+              <b>NOW SHOWING MOVIES</b>
+            </ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
 
     </ion-card-content>
   </ion-card>

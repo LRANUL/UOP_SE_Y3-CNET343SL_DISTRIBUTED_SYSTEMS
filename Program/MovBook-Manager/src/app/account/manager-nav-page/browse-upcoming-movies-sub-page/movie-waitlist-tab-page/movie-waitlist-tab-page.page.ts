@@ -38,8 +38,12 @@ export class MovieWaitlistTabPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // Retrieving movies under 'WaitListed' when the page is initially rendered
+    this.retrieveMoviesAsWaitListed();
+  }
 
-    // Retrieving movies under 'WaitListed' when the page renders
+  ionViewWillEnter(){
+    // Retrieving movies under 'WaitListed' when the page is viewed
     this.retrieveMoviesAsWaitListed();
   }
 
