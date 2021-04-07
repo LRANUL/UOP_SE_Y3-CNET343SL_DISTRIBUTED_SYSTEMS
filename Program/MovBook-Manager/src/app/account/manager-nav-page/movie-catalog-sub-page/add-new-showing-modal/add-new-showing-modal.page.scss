@@ -1,3 +1,31 @@
 #closeAddNewShowingModalButton{
   margin-right: 20px;
 }
+
+ion-item{
+  border: #ccc solid 1px;
+  border-radius: 5px;
+  --ion-background-color: rgb(255, 255, 255);
+}
+
+.add-new-showing-form-text{
+  font-size: 17px;
+  color: #000000;
+  letter-spacing: 1px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.add-new-showing-form-sub-text{
+  padding-left: 10%;
+}
+
+.session-details-summary-text{
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15px;
+}
