@@ -77,6 +77,47 @@ ion-button{
     --ion-color-tint: var(--ion-color-dark-blue-tint);
 }
 
+/* Declaring new color variable - white | #ffffff */
+:root {
+    --ion-color-plain-white: #ffffff;
+    --ion-color-plain-white-rgb: 255,255,255;
+    --ion-color-plain-white-contrast: #000000;
+    --ion-color-plain-white-contrast-rgb: 0,0,0;
+    --ion-color-plain-white-shade: #e0e0e0;
+    --ion-color-plain-white-tint: #ffffff;
+}
+  
+/* Declaring new color variable - white | #ffffff */
+.ion-color-plain-white {
+    --ion-color-base: var(--ion-color-plain-white);
+    --ion-color-base-rgb: var(--ion-color-plain-white-rgb);
+    --ion-color-contrast: var(--ion-color-plain-white-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-plain-white-contrast-rgb);
+    --ion-color-shade: var(--ion-color-plain-white-shade);
+    --ion-color-tint: var(--ion-color-plain-white-tint);
+}
+
+/* Declaring new color variable - darker-blue | #053781 */
+:root {
+    --ion-color-darker-blue: #053781;
+    --ion-color-darker-blue-rgb: 5,55,129;
+    --ion-color-darker-blue-contrast: #ffffff;
+    --ion-color-darker-blue-contrast-rgb: 255,255,255;
+    --ion-color-darker-blue-shade: #043072;
+    --ion-color-darker-blue-tint: #1e4b8e;
+}
+
+/* Declaring new color variable - darker-blue | #053781 */
+.ion-color-darker-blue {
+    --ion-color-base: var(--ion-color-darker-blue);
+    --ion-color-base-rgb: var(--ion-color-darker-blue-rgb);
+    --ion-color-contrast: var(--ion-color-darker-blue-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-darker-blue-contrast-rgb);
+    --ion-color-shade: var(--ion-color-darker-blue-shade);
+    --ion-color-tint: var(--ion-color-darker-blue-tint);
+}
+
+
 /* CSS styles for cinema halls modal */
 .cinema-halls-modal .modal-wrapper {
     height: 80%;
@@ -91,6 +132,24 @@ ion-button{
     height: 50%;
     width: 40%;
     top: 10%;
+    position: absolute;
+    display: block;
+}
+
+/* CSS styles for cinema halls modal */
+.add-new-showing-modal .modal-wrapper {
+    height: 80%;
+    width: 45%;
+    top: 8%;
+    position: absolute; 
+    display: block;  
+}
+
+/* CSS styles for add new showing experience modal */
+.add-new-showing-experience-modal .modal-wrapper {
+    height: 40%;
+    width: 40%;
+    top: 25%;
     position: absolute;
     display: block;
 }

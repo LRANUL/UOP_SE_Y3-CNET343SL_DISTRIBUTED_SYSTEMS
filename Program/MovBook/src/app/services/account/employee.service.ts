@@ -115,42 +115,25 @@ export class EmployeeService {
   }
 
 
-  // statusMongoDB(){
-  //   return this._http.get("http://localhost:3000/api/omdb/upcoming-movies/search/:movieTitle/");
-  //   //return this._http.get("http://www.omdbapi.com/swagger.json")
-  //     //.map(result => result);
-  //     // .pipe(map(res =>{
-  //     //   console.log('bla bla')
-  //     // }))
-
-  // }
-
-
   statusOMDB() {
     return this._http.get(this.BASE_URL + "api/omdb/upcoming-movies/search/tenet")
       .catch(this.errorHandler);
-
   }
 
 
-  // getStatus() {
-  //   return this._http.get(this.BASE_URL + "api/omdb/upcoming-movies/search/tenet")
-  //     .catch(this.errorHandler);
+  statusStripe(){
+    return this._http.get("status.stripe.com")
+  }
 
-  // }
-
+  managerStatus() {
+    return this._http.get(this.BASE_URL + "api/managers/get/")
+      .catch(this.errorHandler);
+  }
 
   errorHandler(error: HttpErrorResponse){
     return Observable.throw(error.message || "Server Error");
   }
 
-  // statusStripe(){
-  //   return this._http.get("http://www.omdbapi.com/?i=tt3896198&apikey=e2993149");
-  //         //.map(result => result);
-  //     // .pipe(map(res =>{
-  //     //   console.log('bla bla')
-  //     // }))
-  // }
 
  
 }

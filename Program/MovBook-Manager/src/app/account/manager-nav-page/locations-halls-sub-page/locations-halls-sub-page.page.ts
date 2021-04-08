@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { CinemaLocation } from 'src/app/models/account/manager/cinema-location';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddLocationModalPage } from './add-location-modal/add-location-modal.page';
@@ -20,7 +20,8 @@ export class LocationsHallsSubPagePage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private managerService: ManagerService
+    private managerService: ManagerService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -28,6 +29,16 @@ export class LocationsHallsSubPagePage implements OnInit {
     // Retrieving list of cinema locations upon page load
     this.retrieveCinemaLocations();
 
+  }
+
+  // Function -  Alert Box Implementation
+  async alertNotice (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   // Function - Implementation for opening the 'Add Location' modal
@@ -74,15 +85,31 @@ export class LocationsHallsSubPagePage implements OnInit {
     this.loadingSpinnerCinemaLocations = true;
 
     // Retrieving list of cinema locations
-    this.managerService.retrieveCinemaLocations().subscribe((res) => {
+    this.managerService.retrieveCinemaLocations()
+      .subscribe((cinemaLocationList: any) => {
 
-      // Assigning retrieved list of cinema locations to 'cinemaLocationList' array
-      this.cinemaLocationList = res as CinemaLocation[];
+        if(cinemaLocationList.message == "Cinema locations retrieved"){
+          // Assigning retrieved list of cinema locations to 'cinemaLocationList' array
+          this.cinemaLocationList = cinemaLocationList.returnedData;
 
-      // Disabling 'loadingSpinnerCinemaLocations' loading spinner
-      this.loadingSpinnerCinemaLocations = false;
+          // Disabling 'loadingSpinnerCinemaLocations' loading spinner
+          this.loadingSpinnerCinemaLocations = false;
+        }
+        else{
+          // Showing error message box to the user
+          this.alertNotice("ERROR", "Unable to retrieve cinema location details, apologies for the inconvenience. Please contact administrator.");
 
+          console.log("Unable to retrieve cinema location details");
+        }
+
+    },(error: ErrorEvent) => {
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to retrieve cinema location details, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to retrieve cinema location details: ", error);
     });
+
   }
 
+  
 }

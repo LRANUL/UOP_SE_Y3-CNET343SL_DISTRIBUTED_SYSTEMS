@@ -8,7 +8,7 @@
   <!-- MOVIE CONTAINER -->
   <div>
     <ion-card style="height: 800px;
-                    background-color: rgb(255, 255, 255);
+                    background-color: #fafafa;
                     border-radius: 10px;
                     overflow-y: auto;">
       <ion-card-content>
@@ -20,7 +20,7 @@
                           position: absolute;
                           top: 20px;
                           left: 5%;" *ngIf="noOfResultsFoundText">
-          <b>{{ retrievedNoOfMovies }}</b> Movies Available
+          <b>{{ retrievedNoOfMovies }}</b> Movie(s) Available
         </ion-label>
 
         <!-- Loading Spinner - Retrieving movies upon page render -->
@@ -66,7 +66,7 @@
               <ion-col size="3" *ngFor="let movie of movieDetailsAsWaitListed">
                 <div style="width: 100%;
                             height: auto;
-                            background-color: #fafafa;
+                            background-color: #ffffff;
                             box-shadow: 5px 3px 18px #888888;
                             border-radius: 10px;">
                   <ion-grid>

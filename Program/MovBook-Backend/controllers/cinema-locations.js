@@ -31,8 +31,25 @@ exports.createCinemaLocation = async (req, res, next) => {
 
 // Function - Retrieving list of cinema locations using route, 'BASE_URL/api/cinema-locations'
 exports.retrieveListCinemaLocations = async (req, res, next) => {
-  const cinemaLocationDocuments = await cinemaLocationModel.find();
-  res.json(cinemaLocationDocuments);
+
+  await cinemaLocationModel.find({}, (error, returnedData) => {
+    
+    if(error){
+      res.status(500).json({
+        message:
+          "Unable to retrieve cinema locations"
+      });
+    }
+    else{
+      res.status(200).json({
+        message:
+          "Cinema locations retrieved",
+        returnedData
+      });
+    }
+  
+  })
+
 };
 
 

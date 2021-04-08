@@ -5,6 +5,14 @@
   <ion-title style="margin-top: 2%;
                     letter-spacing: 1px;"><b>SEARCH BY MOVIE TITLE</b></ion-title>
 
+  <!-- Loading Spinner - Add movie to wait list -->
+  <ion-spinner name="crescent" style="height: 50px;
+                                      width: 50px;
+                                      position: absolute;
+                                      left: 50%;
+                                      top: 3%;
+                                      transform: translateX(-50%);" *ngIf="loadingSpinnerAddMovieWaitList"></ion-spinner>
+
   <!-- SEARCH BY MOVIE NAME FORM -->
   <div style="margin-top: 20px;">
     <form [formGroup]="searchUpcomingMoviesForm" (ngSubmit)="getMovieSearchResults(searchUpcomingMoviesForm.value)">
@@ -27,7 +35,7 @@
           </ion-col>
           <ion-col size="3">
             <ion-item>
-              <ion-select okText="SELECT" cancelText="DISMISS" formControlName="movieReleaseYear">
+              <ion-select placeholder="Select Year" okText="SELECT" cancelText="DISMISS" formControlName="movieReleaseYear">
                 <ion-select-option *ngFor="let year of movieReleaseYearsArray" value="{{year}}">{{year}}</ion-select-option>
               </ion-select>
             </ion-item>
@@ -64,7 +72,7 @@
   <!-- MOVIE SEARCH RESULTS CONTAINER -->
   <div>
     <ion-card style="height: 700px;
-                    background-color: rgb(255, 255, 255);
+                    background-color: #fafafa;
                     border-radius: 10px;
                     overflow-y: auto;">
       <ion-card-content>
@@ -140,7 +148,7 @@
               <ion-col size="3" *ngFor="let movie of movieSearchResults?.Search">
                 <div style="height: auto;
                             border-radius: 10px;
-                            background-color: #fafafa;
+                            background-color: #ffffff;
                             box-shadow: 5px 3px 18px #888888;">
                   <ion-grid>
                     <ion-row>

@@ -118,6 +118,9 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
 
                   if(retrievedMovieResponse.message === "Movie Added As Upcoming"){
 
+                    // Closing the popover
+                    this.closeMoveCatalogTypesPopover();
+                    
                     // Showing successful message box to the user
                     this.alertNotice("Movie Added", `"${retrievedMovieResponse.returnedData.movieTitle}" added as 'Upcoming'`);
 
@@ -294,9 +297,12 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
 
                   if(retrievedMovieResponse.message === "Movie Added As NowShowing"){
 
+                    // Closing the popover
+                    this.closeMoveCatalogTypesPopover();
+                    
                     // Showing successful message box to the user
                     this.alertNotice("Movie Added", `"${retrievedMovieResponse.returnedData.movieTitle}" added as 'Now Showing'`);
-
+                    
                   }
                   else{
                     // Showing error message box to the user

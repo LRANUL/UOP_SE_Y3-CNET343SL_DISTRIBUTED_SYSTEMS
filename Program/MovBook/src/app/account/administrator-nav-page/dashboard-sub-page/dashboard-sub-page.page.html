@@ -45,15 +45,25 @@
 
           <div class="col-6 col-sm-6">
             <h3 style="color: #374d58;"><b>OMDB API status statistics</b></h3>
-            <h5 style="color: #000000;"><b>API Response Status : {{jsonResponse}}</b></h5>
-            <h5 style="color: #000000;"><b>API Response Status : {{splitStatus}}</b></h5>
-            <h5 style="color: #000000;"><b>API Response Status : {{splitAddress}}</b></h5>
+            <h6 style="color: #000000;"><b>API Response Status : {{jsonResponse}}</b></h6>
+            <h6 style="color: #000000;"><b>API Response Code : {{splitStatus}}</b></h6>
+            <h6 style="color: #000000;"><b>API Response Address : {{splitAddress}}</b></h6>
             <br>
-            <!-- <h3 style="color: #374d58;"><b>Users status statistics</b></h3>
-            <h4 style="color: #000000;"><b>API Response Status : {{jsonResponse}}</b></h4>
-            <h4 style="color: #000000;"><b>API Response Status : {{splitStatus}}</b></h4>
-            <h4 style="color: #000000;"><b>API Response Status : {{splitAddress}}</b></h4>
-             -->
+
+            <h3 style="color: #374d58;"><b>STRIPE API status statistics</b></h3>
+            <h6 style="color: #000000;"><b>API Response Status : {{jsonResponse}}</b></h6>
+            <h6 style="color: #000000;"><b>API Response Code : {{splitStatus}}</b></h6>
+            <h6 style="color: #000000;"><b>API Response Address : {{splitAddress}}</b></h6>
+            <br>
+
+            <h3 style="color: #374d58;"><b>Employers status statistics</b></h3>
+            <h6 style="color: #000000;"><b>Admin Status : {{jsonResponseManager}} - {{splitStatusManager}}  {{splitAddressManager}}</b></h6>
+            <br><h6 style="color: #000000;"><b>Managers Status : {{jsonResponseManager}} - {{splitStatusManager}}  {{splitAddressManager}}</b></h6>
+            <br><h6 style="color: #000000;"><b>Operators Status : {{jsonResponseManager}} - {{splitStatusManager}}  {{splitAddressManager}}</b></h6>
+            <!-- <h6 style="color: #000000;"><b>Managers Status : {{splitStatusManager}}</b></h6>
+            <h6 style="color: #000000;"><b>Operators Status : {{splitAddressManager}}</b></h6> -->
+            <br>
+            
             <!-- <ion-card style="width: 500px;background-color: rgb(231, 231, 231);margin-left: 300px;margin-right: 200px;">
               <canvas #barChart></canvas>
             </ion-card> -->

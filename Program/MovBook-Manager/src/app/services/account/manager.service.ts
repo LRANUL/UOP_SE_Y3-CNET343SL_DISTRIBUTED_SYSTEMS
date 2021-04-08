@@ -7,6 +7,7 @@ import { MovieDetails } from 'src/app/models/account/manager/movie-details';
 import { MovieWaitList, AddMovieToMovieWaitList } from 'src/app/models/account/manager/movie-wait-list';
 import { environment } from 'src/environments/environment';
 import { CinemaHall } from 'src/app/models/account/manager/cinema-hall';
+import { ShowingExperience } from 'src/app/models/account/manager/showing-experience';
 
 @Injectable({
   providedIn: 'root'
@@ -64,13 +65,18 @@ export class ManagerService {
   }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
   updateMovieStatus(movieImdbId: string, newMovieStatus: string){
+    // Creating an object to pass the movie details
+    let movieDetails = {
+      movieImdbId: movieImdbId,
+      newMovieStatus: newMovieStatus
+    }
     return this.httpClient
-      .put(this.BASE_URL + "api/movies/update-movie-status/" + newMovieStatus, movieImdbId);
+      .put(this.BASE_URL + "api/movies/update-movie-status", movieDetails);
   }
-  // DELETE - Remove movie from wait list by passing the movie imdb ID
-  removeWaitListedMovie(movieImdbId: string){
+  // DELETE - Remove movie by passing the movie imdb ID
+  removeMovie(movieImdbId: string){
     return this.httpClient
-      .delete(this.BASE_URL + "api/movies/remove-wait-listed-movie/" + movieImdbId);
+      .delete(this.BASE_URL + "api/movies/remove-movie/" + movieImdbId);
   }
 
   /**
@@ -134,4 +140,17 @@ export class ManagerService {
     const body = { name: name, price: price };
     return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update", body);
   }
+
+  /**
+   * Showing Experience
+   */
+  // POST - Passing new showing experience details to the server-side
+  addNewShowingExperience(showingExperience: ShowingExperience){
+    return this.httpClient.post(this.BASE_URL + "api/showing-experiences", showingExperience);
+  }
+  // GET - Retrieving list showing experiences from the server-side
+  retrieveListOfShowingExperiences(){
+    return this.httpClient.get(this.BASE_URL + "api/showing-experiences/");
+  }
+
 }

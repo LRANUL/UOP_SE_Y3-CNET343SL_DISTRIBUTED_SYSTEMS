@@ -48,7 +48,9 @@
         <ion-label>
           <h3 style="text-align: center; 
                     color: rgb(255, 255, 255);
-                    margin-top: 5px;
+                    padding: 0;
+                    margin: 0;
+                    margin-top: -5%;
                     letter-spacing: 1px;"><b>lucasanderson@gmail.com</b></h3>
         </ion-label>
       </ion-toolbar>
@@ -89,7 +91,7 @@
           </ion-item>
 
           <ion-item 
-            [routerLink]="'/manager/movie-catalog'" 
+            [routerLink]="'/manager/movie-catalog/upcoming-movies'" 
             routerDirection="root" 
             [class.active-sub-page]="selectedSubPagePath === '/manager/movie-catalog'" 
             class="sub-page-items">

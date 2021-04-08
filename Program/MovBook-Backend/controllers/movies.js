@@ -171,11 +171,11 @@ exports.retrieveAllMoviesAsStatus = async (req, res, next) => {
 
 };
 
-// Function - Update movie status using route, 'BASE_URL/api/movies/update-movie-status/:newMovieStatus'
+// Function - Update movie status using route, 'BASE_URL/api/movies/update-movie-status'
 exports.updateMovieStatus = async (req, res, next) => {
 
   // Getting passed movie status
-  let passedNewMovieStatus = req.params.newMovieStatus;
+  let passedNewMovieStatus = req.body.newMovieStatus;
 
   // Getting passed movie imdb id
   let passedMovieImdbId = req.body.movieImdbId;
@@ -207,9 +207,9 @@ exports.updateMovieStatus = async (req, res, next) => {
     
 };
 
-// Function - Delete wait listed movie | Route: 'BASE_URL/api/movies/remove-wait-listed-movie/:movieImdbId'
-exports.removeWaitListedMovie = async (req, res, next) => {
-  console.log(req);
+// Function - Delete movie | Route: 'BASE_URL/api/movies/remove-movie/:movieImdbId'
+exports.removeMovie = async (req, res, next) => {
+
   // Getting passed movieImdbId
   let passedMovieImdbId = req.params.movieImdbId;
 

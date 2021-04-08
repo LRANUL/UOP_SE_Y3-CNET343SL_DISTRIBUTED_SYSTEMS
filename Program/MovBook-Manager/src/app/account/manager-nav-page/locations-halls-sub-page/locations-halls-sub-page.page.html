@@ -81,14 +81,14 @@
               <ion-grid>
                 <ion-row>
                   <ion-col size="6" *ngFor="let cinemaLocation of cinemaLocationList">
-                    <div style="height: 300px;
+                    <div style="height: auto;
                                 border-radius: 10px;
                                 border: 2px solid #ccc;">
                       <ion-grid>
                         <ion-col>
                           <ion-row>
                             <ion-col>
-                              <div style="width: 300px;
+                              <div style="width: 90%;
                                         height: 240px;
                                         margin-left: 15px;
                                         background-color: rgb(55, 87, 116);">
@@ -101,7 +101,7 @@
                                   <h1>{{cinemaLocation.cinemaLocationName}}</h1>
                                 </ion-label>
                               </ion-row>
-                              <ion-row style="margin-top: 10px;">
+                              <ion-row>
                                 <ion-label>
                                   <h2>
                                     {{cinemaLocation.cinemaLocationAddress.streetAddress}}, 
@@ -110,7 +110,7 @@
                                   </h2>
                                 </ion-label>
                               </ion-row>
-                              <ion-row style="margin-top: 20px;">
+                              <ion-row>
                                 <ion-label>
                                   <h2>No of Halls: <b>2</b></h2>
                                 </ion-label>
