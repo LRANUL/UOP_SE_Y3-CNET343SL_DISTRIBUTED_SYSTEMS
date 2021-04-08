@@ -19,6 +19,7 @@ import { AssignHallSeatPopoverPageModule } from './account/manager-nav-page/loca
 import { AddLocationModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/add-location-modal/add-location-modal.module';
 import { CinemaHallsModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/cinema-halls-modal/cinema-halls-modal.module';
 import { AddNewShowingModalPageModule } from './account/manager-nav-page/movie-catalog-sub-page/add-new-showing-modal/add-new-showing-modal.module';
+import { AddNewShowingExperienceModalPageModule } from './account/manager-nav-page/settings-sub-page/add-new-showing-experience-modal/add-new-showing-experience-modal.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +35,8 @@ import { AddNewShowingModalPageModule } from './account/manager-nav-page/movie-c
       AssignHallSeatPopoverPageModule,
       AddLocationModalPageModule,
       CinemaHallsModalPageModule,
-      AddNewShowingModalPageModule
+      AddNewShowingModalPageModule,
+      AddNewShowingExperienceModalPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

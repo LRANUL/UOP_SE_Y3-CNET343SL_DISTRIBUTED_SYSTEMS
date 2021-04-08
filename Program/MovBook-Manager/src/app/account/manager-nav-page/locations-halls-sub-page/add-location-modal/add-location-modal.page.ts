@@ -58,7 +58,6 @@ export class AddLocationModalPage implements OnInit {
     this.addNewLocationForm.invalid;
 
     this.managerService.addNewCinemaLocation(locationDetailsFormValue).subscribe((res) => {
-      console.log('Success', res);
 
       // Updating 'addNewCinemaLocationStatus' to true
       this.addNewCinemaLocationStatus = true;

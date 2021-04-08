@@ -7,6 +7,7 @@ import { MovieDetails } from 'src/app/models/account/manager/movie-details';
 import { MovieWaitList, AddMovieToMovieWaitList } from 'src/app/models/account/manager/movie-wait-list';
 import { environment } from 'src/environments/environment';
 import { CinemaHall } from 'src/app/models/account/manager/cinema-hall';
+import { ShowingExperience } from 'src/app/models/account/manager/showing-experience';
 
 @Injectable({
   providedIn: 'root'
@@ -123,6 +124,14 @@ export class ManagerService {
   // GET - Retrieving cinema locations from the server-side
   retrieveCinemaLocations(){
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
+  }
+
+  /**
+   * Showing Experience
+   */
+  // POST - Passing new showing experience details to the server-side
+  addNewShowingExperience(showingExperience: ShowingExperience){
+    return this.httpClient.post(this.BASE_URL + "api/showing-experience", showingExperience);
   }
 
 }
