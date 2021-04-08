@@ -31,8 +31,8 @@
               </ion-col>
               <ion-col size="7">
                 <ion-item>
-                  <ion-select placeholder="Select Location" okText="SELECT" cancelText="DISMISS" formControlName="locationName">
-                    <ion-select-option *ngFor="let year of movieReleaseYearsArray" value="{{year}}">{{year}}</ion-select-option>
+                  <ion-select placeholder="Select Location" okText="SELECT" cancelText="DISMISS" formControlName="cinemaLocationName" (ionChange)="retrieveCinemaHalls($event.detail.value)">
+                    <ion-select-option *ngFor="let cinemaLocation of cinemaLocationList" value="{{cinemaLocation._id}}">{{cinemaLocation.cinemaLocationName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
               </ion-col>
@@ -61,16 +61,39 @@
                                   padding: 5%;
                                   overflow-y: auto;">
 
-                        <ion-button color="darker-blue" style="height: 4vh;
+                        <!-- Cinema Halls' Name -->
+                        <div *ngFor="let cinemaHall of cinemaHallList">
+                          <ion-button color="darker-blue" style="height: 4vh;
                                                               width: 95%;
                                                               position: relative;
                                                               left: 50%;
                                                               transform: translateX(-50%);
-                                                              margin-bottom: 10px;">
+                                                              margin-bottom: 10px;" (click)="setActiveCinemaHallObjectId(cinemaHall?._id)">
                           <ion-label>
-                            <b>HALL A</b>
+                            <b>{{ cinemaHall?.cinemaHallName }}</b>
                           </ion-label>
                         </ion-button>
+                        </div>
+
+                        <!-- Cinema Halls Initial Text -->
+                        <div style="border: 1px solid #ccc;
+                                    border-radius: 5px;
+                                    padding: 5%;" *ngIf="cinemaLocationSelectionInitialText">
+                          <ion-label style="position: relative;
+                                            left: 15%;
+                                            top: 50%;
+                                            transform: translate(-85%, -50%);">
+                            Select a cinema location
+                          </ion-label>
+                        </div>
+
+                        <!-- Loading Spinner - Retrieve cinema halls -->
+                        <ion-spinner name="crescent" style="height: 50px;
+                                                            width: 50px;
+                                                            position: relative;
+                                                            left: 50%;
+                                                            top: 50%;
+                                                            transform: translate(-50%, -50%);" *ngIf="loadingSpinnerCinemaHall"></ion-spinner>
 
                       </div>
                     </ion-col>
@@ -79,8 +102,169 @@
                                   height: 20vh;
                                   border-radius: 8px;
                                   background-color: #608fe6;
-                                  box-shadow: 5px 3px 18px #888888;">
-                        SEAT LAYOUT
+                                  box-shadow: 5px 3px 18px #888888;
+                                  padding: 5%;
+                                  overflow: auto;">
+
+                        <!-- Cinema Hall Seating Initial Text -->
+                        <div style="border: 1px solid rgb(255, 255, 255);
+                                    border-radius: 5px;
+                                    padding: 5%;" *ngIf="cinemaHallSelectionInitialText">
+                          <ion-label style="position: relative;
+                                            left: 30%;
+                                            top: 50%;
+                                            transform: translate(-70%, -50%);
+                                            color: #ffffff;">
+                            Select a cinema hall
+                          </ion-label>
+                        </div>
+
+                        <!-- Loading Spinner - Load cinema hall seat layout -->
+                        <ion-spinner name="crescent" style="height: 50px;
+                                                            width: 50px;
+                                                            position: relative;
+                                                            left: 50%;
+                                                            top: 50%;
+                                                            transform: translate(-50%, -50%);
+                                                            color: #ffffff;" *ngIf="loadingSpinnerCinemaHallSeatLayout"></ion-spinner>
+
+                        <div style="width: 60%;
+                                    float: left;" *ngIf="!cinemaHallSelectionInitialText">
+                          <!-- Hall Seating Layout Contents Section -->
+                          <div style="height: auto;
+                                      position: relative;
+                                      left: 50%;
+                                      transform: translateX(-50%);">
+
+                            <!-- Hall Seating Layout Screen Image -->
+                            <div>
+                              <ion-img src="assets/images/account/manager/locations-halls-sub-page/hall-screen-image.png" style="width: 65%;
+                                                                                                                                position: relative;
+                                                                                                                                left: 50%;
+                                                                                                                                transform: translateX(-50%);
+                                                                                                                                margin-bottom: 10px;"></ion-img>
+                            </div>
+
+                            <!-- Hall Seating Layout Screen Grid Table -->
+                            <div style="min-width: 95%;">
+                              
+                              <!-- Seating Grid Table -->
+                              <table style="border: none;
+                                            background-color: rgb(96, 143, 230);
+                                            position: relative;
+                                            left: 51%;
+                                            transform: translateX(-49%);">
+                                  <!-- Table Rows -->
+                                  <tr *ngFor="let in of covertNumberToArray(activeSeatLayout.seatingGridNoOfRows); let row = index">
+                                    <!-- Table Columns -->
+                                    <td class="seatingGridTableTableData" *ngFor="let in of covertNumberToArray(activeSeatLayout.seatingGridNoOfColumns); let column = index">
+                                      <!-- Table Cells -->
+                                      <div>
+
+                                        <!-- Iterating through each seat (cell) -->
+                                        <ng-container *ngFor="let seatDetails of activeSeatLayout.seatingDetails">
+                                          <!--If condition (condition) - checking whether iterating seatId is equal to generated seatId -->
+                                          <ng-template 
+                                            *ngIf="seatDetails?.seatId == activeSeatLayout.cinemaLocationObjectId + '|0|' + preIncrementValue(row) + '|' + preIncrementValue(column);
+                                                  then showSeatDetails;">
+                                          </ng-template>
+
+                                          <!-- If condition (then) - 
+                                            display seatAllocatedPositionNo, 
+                                            change seat (cell) styles according to the properties of the seat,
+                                            display seatNumber
+                                          -->
+                                          <ng-template #showSeatDetails>
+                                            <div [ngClass]="{
+                                                'seatingGridTableInnerDivSeatActive': seatDetails.seatActive,
+                                                'seatingGridTableInnerDivUnavailableSeat': seatDetails.seatUnavailable,
+                                                'seatingGridTableInnerDiv': !seatDetails.seatActive,
+                                                'seatingGridTableInnerDiv': !seatDetails.seatUnavailable
+                                              }">
+                                            </div>
+                                          </ng-template>
+
+                                        </ng-container>
+                                      </div>
+                                    </td>
+                                  </tr>
+                              </table>
+
+                            </div>
+                            
+                          </div>
+                        </div>
+                        <div style="width: 40%;
+                                    float: right;" *ngIf="!cinemaHallSelectionInitialText">
+                          <table style="min-width: 90%;">
+                            <tr>
+                              <td>
+                                <ion-label style="font-size: 12px;
+                                                  color: #ffffff;
+                                                  position: relative;
+                                                  left: 50%;
+                                                  transform: translateX(-50%);">
+                                  <b>SEATING LEGEND</b>
+                                </ion-label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div style="width: 10px;
+                                            height: 10px;
+                                            border-radius: 10px;
+                                            background-color: #0AAA64;
+                                            position: relative;
+                                            left: 50%;
+                                            transform: translateX(-50%);">
+                                </div>
+                              </td>
+                              <td>
+                                <ion-label style="font-size: 12px;
+                                                  color: #ffffff;">
+                                  Active Seat
+                                </ion-label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div style="width: 10px;
+                                            height: 10px;
+                                            border-radius: 10px;
+                                            background-color: #D33131;
+                                            position: relative;
+                                            left: 50%;
+                                            transform: translateX(-50%);">
+                                </div>
+                              </td>
+                              <td>
+                                <ion-label style="font-size: 12px;
+                                                  color: #ffffff;">
+                                  Unavailable Seat
+                                </ion-label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div style="width: 10px;
+                                            height: 10px;
+                                            border-radius: 10px;
+                                            background-color: #d6d6d6;
+                                            position: relative;
+                                            left: 50%;
+                                            transform: translateX(-50%);">
+                                </div>
+                              </td>
+                              <td>
+                                <ion-label style="font-size: 12px;
+                                                  color: #ffffff;">
+                                  Unallocated Seat
+                                </ion-label>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+
                       </div>
                     </ion-col>
                   </ion-row>
@@ -88,10 +272,101 @@
                     <ion-col size="12">
 
                       <div style="width: 100%;
-                                  height: 5vh;
+                                  height: 6vh;
                                   border-radius: 10px;
                                   box-shadow: 5px 3px 18px #888888;">
-                        HALL DETAILS
+                      
+                        <!-- Cinema Hall Seat Statistics Initial Text -->
+                        <div style="border: 1px solid #ccc;
+                                    border-radius: 5px;
+                                    width: 50%;
+                                    min-height: 10%;
+                                    padding-top: 2%;
+                                    padding-bottom: 2%;
+                                    position: relative;
+                                    left: 50%;
+                                    top: 50%;
+                                    transform: translate(-50%, -50%);" *ngIf="cinemaHallSelectionInitialText">
+                          <ion-label style="position: relative;
+                                            left: 30%;
+                                            top: 50%;
+                                            transform: translate(-70%, -50%);">
+                            Select a cinema hall
+                          </ion-label>
+                        </div>
+
+                        <!-- Hall Seating Statistics -->
+                        <div *ngIf="!cinemaHallSelectionInitialText">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col size="3">
+                                <ion-label style="font-size: 18px;">
+                                  <h2>No of Allocated Seats -</h2>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col size="1" style="padding-left: 5px;">
+                                <div style="width: 40px;
+                                            height: 30px;
+                                            border-radius: 5px;
+                                            background-color: #d6d6d6;">
+                                  <ion-label style="font-size: 18px;
+                                                    margin-left: 5px;
+                                                    margin-top: 5px;
+                                                    color: #000000;">
+                                    <b>
+                                      {{ noOfAllocatedSeats }}
+                                    </b>
+                                  </ion-label>
+                                </div>
+                              </ion-col>
+                              <ion-col size="3">
+                                <ion-label style="font-size: 18px;
+                                                  position: absolute;
+                                                  left: 60px;">
+                                  <h2>No of Active Seats -</h2>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col size="1" style="padding-left: 5px;">
+                                <div style="width: 40px;
+                                            height: 30px;
+                                            border-radius: 5px;
+                                            background-color: #0AAA64;">
+                                  <ion-label style="font-size: 18px;
+                                                    margin-left: 5px;
+                                                    margin-top: 5px;
+                                                    color: #000000;">
+                                    <b>
+                                      {{ noOfActiveSeats }}
+                                    </b>
+                                  </ion-label>
+                                </div>
+                              </ion-col>
+                              <ion-col size="3">
+                                <ion-label style="font-size: 18px;
+                                                  position: absolute;
+                                                  left: 8px;">
+                                  <h2>No of Unavailable Seats -</h2>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col size="1" style="padding-left: 5px;">
+                                <div style="width: 40px;
+                                            height: 30px;
+                                            border-radius: 5px;
+                                            background-color: #D33131;">
+                                  <ion-label style="font-size: 18px;
+                                                    margin-left: 5px;
+                                                    margin-top: 5px;
+                                                    color: #000000;">
+                                    <b>
+                                      {{ noOfUnavailableSeats }}
+                                    </b>
+                                  </ion-label>
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </div>
+
                       </div>
 
                     </ion-col>
@@ -120,7 +395,7 @@
               </ion-col>
               <ion-col size="6">
                 <ion-item>
-                  <ion-input type="text" placeholder="Select Location" clearInput formControlName="locationName"></ion-input>
+                  <ion-input type="text" placeholder="Select Location" clearInput></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -132,7 +407,7 @@
               </ion-col>
               <ion-col size="6">
                 <ion-item>
-                  <ion-input type="text" placeholder="Select Location" clearInput formControlName="locationName"></ion-input>
+                  <ion-input type="text" placeholder="Select Location" clearInput></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -160,7 +435,7 @@
                       </ion-col>
                       <ion-col size="6">
                         <ion-item>
-                          <ion-input type="text" placeholder="Select Location" clearInput formControlName="locationName"></ion-input>
+                          <ion-input type="text" placeholder="Select Location" clearInput></ion-input>
                         </ion-item>
                       </ion-col>
                     </ion-row>
@@ -172,7 +447,7 @@
                       </ion-col>
                       <ion-col size="6">
                         <ion-item>
-                          <ion-input type="text" placeholder="Select Location" clearInput formControlName="locationName"></ion-input>
+                          <ion-input type="text" placeholder="Select Location" clearInput></ion-input>
                         </ion-item>
                       </ion-col>
                     </ion-row>
@@ -196,7 +471,7 @@
                       </ion-col>
                       <ion-col size="6">
                         <ion-item>
-                          <ion-input type="text" placeholder="Select Location" clearInput formControlName="locationName"></ion-input>
+                          <ion-input type="text" placeholder="Select Location" clearInput></ion-input>
                         </ion-item>
                       </ion-col>
                     </ion-row>
@@ -208,16 +483,16 @@
                       </ion-col>
                       <ion-col size="6">
                         <ion-item>
-                          <ion-input type="text" placeholder="Select Location" clearInput formControlName="locationName"></ion-input>
+                          <ion-input type="text" placeholder="Select Location" clearInput></ion-input>
                         </ion-item>
                       </ion-col>
                     </ion-row>
                     <ion-row>
-                      <ion-button color="tertiary" expand="block" type="submit" [disabled]="!addNewLocationForm.valid" style="min-width: 250px;
-                                                                                                                              min-height: 40px;
-                                                                                                                              position: relative;
-                                                                                                                              left: 50%;
-                                                                                                                              transform: translateX(-50%);">
+                      <ion-button color="tertiary" expand="block" style="min-width: 250px;
+                                                                        min-height: 40px;
+                                                                        position: relative;
+                                                                        left: 50%;
+                                                                        transform: translateX(-50%);">
                         ASSIGN SLOT DETAILS
                       </ion-button>
                     </ion-row>
@@ -333,15 +608,13 @@
               </ion-col>
               <ion-col size="7">
                 <ion-item>
-                  <ion-select placeholder="Select Experience" okText="SELECT" cancelText="DISMISS" formControlName="locationName">
-                    <ion-select-option *ngFor="let year of movieReleaseYearsArray" value="{{year}}">{{year}}</ion-select-option>
-                  </ion-select>
+                  
                 </ion-item>
               </ion-col>
             </ion-row>
 
             <ion-row style="margin-top: 5%;">
-              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!addNewLocationForm.valid" style="min-width: 250px;
+              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!addNewShowingForm.valid" style="min-width: 250px;
                                                                                                                       min-height: 40px;
                                                                                                                       position: relative;
                                                                                                                       left: 50%;
