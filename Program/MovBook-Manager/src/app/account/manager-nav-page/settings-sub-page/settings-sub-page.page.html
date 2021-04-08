@@ -6,7 +6,229 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      
+
+      <ion-grid style="padding: 0; margin: 0;">
+        <ion-row>
+          <ion-col size="6">
+
+            <!-- MANAGE SHOWING EXPERIENCES SECTION -->
+            <div style="width: 100%;
+                        height: 39vh;
+                        background-color: #ffffff;
+                        border-radius: 10px;
+                        padding: 3%;">
+
+                <ion-label style="font-size: 20px;
+                                  letter-spacing: 1px;
+                                  color: #000000;
+                                  font-weight: 500;">
+                  Change Show Experiences
+                </ion-label>
+
+                <div style="padding: 2%;
+                            border: 1px solid #ccc;
+                            border-radius: 5px;
+                            min-width: 100%;
+                            margin-top: 2%;
+                            overflow-y: scroll;">
+                  <table style="width: 100%;
+                                padding: 10%;
+                                font-size: 15px;">
+                    <thead style="border-bottom: 2px solid #ccc;">
+                      <tr>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col>
+                                <ion-button style="width: 120px;" (click)="openEditSessionStatusModal(item)">
+                                  <ion-icon name="create-outline"></ion-icon>
+                                  <ion-label style="color: white;
+                                                    margin-left: 5px;">
+                                    EDIT
+                                  </ion-label>
+                                </ion-button>
+                              </ion-col>
+                              <ion-col>
+                                <ion-button color="danger" style="width: 120px;"
+                                  (click)="removeSessionStatus('Confirmation Required', 'This session status will be removed, do you want to continue?', item)">
+                                  <ion-icon name="trash-outline"></ion-icon>
+                                  <ion-label style="color: white;
+                                                    margin-left: 5px;">
+                                    REMOVE
+                                  </ion-label>
+                                </ion-button>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <ion-button color="primary" style="width: 50px;
+                                                      height: 50px;
+                                                      --border-radius: 20px;
+                                                      position: absolute;
+                                                      top: 2%;
+                                                      right: 2%;">
+                  <ion-icon name="add-outline"></ion-icon>
+                </ion-button>
+
+              </div>
+          </ion-col>
+          <ion-col size="6">
+            
+            <!-- UPDATE ACCOUNT DETAILS SECTION -->
+            <div style="width: 100%;
+                  height: auto;
+                  background-color: #ffffff;
+                  border-radius: 10px;
+                  padding: 3%;">
+
+              <ion-label style="font-size: 20px;
+                                letter-spacing: 1px;
+                                color: #000000;
+                                font-weight: 500;">
+                Update Account Details
+              </ion-label>
+
+              <div style="padding: 3%;">
+                <ion-label style="font-size: 18px;
+                                  font-weight: 400;
+                                  color: #000000;">
+                  Enter Login Credentials
+                </ion-label>
+  
+                <form>
+                  <ion-grid style="margin-top: 10px;">
+                    <ion-row>
+                      <ion-col size="4">
+                        <ion-label class="update-account-details-form-text">
+                          Email Address
+                        </ion-label>
+                      </ion-col>
+                      <ion-col size="8">
+                        <ion-item>
+                          <ion-input type="email" clearInput placeholder="Enter Email Address"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="4">
+                        <ion-label class="update-account-details-form-text">
+                          Password
+                        </ion-label>
+                      </ion-col>
+                      <ion-col size="8">
+                        <ion-item>
+                          <ion-input type="password" clearInput placeholder="Enter Password"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row style="margin-top: 20px;">
+                      <ion-col>
+                        <ion-button expand="block" style="height: 50px;" type="submit"> 
+                          <ion-icon name="shield-checkmark-outline"></ion-icon>
+                          <ion-label style="color: white;
+                                            margin-left: 5px;">
+                            VERIFY
+                          </ion-label>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </form>
+              </div>
+
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+
+            <!-- ABOUT SECTION -->
+            <div style="width: 100%;
+              height: auto;
+              background-color: #ffffff;
+              border-radius: 10px;
+              padding: 1%;">
+
+              <ion-label style="font-size: 20px;
+                                letter-spacing: 1px;
+                                color: #000000;
+                                font-weight: 500;">
+                ABOUT
+              </ion-label>
+
+              <div style="width: 90%;
+                          height: auto;
+                          background-color: #e7e7e7;
+                          border-radius: 10px;
+                          position: relative;
+                          left: 50%;
+                          transform: translateX(-50%);
+                          margin-top: 1%;">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="12">
+                      <div style="width: 40%;
+                                  position: relative;
+                                  left: 50%;
+                                  transform: translateX(-50%);">
+                        <ion-grid>
+                          <ion-row>
+                            <ion-col size="4">
+                              <div class="about-image-blocks">
+                                <img src="assets/images/Logo/MovBook-T2.png" class="about-image">
+                              </div>
+                            </ion-col>
+                            <ion-col size="4">
+                              <div class="about-image-blocks">
+                                <img src="assets/images/account/manager/settings-sub-page/Plymouth-University-Logo.png" class="about-image about-image-center-block">
+                              </div>
+                            </ion-col>
+                            <ion-col size="4">
+                              <div class="about-image-blocks">
+                                <img src="assets/images/account/manager/settings-sub-page/NSBM-Logo.png" class="about-image">
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <h2 style="text-align: center;
+                            color: black;">
+                        MovBook Platform was developed by University of Plymouth Third Year students <br> 
+                              following BSc(Hons) Software Engineering Degree</h2><br>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <h1 style="text-align: center;
+                            color: black;">Assignment Title: <b>Coursework CNET343SL - Distributed System</b></h1>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
     </ion-card-content>
   </ion-card>
 </ion-content>

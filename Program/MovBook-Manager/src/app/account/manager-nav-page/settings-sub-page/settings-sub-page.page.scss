@@ -6,3 +6,41 @@ ion-card{
   --ion-background-color: #f1f1f1;
   border-radius: 15px;
 }
+
+ion-item{
+  border: #ccc solid 1px;
+  border-radius: 5px;
+  --ion-background-color: rgb(255, 255, 255);
+}
+
+.update-account-details-form-text{
+  font-size: 17px;
+  color: #000000;
+  letter-spacing: 1px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.about-image-blocks{
+  width: 150px;
+  height: 150px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+}
+
+.about-image{
+  width: 100%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.about-image-center-block{
+  width: 90%;
+}
