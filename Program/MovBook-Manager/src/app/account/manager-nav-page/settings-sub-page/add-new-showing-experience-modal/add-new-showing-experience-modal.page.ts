@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
+import { ShowingExperience } from 'src/app/models/account/manager/showing-experience';
 import { ManagerService } from 'src/app/services/account/manager.service';
 
 @Component({
@@ -49,41 +50,59 @@ export class AddNewShowingExperienceModalPage implements OnInit {
   }
 
   // Function - Adding new showing experiences details into the database by passing through the server-side application
-  addNewLocationDetails(experienceDetailsFormValue){
+  addNewShowingExperienceDetails(experienceDetailsFormValue: ShowingExperience){
 
     // Disabling form submit
     this.addNewShowingExperienceForm.invalid;
 
-    this.managerService.addNewShowingExperience(experienceDetailsFormValue).subscribe((res) => {
+    // Retrieving the now showing movies
+    this.managerService.addNewShowingExperience(experienceDetailsFormValue)
+      .subscribe((responseShowingExperience: any) => {
 
-      // // Updating 'addNewCinemaLocationStatus' to true
-      // this.addNewCinemaLocationStatus = true;
+      if(responseShowingExperience.message == "Showing experience added"){
 
-      // // Showing success message box to user
-      // this.alertNotice("Added", "New Cinema Location Successfully Added");
+        // Showing success message box to the user
+        this.alertNotice("Showing Experience Added", "Showing experience was successfully added.");
 
-      // //alert("New Cinema Location Successfully Added");
+        console.log("Showing Experience Added");
 
-      // // Enabling form submit
-      // this.addNewLocationForm.valid;
+        // Updating 'addNewShowingExperienceStatus' to true
+        this.addNewShowingExperienceStatus = true;
 
-      // // Closing AddLocationModal modal
-      // this.closeAddLocationModal();
+        // Enabling form submit
+        this.addNewShowingExperienceForm.valid;
+
+      }
+      else if(responseShowingExperience.message == "Error - Unable to add showing experience"){
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to retrieve showing experiences, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to retrieve showing experiences");
+
+        // Updating 'addNewShowingExperienceStatus' to false
+        this.addNewShowingExperienceStatus = false;
+
+        // Enabling form submit
+        this.addNewShowingExperienceForm.valid;
+
+      }
 
     }, (error: ErrorEvent) => {
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to retrieve showing experiences, apologies for the inconvenience. Please contact administrator.");
 
-      // // Updating 'addNewCinemaLocationStatus' to false
-      // this.addNewCinemaLocationStatus = false;
+      console.log("Unable to retrieve showing experiences");
 
-      // // Showing error message box to user
-      // this.alertNotice("ERROR", "Unable to add New Cinema Location");
+      // Updating 'addNewShowingExperienceStatus' to false
+      this.addNewShowingExperienceStatus = false;
 
-      // //alert("Unable to add New Cinema Location");
-
-      // // Enabling form submit
-      // this.addNewLocationForm.valid;
+      // Enabling form submit
+      this.addNewShowingExperienceForm.valid;
     });
 
   }
+
+
 
 }

@@ -131,7 +131,11 @@ export class ManagerService {
    */
   // POST - Passing new showing experience details to the server-side
   addNewShowingExperience(showingExperience: ShowingExperience){
-    return this.httpClient.post(this.BASE_URL + "api/showing-experience", showingExperience);
+    return this.httpClient.post(this.BASE_URL + "api/showing-experiences", showingExperience);
+  }
+  // GET - Retrieving list showing experiences from the server-side
+  retrieveListOfShowingExperiences(){
+    return this.httpClient.get(this.BASE_URL + "api/showing-experiences/");
   }
 
 }

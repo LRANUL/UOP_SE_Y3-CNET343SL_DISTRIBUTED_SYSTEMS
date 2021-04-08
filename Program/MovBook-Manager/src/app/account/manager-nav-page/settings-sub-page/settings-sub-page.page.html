@@ -26,14 +26,42 @@
                 </ion-label>
 
                 <div style="padding: 2%;
+                            height: 30vh;
                             border: 1px solid #ccc;
                             border-radius: 5px;
                             min-width: 100%;
                             margin-top: 2%;
                             overflow-y: scroll;">
+
+                  <div style="width: 70%;
+                              height: 50px;
+                              border-radius: 10px;
+                              border: 1px solid #ccc;
+                              position: relative;
+                              left: 50%;
+                              top: 50%;
+                              transform: translate(-50%, -50%);" *ngIf="noShowingExperienceAvailableText">
+                    <ion-label style="position: relative;
+                                      left: 25%;
+                                      top: 25%;
+                                      transform: translate(-75%, -75%);
+                                      font-size: 15px;">
+                      No showing experiences available
+                    </ion-label>
+                  </div>
+
+                  <!-- Loading Spinner - Retrieving movies upon page render -->
+                  <ion-spinner name="dots" style="height: 100px;
+                                                  width: 100px;
+                                                  position: absolute;
+                                                  left: 50%;
+                                                  top: 50%;
+                                                  transform: translate(-50%,-50%);
+                                                  margin-top: 20px;" *ngIf="loadingSpinnerShowingExperience"></ion-spinner>
+
                   <table style="width: 100%;
                                 padding: 10%;
-                                font-size: 15px;">
+                                font-size: 15px;" *ngIf="!noShowingExperienceAvailableText">
                     <thead style="border-bottom: 2px solid #ccc;">
                       <tr>
                         <th>Status</th>
@@ -42,14 +70,14 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
+                      <tr *ngFor="let showingExperience of showingExperienceList">
+                        <td>{{ showingExperience?.showingExperience }}</td>
+                        <td>{{ showingExperience?.description }}</td>
                         <td>
                           <ion-grid>
                             <ion-row>
                               <ion-col>
-                                <ion-button style="width: 120px;" (click)="openEditSessionStatusModal(item)">
+                                <ion-button style="width: 120px;" (click)="openEditSessionStatusModal(showingExperience)">
                                   <ion-icon name="create-outline"></ion-icon>
                                   <ion-label style="color: white;
                                                     margin-left: 5px;">
@@ -59,7 +87,7 @@
                               </ion-col>
                               <ion-col>
                                 <ion-button color="danger" style="width: 120px;"
-                                  (click)="removeSessionStatus('Confirmation Required', 'This session status will be removed, do you want to continue?', item)">
+                                  (click)="removeSessionStatus('Confirmation Required', 'This showing experience will be removed, do you want to continue?', showingExperience)">
                                   <ion-icon name="trash-outline"></ion-icon>
                                   <ion-label style="color: white;
                                                     margin-left: 5px;">
@@ -73,6 +101,7 @@
                       </tr>
                     </tbody>
                   </table>
+             
                 </div>
 
                 <ion-button color="primary" style="width: 50px;
