@@ -9,6 +9,9 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material/angular-material.module';
+
 import { MovieDetailsModalPageModule } from './account/manager-nav-page/browse-upcoming-movies-sub-page/movie-details-modal/movie-details-modal.module';
 import { MovieCatalogTypesPopoverPageModule } from './account/manager-nav-page/browse-upcoming-movies-sub-page/movie-catalog-types-popover/movie-catalog-types-popover.module';
 import { AddHallModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/add-hall-modal/add-hall-modal.module';
@@ -16,7 +19,6 @@ import { AssignHallSeatPopoverPageModule } from './account/manager-nav-page/loca
 import { AddLocationModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/add-location-modal/add-location-modal.module';
 import { CinemaHallsModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/cinema-halls-modal/cinema-halls-modal.module';
 import { AddNewShowingModalPageModule } from './account/manager-nav-page/movie-catalog-sub-page/add-new-showing-modal/add-new-showing-modal.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,14 +26,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule,
       MovieCatalogTypesPopoverPageModule,
       MovieDetailsModalPageModule,
       AddHallModalPageModule,
       AssignHallSeatPopoverPageModule,
       AddLocationModalPageModule,
       CinemaHallsModalPageModule,
-      AddNewShowingModalPageModule,
-      BrowserAnimationsModule
+      AddNewShowingModalPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

@@ -8,6 +8,14 @@ ion-item{
   --ion-background-color: rgb(255, 255, 255);
 }
 
+input{
+  border: #ccc 1px solid;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+}
+
 .add-new-showing-form-text{
   font-size: 17px;
   color: #000000;
@@ -63,4 +71,12 @@ ion-item{
   border-radius: 5px;
   width: 10px;
   height: 10px;
+}
+
+.datepicker-textbox-icon{
+  position: absolute;
+  top: 13px;
+  right: 16px;
+  color: rgb(78, 78, 78);
+  font-size: 28px;
 }

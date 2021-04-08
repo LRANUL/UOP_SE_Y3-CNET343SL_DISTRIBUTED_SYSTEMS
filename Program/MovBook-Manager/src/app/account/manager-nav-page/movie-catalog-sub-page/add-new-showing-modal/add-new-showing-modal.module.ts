@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AddNewShowingModalPageRoutingModule } from './add-new-showing-modal-routing.module';
 
 import { AddNewShowingModalPage } from './add-new-showing-modal.page';
+import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { AddNewShowingModalPage } from './add-new-showing-modal.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    AddNewShowingModalPageRoutingModule
+    AddNewShowingModalPageRoutingModule,
+    AngularMaterialModule
   ],
   declarations: [AddNewShowingModalPage]
 })

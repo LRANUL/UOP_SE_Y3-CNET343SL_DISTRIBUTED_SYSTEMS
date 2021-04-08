@@ -272,7 +272,7 @@
                     <ion-col size="12">
 
                       <div style="width: 100%;
-                                  height: 6vh;
+                                  height: 8vh;
                                   border-radius: 10px;
                                   box-shadow: 5px 3px 18px #888888;">
                       
@@ -394,9 +394,9 @@
                 </ion-label>
               </ion-col>
               <ion-col size="6">
-                <ion-item>
-                  <ion-input type="text" placeholder="Select Location" clearInput></ion-input>
-                </ion-item>
+                <input placeholder="Select start date" (click)="showStartDate.open()" [matDatepicker]="showStartDate" [min]="minDate" [max]="maxDate" readOnly />
+								<mat-datepicker #showStartDate></mat-datepicker>
+								<ion-icon name="calendar-outline" class="datepicker-textbox-icon"></ion-icon>
               </ion-col>
             </ion-row>
             <ion-row style="padding: 0 7% 0 7%;">
@@ -406,9 +406,9 @@
                 </ion-label>
               </ion-col>
               <ion-col size="6">
-                <ion-item>
-                  <ion-input type="text" placeholder="Select Location" clearInput></ion-input>
-                </ion-item>
+                <input placeholder="Select end date" (click)="showEndDate.open()" [matDatepicker]="showEndDate" [min]="minDate" [max]="maxDate" readOnly />
+                <mat-datepicker #showEndDate></mat-datepicker>
+                <ion-icon name="calendar-outline" class="datepicker-textbox-icon"></ion-icon>
               </ion-col>
             </ion-row>
             <ion-row style="padding-top: 2%;">

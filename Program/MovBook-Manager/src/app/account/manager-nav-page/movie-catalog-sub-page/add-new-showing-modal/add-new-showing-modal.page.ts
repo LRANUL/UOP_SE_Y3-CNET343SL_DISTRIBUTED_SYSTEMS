@@ -49,6 +49,13 @@ export class AddNewShowingModalPage implements OnInit {
 
   // Declaration - stores number of unavailable seats of initially loaded and user selected cinema hall
   noOfUnavailableSeats;
+
+
+  // ANGULAR MATERIAL - DATEPICKER | Setting min validation for angular material datepicker
+  minDate: Date;
+
+  // ANGULAR MATERIAL - DATEPICKER | Setting max validation for angular material datepicker
+  maxDate: Date;
   
   constructor(
     private modalController: ModalController,
@@ -58,6 +65,15 @@ export class AddNewShowingModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    // ANGULAR MATERIAL - DATEPICKER | Retrieving current date and setting as min data
+    this.minDate = new Date();
+
+    // ANGULAR MATERIAL - DATEPICKER | Retrieving the current year
+    const currentYear = new Date().getFullYear();
+    // ANGULAR MATERIAL - DATEPICKER | Setting the max date to december 31st two years in the future
+    this.maxDate = new Date(currentYear + 2, 11, 31);
+
 
     // Retrieving list of cinema locations upon page load
     this.retrieveCinemaLocations();
