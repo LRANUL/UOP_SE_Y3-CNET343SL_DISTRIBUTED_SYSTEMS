@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { ModalController, AlertController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddNewShowingExperienceModalPage } from './add-new-showing-experience-modal/add-new-showing-experience-modal.page';
+import { UpdateAccountDetailsModalPage } from './update-account-details-modal/update-account-details-modal.page';
 
 @Component({
   selector: 'app-settings-sub-page',
@@ -34,7 +35,7 @@ export class SettingsSubPagePage implements OnInit {
 
     // Retrieving showing experiences upon page render
     this.retrieveShowingExperiences();
-
+    
   }
 
   // Alert Box Implementation
@@ -68,6 +69,19 @@ export class SettingsSubPagePage implements OnInit {
         this.retrieveShowingExperiences();
       }
     }
+
+    this.openUpdateAccountDetailsModal();
+  }
+
+  // Function - Implementation for opening the 'Update Account Details' modal
+  async openUpdateAccountDetailsModal(){
+    const updateAccountDetailsModal = await this.modalController.create({
+      component: UpdateAccountDetailsModalPage,
+      cssClass: 'update-account-details-modal',
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    updateAccountDetailsModal.present();
   }
 
   // Retrieving list of showing experiences from the database

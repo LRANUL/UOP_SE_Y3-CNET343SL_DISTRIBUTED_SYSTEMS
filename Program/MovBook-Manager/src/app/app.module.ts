@@ -20,6 +20,7 @@ import { AddLocationModalPageModule } from './account/manager-nav-page/locations
 import { CinemaHallsModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/cinema-halls-modal/cinema-halls-modal.module';
 import { AddNewShowingModalPageModule } from './account/manager-nav-page/movie-catalog-sub-page/add-new-showing-modal/add-new-showing-modal.module';
 import { AddNewShowingExperienceModalPageModule } from './account/manager-nav-page/settings-sub-page/add-new-showing-experience-modal/add-new-showing-experience-modal.module';
+import { UpdateAccountDetailsModalPageModule } from './account/manager-nav-page/settings-sub-page/update-account-details-modal/update-account-details-modal.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +37,8 @@ import { AddNewShowingExperienceModalPageModule } from './account/manager-nav-pa
       AddLocationModalPageModule,
       CinemaHallsModalPageModule,
       AddNewShowingModalPageModule,
-      AddNewShowingExperienceModalPageModule
+      AddNewShowingExperienceModalPageModule,
+      UpdateAccountDetailsModalPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
