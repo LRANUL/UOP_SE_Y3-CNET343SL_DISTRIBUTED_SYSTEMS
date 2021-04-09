@@ -88,3 +88,31 @@ exports.updateShowingExperience = async (req, res, next) => {
     })
     
 };
+
+// Function - Delete showing experience using route, 'BASE_URL/api/showing-experiences/delete/:showingExperienceId'
+exports.deleteShowingExperience = async (req, res, next) => {
+
+  // Getting passed showingExperienceId
+  let passedShowingExperienceId = req.params.showingExperienceId;
+
+  // Using mongoDB's findByIdAndDelete() functionality to remove the showing experience according to the passed showingExperienceId
+  await showingExperienceModel.deleteOne({ _id: passedShowingExperienceId }, (error, returnedData) => {
+
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to remove showing experience",
+      });
+    }
+    else {
+      res.status(200).json({
+        message:
+          "Showing experience removed",
+        returnedData
+      });
+    }
+
+  })
+
+};

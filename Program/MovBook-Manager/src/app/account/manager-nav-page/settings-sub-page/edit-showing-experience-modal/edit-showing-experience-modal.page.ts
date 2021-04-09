@@ -16,6 +16,9 @@ export class EditShowingExperienceModalPage implements OnInit {
   
   // Declaration | Initialization - Stores status of edit showing experience details
   editShowingExperienceStatus: Boolean = false;
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerEditShowingExperience' block
+  loadingSpinnerEditShowingExperience: Boolean = false;
   
   // Declaration | Initialization - string variable to store passingShowingExperienceId
   passedShowingExperienceId = null;
@@ -76,60 +79,86 @@ export class EditShowingExperienceModalPage implements OnInit {
   // Function - Editing showing experiences details into the database by passing through the server-side application
   editShowingExperienceDetails(experienceDetailsFormValue: ShowingExperience){
 
-    // Disabling form submit
-    this.editShowingExperienceForm.invalid;
+    // Checking whether any details were updated from the existing details
+    if(this.passedShowingExperience != experienceDetailsFormValue.showingExperience || 
+      this.passedShowingExperienceDescription != experienceDetailsFormValue.description){
 
-    let updatedShowingExperience = {
-      showingExperienceId: this.passedShowingExperienceId,
-      showingExperience: experienceDetailsFormValue.showingExperience,
-      showingExperienceDescription: experienceDetailsFormValue.description,
-    }
+        // Assigning 'loadingSpinnerEditShowingExperience' to true (starts loading spinner)
+        this.loadingSpinnerEditShowingExperience = true;
 
-    // Editing showing experience
-    this.managerService.editShowingExperience(updatedShowingExperience)
-      .subscribe((responseShowingExperience: any) => {
+        // Disabling form submit
+        this.editShowingExperienceForm.invalid;
 
-      if(responseShowingExperience.message == "Showing experience updated"){
-
-        // Showing success message box to the user
-        this.alertNotice("Showing Experience updated", "Showing experience was successfully updated.");
-
-        console.log("Showing Experience Updated");
-
-        // Updating 'editShowingExperienceStatus' to true
-        this.editShowingExperienceStatus = true;
-
-        // Enabling form submit
-        this.editShowingExperienceForm.valid;
+        let updatedShowingExperience = {
+          showingExperienceId: this.passedShowingExperienceId,
+          showingExperience: experienceDetailsFormValue.showingExperience,
+          showingExperienceDescription: experienceDetailsFormValue.description,
+        }
+    
+        // Editing showing experience
+        this.managerService.editShowingExperience(updatedShowingExperience)
+          .subscribe((responseShowingExperience: any) => {
+    
+          if(responseShowingExperience.message == "Showing experience updated"){
+    
+            // Assigning 'loadingSpinnerEditShowingExperience' to false (stops loading spinner)
+            this.loadingSpinnerEditShowingExperience = false;
+    
+            // Showing success message box to the user
+            this.alertNotice("Showing Experience updated", "Showing experience was successfully updated.");
+    
+            console.log("Showing Experience Updated");
+    
+            // Updating 'editShowingExperienceStatus' to true
+            this.editShowingExperienceStatus = true;
+    
+            // Enabling form submit
+            this.editShowingExperienceForm.valid;
+    
+          }
+          else if(responseShowingExperience.message == "Unable to update showing experience"){
+    
+            // Assigning 'loadingSpinnerEditShowingExperience' to false (stops loading spinner)
+            this.loadingSpinnerEditShowingExperience = false;
+    
+            // Showing error message box to the user
+            this.alertNotice("ERROR", "Unable to edit showing experience, apologies for the inconvenience. Please contact administrator.");
+    
+            console.log("Unable to edit showing experience");
+    
+            // Updating 'editShowingExperienceStatus' to false
+            this.editShowingExperienceStatus = false;
+    
+            // Enabling form submit
+            this.editShowingExperienceForm.valid;
+    
+          }
+    
+        }, (error: ErrorEvent) => {
+          // Assigning 'loadingSpinnerEditShowingExperience' to false (stops loading spinner)
+          this.loadingSpinnerEditShowingExperience = false;
+    
+          // Showing error message box to the user
+          this.alertNotice("ERROR", "Unable to edit showing experience, apologies for the inconvenience. Please contact administrator.");
+    
+          console.log("Unable to edit showing experience");
+    
+          // Updating 'editShowingExperienceStatus' to false
+          this.editShowingExperienceStatus = false;
+    
+          // Enabling form submit
+          this.editShowingExperienceForm.valid;
+        });
 
       }
-      else if(responseShowingExperience.message == "Unable to update showing experience"){
+      else{
 
-        // Showing error message box to the user
-        this.alertNotice("ERROR", "Unable to edit showing experience, apologies for the inconvenience. Please contact administrator.");
-
-        console.log("Unable to edit showing experience");
-
-        // Updating 'editShowingExperienceStatus' to false
-        this.editShowingExperienceStatus = false;
-
-        // Enabling form submit
-        this.editShowingExperienceForm.valid;
+        // Showing information message box to the user
+        this.alertNotice("Details Not Updated", "Showing Experience details are not updated.");
+    
+        console.log("Details are not updated.");
 
       }
-
-    }, (error: ErrorEvent) => {
-      // Showing error message box to the user
-      this.alertNotice("ERROR", "Unable to edit showing experience, apologies for the inconvenience. Please contact administrator.");
-
-      console.log("Unable to edit showing experience");
-
-      // Updating 'editShowingExperienceStatus' to false
-      this.editShowingExperienceStatus = false;
-
-      // Enabling form submit
-      this.editShowingExperienceForm.valid;
-    });
 
   }
 

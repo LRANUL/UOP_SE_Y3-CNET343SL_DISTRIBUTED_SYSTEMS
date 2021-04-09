@@ -1,6 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Add New Showing Experience</ion-title>
+    <!-- Loading Spinner - Add new showing experience -->
+    <ion-spinner name="crescent" style="height: 50px;
+                                        width: 50px;
+                                        position: absolute;
+                                        top: 5%;
+                                        left: 60%;
+                                        transform: translateX(-40%);" *ngIf="loadingSpinnerAddNewShowingExperience"></ion-spinner>
     <ion-button
       (click)="closeAddNewShowingExperienceModal()" 
       slot="end" 
