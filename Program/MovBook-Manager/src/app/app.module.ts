@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 import { MovieDetailsModalPageModule } from './account/manager-nav-page/browse-upcoming-movies-sub-page/movie-details-modal/movie-details-modal.module';
 import { MovieCatalogTypesPopoverPageModule } from './account/manager-nav-page/browse-upcoming-movies-sub-page/movie-catalog-types-popover/movie-catalog-types-popover.module';
 import { AddHallModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/add-hall-modal/add-hall-modal.module';
@@ -30,6 +32,7 @@ import { UpdateAccountDetailsModalPageModule } from './account/manager-nav-page/
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
+    NgxMaterialTimepickerModule,
       MovieCatalogTypesPopoverPageModule,
       MovieDetailsModalPageModule,
       AddHallModalPageModule,

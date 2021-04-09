@@ -20,14 +20,23 @@ export class AddNewShowingModalPage implements OnInit {
   // Declaration - stores list of cinema halls
   cinemaHallList = new Array();
 
-  // Declaration | Initialization - to handle visibility of 'loadingSpinnerShowing' block
-  loadingSpinnerShowing: Boolean = false;
+  // Declaration - stores list of cinema experiences
+  showingExperienceList = new Array();
 
   // Declaration | Initialization - to handle visibility of 'cinemaLocationSelectionInitialText' block
   cinemaLocationSelectionInitialText: Boolean = true;
 
   // Declaration | Initialization - to handle visibility of 'cinemaHallSelectionInitialText' block
   cinemaHallSelectionInitialText: Boolean = true;
+
+  // Declaration | Initialization - to handle visibility of 'showingDetailsInitialText' block
+  showingDetailsInitialText: Boolean = true;
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerCinemaLocation' block
+  loadingSpinnerCinemaLocation: Boolean = false;
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerShowingExperience' block
+  loadingSpinnerShowingExperience: Boolean = false;
 
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerCinemaHall' block
   loadingSpinnerCinemaHall: Boolean = false;
@@ -49,6 +58,26 @@ export class AddNewShowingModalPage implements OnInit {
 
   // Declaration - stores number of unavailable seats of initially loaded and user selected cinema hall
   noOfUnavailableSeats;
+
+  // Declaration | Initialization - storing status to check the whether the showing details are provided
+  showingDetailsEntered: Boolean = false;
+
+  // Declaration - stores the list of showing sessions
+  listOfShowingDetails = new Array();
+
+  /**
+   * Maintaining selected values for showing details
+   * - Time Slot Start Time
+   * - Time Slot End Time
+   * - Showing Experience
+   * - Child Ticket Cost
+   * - Adult Ticket Cost
+   */
+  private timeSlotStartTime: String;
+  private timeSlotEndTime: String;
+  private showingExperience: String;
+  private childTicketCost: Number;
+  private adultTicketCost: Number;
 
 
   // ANGULAR MATERIAL - DATEPICKER | Setting min validation for angular material datepicker
@@ -78,9 +107,17 @@ export class AddNewShowingModalPage implements OnInit {
     // Retrieving list of cinema locations upon page load
     this.retrieveCinemaLocations();
 
+    // Retrieving list of showing experiences upon page load
+    this.retrieveShowingExperiences();
+
     // Assigning form validation to AddNewShowingForm
     this.addNewShowingForm = this.formBuilder.group({
-      cinemaLocationName: new FormControl('', Validators.required)
+      cinemaLocationName: new FormControl('', Validators.required),
+      showStartDate: new FormControl('', Validators.required),
+      showEndDate: new FormControl('', Validators.required),
+      showingExperience: new FormControl('', Validators.required),
+      slotStartTime: new FormControl('', Validators.required),
+      slotEndTime: new FormControl('', Validators.required)
     });
 
   }
@@ -100,11 +137,156 @@ export class AddNewShowingModalPage implements OnInit {
     await alert.present();
   }
 
+
+  // Getters and setters to assign and pass showing details
+  public getTimeSlotStartTime(): String {
+    return this.timeSlotStartTime;
+  }
+  public setTimeSlotStartTime(value: String) {
+    this.timeSlotStartTime = value;
+    this.enableAssignSlotDetailsButton();
+  }
+
+  public getTimeSlotEndTime(): String {
+    return this.timeSlotEndTime;
+  }
+  public setTimeSlotEndTime(value: String) {
+    this.timeSlotEndTime = value;
+    this.enableAssignSlotDetailsButton();
+  }
+
+  public getShowingExperience(): String {
+    return this.showingExperience;
+  }
+  public setShowingExperience(value: String) {
+    this.showingExperience = value;
+    this.enableAssignSlotDetailsButton();
+  }
+
+  public getChildTicketCost(): Number {
+    return this.childTicketCost;
+  }
+  public setChildTicketCost(value: Number) {
+    this.childTicketCost = value;
+    this.enableAssignSlotDetailsButton();
+  }
+
+  public getAdultTicketCost(): Number {
+    return this.adultTicketCost;
+  }
+  public setAdultTicketCost(value: Number) {
+    this.adultTicketCost = value;
+    this.enableAssignSlotDetailsButton();
+  }
+
+
+  // Function - Enabling 'Assign Slot Details' buttons if all the necessary details are provided
+  enableAssignSlotDetailsButton(){
+
+    // Checking whether all the necessary details for showing details are assigned
+    if((this.timeSlotStartTime != undefined || this.timeSlotStartTime != null) &&
+      (this.timeSlotEndTime != undefined || this.timeSlotEndTime != null) &&
+      (this.showingExperience != undefined || this.showingExperience != null) &&
+      (this.childTicketCost != undefined || this.childTicketCost != null) &&
+      (this.adultTicketCost != undefined || this.adultTicketCost != null)){
+
+        // Enabling 'Assign Slot Details' button
+        this.showingDetailsEntered = true;
+       
+      }
+    else{
+
+      // Disable 'Assign Slot Details' button
+      this.showingDetailsEntered = false;
+
+    }
+
+
+    if(this.timeSlotStartTime == ""){
+      console.log("3333");
+    }
+
+  }
+
+  // Function - Assign new showing shot
+  assignNewSlot(){
+
+    if((this.timeSlotStartTime != undefined || this.timeSlotStartTime != null) &&
+      (this.timeSlotEndTime != undefined || this.timeSlotEndTime != null) &&
+      (this.showingExperience != undefined || this.showingExperience != null) &&
+      (this.childTicketCost != undefined || this.childTicketCost != null) &&
+      (this.adultTicketCost != undefined || this.adultTicketCost != null)){
+      
+      if(String(this.childTicketCost) == ""){
+        // Showing missing message box to the user
+        this.alertNotice("Value missing", "Enter child ticket cost");
+      }
+      else if(String(this.adultTicketCost.toString()) == ""){
+        // Showing missing message box to the user
+        this.alertNotice("Value missing", "Enter adult ticket cost");
+      }
+      else{
+         // Hiding 'showingDetailsInitialText' block
+        this.showingDetailsInitialText = false;
+
+        let showingDetailSession = {
+          timeSlotStartTime: this.timeSlotStartTime,
+          timeSlotEndTime: this.timeSlotEndTime,
+          showingExperience: this.showingExperience,
+          childTicketCost: this.childTicketCost,
+          adultTicketCost: this.adultTicketCost
+        }
+
+        this.listOfShowingDetails.push(showingDetailSession);
+
+      }
+      
+    }
+    else{
+
+      if(this.timeSlotStartTime == undefined || this.timeSlotStartTime == null){
+        // Showing missing message box to the user
+        this.alertNotice("Value missing", "Select slot start time");
+      }
+      else if(this.timeSlotEndTime == undefined || this.timeSlotEndTime == null){
+        // Showing missing message box to the user
+        this.alertNotice("Value missing", "Select slot end time");
+      }
+      else if(this.showingExperience == undefined || this.showingExperience == null){
+        // Showing missing message box to the user
+        this.alertNotice("Value missing", "Select slot showing experience");
+      }
+
+    }
+
+  }
+
+  // Remove showing slot from 'listOfShowingDetails' array
+  removeShowingSlot(arrayIndex: number){
+
+    if (arrayIndex !== -1) {
+      this.listOfShowingDetails.splice(arrayIndex, 1);
+    }
+    
+  }
+
+  // Adding new showing details
+  addNewShowingDetails(showingDetails){
+
+    if(this.listOfShowingDetails.length == 0){
+
+      // Showing error message box to the user
+      this.alertNotice("No Showing Slots Assigned", "Assign showing slots");
+
+    }
+
+  }
+
   // Function - Retrieving cinema locations from the server-side
   retrieveCinemaLocations(){
 
-    // Activating 'loadingSpinnerShowing' loading spinner
-    this.loadingSpinnerShowing = true;
+    // Activating 'loadingSpinnerCinemaLocation' loading spinner
+    this.loadingSpinnerCinemaLocation = true;
 
     // Retrieving list of cinema locations
     this.managerService.retrieveCinemaLocations()
@@ -114,8 +296,8 @@ export class AddNewShowingModalPage implements OnInit {
           // Assigning retrieved list of cinema locations to 'cinemaLocationList' array
           this.cinemaLocationList = cinemaLocationList.returnedData;
 
-          // Disabling 'loadingSpinnerShowing' loading spinner
-          this.loadingSpinnerShowing = false;
+          // Disabling 'loadingSpinnerCinemaLocation' loading spinner
+          this.loadingSpinnerCinemaLocation = false;
         }
         else{
           // Showing error message box to the user
@@ -148,13 +330,13 @@ export class AddNewShowingModalPage implements OnInit {
           // Assigning retrieved list of cinema halls to 'cinemaHallList' array
           this.cinemaHallList = cinemaHallList.returnedData;
 
-          // Disabling 'loadingSpinnerShowing' loading spinner
-          this.loadingSpinnerShowing = false;
+          // Disabling 'loadingSpinnerCinemaHall' loading spinner
+          this.loadingSpinnerCinemaHall = false;
 
           this.loadingSpinnerCinemaHall = false;
         }
         else if(cinemaHallList.message == "No cinema halls available for cinema location"){
-          alert(cinemaHallList.message);
+          console.log(cinemaHallList.message);
 
           this.loadingSpinnerCinemaHall = false;
         }
@@ -174,6 +356,55 @@ export class AddNewShowingModalPage implements OnInit {
       console.log("Unable to retrieve cinema hall details: ", error);
 
       this.loadingSpinnerCinemaHall = false;
+    });
+
+  }
+
+  // Function - Retrieving list of showing experiences from the server-side
+  retrieveShowingExperiences(){
+
+    // Activating 'loadingSpinnerShowingExperience' loading spinner
+    this.loadingSpinnerShowingExperience = true;
+
+    // Retrieving the showing experiences
+    this.managerService.retrieveListOfShowingExperiences()
+      .subscribe((retrievedShowingExperiences: any) => {
+
+      if(retrievedShowingExperiences.message == "Showing experiences retrieved"){
+
+        // Assigning 'loadingSpinnerShowingExperience' to false (stops loading spinner)
+        this.loadingSpinnerShowingExperience = false;
+
+        // Assigning retrieve movie list to 'showingExperienceList' array
+        this.showingExperienceList = retrievedShowingExperiences.returnedData;
+
+      }
+      else if(retrievedShowingExperiences.message == "No showing experiences available"){
+
+        // Assigning 'loadingSpinnerShowingExperience' to false (stops loading spinner)
+        this.loadingSpinnerShowingExperience = false;
+
+      }
+      else{
+
+        // Assigning 'loadingSpinnerWaitListedMovies' to false (stops loading spinner)
+        this.loadingSpinnerShowingExperience = false;
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to retrieve showing experience, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to retrieve showing experience");
+
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerWaitListedMovies' to false (stops loading spinner)
+      this.loadingSpinnerShowingExperience = false;
+
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to retrieve showing experience, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to retrieve showing experience");
     });
 
   }
