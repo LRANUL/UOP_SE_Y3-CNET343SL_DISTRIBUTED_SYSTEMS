@@ -60,12 +60,23 @@ router.get('/get/:id', (req, res, next) => { //to fetch posts from db
         });
 });
 
+//get manager profile 
+router.get('/:email', (req, res, next) => { //to fetch posts from db
+    console.log(req.params.email)
+
+    Managers.findOne({ Email: req.params.email })
+        .then((manager) => {
+            console.log(manager)
+            res.json(manager);
+        });
+});
+
 
 //update
 router.put('/update/:id', (req, res) => {
 
     const managerUpdate = new Managers({
-        _id:req.params.id,
+        _id: req.params.id,
         Prefix: req.body.Prefix,
         FirstName: req.body.FirstName,
         MiddleName: req.body.MiddleName,
@@ -78,7 +89,7 @@ router.put('/update/:id', (req, res) => {
     });
     //console.log("******************************************************")
     //console.log(managerUpdate)
-    Managers.updateOne({_id:req.params.id},managerUpdate).then(res=>{
+    Managers.updateOne({ _id: req.params.id }, managerUpdate).then(res => {
 
     })
 

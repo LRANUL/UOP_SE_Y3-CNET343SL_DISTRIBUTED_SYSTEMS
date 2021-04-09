@@ -125,6 +125,8 @@ export class ManagerService {
   retrieveCinemaLocations() {
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
   }
+
+
   /** Beverages Management */
   // GET beverages list
   getBeverages() {
@@ -140,7 +142,13 @@ export class ManagerService {
     const body = { name: name, price: price };
     return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update", body);
   }
-
+/**
+ * Profile Settings
+ */
+// Get profile data
+getProfile(email){
+  return this.httpClient.get<any>(this.BASE_URL + "api/managers/" + email);
+}
   /**
    * Showing Experience
    */
