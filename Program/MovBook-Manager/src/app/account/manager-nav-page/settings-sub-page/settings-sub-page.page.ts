@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { ModalController, AlertController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddNewShowingExperienceModalPage } from './add-new-showing-experience-modal/add-new-showing-experience-modal.page';
+import { EditShowingExperienceModalPage } from './edit-showing-experience-modal/edit-showing-experience-modal.page';
 import { UpdateAccountDetailsModalPage } from './update-account-details-modal/update-account-details-modal.page';
 
 @Component({
@@ -70,7 +71,39 @@ export class SettingsSubPagePage implements OnInit {
       }
     }
 
+    /**
+     * TODO: REMOVE THIS AFTER AUTH IS COMPLETE
+     */
     this.openUpdateAccountDetailsModal();
+  }
+
+  // Function - Implementation for opening the 'Edit Showing Experience' modal
+  async openEditShowingExperienceModal(showingExperience: any){
+    const editShowingExperienceModal = await this.modalController.create({
+      component: EditShowingExperienceModalPage,
+      cssClass: 'add-new-showing-experience-modal',
+      componentProps: {
+        passingShowingExperienceId: showingExperience._id,
+        passingShowingExperience: showingExperience.showingExperience,
+        passingShowingExperienceDescription: showingExperience.description
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    editShowingExperienceModal.present();
+
+    // Collecting response data when modal is dismissed
+    const { data } = await editShowingExperienceModal.onDidDismiss();
+
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        // Retrieving updated list of showing experiences
+        this.retrieveShowingExperiences();
+      }
+    }
+
   }
 
   // Function - Implementation for opening the 'Update Account Details' modal

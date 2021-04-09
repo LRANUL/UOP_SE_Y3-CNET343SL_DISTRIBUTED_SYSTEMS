@@ -55,7 +55,7 @@ export class AddNewShowingExperienceModalPage implements OnInit {
     // Disabling form submit
     this.addNewShowingExperienceForm.invalid;
 
-    // Retrieving the now showing movies
+    // Adding new showing experience
     this.managerService.addNewShowingExperience(experienceDetailsFormValue)
       .subscribe((responseShowingExperience: any) => {
 
@@ -76,9 +76,9 @@ export class AddNewShowingExperienceModalPage implements OnInit {
       else if(responseShowingExperience.message == "Error - Unable to add showing experience"){
 
         // Showing error message box to the user
-        this.alertNotice("ERROR", "Unable to retrieve showing experiences, apologies for the inconvenience. Please contact administrator.");
+        this.alertNotice("ERROR", "Unable to add showing experience, apologies for the inconvenience. Please contact administrator.");
 
-        console.log("Unable to retrieve showing experiences");
+        console.log("Unable to add showing experience");
 
         // Updating 'addNewShowingExperienceStatus' to false
         this.addNewShowingExperienceStatus = false;
@@ -90,9 +90,9 @@ export class AddNewShowingExperienceModalPage implements OnInit {
 
     }, (error: ErrorEvent) => {
       // Showing error message box to the user
-      this.alertNotice("ERROR", "Unable to retrieve showing experiences, apologies for the inconvenience. Please contact administrator.");
+      this.alertNotice("ERROR", "Unable to add showing experience, apologies for the inconvenience. Please contact administrator.");
 
-      console.log("Unable to retrieve showing experiences");
+      console.log("Unable to add showing experience");
 
       // Updating 'addNewShowingExperienceStatus' to false
       this.addNewShowingExperienceStatus = false;
