@@ -68,9 +68,9 @@ export class MovieDetailsModalPage implements OnInit {
     const movieCatalogTypesPopover = await this.popoverController.create({
       component: MovieCatalogTypesPopoverPage,
       componentProps: {
-        movieImdbId: this.passedMovieImdbId,
-        movieDetails: this.MovieDetails,
-        movieCondition: "New-Movie"
+        passingMovieImdbId: this.passedMovieImdbId,
+        passingMovieDetails: this.MovieDetails,
+        passingMovieCondition: "New-Movie"
       },
       event: evt
     });

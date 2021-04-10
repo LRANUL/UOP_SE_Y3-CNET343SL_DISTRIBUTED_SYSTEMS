@@ -52,9 +52,9 @@ export class MovieWaitlistTabPagePage implements OnInit {
     const movieCatalogTypesPopover = await this.popoverController.create({
       component: MovieCatalogTypesPopoverPage,
       componentProps: {
-        movieId: waitListedMovieImdbId,
-        movieDetails: waitListedMovieDetails,
-        movieCondition: "Movie-Exists"
+        passingMovieImdbId: waitListedMovieImdbId,
+        passingMovieDetails: waitListedMovieDetails,
+        passingMovieCondition: "Movie-Exists"
       },
       event: evt
     });

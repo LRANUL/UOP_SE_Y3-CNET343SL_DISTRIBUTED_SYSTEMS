@@ -11,14 +11,14 @@ import { AddNewShowingModalPage } from '../../movie-catalog-sub-page/add-new-sho
 })
 export class MovieCatalogTypesPopoverPage implements OnInit {
 
-  // Declaration | Initialization - string variable to store passedMovieId
-  passedMovieId = null;
+  // Declaration | Initialization - string variable to store passedMovieImdbId
+  passedMovieImdbId = null;
 
   // Declaration | Initialization - string variable to store passedMovieDetails
   passedMovieDetails = null;
 
-   // Declaration | Initialization - string variable to store movieCondition
-   passedMovieCondition = null;
+  // Declaration | Initialization - string variable to store passingMovieCondition
+  passedMovieCondition = null;
 
   // Declaration | Initialization - to store the status of updating the movie status
   updateMovieStatusResponse: Boolean = false;
@@ -33,13 +33,13 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
 
   ngOnInit() {
     // Assigning variable with passed 'movieId'
-    this.passedMovieId = this.navParams.get('movieImdbId');
+    this.passedMovieImdbId = this.navParams.get('passingMovieImdbId');
 
     // Assigning variable with passed 'movieDetails'
-    this.passedMovieDetails = this.navParams.get('movieDetails');
+    this.passedMovieDetails = this.navParams.get('passingMovieDetails');
 
     // Assigning variable with passed 'movieCondition'
-    this.passedMovieCondition = this.navParams.get('movieCondition');
+    this.passedMovieCondition = this.navParams.get('passingMovieCondition');
   }
 
   // Implementation to close 'Movie Catalog Types' popover
@@ -63,7 +63,7 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
    */
 
   // Function - Add movie to movie catalog (upcoming) alert box implementation
-  async addMovieToUpcomingAlert( title: string, content: string, movieImdbId: string ) {
+  async addMovieToUpcomingAlert( title: string, content: string ) {
     const alert = await this.alertController.create({
       header: title,
       message: content,
@@ -79,7 +79,7 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
           text: 'Continue',
           handler: () => {
             
-            this.addMovieToMovieUpcoming(movieImdbId);
+            this.addMovieToMovieUpcoming(this.passedMovieImdbId);
 
           }
         }
@@ -134,12 +134,12 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
 
                     // Assigning 'updateMovieStatusResponse' status to true
                     this.updateMovieStatusResponse = true;
-
-                    // Closing the popover
-                    this.closeMoveCatalogTypesPopover();
                     
                     // Showing successful message box to the user
                     this.alertNotice("Movie Added", `"${retrievedMovieResponse.returnedData.movieTitle}" added as 'Upcoming'`);
+
+                    // Closing the popover
+                    this.closeMoveCatalogTypesPopover();
 
                   }
                   else{
@@ -271,6 +271,9 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
         this.alertNotice("Movie Updated", `Movie was moved to movie catalog (${movieStatus == "Upcoming" ? "Upcoming" : "Now Showing"})`);
 
         console.log(`Movie was moved to movie catalog (${movieStatus == "Upcoming" ? "Upcoming" : "Now Showing"})`);
+
+        // Closing the popover
+        this.closeMoveCatalogTypesPopover();
       }
 
     },
@@ -289,7 +292,7 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
    */
 
   // Function - Add movie to movie catalog (Now Showing) alert box implementation
-  async addMovieToNowShowingAlert( title: string, content: string, movieImdbId: string ) {
+  async addMovieToNowShowingAlert( title: string, content: string ) {
     const alert = await this.alertController.create({
       header: title,
       message: content,
@@ -306,7 +309,7 @@ export class MovieCatalogTypesPopoverPage implements OnInit {
           handler: () => {
             
             // Checking the availability of the movie in the database and assigned the relevant path
-            this. addMovieToMovieNowShowing(this.passedMovieId);
+            this.addMovieToMovieNowShowing(this.passedMovieImdbId);
 
           }
         }
