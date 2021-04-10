@@ -70,12 +70,12 @@ export class UpcomingMoviesTabPagePage implements OnInit {
   }
 
   // Function - Implementation for opening the 'Add New Showing' modal
-  async openAddNewShowingModal(movieImdbId: string){
+  async openAddNewShowingModal(movieObjectId: string){
     const addNewShowingModal = await this.modalController.create({
       component: AddNewShowingModalPage,
       cssClass: 'add-new-showing-modal',
       componentProps: {
-        passingMovieImdbId: movieImdbId
+        passingMovieObjectId: movieObjectId
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,

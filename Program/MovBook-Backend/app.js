@@ -20,6 +20,8 @@ const bookingDetails = require("./routes/booking-details");
 const movieWaitLists = require("./routes/movie-wait-lists");
 const movies = require("./routes/movies");
 const showingExperiences = require("./routes/showing-experiences");
+const showingMovies = require("./routes/showing-movies");
+const showingCinemaHalls = require("./routes/showing-cinema-halls");
 
 const app = express();
 
@@ -77,5 +79,7 @@ app.use("/api/cinema-locations", cinemaLocationRoutes);
 app.use("/api/movie-wait-lists", movieWaitLists);
 app.use("/api/movies", movies);
 app.use("/api/showing-experiences", showingExperiences);
+app.use("/api/showing-movies", showingMovies);
+app.use("/api/showing-cinema-halls", showingCinemaHalls);
 
 module.exports = app;

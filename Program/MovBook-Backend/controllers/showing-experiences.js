@@ -61,7 +61,7 @@ exports.retrieveListOfShowingExperiences = async (req, res, next) => {
 // Function - Update showing experience using route, 'BASE_URL/api/showing-experiences/update'
 exports.updateShowingExperience = async (req, res, next) => {
 
-  // Using mongoDB's findOneAndUpdate() functionality to update showing experience
+  // Using mongoose findOneAndUpdate() functionality to update showing experience
   await showingExperienceModel.findOneAndUpdate(
     {
       _id: req.body.showingExperienceId
@@ -95,7 +95,7 @@ exports.deleteShowingExperience = async (req, res, next) => {
   // Getting passed showingExperienceId
   let passedShowingExperienceId = req.params.showingExperienceId;
 
-  // Using mongoDB's findByIdAndDelete() functionality to remove the showing experience according to the passed showingExperienceId
+  // Using mongoose findByIdAndDelete() functionality to remove the showing experience according to the passed showingExperienceId
   await showingExperienceModel.deleteOne({ _id: passedShowingExperienceId }, (error, returnedData) => {
 
     // If condition - checking whether an error occurred during the query execution

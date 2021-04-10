@@ -5,7 +5,7 @@ const cinemaHallModel = require("../models/cinema-halls");
 // Function - Inserting new cinema hall using route, 'BASE_URL/api/cinema-hall/'
 exports.createCinemaHall = async (req, res, next) => {
 
-  // Using mongoDb's save functionality to store the cinema hall details
+  // Using mongoose save functionality to store the cinema hall details
   await new cinemaHallModel({
     cinemaLocationObjectId: req.body.cinemaLocationObjectId,
     cinemaHallName: req.body.hallName,
@@ -39,7 +39,7 @@ exports.retrieveCinemaHalls = async (req, res, next) => {
   // Getting passed 'cinemaLocationObjectId' from the URL
   let cinemaLocationId = req.params.cinemaLocationObjectId;
 
-  // Using mongoDB's find() functionality to retrieve cinema halls for the cinema location
+  // Using mongoose find() functionality to retrieve cinema halls for the cinema location
   await cinemaHallModel.find({ cinemaLocationObjectId: cinemaLocationId }, (error, returnedData) => {
 
     // If condition - checking whether an error has occurred and the relevant message is passed to the client-side

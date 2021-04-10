@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, ModalController } from '@ionic/angular';
-import { CinemaLocation } from 'src/app/models/account/manager/cinema-location';
+import { AlertController, ModalController, NavParams } from '@ionic/angular';
+import { ShowingCinemaHallList, ShowingSeatDetails } from 'src/app/models/account/manager/showing-cinema-hall';
+import { ShowingMovie } from 'src/app/models/account/manager/showing-movie';
 import { ManagerService } from 'src/app/services/account/manager.service';
 
 @Component({
@@ -65,8 +66,15 @@ export class AddNewShowingModalPage implements OnInit {
   // Declaration - stores the list of showing sessions
   listOfShowingDetails = new Array();
 
+  // Declaration | Initialization - string variable to store passingMovieObjectId
+  passedMovieObjectId = null;
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerAddNewShowing' block
+  loadingSpinnerAddNewShowing: Boolean = false;
+
+
   /**
-   * Maintaining selected values for showing details
+   * To store selected values for showing details
    * - Time Slot Start Time
    * - Time Slot End Time
    * - Showing Experience
@@ -90,7 +98,8 @@ export class AddNewShowingModalPage implements OnInit {
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private managerService: ManagerService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private navParams: NavParams
   ) { }
 
   ngOnInit() {
@@ -104,6 +113,9 @@ export class AddNewShowingModalPage implements OnInit {
     this.maxDate = new Date(currentYear + 2, 11, 31);
 
 
+    // Assigning variable with 'passingMovieObjectId'
+    this.passedMovieObjectId = this.navParams.get('passingMovieObjectId');
+
     // Retrieving list of cinema locations upon page load
     this.retrieveCinemaLocations();
 
@@ -113,8 +125,8 @@ export class AddNewShowingModalPage implements OnInit {
     // Assigning form validation to AddNewShowingForm
     this.addNewShowingForm = this.formBuilder.group({
       cinemaLocationName: new FormControl('', Validators.required),
-      showStartDate: new FormControl('', Validators.required),
-      showEndDate: new FormControl('', Validators.required),
+      showingStartDate: new FormControl('', Validators.required),
+      showingEndDate: new FormControl('', Validators.required),
       showingExperience: new FormControl('', Validators.required),
       slotStartTime: new FormControl('', Validators.required),
       slotEndTime: new FormControl('', Validators.required)
@@ -189,21 +201,12 @@ export class AddNewShowingModalPage implements OnInit {
       (this.showingExperience != undefined || this.showingExperience != null) &&
       (this.childTicketCost != undefined || this.childTicketCost != null) &&
       (this.adultTicketCost != undefined || this.adultTicketCost != null)){
-
         // Enabling 'Assign Slot Details' button
         this.showingDetailsEntered = true;
-       
       }
     else{
-
       // Disable 'Assign Slot Details' button
       this.showingDetailsEntered = false;
-
-    }
-
-
-    if(this.timeSlotStartTime == ""){
-      console.log("3333");
     }
 
   }
@@ -219,11 +222,11 @@ export class AddNewShowingModalPage implements OnInit {
       
       if(String(this.childTicketCost) == ""){
         // Showing missing message box to the user
-        this.alertNotice("Value missing", "Enter child ticket cost");
+        this.alertNotice("Value missing", "Enter children ticket cost");
       }
       else if(String(this.adultTicketCost.toString()) == ""){
         // Showing missing message box to the user
-        this.alertNotice("Value missing", "Enter adult ticket cost");
+        this.alertNotice("Value missing", "Enter adults ticket cost");
       }
       else{
          // Hiding 'showingDetailsInitialText' block
@@ -238,12 +241,9 @@ export class AddNewShowingModalPage implements OnInit {
         }
 
         this.listOfShowingDetails.push(showingDetailSession);
-
       }
-      
     }
     else{
-
       if(this.timeSlotStartTime == undefined || this.timeSlotStartTime == null){
         // Showing missing message box to the user
         this.alertNotice("Value missing", "Select slot start time");
@@ -265,19 +265,277 @@ export class AddNewShowingModalPage implements OnInit {
   removeShowingSlot(arrayIndex: number){
 
     if (arrayIndex !== -1) {
+      // Removing one index value from the array
       this.listOfShowingDetails.splice(arrayIndex, 1);
     }
     
   }
 
   // Adding new showing details
-  addNewShowingDetails(showingDetails){
+  addNewShowingDetails(newShowingDetailsFormDetails){
 
-    if(this.listOfShowingDetails.length == 0){
+    // Checking whether ant showing slots are assigned and the showing detail form is filled
+    if(this.listOfShowingDetails.length != 0 || newShowingDetailsFormDetails != null){
+      
+      // Assigning 'loadingSpinnerAddNewShowing' to true (starts loading spinner)
+      this.loadingSpinnerAddNewShowing = true;
+    
+      // Preparing details to add new showing details
 
+      // To store selected cinema location details
+      let selectedCinemaLocation = {
+        cinemaLocationObjectId: null,
+        cinemaLocationName: null,
+        cinemaLocationAddress: {
+          streetAddress: null,
+          city: null,
+          postalCode: null
+        }
+      };
+
+      // For Loop | Retrieving cinema locations details from the already retrieved list of cinema locations using the
+      // user selected cinemaLocationObjectId
+      for (let cinemaLocationIndex = 0; cinemaLocationIndex < this.cinemaLocationList.length; cinemaLocationIndex++) {
+        if(this.cinemaLocationList[cinemaLocationIndex]._id == newShowingDetailsFormDetails.cinemaLocationName){
+          selectedCinemaLocation.cinemaLocationObjectId = this.cinemaLocationList[cinemaLocationIndex]._id;
+          selectedCinemaLocation.cinemaLocationName = this.cinemaLocationList[cinemaLocationIndex].cinemaLocationName;
+          selectedCinemaLocation.cinemaLocationAddress = this.cinemaLocationList[cinemaLocationIndex].cinemaLocationAddress;
+        }
+      }
+
+      // Extracting the month, day and year from selected showing start date, sample format - Mar 16, 2021
+      let showingStartDateString = (new Date(newShowingDetailsFormDetails.showingStartDate).toLocaleString('default', { month: 'short' })) + " " + 
+                                    (new Date(newShowingDetailsFormDetails.showingStartDate).toLocaleString('default', { day: '2-digit' })) + ", " + 
+                                    (new Date(newShowingDetailsFormDetails.showingStartDate).toLocaleString('default', { year: 'numeric' }));
+
+      // Extracting the month, day and year from selected showing end date, sample format - Mar 16, 2021
+      let showingEndDateString = (new Date(newShowingDetailsFormDetails.showingEndDate).toLocaleString('default', { month: 'short' })) + " " + 
+                                  (new Date(newShowingDetailsFormDetails.showingEndDate).toLocaleString('default', { day: '2-digit' })) + ", " + 
+                                  (new Date(newShowingDetailsFormDetails.showingEndDate).toLocaleString('default', { year: 'numeric' }));
+
+      // Declaration - To objects store showing slot details
+      let newShowingSlotDetails = {
+        showingExperience: null,
+        showingDate: null,
+        timeSlotStartTime: null,
+        timeSlotEndTime: null,
+        adultsTicketFeeLKR: null,
+        childrenTicketFeeLKR: null
+      }
+
+      // Calculating the number of days in the showing period
+      let showingStartDateDate: Date = new Date(newShowingDetailsFormDetails.showingStartDate);
+      let showingEndDateDate: Date = new Date(newShowingDetailsFormDetails.showingEndDate);
+      // Calculated date is converted to days from milliseconds
+      let noOfShowingPeriodDay = (showingEndDateDate.getTime() - showingStartDateDate.getTime()) / (1000 * 60 * 60 * 24); 
+
+      // Declaration | Initialization - To store the number of movie showing slots
+      let noOfShowingSlot = this.listOfShowingDetails.length;
+
+      // Declaration - To store an array of objects of showing slot details
+      let newShowingSlotsArray = new Array();
+
+      // Declaration - To store current showing slot's date
+      let currentShowingDate;
+
+
+      // For loop - Generating array of showing slot objects
+      // Iterating through the number of days in the showing period
+      for (let showingDayIndex = 0; showingDayIndex < noOfShowingPeriodDay; showingDayIndex++) {
+        
+        // Checking whether the 'showingDayIndex' is 0, which doesn't require the date to be incremented
+        if(showingDayIndex != 0){
+          // Increment showing start date by one for 'showingDate' field
+          showingStartDateDate.setDate(showingStartDateDate.getDate() + 1);
+
+          // Extracting the month, day and year from 'showingStartDateDate', sample format - Mar 16, 2021
+          currentShowingDate = (new Date(showingStartDateDate).toLocaleString('default', { month: 'short' })) + " " + 
+                                  (new Date(showingStartDateDate).toLocaleString('default', { day: '2-digit' })) + ", " + 
+                                  (new Date(showingStartDateDate).toLocaleString('default', { year: 'numeric' }));
+        }
+
+        // For loop - Iterating through the number of showing slots in each day
+        for (let showingSlotIndex = 0; showingSlotIndex < noOfShowingSlot; showingSlotIndex++) {
+          newShowingSlotDetails = {
+            showingExperience: this.listOfShowingDetails[showingSlotIndex].showingExperience,
+            showingDate: null,
+            timeSlotStartTime: this.listOfShowingDetails[showingSlotIndex].timeSlotStartTime,
+            timeSlotEndTime: this.listOfShowingDetails[showingSlotIndex].timeSlotEndTime,
+            adultsTicketFeeLKR: this.listOfShowingDetails[showingSlotIndex].adultTicketCost,
+            childrenTicketFeeLKR: this.listOfShowingDetails[showingSlotIndex].childTicketCost
+          }
+
+          // Checking whether the 'showingDayIndex' is 0 to add the 'showingDate' field
+          showingDayIndex == 0 ? (newShowingSlotDetails.showingDate = showingStartDateString) : (newShowingSlotDetails.showingDate = currentShowingDate);
+
+          // Pushing 'newShowingSlotDetails' object instance into the 'newShowingSlotsArray' array
+          newShowingSlotsArray.push(newShowingSlotDetails);
+        }
+
+      }
+
+      // Preparing 'selectedShowingMovieDetails' to add new showing details to the database
+      let selectedShowingMovieDetails: ShowingMovie = {
+        movieObjectId: this.passedMovieObjectId,
+        cinemaHallObjectId: this.activeCinemaHallObjectId,
+        cinemaLocation: {
+          cinemaLocationObjectId: selectedCinemaLocation.cinemaLocationObjectId,
+          cinemaLocationName: selectedCinemaLocation.cinemaLocationName,
+          cinemaLocationAddress: {
+            streetAddress: selectedCinemaLocation.cinemaLocationAddress.streetAddress,
+            city: selectedCinemaLocation.cinemaLocationAddress.city,
+            postalCode: selectedCinemaLocation.cinemaLocationAddress.postalCode
+          }
+        },
+        showingStartDate: showingStartDateString,
+        showingEndDate: showingEndDateString,
+        showingSlots: newShowingSlotsArray
+      }
+
+      // Passing 'selectedShowingMovieDetails' to the backend to add to the database
+      this.managerService.addNewShowingMovie(selectedShowingMovieDetails)
+        .subscribe((showingMovieDetailsResponse: any) => {
+
+          if(showingMovieDetailsResponse.message == "Showing movie added"){
+
+            
+            // Preparing showing cinema hall details
+
+            // For loop - iterating through all cinema halls
+            for (let cinemaHallIndex = 0; cinemaHallIndex < this.cinemaHallList.length; cinemaHallIndex++) {
+
+              // If condition - checking whether the currently active cinema hall object Id is equal when iterating through the loop
+              if(this.activeCinemaHallObjectId == this.cinemaHallList[cinemaHallIndex]._id){
+
+                // Declaration | Initialization - To store the showing seat details for the cinema halls
+                let showingSeatingDetails = {
+                  seatId: null,
+                  seatActive: null,
+                  seatNumber: null,
+                  seatUnavailable: null,
+                  seatStatus: null,
+                  customerObjectId: null
+                };
+
+                // Declaration | Initialization - To store the showing cinema hall details
+                let showingCinemaHall = {
+                  slotObjectId: null,
+                  showingMovieObjectId: null,
+                  cinemaHallObjectId: null,
+                  cinemaLocationObjectId: null,
+                  showingSeatDetails: null
+                };
+
+                // Declaration | Initialization - To store the number of all showing slots available
+                let noOfAllShowingSlots = showingMovieDetailsResponse.returnedData.showingSlots.length;
+
+                // Declaration | Initialization - To store the number of cinema hall seats
+                let noOfCinemaHallSeats = this.cinemaHallList[cinemaHallIndex].seatingDetails.length;
+
+                // Declaration - To store an array of objects on cinema hall showing seat details
+                let showingSeatDetailsArray = new Array();
+
+                // Declaration - To store an array of objects on cinema hall details
+                let showingCinemaHallArray = new Array();
+
+                // For loop - Iterating through the showing slots to assign the cinema halls
+                for (let showingSlotIndex = 0; showingSlotIndex < noOfAllShowingSlots; showingSlotIndex++) {
+
+                  // For loop - Iterating through the cinema hall seats
+                  for (let cinemaHallSeatIndex = 0; cinemaHallSeatIndex < noOfCinemaHallSeats; cinemaHallSeatIndex++) {
+
+                    // Assigning cinema hall seat details into the 'showingSeatingDetails' object
+                    showingSeatingDetails = {
+                      seatId: this.cinemaHallList[cinemaHallIndex].seatingDetails[cinemaHallSeatIndex].seatId,
+                      seatActive: this.cinemaHallList[cinemaHallIndex].seatingDetails[cinemaHallSeatIndex].seatActive,
+                      seatNumber: this.cinemaHallList[cinemaHallIndex].seatingDetails[cinemaHallSeatIndex].seatNumber,
+                      seatUnavailable: this.cinemaHallList[cinemaHallIndex].seatingDetails[cinemaHallSeatIndex].seatUnavailable,
+                      seatStatus: "null",
+                      customerObjectId: "null"
+                    }
+
+                    // Adding 'showingSeatingDetails' object into the 'showingSeatDetailsArray' array
+                    showingSeatDetailsArray.push(showingSeatingDetails);
+                    
+                  }
+
+                  // Assigning cinema hall details into the 'showingCinemaHall' object
+                  showingCinemaHall = {
+                    slotObjectId: showingMovieDetailsResponse.returnedData.showingSlots[showingSlotIndex]._id,
+                    showingMovieObjectId: this.passedMovieObjectId,
+                    cinemaHallObjectId: this.activeCinemaHallObjectId,
+                    cinemaLocationObjectId: newShowingDetailsFormDetails.cinemaLocationName,
+                    showingSeatDetails: showingSeatDetailsArray
+                  }
+
+                  // Adding 'showingCinemaHall' object into the 'showingCinemaHallArray' array
+                  showingCinemaHallArray.push(showingCinemaHall);
+
+                  // Re-initializing 'showingSeatDetailsArray' array to store showing seat details for the next showing cinema hall document
+                  showingSeatDetailsArray = new Array();
+
+                }
+
+                // Passing 'showingCinemaHallArray' array to the backend to add the list of cinema halls to the database
+                this.managerService.assignShowingCinemaHalls(showingCinemaHallArray)
+                .subscribe((showingCinemaHallResponse: any) => {
+
+                  if(showingCinemaHallResponse.message == "Showing cinema hall(s) assigned"){
+                    
+                    // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
+                    this.loadingSpinnerAddNewShowing = false;
+
+                    // Showing success message box to the user
+                    this.alertNotice("New Showing Added", "New showing details were successfully added.");
+
+                  }
+                  else{
+                    // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
+                    this.loadingSpinnerAddNewShowing = false;
+
+                    // Showing error message box to the user
+                    this.alertNotice("ERROR", "Unable to assign cinema halls, apologies for the inconvenience. Please contact administrator.");
+
+                    console.log("Unable to assign cinema halls");
+                  }
+
+                },(error: ErrorEvent) => {
+                  // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
+                  this.loadingSpinnerAddNewShowing = false;
+
+                  // Showing error message box to the user
+                  this.alertNotice("ERROR", "Unable to assign cinema halls, apologies for the inconvenience. Please contact administrator.");
+
+                  console.log("Unable to assign cinema halls: ", error);
+                });
+              }
+            }
+            
+          }
+          else{
+            // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
+            this.loadingSpinnerAddNewShowing = false;
+
+            // Showing error message box to the user
+            this.alertNotice("ERROR", "Unable to add new showing movie details, apologies for the inconvenience. Please contact administrator.");
+
+            console.log("Unable to add new showing movie details");
+          }
+
+      },(error: ErrorEvent) => {
+        // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
+        this.loadingSpinnerAddNewShowing = false;
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to add new showing movie details, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to add new showing movie details: ", error);
+      });
+
+    }
+    else if(this.listOfShowingDetails.length){
       // Showing error message box to the user
       this.alertNotice("No Showing Slots Assigned", "Assign showing slots");
-
     }
 
   }
@@ -331,8 +589,6 @@ export class AddNewShowingModalPage implements OnInit {
           this.cinemaHallList = cinemaHallList.returnedData;
 
           // Disabling 'loadingSpinnerCinemaHall' loading spinner
-          this.loadingSpinnerCinemaHall = false;
-
           this.loadingSpinnerCinemaHall = false;
         }
         else if(cinemaHallList.message == "No cinema halls available for cinema location"){
@@ -453,7 +709,7 @@ export class AddNewShowingModalPage implements OnInit {
 
     // For loop - iterating through all cinema halls for selected cinema location
     for (let hallSeatingLayout = 0; hallSeatingLayout < this.cinemaHallList.length; hallSeatingLayout++) {
-      
+
       // If condition - checking whether the currently active cinema hall object Id is equal when iterating through the loop
       if(this.activeCinemaHallObjectId == this.cinemaHallList[hallSeatingLayout]._id){
         
@@ -486,6 +742,5 @@ export class AddNewShowingModalPage implements OnInit {
     this.loadingSpinnerCinemaHallSeatLayout = false;
     
   }
-
 
 }
