@@ -16,6 +16,9 @@ export class AddNewShowingExperienceModalPage implements OnInit {
   
   // Declaration | Initialization - Stores status of adding new showing experience details
   addNewShowingExperienceStatus: Boolean = false;
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerAddNewShowingExperience' block
+  loadingSpinnerAddNewShowingExperience: Boolean = false;
   
   constructor(
     private modalController: ModalController,
@@ -52,14 +55,20 @@ export class AddNewShowingExperienceModalPage implements OnInit {
   // Function - Adding new showing experiences details into the database by passing through the server-side application
   addNewShowingExperienceDetails(experienceDetailsFormValue: ShowingExperience){
 
+    // Assigning 'loadingSpinnerAddNewShowingExperience' to true (starts loading spinner)
+    this.loadingSpinnerAddNewShowingExperience = true;
+
     // Disabling form submit
     this.addNewShowingExperienceForm.invalid;
 
-    // Retrieving the now showing movies
+    // Adding new showing experience
     this.managerService.addNewShowingExperience(experienceDetailsFormValue)
       .subscribe((responseShowingExperience: any) => {
 
       if(responseShowingExperience.message == "Showing experience added"){
+
+        // Assigning 'loadingSpinnerAddNewShowingExperience' to false (stops loading spinner)
+        this.loadingSpinnerAddNewShowingExperience = false;
 
         // Showing success message box to the user
         this.alertNotice("Showing Experience Added", "Showing experience was successfully added.");
@@ -75,10 +84,13 @@ export class AddNewShowingExperienceModalPage implements OnInit {
       }
       else if(responseShowingExperience.message == "Error - Unable to add showing experience"){
 
-        // Showing error message box to the user
-        this.alertNotice("ERROR", "Unable to retrieve showing experiences, apologies for the inconvenience. Please contact administrator.");
+        // Assigning 'loadingSpinnerAddNewShowingExperience' to false (stops loading spinner)
+        this.loadingSpinnerAddNewShowingExperience = false;
 
-        console.log("Unable to retrieve showing experiences");
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to add showing experience, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to add showing experience");
 
         // Updating 'addNewShowingExperienceStatus' to false
         this.addNewShowingExperienceStatus = false;
@@ -89,10 +101,13 @@ export class AddNewShowingExperienceModalPage implements OnInit {
       }
 
     }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerAddNewShowingExperience' to false (stops loading spinner)
+      this.loadingSpinnerAddNewShowingExperience = false;
+      
       // Showing error message box to the user
-      this.alertNotice("ERROR", "Unable to retrieve showing experiences, apologies for the inconvenience. Please contact administrator.");
+      this.alertNotice("ERROR", "Unable to add showing experience, apologies for the inconvenience. Please contact administrator.");
 
-      console.log("Unable to retrieve showing experiences");
+      console.log("Unable to add showing experience");
 
       // Updating 'addNewShowingExperienceStatus' to false
       this.addNewShowingExperienceStatus = false;

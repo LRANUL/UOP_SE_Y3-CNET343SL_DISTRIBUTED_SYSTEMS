@@ -160,5 +160,13 @@ getProfile(email){
   retrieveListOfShowingExperiences(){
     return this.httpClient.get(this.BASE_URL + "api/showing-experiences/");
   }
+  // PUT - Updating showing experience by passing details to the server-side
+  editShowingExperience(showingExperience: any){
+    return this.httpClient.put(this.BASE_URL + "api/showing-experiences/update", showingExperience);
+  }
+  // DELETE - Remove showing experience by passing the showing experience ID
+  removeShowingExperience(showingExperienceId: string){
+    return this.httpClient.delete(this.BASE_URL + "api/showing-experiences/delete/" + showingExperienceId);
+  }
 
 }

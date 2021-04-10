@@ -1,15 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Add New Showing Experience</ion-title>
-    <!-- Loading Spinner - Add new showing experience -->
+    <ion-title>Edit Showing Experience</ion-title>
+    <!-- Loading Spinner - Edit showing experience -->
     <ion-spinner name="crescent" style="height: 50px;
                                         width: 50px;
                                         position: absolute;
                                         top: 5%;
                                         left: 60%;
-                                        transform: translateX(-40%);" *ngIf="loadingSpinnerAddNewShowingExperience"></ion-spinner>
+                                        transform: translateX(-40%);" *ngIf="loadingSpinnerEditShowingExperience"></ion-spinner>
     <ion-button
-      (click)="closeAddNewShowingExperienceModal()" 
+      (click)="closeEditShowingExperienceModal()" 
       slot="end" 
       shape="round" 
       fill="outline" 
@@ -32,11 +32,11 @@
       </ion-label>
 
       <div>
-        <form [formGroup]="addNewShowingExperienceForm" (ngSubmit)="addNewShowingExperienceDetails(addNewShowingExperienceForm.value)">
+        <form [formGroup]="editShowingExperienceForm" (ngSubmit)="editShowingExperienceDetails(editShowingExperienceForm.value)">
           <ion-grid>
             <ion-row>
               <ion-col size="5">
-                <ion-label class="add-new-showing-experience-form-text">
+                <ion-label class="edit-showing-experience-form-text">
                   Experience:
                 </ion-label>
               </ion-col>
@@ -48,7 +48,7 @@
             </ion-row>
             <ion-row>
               <ion-col size="5">
-                <ion-label class="add-new-showing-experience-form-text">
+                <ion-label class="edit-showing-experience-form-text">
                   Description:
                 </ion-label>
               </ion-col>
@@ -59,12 +59,12 @@
               </ion-col>
             </ion-row>
             <ion-row style="margin-top: 10px;">
-              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!addNewShowingExperienceForm.valid" style="min-width: 250px;
+              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!editShowingExperienceForm.valid" style="min-width: 250px;
                                                                                                                               min-height: 40px;
                                                                                                                               position: relative;
                                                                                                                               left: 50%;
                                                                                                                               transform: translateX(-50%);">
-                ADD SHOWING EXPERIENCE
+                EDIT SHOWING EXPERIENCE
               </ion-button>
             </ion-row>
           </ion-grid>
