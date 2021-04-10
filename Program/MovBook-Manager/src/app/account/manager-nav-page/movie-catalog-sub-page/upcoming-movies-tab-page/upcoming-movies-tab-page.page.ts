@@ -70,17 +70,31 @@ export class UpcomingMoviesTabPagePage implements OnInit {
   }
 
   // Function - Implementation for opening the 'Add New Showing' modal
-  async openAddNewShowingModal(movieObjectId: string){
+  async openAddNewShowingModal(movieObjectId: string, movieImdbId: string){
     const addNewShowingModal = await this.modalController.create({
       component: AddNewShowingModalPage,
       cssClass: 'add-new-showing-modal',
       componentProps: {
-        passingMovieObjectId: movieObjectId
+        passingMovieObjectId: movieObjectId,
+        passingMovieImdbId: movieImdbId,
+        passingMovieCondition: "Movie-Exists"
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,
     });
     addNewShowingModal.present();
+
+    // Collecting response data when modal is dismissed
+    const { data } = await addNewShowingModal.onDidDismiss();
+
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        // Retrieving updated list of movies under 'Upcoming'
+        this.retrieveMoviesAsUpcoming();
+      }
+    }
   }
   
   // Retrieve all available movies under 'Upcoming'

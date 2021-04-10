@@ -53,11 +53,24 @@ export class MovieWaitlistTabPagePage implements OnInit {
       component: MovieCatalogTypesPopoverPage,
       componentProps: {
         movieId: waitListedMovieImdbId,
-        movieDetails: waitListedMovieDetails
+        movieDetails: waitListedMovieDetails,
+        movieCondition: "Movie-Exists"
       },
       event: evt
     });
     movieCatalogTypesPopover.present();
+
+    // Collecting response data when modal is dismissed
+    const { data } = await movieCatalogTypesPopover.onDidDismiss();
+
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        // Retrieving updated list of wait listed movies
+        this.retrieveMoviesAsWaitListed();
+      }
+    }
   }
 
   // Implementation for opening the 'Movie Details Modal' modal

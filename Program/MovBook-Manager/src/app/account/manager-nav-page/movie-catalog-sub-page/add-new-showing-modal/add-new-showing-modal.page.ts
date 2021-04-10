@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController, NavParams } from '@ionic/angular';
+import { MovieDetails } from 'src/app/models/account/manager/movie-details';
 import { ShowingCinemaHallList, ShowingSeatDetails } from 'src/app/models/account/manager/showing-cinema-hall';
 import { ShowingMovie } from 'src/app/models/account/manager/showing-movie';
 import { ManagerService } from 'src/app/services/account/manager.service';
@@ -48,6 +49,9 @@ export class AddNewShowingModalPage implements OnInit {
   // Declaration - stores the initially loaded and user selected cinema hall object Id
   activeCinemaHallObjectId;
 
+  // Declaration - stores the existing movie object id or the newly created object id
+  activeMovieObjectId;
+
   // Declaration - stores all seating details of initially loaded and user selected cinema hall
   activeSeatLayout = new Array()
 
@@ -69,8 +73,17 @@ export class AddNewShowingModalPage implements OnInit {
   // Declaration | Initialization - string variable to store passingMovieObjectId
   passedMovieObjectId = null;
 
+  // Declaration | Initialization - string variable to store passingMovieImdbId
+  passedMovieImdbId = null;
+
+  // Declaration | Initialization - string variable to store passingMovieCondition
+  passedMovieCondition = null;
+
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerAddNewShowing' block
   loadingSpinnerAddNewShowing: Boolean = false;
+
+  // Declaration | Initialization - Stores status of adding new showing details
+  addNewShowingStatus: Boolean = false;
 
 
   /**
@@ -116,6 +129,13 @@ export class AddNewShowingModalPage implements OnInit {
     // Assigning variable with 'passingMovieObjectId'
     this.passedMovieObjectId = this.navParams.get('passingMovieObjectId');
 
+    // Assigning variable with 'passingMovieImdbId'
+    this.passedMovieImdbId = this.navParams.get('passingMovieImdbId');
+    
+    // Assigning variable with 'passingMovieCondition'
+    this.passedMovieCondition = this.navParams.get('passingMovieCondition');
+
+
     // Retrieving list of cinema locations upon page load
     this.retrieveCinemaLocations();
 
@@ -136,7 +156,7 @@ export class AddNewShowingModalPage implements OnInit {
 
   // Implementation to close 'Add New Showing' modal
   async closeAddNewShowingModal(){
-    await this.modalController.dismiss();
+    await this.modalController.dismiss(this.addNewShowingStatus);
   }
 
   // Function -  Alert Box Implementation
@@ -271,6 +291,85 @@ export class AddNewShowingModalPage implements OnInit {
     
   }
 
+  // Checking the condition of the movie (new or exists), and assigning the relevant path
+  addNewShowingDetailsPre(newShowingDetailsFormDetails){
+
+    // Checking whether ant showing slots are assigned and the showing detail form is filled
+    if(this.listOfShowingDetails.length != 0 || newShowingDetailsFormDetails != null){
+
+      // Checking the condition of the movie ('New-Movie' or 'Movie-Exists'), and assigning the relevant path
+      // to either assign the existing movieObjectId if the movie exists, or add the movie and assign the new movieObjectId
+
+      // If the movie exists, the passed movie object id is assigned
+      if(this.passedMovieCondition == "Movie-Exists"){
+
+        // Assigning 'activeMovieObjectId' with the existing movie object document ID
+        this.activeMovieObjectId = this.passedMovieObjectId
+
+        // Continuing 'Add New Showing' functionality after the 'activeMovieObjectId' is assigned
+        this.addNewShowingDetails(newShowingDetailsFormDetails);
+
+      }
+      // If the movie is new, it will be added to the database and the object id will be retrieved
+      else if(this.passedMovieCondition == "New-Movie"){
+
+        // Adding new movie into the database
+        // Retrieving the movie details from the omdb api
+        this.managerService.getMovieDetailsForOneMovie(this.passedMovieImdbId)
+        .subscribe((retrievedMovieDetails: MovieDetails) => {
+
+          if(retrievedMovieDetails.Response === "True"){
+            
+            // Adding movie to the database under 'upcoming'
+            this.managerService.addMovie(retrievedMovieDetails, "NowShowing")
+              .subscribe((retrievedMovieResponse: any) => {
+
+                if(retrievedMovieResponse.message === "Movie Added As NowShowing"){
+                  
+                  // Assigning 'activeMovieObjectId' with the newly create movie object document ID
+                  this.activeMovieObjectId = retrievedMovieResponse.returnedData._id
+
+                  // Continuing 'Add New Showing' functionality after the 'activeMovieObjectId' is assigned
+                  this.addNewShowingDetails(newShowingDetailsFormDetails);
+
+                }
+                else{
+                  // Showing error message box to the user
+                  this.alertNotice("ERROR", "Unable to add movie as 'NowShowing', apologies for the inconvenience. Please contact administrator.");
+
+                  console.log("Unable to add movie as 'NowShowing'");
+                }
+
+              }, (error: ErrorEvent) => {
+                // Showing error message box to the user
+                this.alertNotice("ERROR", "Unable to add movie as 'NowShowing', apologies for the inconvenience. Please contact administrator.");
+
+                console.log("Unable to add movie as 'NowShowing' ", error);
+              }
+            );
+
+          }
+          else{
+            // Showing error message box to the user
+            this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
+
+            console.log("Unable to retrieve movie details");
+          }
+
+        },
+        (error: ErrorEvent) => {
+          // Showing error message box to the user
+          this.alertNotice("ERROR", "Unable to retrieve movie details, apologies for the inconvenience. Please contact administrator.");
+
+          console.log("Unable to retrieve results: ", error);
+        });
+
+      }
+
+    }
+
+  }
+
   // Adding new showing details
   addNewShowingDetails(newShowingDetailsFormDetails){
 
@@ -279,6 +378,10 @@ export class AddNewShowingModalPage implements OnInit {
       
       // Assigning 'loadingSpinnerAddNewShowing' to true (starts loading spinner)
       this.loadingSpinnerAddNewShowing = true;
+
+      // Assigning 'addNewShowingStatus' to false
+      this.addNewShowingStatus = false;
+
     
       // Preparing details to add new showing details
 
@@ -373,10 +476,10 @@ export class AddNewShowingModalPage implements OnInit {
         }
 
       }
-
+      
       // Preparing 'selectedShowingMovieDetails' to add new showing details to the database
       let selectedShowingMovieDetails: ShowingMovie = {
-        movieObjectId: this.passedMovieObjectId,
+        movieObjectId: this.activeMovieObjectId,
         cinemaHallObjectId: this.activeCinemaHallObjectId,
         cinemaLocation: {
           cinemaLocationObjectId: selectedCinemaLocation.cinemaLocationObjectId,
@@ -462,7 +565,7 @@ export class AddNewShowingModalPage implements OnInit {
                   // Assigning cinema hall details into the 'showingCinemaHall' object
                   showingCinemaHall = {
                     slotObjectId: showingMovieDetailsResponse.returnedData.showingSlots[showingSlotIndex]._id,
-                    showingMovieObjectId: this.passedMovieObjectId,
+                    showingMovieObjectId: showingMovieDetailsResponse.returnedData._id,
                     cinemaHallObjectId: this.activeCinemaHallObjectId,
                     cinemaLocationObjectId: newShowingDetailsFormDetails.cinemaLocationName,
                     showingSeatDetails: showingSeatDetailsArray
@@ -475,23 +578,56 @@ export class AddNewShowingModalPage implements OnInit {
                   showingSeatDetailsArray = new Array();
 
                 }
-
+                
                 // Passing 'showingCinemaHallArray' array to the backend to add the list of cinema halls to the database
                 this.managerService.assignShowingCinemaHalls(showingCinemaHallArray)
                 .subscribe((showingCinemaHallResponse: any) => {
 
                   if(showingCinemaHallResponse.message == "Showing cinema hall(s) assigned"){
                     
-                    // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
-                    this.loadingSpinnerAddNewShowing = false;
 
-                    // Showing success message box to the user
-                    this.alertNotice("New Showing Added", "New showing details were successfully added.");
+                    // Updating movie status to Now Showing
+                    this.managerService.updateMovieStatus(this.passedMovieImdbId, "NowShowing")
+                      .subscribe((updatedMovieDetails: any) => {
+                
+                      if(updatedMovieDetails.message !== "Movie status updated"){
+                        // Showing error message box to the user
+                        this.alertNotice("ERROR", "Unable to update movie status, apologies for the inconvenience. Please contact administrator.");
+
+                        console.log("Unable to update movie status");
+                      }
+                      else{
+                        // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
+                        this.loadingSpinnerAddNewShowing = false;
+
+                        // Assigning 'addNewShowingStatus' to true
+                        this.addNewShowingStatus = true;
+
+                        // Showing success message box to the user
+                        this.alertNotice("New Showing Added", "New showing details were successfully added.");
+
+                        console.log("Movie was moved to movie catalog (Now Showing)");
+
+                        // Closing 'Add New Showing' modal
+                        this.closeAddNewShowingModal();
+                      }
+
+                    },
+                    (error: ErrorEvent) => {
+                      // Showing error message box to the user
+                      this.alertNotice("ERROR", "Unable to update movie status, apologies for the inconvenience. Please contact administrator.");
+
+                      console.log("Unable to update movie status: ", error);
+                    });
+                    
 
                   }
                   else{
                     // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
                     this.loadingSpinnerAddNewShowing = false;
+
+                    // Assigning 'addNewShowingStatus' to false
+                    this.addNewShowingStatus = false;
 
                     // Showing error message box to the user
                     this.alertNotice("ERROR", "Unable to assign cinema halls, apologies for the inconvenience. Please contact administrator.");
@@ -502,6 +638,9 @@ export class AddNewShowingModalPage implements OnInit {
                 },(error: ErrorEvent) => {
                   // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
                   this.loadingSpinnerAddNewShowing = false;
+
+                  // Assigning 'addNewShowingStatus' to false
+                  this.addNewShowingStatus = false;
 
                   // Showing error message box to the user
                   this.alertNotice("ERROR", "Unable to assign cinema halls, apologies for the inconvenience. Please contact administrator.");
@@ -516,6 +655,9 @@ export class AddNewShowingModalPage implements OnInit {
             // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
             this.loadingSpinnerAddNewShowing = false;
 
+            // Assigning 'addNewShowingStatus' to false
+            this.addNewShowingStatus = false;
+
             // Showing error message box to the user
             this.alertNotice("ERROR", "Unable to add new showing movie details, apologies for the inconvenience. Please contact administrator.");
 
@@ -525,6 +667,9 @@ export class AddNewShowingModalPage implements OnInit {
       },(error: ErrorEvent) => {
         // Assigning 'loadingSpinnerAddNewShowing' to false (stops loading spinner)
         this.loadingSpinnerAddNewShowing = false;
+
+        // Assigning 'addNewShowingStatus' to false
+        this.addNewShowingStatus = false;
 
         // Showing error message box to the user
         this.alertNotice("ERROR", "Unable to add new showing movie details, apologies for the inconvenience. Please contact administrator.");
