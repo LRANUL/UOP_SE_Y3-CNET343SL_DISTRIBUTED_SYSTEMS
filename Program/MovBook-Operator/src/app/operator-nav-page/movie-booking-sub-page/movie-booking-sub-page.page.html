@@ -23,8 +23,8 @@
         <ion-row style="height: 280px;overflow-y: scroll;">
           <div *ngFor="let movie of Movies">
             <ion-card *ngIf="movie.movieStatus == 'NowShowing'" style="width: 240px;">
-              <ion-img src='{{movie.poster}}' style="height: 250px;"></ion-img>
-              <ion-card-title>{{movie.title}} (Year: {{movie.year}})</ion-card-title>
+              <ion-img src='{{movie.posterLink}}' style="height: 250px;"></ion-img>
+              <ion-card-title>{{movie.title}} (Year: {{movie.releasedYear}})</ion-card-title>
               <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
               <ion-card-content>
                 <p>Director: {{movie.director}}</p>

@@ -5,6 +5,14 @@
 export const environment = {
   production: false,
   MOVBOOK_BACKEND_URL: "http://localhost:5000/"
+  firebase: {
+    apiKey: "AIzaSyDgIZg9bO1QslkIm_c00Ivp4Qql-C-lyKI",
+    authDomain: "movbook-18609.firebaseapp.com",
+    projectId: "movbook-18609",
+    storageBucket: "movbook-18609.appspot.com",
+    messagingSenderId: "1069731166949",
+    appId: "1:1069731166949:web:92d5f46a3b09050966f20c",
+    measurementId: "G-G89C73GZ08"
 };
 
 /*

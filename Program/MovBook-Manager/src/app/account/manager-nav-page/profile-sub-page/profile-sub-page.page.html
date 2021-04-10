@@ -7,29 +7,29 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
 
-      <div style="width: 50%;
-                  height: 500px;
+      <div style="width: 700px;
+                  height: 350px;
                   box-shadow: 5px 3px 18px #888888;
                   background-color: #ffffff;
                   border-radius: 15px;
                   position: absolute;
                   margin-top: 10%;
-                  transform: translateX(50%);">
+                  transform: translateX(30%);">
 
 
-        <ion-img src="assets/images/account/manager/profile-sub-page-images/profile-icon.png" style="width: 70px;
-height: 70px;
+        <ion-img src="assets/images/account/manager/profile-sub-page-images/profile-icon.png" style="width: 100px;
+height: 100px;
 position: relative;
 left: 50%;
 top: 10px;
-transform: translateX(-50%);"></ion-img>
-        <div style="padding: 20%;font-size: x-large;">
-          <h5>Name: {{Prefix}}.{{FirstName}} {{MiddleName}} {{LastName}}</h5>
+transform: translateX(-50%);padding-bottom: 5%;"></ion-img>
+        <div style="padding-left: 20%;font-size: x-large;">
+          <h3>Account Details</h3>
+          <h5>Name: {{Prefix}}. {{FirstName}} {{MiddleName}} {{LastName}}</h5>
           <h5>Email: {{Email}}</h5>
-          <h5>Phone: {{Phone}}</h5>
-          <h5>Street Address: {{StreetAddress}}</h5>
-          <h5>City: {{City}}</h5>
-          <h5>Postal code: {{PostalCode}}</h5>
+          <h5>Address: {{StreetAddress}}, {{City}}, {{PostalCode}}</h5>
+          <h5>Phone Number: {{Phone}}</h5>
+          <h5>Registered Date Time: {{RegisteredDateTime}}</h5>
         </div>
       </div>
 

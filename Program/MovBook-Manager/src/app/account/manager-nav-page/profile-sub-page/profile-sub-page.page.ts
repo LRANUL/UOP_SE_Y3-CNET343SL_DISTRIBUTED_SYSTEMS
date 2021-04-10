@@ -16,6 +16,7 @@ export class ProfileSubPagePage implements OnInit {
   StreetAddress: any;
   City: any;
   PostalCode: any;
+  RegisteredDateTime: any;
 
   constructor(
     public managerService: ManagerService,
@@ -36,6 +37,7 @@ export class ProfileSubPagePage implements OnInit {
         this.StreetAddress = data['StreetAddress'];
         this.City = data['City'];
         this.PostalCode = data['PostalCode'];
+        this.RegisteredDateTime = data['RegisteredDateTime'];
       },
       (error) => {
         console.log(error);

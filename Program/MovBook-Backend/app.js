@@ -6,11 +6,13 @@ require("dotenv").config();
 const refreshmentsRoutes = require("./routes/refreshments");
 const usersRoutes = require("./routes/users");
 const moviesRoutes = require("./routes/movies");
+const operatorRoutes = require("./routes/operators");
 const loyaltyRoutes = require("./routes/loyalty");
 const ticketPriceRoutes = require("./routes/ticket-prices");
 const showingCinemaHall = require("./routes/showing-movie-hall");
 const bookingHistory = require("./routes/bookingHistory");
 const customerRoutes = require("./routes/customer");
+const messagesRoutes = require("./routes/messages");
 const managerRoutes = require("./routes/managers");
 const adminRoutes = require("./routes/admin");
 const cinemaHallRoutes = require("./routes/cinema-halls");
@@ -63,6 +65,8 @@ app.use((req, res, next) => {
 app.use("/api/movies", moviesRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/refreshments", refreshmentsRoutes);
+app.use("/api/messages", messagesRoutes);
+app.use("/api/operators", operatorRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
 app.use("/api/ticket-prices", ticketPriceRoutes);
 app.use("/api/showing-cinema-hall", showingCinemaHall)

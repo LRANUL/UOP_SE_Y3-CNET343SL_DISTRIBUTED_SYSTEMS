@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { OperatorService } from 'src/app/service/operator.service';
 
 @Component({
@@ -12,19 +13,27 @@ export class SupportSubPagePage implements OnInit {
   email: string;
   promotion: boolean;
   maintainence: boolean;
+  Messages: Object;
+  selectedMessage: any;
+  selectedMessageEmail: any;
+  selectedMessageContent: any;
+  selectedMessageSubject: any;
+  MessageResponse: any;
 
   constructor(
     public operatorService: OperatorService,
+    public alertController: AlertController,
     private router: Router
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.name = localStorage.getItem('name');
     this.email = localStorage.getItem('email');
 // Remove after getting login credentials
     this.name = 'John Steve';
     this.email = 'john@movbook.com';
 
+    await this.getMessages();
     this.operatorService.getOfferStatus().subscribe(
       (data) => {
         console.log(data)
@@ -68,6 +77,49 @@ export class SupportSubPagePage implements OnInit {
     this.operatorService.setMaintenanceStatus(maintainence).subscribe(
       (data) => {
         this.ngOnInit();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  async getMessages() {
+    (await this.operatorService.getMessages()).subscribe(
+      (data) => {
+        this.Messages = data;
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  selectMessage(messages){
+    this.selectedMessage = messages._id
+    this.selectedMessageEmail = messages.email
+    this.selectedMessageSubject = messages.subject
+  }
+  sendReply() {
+    this.operatorService.sendMessage(this.selectedMessage, this.MessageResponse).subscribe(
+      async (data) => {
+        console.log(data)
+         if (data == 'Message Sent') {
+          this.getMessages();
+          const alert = await this.alertController.create({
+            header: 'Reponse sent',
+            message: 'Reply was sent to ' + this.selectedMessageEmail,
+          });
+
+          await alert.present();
+        }
+        else if (data == 'Not Updated"') {
+          const alert = await this.alertController.create({
+            header: 'Stock Not Updated',
+            message: "Inform Administrator",
+          });
+
+          await alert.present();
+        }
       },
       (error) => {
         console.log(error);

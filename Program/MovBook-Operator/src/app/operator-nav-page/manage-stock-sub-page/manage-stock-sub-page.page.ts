@@ -44,7 +44,6 @@ export class ManageStockSubPagePage implements OnInit {
     this.selectedBeverage = beverage.name
   }
   updateStock() {
-    console.log(this.Quantity)
     this.operatorService.updateStock(this.selectedBeverage, this.Quantity).subscribe(
       async (data) => {
         console.log(data)

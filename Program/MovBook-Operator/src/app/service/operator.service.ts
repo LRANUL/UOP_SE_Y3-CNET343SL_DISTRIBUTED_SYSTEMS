@@ -30,12 +30,23 @@ export class OperatorService {
   getBeverages() {
     return this.http.get(this.BASE_URL + "api/refreshments");
   }
-  getProfile(email) {
-    return this.http.get(this.BASE_URL + "api/users?email=" + email);
+  async getMessages() {
+    return await this.http.get(this.BASE_URL + "api/messages/new");
   }
-
+  sendMessage(messageID, messageBody) {
+    const body = { _id: messageID, response: messageBody, status: 'reply' };
+    return this.http.put<any>(this.BASE_URL + "api/messages/reply", body);
+  }
+  getProfile(email) {
+    return this.http.get(this.BASE_URL + "api/operators?email=" + email);
+  }
   getMovie(movieTitle) {
     return this.http.get(this.BASE_URL + "api/movie?title=" + movieTitle);
+  }
+  updateEmail(oldEmail, newEmail){
+    const body = { oldEmail: oldEmail, newEmail: newEmail };
+    return this.http.put<any>(this.BASE_URL + "api/operators/update", body);
+
   }
   updateStock(name, quantity) {
     const body = { name: name, quantity: quantity };
