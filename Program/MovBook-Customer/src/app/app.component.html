@@ -13,42 +13,32 @@
           <ion-label>Home</ion-label>
         </ion-item>
         <br>
-        <ion-item routerLink="customer/home">
+        <ion-item routerLink="customer/profile">
           <ion-icon name="person-circle-outline" slot="start"></ion-icon>
           <ion-label>Profile</ion-label>
         </ion-item>
         <br>
-        <ion-item routerLink="customer/home">
-          <ion-icon name="film-outline" slot="start"></ion-icon>
-          <ion-label>Book Tickets</ion-label>
-        </ion-item>
-        <br>
-        <ion-item routerLink="customer/home">
+        <ion-item routerLink="customer/booked-tickets">
           <ion-icon name="ticket-outline" slot="start"></ion-icon>
           <ion-label>Booked Tickets</ion-label>
         </ion-item>
         <br>
-        <ion-item routerLink="customer/home">
+        <ion-item routerLink="customer/loyality">
           <ion-icon name="document-text-outline" slot="start"></ion-icon>
           <ion-label>Loyality Information</ion-label>
         </ion-item>
         <br>
-        <ion-item routerLink="customer/home">
-          <ion-icon name="bookmark-outline" slot="start"></ion-icon>
-          <ion-label>Wishlist</ion-label>
-        </ion-item>
-        <br>
-        <ion-item routerLink="customer/home">
+        <ion-item routerLink="customer/about-us">
           <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
           <ion-label>About Us</ion-label>
         </ion-item>
         <br>
-        <ion-item routerLink="customer/home">
+        <ion-item routerLink="customer/home" (click)=" openContactUsModal()">
           <ion-icon name="call-outline" slot="start"></ion-icon>
           <ion-label>Contact Us</ion-label>
         </ion-item>
         <br>
-        <ion-item routerLink="customer/home">
+        <ion-item routerLink="customer/home" (click)="openTermsmodal()">
           <ion-icon name="document-lock-outline" slot="start"></ion-icon>
           <ion-label>Terms and Conditions</ion-label>
         </ion-item>

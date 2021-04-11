@@ -154,11 +154,26 @@ export class CustomerService {
     public movieShowingUpdated = {
       movieObjectId: '',
       cinemaHallObjectId: '',
-      cinemaLocationObjectId: '',
-      showingExperience: '',
+      cinemaLocation: {
+      cinemaLocationObjectId : '',
+      cinemaLocationName : '',
+      cinemaLocationAddress : {
+        streetAddress : '',
+        city : '',
+        postalCode: '',
+      }
+    },
       showingStartDate: '',
       showingEndDate: '',
-      showingTime: ''
+      showingSlots: [{
+      _id: '',
+      showingExperience: '',
+      showingDate: '',
+      timeSlotStartTime: '',
+      timeSlotEndTime: '',
+      adultsTicketFeeLKR: '',
+      childrenTicketFeeLKR: ''
+    }]
       };
       private Showingmovie = new Subject();
 
@@ -316,7 +331,7 @@ getShowingMovies()
 
 getSpecificShowingMovie(showingId: string)
 {
-  return this.http.get<{message : string, tickets : any}>(this.BASE_URL + "api/booking-details/id/" + showingId).subscribe(res=>{
+  return this.http.get<{message : string, tickets : movie}>(this.BASE_URL + "api/booking-details/id/" + showingId).subscribe(res=>{
     console.log(res.tickets);
     this.movieShowingUpdated = res.tickets;
     this.Showingmovie.next(this.movieShowingUpdated);

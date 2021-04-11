@@ -28,10 +28,11 @@ export class Booking1SubPagePage implements OnInit {
    }
 
   ngOnInit() {
-    this.routedID = this.router.snapshot.paramMap.get('id');
+    this.showingSlot = this.router.snapshot.paramMap.get('id');
     this.startTimer();
     console.log(this.time)
-    this.getShowingMovie();
+    console.log(this.showingSlot + " showing slot ID")
+    this.getShowingMovieHall(this.showingSlot);
   }
 
   movieDetails : Movie = {
@@ -67,8 +68,9 @@ export class Booking1SubPagePage implements OnInit {
   };
 
   // this is the showing movie collection  id
-  routedID;
   movieId;
+  showingMovieId;
+  showingSlot;
   hallId;
   movies : movie ={
     movieObjectId: '',
@@ -182,28 +184,52 @@ export class Booking1SubPagePage implements OnInit {
     }
   }
 
-  //get the showing movie details from the database using the movie ID
-  getShowingMovie()
+  getShowingMovieHall(id)
   {
-    this.customerService.getSpecificShowingMovie(this.routedID);
+   this.customerService.retrieveShowingCinemaHall(id);
+   this.customerService.getShowingCinemaHall().subscribe((cinemaHall: showingCinemaHall)=> {
+   this.showingHallDetails = cinemaHall;
+   this.hallinfo = cinemaHall
+   this.showingMovieId = cinemaHall[0].showingMovieObjectId;
+   console.log(this.showingMovieId);
+   this.getShowingMovie(this.showingMovieId);
+   let value = this.hallinfo[0].showingSeatDetails.length
+     let i = 0;
+     this.seat = -1;
+     for(i ; i < value; i++)
+     {
+      this.seatinfo = {
+        seatObjectId:  this.hallinfo[0].showingSeatDetails[i]._id,
+        seatId: this.hallinfo[0].showingSeatDetails[i].seatId,
+        seatNumber: this.hallinfo[0].showingSeatDetails[i].seatNumber,
+        seatUnavailable: this.hallinfo[0].showingSeatDetails[i].seatUnavailable,
+        seatStatus : this.hallinfo[0].showingSeatDetails[i].seatStatus,
+        seatActive : this.hallinfo[0].showingSeatDetails[i].seatActive,
+        customerObjectId : this.hallinfo[0].showingSeatDetails[i].customerObjectId
+    }
+    this.seatData.push(this.seatinfo)
+     this.seat = this.seat + 1;
+    }
+   })
+  }
+
+  //get the showing movie details from the database using the movie ID
+  getShowingMovie(id)
+  {
+    this.customerService.getSpecificShowingMovie(id);
     this.customerService.getShowingMovie().subscribe((movie: movie)=> {
       this.movies = movie;
-      console.log( this.movies);
-      console.log( movie);
       this.movieId =  movie.movieObjectId;
       this.hallId = movie.cinemaHallObjectId;
       this.Aprice = movie.showingSlots[0].adultsTicketFeeLKR;
       this.Cprice = movie.showingSlots[0].childrenTicketFeeLKR;
-      console.log(this.Aprice);
       this.totalammount = this.numberoftickets * this.Aprice;
       this.allticketInformation.showingMovieInfo = movie;
       if(this.movieId != undefined && this.hallId != undefined)
       {
-        console.log(this.movieId);
         // to get the movie details for this movie
         this.getMovieAdditionalDetails(this.movieId);
         this.getmoviehall(this.hallId);
-        this.getShowingMovieHall(this.hallId);
       }
     })
   }
@@ -227,41 +253,10 @@ export class Booking1SubPagePage implements OnInit {
      this.hallDetails = hall;
      this.allticketInformation.hallInformaion = hall;
      this.hall = hall;
-     console.log(hall);
-     console.log(this.hallDetails);
      this.hallName = this.hallDetails[0].cinemaHallName
      this.NoOfColumns = this.hallDetails[0].seatingGridNoOfColumns;
      this.NoOfRows = this.hallDetails[0].seatingGridNoOfRows;
      this.cinemaLocationId = this.hallDetails[0].cinemaLocationObjectId
-   })
-  }
-
-
-
-  getShowingMovieHall(id)
-  {
-   this.customerService.retrieveShowingCinemaHall(id);
-   this.customerService.getShowingCinemaHall().subscribe((cinemaHall: showingCinemaHall)=> {
-   this.showingHallDetails = cinemaHall;
-   this.hallinfo = cinemaHall
-   let value = this.hallinfo[0].showingSeatDetails.length
-     let i = 0;
-     this.seat = -1;
-     for(i ; i < value; i++)
-     {
-      this.seatinfo = {
-        seatObjectId:  this.hallinfo[0].showingSeatDetails[i]._id,
-        seatId: this.hallinfo[0].showingSeatDetails[i].seatId,
-        seatNumber: this.hallinfo[0].showingSeatDetails[i].seatNumber,
-        seatUnavailable: this.hallinfo[0].showingSeatDetails[i].seatUnavailable,
-        seatStatus : this.hallinfo[0].showingSeatDetails[i].seatStatus,
-        seatActive : this.hallinfo[0].showingSeatDetails[i].seatActive,
-        customerObjectId : this.hallinfo[0].showingSeatDetails[i].customerObjectId
-    }
-    this.seatData.push(this.seatinfo)
-     this.seat = this.seat + 1;
-    }
-    console.log(this.seatData);
    })
   }
 
