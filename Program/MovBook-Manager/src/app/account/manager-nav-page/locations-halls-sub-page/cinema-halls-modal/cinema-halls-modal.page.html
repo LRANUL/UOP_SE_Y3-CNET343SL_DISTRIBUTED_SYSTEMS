@@ -124,7 +124,7 @@
                                     margin-top: 5px;
                                     color: #000000;">
                     <b>
-                      {{ noOfActiveSeats - noOfUnavailableSeats }}
+                      {{ noOfActiveSeats ? noOfActiveSeats - noOfUnavailableSeats : noOfUnavailableSeats }}
                     </b>
                   </ion-label>
                 </div>
@@ -167,7 +167,7 @@
                     min-height: 50px;
                     position: absolute;
                     left: 15px;
-                    top: 21%;">
+                    top: 24%;">
           <ion-button shape="block" color="secondary" style="--border-radius: 5px;">
             <ion-label>
               <ion-img src="assets/images/account/manager/locations-halls-sub-page/edit-icon.png" style="width: 25px;
@@ -185,7 +185,7 @@
                     min-height: 50px;
                     position: absolute;
                     right: 15px;
-                    top: 21%;">
+                    top: 24%;">
           <ion-button shape="block" color="warning" style="--border-radius: 5px;">
             <ion-label>
               <ion-img src="assets/images/account/manager/locations-halls-sub-page/remove-icon.png" style="width: 25px;
