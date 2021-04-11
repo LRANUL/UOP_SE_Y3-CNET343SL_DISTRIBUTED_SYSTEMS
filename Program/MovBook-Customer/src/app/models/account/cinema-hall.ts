@@ -1,7 +1,7 @@
 /**
  * MODEL - Cinema Hall
  */
-export interface CinemaHall {
+ export interface CinemaHall {
   cinemaLocationObjectId: string;
   cinemaHallName: string;
   seatingGridNoOfRows: any,
@@ -25,11 +25,14 @@ export interface seating {
 }
 
 export interface showingCinemaHall{
-  movieShowingObjectId : String;
-  cinemaHallObjectId : string;
+  showingCinemaHallObjectId: String;
+  slotObjectId: string;
+  showingMovieObjectId: string;
+  cinemaHallObjectID: string;
   cinemaLocationObjectId : string;
   showingSeatDetails : [
     {
+      seatObjectId: string,
       seatId : any;
       seatNumber: string;
       seatUnavailable: string;
@@ -41,10 +44,11 @@ export interface showingCinemaHall{
 }
 
 export interface seatingData {
+  seatObjectId: string,
   seatId: string,
   seatNumber: string,
   seatUnavailable: string,
   seatStatus : string,
-  seatType: string,
+  seatActive: string,
   customerObjectId: string
 }

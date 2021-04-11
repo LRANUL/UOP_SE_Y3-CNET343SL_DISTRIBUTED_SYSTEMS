@@ -1,7 +1,7 @@
 /**
  * MODEL - Movie - MovieResponse
  */
-export interface Movie {
+ export interface Movie {
   _id?: string;
   movieStatus: string;
   movieTitle: string;
@@ -96,3 +96,9 @@ export interface ticketPrices{
     children: any,
   }
 }
+
+export interface CinemaExperience {
+  showingExperience: string,
+  description: string
+}
+

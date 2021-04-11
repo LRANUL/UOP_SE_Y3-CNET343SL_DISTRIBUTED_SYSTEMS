@@ -26,7 +26,7 @@ router.get('/:id' ,(req,res,next)=>{
 });
 
 router.get('/id/:showingId' ,(req,res,next)=>{
-    booking.findById(req.params.showingId)
+    booking.findById(req.params.showingId) // changed this change if error happens
       .then((data)=>{
         if(data)
       {
@@ -47,7 +47,7 @@ router.get('/id/:showingId' ,(req,res,next)=>{
 
 //get information with cinemaExperience
 router.get('/experience/:experience' ,(req,res,next)=>{
-    booking.find({showingExperience: req.params.experience})
+    booking.find({showingSessionDetails: {$elemMatch: {showingExperience: req.params.experience}}})
       .then((data)=>{
         console.log(data)
         if(data)
