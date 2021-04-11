@@ -1,0 +1,276 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><b>EDIT CINEMA HALL</b></ion-title>
+    <ion-button
+      (click)="closeEditHallModal()" 
+      slot="end" 
+      shape="round" 
+      fill="outline" 
+      color="danger" 
+      id="closeEditHallModalButton">
+      <ion-icon name="close-outline" style="font-size: 30px;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- CONTENT CARD -->
+  <ion-card style="height: 685px;">
+    <ion-card-content>
+
+      <form [formGroup]="editHallForm" (ngSubmit)="confirmBoxEditHall('Confirmation', 
+        'Cinema hall will be updated to these preferences, do you want to continue?', editHallForm.value)">
+
+        <div id="editHallFormCustomizationSection">
+          <!-- EDIT HALL FORM - MOVIE NAME, HALL SEATING STATISTICS -->
+          <div style="width: 100%;">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-grid>
+                    <ion-col>
+                      <ion-row>
+                        <ion-col>
+                          <ion-label>
+                            <p class="edit-form-text">Movie Hall Name: </p>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-input type="text" placeholder="Enter Hall Name" clearInput formControlName="hallName"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-button expand="block" 
+                              style="min-width: 100%;
+                                    min-height: 40px;
+                                    --border-radius: 10px;"
+                              [disabled]="!editHallForm.valid"
+                              type="submit">
+                          <ion-label>
+                            <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
+                                                                                                                              margin-left: 0px;"></ion-img>
+                          </ion-label>
+                          <ion-label style="margin-left: 10px;">
+                            UPDATE CINEMA HALL
+                          </ion-label>
+                        </ion-button>
+                      </ion-row>
+                    </ion-col>
+                  </ion-grid>
+                </ion-col>
+                <ion-col size="1">
+                  <!-- Vertical Line -->
+                  <div style="border-left: 2px solid #ccc;
+                              width: 2vw;
+                              min-height: 100%;"></div>
+                </ion-col>
+                <ion-col size="5">
+
+                  <!-- Hall Seating Statistics -->
+                  <div>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size="8">
+                          <ion-label style="font-size: 18px;">
+                            <h2>No of Allocated Seats -</h2>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col size="4">
+                          <div style="width: 40px;
+                                      height: 30px;
+                                      border-radius: 5px;
+                                      background-color: #d6d6d6;">
+                            <ion-label style="font-size: 18px;
+                                              margin-left: 5px;
+                                              margin-top: 5px;
+                                              color: #000000;">
+                              <b>
+                                {{ noOfAllocatedSeats }}
+                              </b>
+                            </ion-label>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col size="8">
+                          <ion-label style="font-size: 18px;">
+                            <h2>No of Active Seats -</h2>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col size="4">
+                          <div style="width: 40px;
+                                      height: 30px;
+                                      border-radius: 5px;
+                                      background-color: #0AAA64;">
+                            <ion-label style="font-size: 18px;
+                                              margin-left: 5px;
+                                              margin-top: 5px;
+                                              color: #000000;">
+                              <b>
+                                {{ noOfActiveSeats ? noOfActiveSeats - noOfUnavailableSeats : noOfUnavailableSeats }}
+                              </b>
+                            </ion-label>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col size="8">
+                          <ion-label style="font-size: 18px;">
+                            <h2>No of Unavailable Seats -</h2>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col size="4">
+                          <div style="width: 40px;
+                                      height: 30px;
+                                      border-radius: 5px;
+                                      background-color: #D33131;">
+                            <ion-label style="font-size: 18px;
+                                              margin-left: 5px;
+                                              margin-top: 5px;
+                                              color: #000000;">
+                              <b>
+                                {{ noOfUnavailableSeats }}
+                              </b>
+                            </ion-label>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+          <!-- Horizontal Line -->
+          <div style="border-bottom: 2px solid #ccc;"></div>
+        </div>
+
+      </form>
+
+      <!-- Add New Hall Form Customization Section Visibility Button -->
+      <div>
+        <ion-button expand="block" 
+              (click)="editHallCustomizationVisibility()"
+              style="min-width: 170px;
+                    min-height: 40px;
+                    --border-radius: 10px;
+                    position: absolute;
+                    right: 10px;"
+              color="green">
+          <ion-label>
+            <ion-img src="assets/images/account/manager/locations-halls-sub-page/preferences-icon.png" style="width: 25px;
+                                                                                                              margin-left: 0px;" id="visibilityButtonImage"></ion-img>
+          </ion-label>
+          <ion-label style="margin-left: 10px;" id="visibilityButtonText">
+            HIDE CUSTOMIZATION
+          </ion-label>
+        </ion-button>
+      </div>
+
+      <!-- 'Layout of Hall Seating' Heading -->
+      <ion-label>
+        <h1 style="text-align: center;
+                  margin-top: 10px;
+                  font-weight: 600;">Layout of Hall Seating</h1>
+      </ion-label>
+
+      <!-- Hall Seating Layout Section -->
+      <div style="width: 100%;
+                  height: 40.3vh;
+                  overflow: auto;
+                  margin-top: 20px;
+                  background-color: rgb(96, 143, 230);
+                  border-radius: 10px;" id="hallSeatLayoutSection">
+        <!-- Hall Seating Layout Contents Section -->
+        <div style="height: auto;
+                    position: relative;
+                    left: 50%;
+                    transform: translateX(-50%);">
+
+          <!-- Hall Seating Layout Screen Image -->
+          <div>
+            <ion-img src="assets/images/account/manager/locations-halls-sub-page/hall-screen-image.png" style="width: 65%;
+                                                                                                              position: relative;
+                                                                                                              left: 50%;
+                                                                                                              transform: translateX(-50%);
+                                                                                                              margin-bottom: 10px;"></ion-img>
+          </div>
+
+          <!-- Hall Seating Layout Screen Grid Table -->
+          <div style="margin-top: 5px;
+                      min-width: 95%;">
+
+            <!-- Loading Spinner - Group 1 - Activated until cinema halls are retrieved from the database -->
+            <div *ngIf="loadingSpinnerCinemaHalls">
+              <ion-spinner name="dots" style="height: 100px;
+                                          width: 100px;
+                                          position: absolute;
+                                          left: 50%;
+                                          top: 60%;
+                                          transform: translate(-50%,-40%);
+                                          margin-top: 50px;" color="light"></ion-spinner>
+            </div>
+
+            <!-- Seating Grid Table -->
+            <table style="border: none;
+                          background-color: rgb(96, 143, 230);
+                          position: relative;
+                          left: 51%;
+                          transform: translateX(-49%);">
+                <!-- Table Rows -->
+                <tr *ngFor="let in of covertNumberToArray(activeSeatLayout.seatingGridNoOfRows); let row = index">
+                  <!-- Table Columns -->
+                  <td class="seatingGridTableTableData" *ngFor="let in of covertNumberToArray(activeSeatLayout.seatingGridNoOfColumns); let column = index">
+
+                    <!-- Iterating through each seat (cell) -->
+                    <ng-container *ngFor="let seatDetails of activeSeatLayout.seatingDetails">
+                      <!--If condition (condition) - checking whether iterating seatId is equal to generated seatId -->
+                      <ng-template 
+                        *ngIf="seatDetails?.seatId == activeSeatLayout.cinemaLocationObjectId + '|0|' + preIncrementValue(row) + '|' + preIncrementValue(column);
+                              then showSeatDetails;">
+                      </ng-template>
+
+                      <!-- If condition (then) - 
+                        display seatAllocatedPositionNo, 
+                        change seat (cell) styles according to the properties of the seat,
+                        display seatNumber
+                      -->
+                      <ng-template #showSeatDetails>
+                        <!-- Table Cells -->
+                        <button class="seatingGridTableOuterDiv" (click)="openAssignHallSeatPopover(event, seatDetails)">
+                          <p class="seatingGridTableOuterDivP">
+                            {{ seatDetails.seatAllocatedPositionNo }}
+                          </p> 
+                          <div [ngClass]="{
+                              'seatingGridTableInnerDivSeatActive': seatDetails.seatActive,
+                              'seatingGridTableInnerDivUnavailableSeat': seatDetails.seatUnavailable,
+                              'seatingGridTableInnerDiv': !seatDetails.seatActive,
+                              'seatingGridTableInnerDiv': !seatDetails.seatUnavailable
+                            }" id="{{ seatDetails?.seatId }}">
+                            <p class="seatingGridTableInnerDivP">
+                              {{ seatDetails.seatNumber }}
+                            </p>
+                          </div>
+                        </button>
+                      </ng-template>
+
+                    </ng-container>
+                    
+                  </td>
+                </tr>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -24,6 +24,7 @@ import { AddNewShowingModalPageModule } from './account/manager-nav-page/movie-c
 import { AddNewShowingExperienceModalPageModule } from './account/manager-nav-page/settings-sub-page/add-new-showing-experience-modal/add-new-showing-experience-modal.module';
 import { UpdateAccountDetailsModalPageModule } from './account/manager-nav-page/settings-sub-page/update-account-details-modal/update-account-details-modal.module';
 import { EditShowingExperienceModalPageModule } from './account/manager-nav-page/settings-sub-page/edit-showing-experience-modal/edit-showing-experience-modal.module';
+import { EditHallModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/edit-hall-modal/edit-hall-modal.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,7 +44,8 @@ import { EditShowingExperienceModalPageModule } from './account/manager-nav-page
       AddNewShowingModalPageModule,
       AddNewShowingExperienceModalPageModule,
       UpdateAccountDetailsModalPageModule,
-      EditShowingExperienceModalPageModule
+      EditShowingExperienceModalPageModule,
+      EditHallModalPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
