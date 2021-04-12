@@ -119,7 +119,7 @@ export class Booking1SubPagePage implements OnInit {
       seatNumber: '',
       seatUnavailable: '',
       seatStatus : '',
-      seatType : '',
+      seatActive : '',
       customerObjectId : '',
     }
   ]
@@ -189,6 +189,7 @@ export class Booking1SubPagePage implements OnInit {
    this.customerService.retrieveShowingCinemaHall(id);
    this.customerService.getShowingCinemaHall().subscribe((cinemaHall: showingCinemaHall)=> {
    this.showingHallDetails = cinemaHall;
+   console.log(cinemaHall);
    this.hallinfo = cinemaHall
    this.showingMovieId = cinemaHall[0].showingMovieObjectId;
    console.log(this.showingMovieId);
@@ -241,7 +242,6 @@ export class Booking1SubPagePage implements OnInit {
     this.customerService.getmovies().subscribe((movies: Movie)=> {
       this.movieDetails = movies;
       this.allticketInformation.movieInfo = movies
-      console.log( this.movieDetails);
     })
   }
 

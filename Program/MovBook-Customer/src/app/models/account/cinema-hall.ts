@@ -37,7 +37,7 @@ export interface showingCinemaHall{
       seatNumber: string;
       seatUnavailable: string;
       seatStatus : string;
-      seatType : string;
+      seatActive : string;
       customerObjectId : string;
     }
   ]

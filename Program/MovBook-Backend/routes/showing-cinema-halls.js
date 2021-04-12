@@ -11,5 +11,8 @@ router.post("/assign-showing-cinema-hall", showingCinemaHallsController.assignSh
 // PUT - Update showing cinema hall(s) | Route: 'BASE_URL/api/showing-cinema-halls/update-showing-cinema-hall'
 router.put("/update-showing-cinema-hall", showingCinemaHallsController.updateShowingCinemaHall);
 
+//get the showing cinema hall
+router.get("/:id", showingCinemaHallsController.getShowingCinemaHall);
+
 
 module.exports = router;

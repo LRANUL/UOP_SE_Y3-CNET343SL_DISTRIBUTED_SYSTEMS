@@ -1,3 +1,9 @@
+/**
+ * 
+ * DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS
+ * 
+ */
+
 const express = require("express");
 
 const router = express.Router();

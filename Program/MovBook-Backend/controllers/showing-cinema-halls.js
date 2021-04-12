@@ -25,6 +25,27 @@ exports.assignShowingCinemaHall = async (req, res, next) => {
 
 };
 
+//To get the showing cinema hall details
+exports.getShowingCinemaHall = async (req, res, next) => {
+await  showingCinemaHallModel.find({slotObjectId: req.params.id})
+      .then((returnedData)=>{
+        if(returnedData)
+      {
+        res.status(200).json({
+          message: "Movie hall found",
+          returnedData
+        })
+      }else
+      {
+        res.status(404).json({
+          message: "The Movie hall was not found"
+        })
+      } 
+      }).catch(err => {
+       console.log(err);
+      })
+};
+
 
 /** DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS */
 // Function - Update showing experience using route, 'BASE_URL/api/showing-cinema-halls/update-showing-cinema-hall'

@@ -10,4 +10,8 @@ router.post("/add-new-showing-movie", showingMoviesController.addNewShowingMovie
 // GET - Check availability of existing data | Route: 'BASE_URL/api/showing-movies/check-showing-movie-availability'
 router.post("/check-showing-movie-availability", showingMoviesController.checkShowingMovieAvailability);
 
+router.get("/:id", showingMoviesController.getShowingMovieByMovieId); 
+
+router.get("/id/:showingId", showingMoviesController.getShowingMovieByShowingId);
+
 module.exports = router;

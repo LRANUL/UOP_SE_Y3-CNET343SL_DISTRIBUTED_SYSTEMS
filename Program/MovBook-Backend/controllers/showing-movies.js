@@ -90,3 +90,43 @@ exports.checkShowingMovieAvailability = async (req, res, next) => {
   })
 
 };
+
+exports.getShowingMovieByMovieId = async (req, res, next) => {
+  await showingMovieModel.find({movieObjectId: req.params.id})
+      .then((data)=>{
+        if(data)
+      {
+        res.status(200).json({
+          message: "It works",
+          tickets: data
+        })
+      }else
+      {
+        res.status(404).json({
+          message: "The user does not exist"
+        })
+      } 
+      }).catch(err => {
+       console.log(err);
+      })
+};
+
+exports.getShowingMovieByShowingId = async (req, res, next) => {
+  await showingMovieModel.findById(req.params.showingId)
+      .then((data)=>{
+        if(data)
+      {
+        res.status(200).json({
+          message: "It works",
+          tickets: data
+        })
+      }else
+      {
+        res.status(404).json({
+          message: "The user does not exist"
+        })
+      } 
+      }).catch(err => {
+       console.log(err);
+      })
+};
