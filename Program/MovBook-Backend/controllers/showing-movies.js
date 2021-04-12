@@ -21,7 +21,7 @@ exports.addNewShowingMovie = async (req, res, next) => {
     showingEndDate: req.body.showingEndDate,
     showingSlots: req.body.showingSlots
   }).save((error, returnedData) => {
-  
+
     if (error) {
       res.status(500).json({
         message:
@@ -34,6 +34,57 @@ exports.addNewShowingMovie = async (req, res, next) => {
           "Showing movie added",
         returnedData
       });
+    }
+
+  })
+
+};
+
+// Function - Check availability of movie showing using route, 'BASE_URL/api/showing-movies/check-showing-movie-availability'
+exports.checkShowingMovieAvailability = async (req, res, next) => {
+
+  await showingMovieModel.find({
+    $and: [
+      {
+        "cinemaLocation.cinemaLocationObjectId": req.body.cinemaLocationObjectId
+      },
+      {
+        "cinemaHallObjectId": req.body.cinemaHallObjectId
+      },
+      {
+        "movieObjectId": req.body.movieObjectId
+      },
+      {
+        "showingStartDate": req.body.showingStartDate
+      },
+      {
+        "showingEndDate": req.body.showingEndDate
+      }
+    ]
+  }).exec((error, returnedData) => {
+    
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to check availability of showing movies"
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No showing movie available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Showing movie available",
+          returnedData
+        });
+      }
     }
 
   })

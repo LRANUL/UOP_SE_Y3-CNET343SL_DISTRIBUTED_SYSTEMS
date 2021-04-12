@@ -155,6 +155,10 @@ export class ManagerService {
   addNewShowingMovie(showingMovieDetails: ShowingMovie){
     return this.httpClient.post(this.BASE_URL + "api/showing-movies/add-new-showing-movie", showingMovieDetails);
   }
+  // POST - Checking availability of showing movie
+  checkShowingMovieAvailability(showingMovieDetails: any){
+    return this.httpClient.post(this.BASE_URL + "api/showing-movies/check-showing-movie-availability", showingMovieDetails);
+  }
 
   /**
    * Showing Cinema Hall
