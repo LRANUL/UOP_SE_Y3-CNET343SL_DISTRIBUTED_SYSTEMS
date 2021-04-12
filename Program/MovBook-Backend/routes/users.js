@@ -11,6 +11,9 @@ const transporter = nodemailer.createTransport(sendgridTransport({
     api_key:"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"
   }
 }))
+
+const nodemailer =require("nodemailer");
+const sendgridTransport =require("nodemailer-sendgrid-transport");
 // Get selected user
 /*router.get('' ,(req,res,next)=>{
   var email = req.query.email || "";
