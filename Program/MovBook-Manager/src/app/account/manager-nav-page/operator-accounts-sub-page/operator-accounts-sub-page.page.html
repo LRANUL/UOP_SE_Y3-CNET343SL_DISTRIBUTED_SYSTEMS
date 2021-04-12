@@ -7,6 +7,343 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       
+      <!-- SEARCH OPERATOR ACCOUNT TITLE -->
+      <ion-title style="margin-top: 1%;
+                        letter-spacing: 1px;"><b>SEARCH OPERATOR ACCOUNT</b></ion-title>
+
+      <!-- ADD CINEMA LOCATION BUTTON -->
+      <div style="position: absolute;
+                  right: 1%;
+                  top: 1%;">
+        <ion-button style="--border-radius: 40px;" color="tertiary">
+          <ion-label>
+            <ion-img src="assets/images/account/manager/operator-accounts-sub-page/register-operator-account-icon.png" 
+              style="width: 25px;
+                    margin-right: 5px;"></ion-img>
+          </ion-label>
+          <ion-label>
+            REGISTER OPERATOR ACCOUNT
+          </ion-label>
+        </ion-button>
+      </div>
+
+      <!-- SEARCH OPERATOR ACCOUNT FORM -->
+      <div style="margin-top: 20px;">
+        <form [formGroup]="searchOperatorAccountForm" (ngSubmit)="doSearchOperatorAccount(searchOperatorAccountForm.value)">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="5">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-label class="search-operator-account-form-text">
+                        Email Address:
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-item>
+                        <ion-input type="text" placeholder="Enter Email" clearInput formControlName="emailAddress"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+              <ion-col size="5">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="2.5">
+                      <ion-label class="search-operator-account-form-text">
+                        Name (Optional):
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size="2.5">
+                      <ion-item>
+                        <ion-select placeholder="Prefix" okText="SELECT" cancelText="DISMISS" formControlName="namePrefix">
+                          <ion-select-option value="Mr.">Mr.</ion-select-option>
+                          <ion-select-option value="Sir.">Sir.</ion-select-option>
+                          <ion-select-option value="Ms.">Ms.</ion-select-option>
+                          <ion-select-option value="Mrs.">Mrs.</ion-select-option>
+                          <ion-select-option value="Miss.">Miss.</ion-select-option>
+                          <ion-select-option value="Dr.">Dr.</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="3">
+                      <ion-item>
+                        <ion-input type="text" placeholder="First Name" clearInput formControlName="firstName"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="4">
+                      <ion-item>
+                        <ion-input type="text" placeholder="Last Name" clearInput formControlName="lastName"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+              <ion-col size="2">
+                <div style="position: relative;
+                            top: 50%;
+                            transform: translateY(-50%);">
+                  <ion-button expand="block" type="submit" [disabled]="!searchOperatorAccountForm.valid" style="--border-radius: 10px;">
+                    <ion-label>
+                      <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/search-icon.png" style="width: 25px;
+                                                                                                                          margin-left: 0px;"></ion-img>
+                    </ion-label>
+                    <ion-label style="margin-left: 10px;">
+                      SEARCH
+                    </ion-label>
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+
+      <!-- RESET BUTTON -->
+      <div style="position: absolute;
+                  top: 10px;
+                  right: 22%;">
+        <ion-button color="green" fill="outline" size="small" style="--border-radius: 20px;
+                                                                    min-height: 45px;
+                                                                    min-width: 120px;">
+          RESET
+        </ion-button>
+      </div>
+
+      <!-- OPERATOR ACCOUNT SEARCH RESULT CONTAINER -->
+      <div>
+        <ion-card style="height: 740px;
+                        background-color: #ffffff;
+                        border-radius: 10px;
+                        overflow-y: auto;">
+          <ion-card-content>
+            
+            <!-- SEARCH RESULT CARDS CONTAINER -->
+            <div style="padding-top: 10px;">
+              <ion-grid>
+                <ion-row>
+                  
+                  <!-- INITIAL SEARCH OPERATOR ACCOUNT TEXT -->
+                  <div style="border: 2px solid #ccc;
+                              width: 55%;
+                              height: 100px;
+                              border-radius: 10px;
+                              position: absolute;
+                              left: 50%;
+                              top: 80%;
+                              transform: translate(-50%,-20%);"
+                    *ngIf="operatorAccountDetails.operatorAccountView == 'Initial'"
+                  >
+                    <ion-label style="position: absolute;
+                                    left: 47%;
+                                    top: 50%;
+                                    transform: translate(-53%,-50%);
+                                    font-size: 19px;
+                                    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                    color: #000000;">
+                      Enter Email Address and (Optional) Name 
+                    </ion-label>
+                  </div>
+
+                  <!-- NO OPERATOR ACCOUNT AVAILABLE TEXT -->
+                  <div style="border: 2px solid #ccc;
+                              width: 30%;
+                              height: 40px;
+                              border-radius: 10px;
+                              margin-top: 10px;
+                              position: absolute;
+                              left: 50%;
+                              top: 50%;
+                              transform: translate(-50%,-50%);"
+                    *ngIf="operatorAccountDetails.operatorAccountView == 'NotAvailable'"
+                  >
+                      <ion-label style="position: absolute;
+                                      left: 50%;
+                                      top: 50%;
+                                      transform: translate(-50%,-50%);
+                                      font-size: 19px;
+                                      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                      color: #000000;">
+                      No Account Available
+                      </ion-label>
+                    </div>
+
+                  <!-- SEARCHED OPERATOR ACCOUNT DETAILS SECTION -->
+                  <div style="width: 70%;
+                              height: 100%;
+                              border-radius: 10px;
+                              padding: 1%;
+                              position: relative;
+                              left: 50%;
+                              transform: translateX(-50%);
+                              box-shadow: 0px 0px 30px #888888;" 
+                    *ngIf="operatorAccountDetails.operatorAccountView == 'Found'"
+                  >
+                    <ion-grid>
+                      <ion-row style="height: 20%;
+                                      width: 100%;
+                                      padding-bottom: 2%;">
+                        <ion-col size="12">
+                          <div style="width: 150px;
+                                      height: 150px;
+                                      position: relative;
+                                      top: 50%;
+                                      left: 50%;
+                                      transform: translate(-50%, -50%);
+                                      background-color: #ffffff;
+                                      border-radius: 10px;
+                                      box-shadow: 0px 0px 30px #888888;">
+                            <img src="assets/images/account/manager/operator-accounts-sub-page/operator-icon.png" 
+                              style="width: 100%;
+                                    position: relative;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%);">
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row style="height: 20%;
+                                      width: 100%;">
+                        <ion-col size="12">
+                          <div style="padding-left: 20%;">
+                            <ion-label style="font-size: 30px;
+                                              color: #000000;
+                                              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                              Account Details
+                            </ion-label>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row style="height: 60%;
+                                      width: 100%;">
+                        <ion-col size="12">
+                          <div style="width: 80%;
+                                      margin-left: 20%;">
+                            <ion-grid>
+                              <ion-row>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-sub-heading-text">
+                                    Name:
+                                  </ion-label>
+                                </ion-col>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-user-details-text">
+                                    Mr. Lucas Anderson
+                                  </ion-label>
+                                </ion-col>
+                              </ion-row>
+                              <ion-row>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-sub-heading-text">
+                                    Email Address:
+                                  </ion-label>
+                                </ion-col>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-user-details-text">
+                                    lucasanderson@gmail.com
+                                  </ion-label>
+                                </ion-col>
+                              </ion-row>
+                              <ion-row>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-sub-heading-text">
+                                    Address:
+                                  </ion-label>
+                                </ion-col>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-user-details-text">
+                                    No 24, Bakers Street, Colombo, 10500
+                                  </ion-label>
+                                </ion-col>
+                              </ion-row>
+                              <ion-row>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-sub-heading-text">
+                                    Phone Number:
+                                  </ion-label>
+                                </ion-col>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-user-details-text">
+                                    +94 542 478 1463
+                                  </ion-label>
+                                </ion-col>
+                              </ion-row>
+                              <ion-row>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-sub-heading-text">
+                                    Registered Date Time:
+                                  </ion-label>
+                                </ion-col>
+                                <ion-col size=6>
+                                  <ion-label class="search-result-user-details-text">
+                                    14th March, 2021 | 10:00 am
+                                  </ion-label>
+                                </ion-col>
+                              </ion-row>
+                            </ion-grid>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+                </ion-row>
+                <ion-row style="margin-top: 20px;">
+                  <ion-col size="4">
+                  </ion-col>
+                  <ion-col size="4">
+
+                      <!-- DISABLE ACCOUNT BUTTON -->
+                      <ion-button 
+                        style="--border-radius: 20px;
+                              position: relative;
+                              left: 50%;
+                              transform: translateX(-50%);" 
+                        color="danger" 
+                        expand="block" 
+                        *ngIf="operatorAccountDetails.operatorAccountStatus == 'Disabled'"
+                      >
+                        <ion-label>
+                          <ion-img src="assets/images/account/manager/operator-accounts-sub-page/disable-account-icon.png" 
+                            style="width: 25px;
+                                  margin-right: 5px;"></ion-img>
+                        </ion-label>
+                        <ion-label>
+                          DISABLE ACCOUNT
+                        </ion-label>
+                      </ion-button>
+
+                      <!-- ENABLE ACCOUNT BUTTON -->
+                      <ion-button 
+                        style="--border-radius: 20px;
+                              position: relative;
+                              left: 50%;
+                              transform: translateX(-50%);" 
+                        color="green" 
+                        expand="block" 
+                        *ngIf="operatorAccountDetails.operatorAccountStatus == 'Enabled'"
+                      >
+                        <ion-label>
+                          <ion-img src="assets/images/account/manager/operator-accounts-sub-page/enable-account-icon.png" 
+                            style="width: 25px;
+                                  margin-right: 5px;"></ion-img>
+                        </ion-label>
+                        <ion-label>
+                          ENABLE ACCOUNT
+                        </ion-label>
+                      </ion-button>
+
+                  </ion-col>
+                  <ion-col size="4">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          
+          </ion-card-content>
+        </ion-card>
+      </div>
 
 
     </ion-card-content>
