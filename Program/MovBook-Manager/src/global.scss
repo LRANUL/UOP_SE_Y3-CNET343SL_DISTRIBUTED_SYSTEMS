@@ -162,3 +162,15 @@ ion-button{
     position: absolute;
     display: block;
 }
+
+// Code block added to render whole text in the ion select option
+.alert-tappable.alert-radio {
+    height: auto;
+    contain: content;
+}
+
+.alert-radio-label.sc-ion-alert-md,
+.alert-radio-label.sc-ion-alert-ios {
+    white-space: normal;
+}
+

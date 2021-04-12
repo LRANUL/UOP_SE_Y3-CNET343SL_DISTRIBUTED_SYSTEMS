@@ -16,11 +16,21 @@ router.get('', (req, res, next) => {
     })
 });
 
-// Update Refreshments
-router.put('/update', (req, res, next) => {
+// Update Refreshments Stock
+router.put('/update-stock', (req, res, next) => {
   Refreshments.findOneAndUpdate(
     { name: req.body.name },
     { stock: req.body.quantity }).then((data) => {
+      res.send(JSON.stringify("Updated Stock"))
+    }).catch(err => {
+      res.send(JSON.stringify("Not Updated: "+ err))
+    })
+});
+// Update Refreshments Price
+router.put('/update-price', (req, res, next) => {
+  Refreshments.findOneAndUpdate(
+    { name: req.body.name },
+    { price: req.body.price }).then((data) => {
       res.send(JSON.stringify("Updated Stock"))
     }).catch(err => {
       res.send(JSON.stringify("Not Updated: "+ err))

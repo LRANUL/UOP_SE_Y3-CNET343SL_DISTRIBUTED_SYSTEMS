@@ -8,6 +8,8 @@ import { MovieWaitList, AddMovieToMovieWaitList } from 'src/app/models/account/m
 import { environment } from 'src/environments/environment';
 import { CinemaHall } from 'src/app/models/account/manager/cinema-hall';
 import { ShowingExperience } from 'src/app/models/account/manager/showing-experience';
+import { ShowingMovie } from 'src/app/models/account/manager/showing-movie';
+import { ShowingCinemaHallList } from 'src/app/models/account/manager/showing-cinema-hall';
 
 @Injectable({
   providedIn: 'root'
@@ -135,12 +137,12 @@ export class ManagerService {
   // Update beverages quantity
   updateStock(name, quantity) {
     const body = { name: name, quantity: quantity };
-    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update", body);
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-stock", body);
   }
   // Update beverages price
   updatePrice(name, price) {
     const body = { name: name, price: price };
-    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update", body);
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-price", body);
   }
 /**
  * Profile Settings
@@ -167,6 +169,22 @@ getProfile(email){
   // DELETE - Remove showing experience by passing the showing experience ID
   removeShowingExperience(showingExperienceId: string){
     return this.httpClient.delete(this.BASE_URL + "api/showing-experiences/delete/" + showingExperienceId);
+  }
+
+  /**
+   * Showing Movie
+   */
+  // POST - Passing new showing movie details to the server-side
+  addNewShowingMovie(showingMovieDetails: ShowingMovie){
+    return this.httpClient.post(this.BASE_URL + "api/showing-movies/add-new-showing-movie", showingMovieDetails);
+  }
+
+  /**
+   * Showing Cinema Hall
+   */
+  // POST - Passing showing cinema hall details to the server-side
+  assignShowingCinemaHalls(showingCinemaHallList: any){
+    return this.httpClient.post(this.BASE_URL + "api/showing-cinema-halls/assign-showing-cinema-hall", showingCinemaHallList);
   }
 
 }

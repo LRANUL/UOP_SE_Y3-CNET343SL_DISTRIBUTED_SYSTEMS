@@ -30,19 +30,19 @@ router.put('/:id', (req, res, next) => {
   console.log(req.body);
   Users.updateOne({ email: req.params.id },
     {
-      name:[ {
+      name:{
         "prefix":req.body.prefix,
         "firstName":req.body.firstName,
         'middleName':req.body.firstName,
         'lastName':req.body.lastName,
-      }],
-      address:[
+      },
+      address:
         {
           'streetAddress':req.body.streetAddress,
           'city':req.body.city,
           'postalZipCode':req.body.postalZipCode,
         }
-      ],
+      ,
       "phone": req.body.phone
     })
     .then((data) => {

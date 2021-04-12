@@ -4,7 +4,7 @@ const router = express.Router();
 const showingCinemaHall = require("../models/showing-movie-hall");
 
 router.get('/:id' ,(req,res,next)=>{
-    showingCinemaHall.find({cinemaHallObjectId : req.params.id})
+    showingCinemaHall.find({slotObjectId: req.params.id})
       .then((returnedData)=>{
         if(returnedData)
       {

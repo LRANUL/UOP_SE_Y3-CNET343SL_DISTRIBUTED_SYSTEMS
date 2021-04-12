@@ -93,7 +93,7 @@
           <ion-item 
             [routerLink]="'/manager/movie-catalog/upcoming-movies'" 
             routerDirection="root" 
-            [class.active-sub-page]="selectedSubPagePath === '/manager/movie-catalog'" 
+            [class.active-sub-page]="selectedSubPagePath === '/manager/movie-catalog/upcoming-movies' || selectedSubPagePath === '/manager/movie-catalog/now-showing-movies'" 
             class="sub-page-items">
             <ion-label>
               <ion-img 

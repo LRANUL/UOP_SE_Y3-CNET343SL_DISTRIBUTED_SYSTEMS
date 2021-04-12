@@ -67,7 +67,6 @@ export class FoodAndBeveragesSubPagePage implements OnInit {
     );
   }
   updatePrice() {
-    console.log(this.Quantity)
     this.managerService.updatePrice(this.selectedBeverage, this.Price).subscribe(
       async (data) => {
         console.log(data)
@@ -75,7 +74,7 @@ export class FoodAndBeveragesSubPagePage implements OnInit {
           this.getBeverages();
           const alert = await this.alertController.create({
             header: 'Price Updated',
-            message: this.selectedBeverage + ' stock price was update to ' + this.Price,
+            message: this.selectedBeverage + ' stock price was update to ' + this.Price + 'LKR',
           });
 
           await alert.present();

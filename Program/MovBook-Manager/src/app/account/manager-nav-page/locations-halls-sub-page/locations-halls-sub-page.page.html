@@ -28,7 +28,7 @@
 
       <!-- SEARCH BY CINEMA LOCATION NAME FORM -->
       <div>
-        <form>
+        <form [formGroup]="searchCinemaLocationForm" (ngSubmit)="searchCinemaLocation(searchCinemaLocationForm.value)">
           <ion-grid>
             <ion-row>
               <ion-col size="10">
@@ -36,17 +36,22 @@
                   <ion-label>
                     Select Location:
                   </ion-label>
-                  <ion-select okText="SELECT" cancelText="DISMISS">
-                    <ion-select-option *ngFor="let cinemaLocation of cinemaLocationList" value="{{cinemaLocation.cinemaLocationName}}">{{cinemaLocation.cinemaLocationName}}</ion-select-option>
+                  <ion-select okText="SELECT" cancelText="DISMISS" formControlName="cinemaLocationName">
+                    <ion-select-option 
+                      *ngFor="let cinemaLocation of cinemaLocationList" 
+                      value="{{ cinemaLocation.cinemaLocationName }}"
+                    >
+                      {{ cinemaLocation.cinemaLocationName }}
+                    </ion-select-option>
                   </ion-select>
                 </ion-item>
               </ion-col>
               <ion-col size="2">
                 <div>
-                  <ion-button expand="block" type="submit">
+                  <ion-button expand="block" type="submit" [disabled]="!searchCinemaLocationForm.valid">
                     <ion-label>
                       <ion-img src="assets/images/account/manager/locations-halls-sub-page/search-icon.png" style="width: 25px;
-                                                                                                                          margin-left: 0px;"></ion-img>
+                                                                                                                  margin-left: 0px;"></ion-img>
                     </ion-label>
                     <ion-label style="margin-left: 10px;">
                       SEARCH
@@ -59,10 +64,21 @@
         </form>
       </div>
 
+      <!-- RESET BUTTON -->
+      <div style="position: absolute;
+                  top: 10px;
+                  right: 15%;">
+        <ion-button color="green" fill="outline" size="small" style="--border-radius: 20px;
+                                                                    min-height: 45px;
+                                                                    min-width: 120px;" (click)="resetSearchCinemaLocationForm()">
+        RESET
+        </ion-button>
+      </div>
+
       <!-- CINEMA LOCATION SEARCH RESULTS CONTAINER -->
       <div>
         <ion-card style="height: 765px;
-                        background-color: rgb(255, 255, 255);
+                        background-color: rgb(231, 231, 231);
                         border-radius: 10px;
                         overflow-y: auto;">
           <ion-card-content>
@@ -80,86 +96,205 @@
             <div style="padding-top: 10px;">
               <ion-grid>
                 <ion-row>
-                  <ion-col size="6" *ngFor="let cinemaLocation of cinemaLocationList">
-                    <div style="height: auto;
-                                border-radius: 10px;
-                                border: 2px solid #ccc;">
-                      <ion-grid>
-                        <ion-col>
-                          <ion-row>
-                            <ion-col>
-                              <div style="width: 90%;
-                                        height: 240px;
-                                        margin-left: 15px;
-                                        background-color: rgb(55, 87, 116);">
-              
-                              </div>
-                            </ion-col>
-                            <ion-col>
-                              <ion-row>
-                                <ion-label>
-                                  <h1>{{cinemaLocation.cinemaLocationName}}</h1>
-                                </ion-label>
-                              </ion-row>
-                              <ion-row>
-                                <ion-label>
-                                  <h2>
-                                    {{cinemaLocation.cinemaLocationAddress.streetAddress}}, 
-                                    {{cinemaLocation.cinemaLocationAddress.city}}, 
-                                    {{cinemaLocation.cinemaLocationAddress.postalCode}}
-                                  </h2>
-                                </ion-label>
-                              </ion-row>
-                              <ion-row>
-                                <ion-label>
-                                  <h2>No of Halls: <b>2</b></h2>
-                                </ion-label>
-                              </ion-row>
-                              <ion-row style="margin-top: 5%;">
-                                <ion-button expand="block" 
-                                      (click)="openCinemaHallsModal(cinemaLocation._id)"
+                  
+                  <ng-container *ngIf="handleListOfCinemaLocations">
+                    <ion-col size="6" *ngFor="let cinemaLocation of cinemaLocationList">
+                      <div style="height: auto;
+                                  border-radius: 10px;
+                                  border: 2px solid #ccc;
+                                  background-color: #ffffff;">
+                        <ion-grid>
+                          <ion-col>
+                            <ion-row>
+                              <ion-col>
+                                <div style="width: 90%;
+                                          height: 240px;
+                                          margin-left: 15px;
+                                          background-color: #003a6c;
+                                          border-radius: 5px;">
+                                  <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-image.jpg" style="width: 100%; 
+                                                                                                                                    height: 100%;"></ion-img>
+                                </div>
+                              </ion-col>
+                              <ion-col>
+                                <ion-row>
+                                  <ion-label>
+                                    <h1>{{ cinemaLocation.cinemaLocationName }}</h1>
+                                  </ion-label>
+                                </ion-row>
+                                <ion-row>
+                                  <ion-label>
+                                    <h2>
+                                      {{ cinemaLocation.cinemaLocationAddress.streetAddress }}, 
+                                      {{ cinemaLocation.cinemaLocationAddress.city }}, 
+                                      {{ cinemaLocation.cinemaLocationAddress.postalCode }}
+                                    </h2>
+                                  </ion-label>
+                                </ion-row>
+                                <ion-row>
+                                  <ion-label>
+                                    <h2>No of Halls: 
+  
+                                      <ng-container *ngFor="let noOfCinemaHalls of listOfAmountOfCinemaHalls">
+                                        <ng-template 
+                                          *ngIf="noOfCinemaHalls?.cinemaLocationObjectId == cinemaLocation._id;
+                                                then showNoOfCinemaHalls;">
+                                        </ng-template>
+  
+                                        <ng-template #showNoOfCinemaHalls>
+                                          <b>{{ noOfCinemaHalls.noOfCinemaHalls }}</b>
+                                        </ng-template>
+                                      </ng-container>
+  
+                                    </h2>
+                                  </ion-label>
+                                </ion-row>
+                                <ion-row style="margin-top: 5%;">
+                                  <ion-button expand="block" 
+                                        (click)="openCinemaHallsModal(cinemaLocation._id)"
+                                        style="min-width: 100%;
+                                              --border-radius: 10px;"
+                                        color="green">
+                                    <ion-label>
+                                      <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
+                                                                                                                                          margin-left: 0px;"></ion-img>
+                                    </ion-label>
+                                    <ion-label style="margin-left: 10px;">
+                                      VIEW CINEMA HALLS
+                                    </ion-label>
+                                  </ion-button>
+                                </ion-row>
+                                <ion-row>
+                                  <ion-col size="6">
+                                    <ion-button expand="block" 
+                                      (click)="openCinemaHallsModal()"
                                       style="min-width: 100%;
                                             --border-radius: 10px;"
-                                      color="green">
+                                      color="medium">
+                                      <ion-label>
+                                        EDIT LOCATION
+                                      </ion-label>
+                                    </ion-button>
+                                  </ion-col>
+                                  <ion-col size="6">
+                                    <ion-button expand="block" 
+                                      (click)="openCinemaHallsModal()"
+                                      style="min-width: 100%;
+                                            --border-radius: 10px;"
+                                      color="warning">
+                                      <ion-label>
+                                        REMOVE LOCATION
+                                      </ion-label>
+                                    </ion-button>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-col>
+                            </ion-row>
+                          </ion-col>
+                        </ion-grid>
+                      </div>
+                    </ion-col>
+                  </ng-container>
+
+                  <ng-container *ngIf="handleUserSelectedCinemaLocation">
+                    <ion-col size="6">
+                      <div style="height: auto;
+                                  border-radius: 10px;
+                                  border: 2px solid #ccc;
+                                  background-color: #ffffff;">
+                        <ion-grid>
+                          <ion-col>
+                            <ion-row>
+                              <ion-col>
+                                <div style="width: 90%;
+                                          height: 240px;
+                                          margin-left: 15px;
+                                          background-color: #003a6c;
+                                          border-radius: 5px;">
+                                  <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-image.jpg" style="width: 100%; 
+                                                                                                                                    height: 100%;"></ion-img>
+                                </div>
+                              </ion-col>
+                              <ion-col>
+                                <ion-row>
                                   <ion-label>
-                                    <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
-                                                                                                                                        margin-left: 0px;"></ion-img>
+                                    <h1>{{ searchResultCinemaLocation.cinemaLocationName }}</h1>
                                   </ion-label>
-                                  <ion-label style="margin-left: 10px;">
-                                    VIEW CINEMA HALLS
+                                </ion-row>
+                                <ion-row>
+                                  <ion-label>
+                                    <h2>
+                                      {{ searchResultCinemaLocation.cinemaLocationAddress.streetAddress }}, 
+                                      {{ searchResultCinemaLocation.cinemaLocationAddress.city }}, 
+                                      {{ searchResultCinemaLocation.cinemaLocationAddress.postalCode }}
+                                    </h2>
                                   </ion-label>
-                                </ion-button>
-                              </ion-row>
-                              <ion-row>
-                                <ion-col size="6">
+                                </ion-row>
+                                <ion-row>
+                                  <ion-label>
+                                    <h2>No of Halls: 
+  
+                                      <ng-container *ngFor="let noOfCinemaHalls of listOfAmountOfCinemaHalls">
+                                        <ng-template 
+                                          *ngIf="noOfCinemaHalls?.cinemaLocationObjectId == searchResultCinemaLocation._id;
+                                                then showNoOfCinemaHalls;">
+                                        </ng-template>
+  
+                                        <ng-template #showNoOfCinemaHalls>
+                                          <b>{{ noOfCinemaHalls.noOfCinemaHalls }}</b>
+                                        </ng-template>
+                                      </ng-container>
+  
+                                    </h2>
+                                  </ion-label>
+                                </ion-row>
+                                <ion-row style="margin-top: 5%;">
                                   <ion-button expand="block" 
-                                    (click)="openCinemaHallsModal()"
-                                    style="min-width: 100%;
-                                          --border-radius: 10px;"
-                                    color="medium">
+                                        (click)="openCinemaHallsModal(searchResultCinemaLocation._id)"
+                                        style="min-width: 100%;
+                                              --border-radius: 10px;"
+                                        color="green">
                                     <ion-label>
-                                      EDIT LOCATION
+                                      <ion-img src="assets/images/account/manager/locations-halls-sub-page/cinema-hall-icon.png" style="width: 25px;
+                                                                                                                                          margin-left: 0px;"></ion-img>
+                                    </ion-label>
+                                    <ion-label style="margin-left: 10px;">
+                                      VIEW CINEMA HALLS
                                     </ion-label>
                                   </ion-button>
-                                </ion-col>
-                                <ion-col size="6">
-                                  <ion-button expand="block" 
-                                    (click)="openCinemaHallsModal()"
-                                    style="min-width: 100%;
-                                          --border-radius: 10px;"
-                                    color="warning">
-                                    <ion-label>
-                                      REMOVE LOCATION
-                                    </ion-label>
-                                  </ion-button>
-                                </ion-col>
-                              </ion-row>
-                            </ion-col>
-                          </ion-row>
-                        </ion-col>
-                      </ion-grid>
-                    </div>
-                  </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                  <ion-col size="6">
+                                    <ion-button expand="block" 
+                                      (click)="openCinemaHallsModal()"
+                                      style="min-width: 100%;
+                                            --border-radius: 10px;"
+                                      color="medium">
+                                      <ion-label>
+                                        EDIT LOCATION
+                                      </ion-label>
+                                    </ion-button>
+                                  </ion-col>
+                                  <ion-col size="6">
+                                    <ion-button expand="block" 
+                                      (click)="openCinemaHallsModal()"
+                                      style="min-width: 100%;
+                                            --border-radius: 10px;"
+                                      color="warning">
+                                      <ion-label>
+                                        REMOVE LOCATION
+                                      </ion-label>
+                                    </ion-button>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-col>
+                            </ion-row>
+                          </ion-col>
+                        </ion-grid>
+                      </div>
+                    </ion-col>
+                  </ng-container>
+
                 </ion-row>
               </ion-grid>
             </div>
