@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-<<<<<<< HEAD:Program/MovBook-Operator/src/app/operator-nav-page/support-sub-page/support-sub-page.page.spec.ts
-import { SupportSubPagePage } from './support-sub-page.page';
+<<<<<<< HEAD:Program/MovBook-Operator/src/app/operator-nav-page/manage-stock-sub-page/manage-stock-sub-page.page.spec.ts
+import { ManageStockSubPagePage } from './manage-stock-sub-page.page';
 
-describe('SupportSubPagePage', () => {
-  let component: SupportSubPagePage;
-  let fixture: ComponentFixture<SupportSubPagePage>;
+describe('ManageStockSubPagePage', () => {
+  let component: ManageStockSubPagePage;
+  let fixture: ComponentFixture<ManageStockSubPagePage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SupportSubPagePage ],
+      declarations: [ ManageStockSubPagePage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SupportSubPagePage);
+    fixture = TestBed.createComponent(ManageStockSubPagePage);
 =======
 import { HeaderComponentComponent } from './header-component.component';
 

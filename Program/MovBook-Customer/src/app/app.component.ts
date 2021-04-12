@@ -122,6 +122,5 @@ export class AppComponent {
         .catch(err => reject(err));
     });
   }
-
 }
 
