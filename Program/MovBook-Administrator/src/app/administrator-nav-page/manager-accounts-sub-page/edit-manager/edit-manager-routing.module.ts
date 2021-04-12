@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: EditManagerPage
+  },
+  {
+    path: ':managerid',
+    component:EditManagerPage
   }
+
 ];
 
 @NgModule({

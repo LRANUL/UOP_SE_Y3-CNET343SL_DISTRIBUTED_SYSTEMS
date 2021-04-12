@@ -6,3 +6,24 @@ ion-card{
   --ion-background-color: #f1f1f1;
   border-radius: 15px;
 }
+
+.header-tab-button{
+  min-width: 50%;
+  border-bottom: none;
+  background-color: #ffffff;
+  
+}
+
+.header-tab-icon{
+  width: 36px;
+  position: absolute;
+  left: 45%;
+  transform: translateX(-55%);
+}
+
+.header-tab-heading{
+  font-size: 17px;
+  letter-spacing: 2px;
+  padding-left: 25%;
+  padding-top: 5px;
+}

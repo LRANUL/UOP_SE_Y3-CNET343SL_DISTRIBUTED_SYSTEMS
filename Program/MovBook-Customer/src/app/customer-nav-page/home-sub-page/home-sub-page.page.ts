@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { Movie } from 'src/app/models/account/movie';
 import { CustomerService } from 'src/app/services/account/customer.service';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
+import { TermsAndConditionsComponent } from '../terms-and-conditions/terms-and-conditions.component';
 
 @Component({
   selector: 'app-home-sub-page',
@@ -82,6 +83,15 @@ export class HomeSubPagePage implements OnInit {
   });
   await modal.present();
   }
+
+async openTermsmodal()
+{
+const modal = await this.modalCtrl.create({
+  component: TermsAndConditionsComponent,
+  cssClass: 'customer-terms-and-condition-css'
+});
+await modal.present();
+}
 
   aboutUs()
   {

@@ -23,6 +23,14 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'manage-stock',
+    loadChildren: () => import('./manage-stock-sub-page/manage-stock-sub-page.module').then(m => m.ManageStockSubPagePageModule)
+  },
+  {
+    path: 'support',
+    loadChildren: () => import('./support-sub-page/support-sub-page.module').then(m => m.SupportSubPagePageModule)
+  },
+  {
     path: 'settings',
     loadChildren: () =>
       import('./setting-sub-page/setting-sub-page.module').then(
@@ -39,4 +47,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class OperatorNavPagePageRoutingModule {}
+export class OperatorNavPagePageRoutingModule { }

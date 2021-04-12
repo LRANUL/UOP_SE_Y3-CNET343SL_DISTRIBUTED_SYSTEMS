@@ -13,14 +13,15 @@
           <br />
         </div>
 
-        <ion-button expand="block" color="button" href="administrator/dashboard">Dashboard
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','dashboard']">Dashboard
         </ion-button>
-        <ion-button expand="block" color="light" href="administrator/manager-accounts">Manager
+        <ion-button expand="block" color="light" [routerLink]="['/','administrator','manager-accounts']">Manager
           Accounts</ion-button>
-        <ion-button expand="block" color="button" href="administrator/profile-sub-page" style="margin-top: 50%">Profile
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','profile-sub-page']" style="margin-top: 50%">Profile
         </ion-button>
-        <ion-button expand="block" color="button" href="administrator/settings-sub-page">Settings</ion-button>
-        <ion-button expand="block" color="button" href="">Logout</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="['/','administrator','settings-sub-page']">Settings</ion-button>
+        <ion-button expand="block" color="button" [routerLink]="">Logout</ion-button>
+        <!-- [routerLink]="['/','administrator','manager-accounts','edit-manager',ManagerDetails._id]" -->
       </ion-col>
 
       <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;height: 700px">
@@ -185,7 +186,7 @@
               <!--<ion-button><a [routerLink]="['/administrator/manager-accounts/edit-manager']"> Update Details</a></ion-button>
                 -->
               <ion-button style="margin-left: 70px;margin-top: 20px; margin-bottom: 20px;"
-                href="administrator/manager-accounts/edit-manager">Update Details</ion-button>
+              [routerLink]="['/','administrator','manager-accounts','edit-manager',ManagerDetails._id]">Update Details</ion-button>
 
               <ion-button style="margin-left: 70px;margin-top: 20px; margin-bottom: 20px;"
                 (click)='deleteAManager(ManagerDetails._id)'> Remove Manager </ion-button>

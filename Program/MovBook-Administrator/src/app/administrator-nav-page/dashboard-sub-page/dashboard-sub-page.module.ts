@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DashboardSubPagePageRoutingModule } from './dashboard-sub-page-routing.module';
 
 import { DashboardSubPagePage } from './dashboard-sub-page.page';
-import { EmployeeService } from './../../services/account/employee.service';
+import { EmployeeService } from '../../services/account/employee.service';
 
 
 
@@ -21,6 +21,6 @@ import { EmployeeService } from './../../services/account/employee.service';
     HttpClientModule
   ],
   declarations: [DashboardSubPagePage],
-  providers: [EmployeeService]
+  providers: [EmployeeService],
 })
 export class DashboardSubPagePageModule {}

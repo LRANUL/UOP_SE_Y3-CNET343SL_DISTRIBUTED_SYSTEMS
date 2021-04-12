@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { CinemaLocation } from 'src/app/models/account/manager/cinema-location';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddLocationModalPage } from './add-location-modal/add-location-modal.page';
 import { CinemaHallsModalPage } from './cinema-halls-modal/cinema-halls-modal.page';
@@ -12,22 +12,54 @@ import { CinemaHallsModalPage } from './cinema-halls-modal/cinema-halls-modal.pa
 })
 export class LocationsHallsSubPagePage implements OnInit {
 
+  // Declaration - FormGroup to handle searchCinemaLocationForm form
+  searchCinemaLocationForm: FormGroup;
+
   // Declaration - stores list of cinema locations
   cinemaLocationList = [];
+
+  // Declaration - stores the search results for the user selected cinema location
+  searchResultCinemaLocation;
 
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerCinemaLocations' block
   loadingSpinnerCinemaLocations: Boolean = false;
 
+  // Declaration | Initialization - to handle visibility of 'handleListOfCinemaLocations' block
+  handleListOfCinemaLocations: Boolean = false;
+
+  // Declaration | Initialization - to handle visibility of 'handleUserSelectedCinemaLocation' block
+  handleUserSelectedCinemaLocation: Boolean = false;
+
+  // Declaration | Initialization - to store a list of number of cinema halls
+  listOfAmountOfCinemaHalls = new Array();
+
   constructor(
     private modalController: ModalController,
-    private managerService: ManagerService
+    private formBuilder: FormBuilder,
+    private managerService: ManagerService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
 
+    // Assigning form validation
+    this.searchCinemaLocationForm = this.formBuilder.group({
+      cinemaLocationName: new FormControl('', Validators.required)
+    });
+
     // Retrieving list of cinema locations upon page load
     this.retrieveCinemaLocations();
 
+  }
+
+  // Function -  Alert Box Implementation
+  async alertNotice (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   // Function - Implementation for opening the 'Add Location' modal
@@ -70,19 +102,111 @@ export class LocationsHallsSubPagePage implements OnInit {
   // Function - Retrieving cinema locations from the server-side
   retrieveCinemaLocations(){
 
+    // Removing visibility to 'handleListOfCinemaLocations' block
+    this.handleListOfCinemaLocations = false
+
+    // Declaration | Initialization - to store cinema location object ID and number of cinema halls
+    let numberOfCinemaHallsObject = {
+      cinemaLocationObjectId: null,
+      noOfCinemaHalls: null
+    };
+
     // Activating 'loadingSpinnerCinemaLocations' loading spinner
     this.loadingSpinnerCinemaLocations = true;
 
     // Retrieving list of cinema locations
-    this.managerService.retrieveCinemaLocations().subscribe((res) => {
+    this.managerService.retrieveCinemaLocations()
+      .subscribe((cinemaLocationList: any) => {
 
-      // Assigning retrieved list of cinema locations to 'cinemaLocationList' array
-      this.cinemaLocationList = res as CinemaLocation[];
+        if(cinemaLocationList.message == "Cinema locations retrieved"){
+          
+          // For loop - Iterating through the returned cinema locations to retrieve the number of cinema halls
+          for (let cinemaLocationIndex = 0; cinemaLocationIndex < cinemaLocationList.returnedData.length; cinemaLocationIndex++) {
+           
+            // Retrieving the cinema halls for each cinema location
+            this.managerService.retrieveCinemaHalls(cinemaLocationList.returnedData[cinemaLocationIndex]._id)
+              .subscribe((cinemaHallsResponse: any) => {
 
-      // Disabling 'loadingSpinnerCinemaLocations' loading spinner
-      this.loadingSpinnerCinemaLocations = false;
+                // Defining cinema location object ID and number of cinema halls
+                numberOfCinemaHallsObject = {
+                  cinemaLocationObjectId: cinemaLocationList.returnedData[cinemaLocationIndex]._id,
+                  noOfCinemaHalls: cinemaHallsResponse.returnedData ? cinemaHallsResponse.returnedData.length : "0"
+                };
 
+                // Adding 'numberOfCinemaHallsObject' object into the 'listOfAmountOfCinemaHalls' array
+                this.listOfAmountOfCinemaHalls.push(numberOfCinemaHallsObject);
+
+              }, (error: ErrorEvent) => {
+                // Showing error message box to the user
+                this.alertNotice("ERROR", "Unable to retrieve cinema halls, apologies for the inconvenience. Please contact administrator.");
+
+                console.log("Unable to retrieve cinema halls: ", error);
+              });
+
+          }
+          
+          // Assigning retrieved list of cinema locations to 'cinemaLocationList' array
+          this.cinemaLocationList = cinemaLocationList.returnedData;
+
+          // Disabling 'loadingSpinnerCinemaLocations' loading spinner
+          this.loadingSpinnerCinemaLocations = false;
+
+          // Showing visibility to 'handleListOfCinemaLocations' block
+          this.handleListOfCinemaLocations = true
+        }
+        else{
+          // Showing error message box to the user
+          this.alertNotice("ERROR", "Unable to retrieve cinema location details, apologies for the inconvenience. Please contact administrator.");
+
+          console.log("Unable to retrieve cinema location details");
+        }
+
+    },(error: ErrorEvent) => {
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to retrieve cinema location details, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to retrieve cinema location details: ", error);
     });
+
   }
 
+  // Filtering the cinema locations to render the user selected cinema location
+  searchCinemaLocation(searchCinemaLocationFormData){
+
+    // Hiding visibility to 'handleUserSelectedCinemaLocation' block
+    this.handleUserSelectedCinemaLocation = false
+
+    for (let cinemaLocationIndex = 0; cinemaLocationIndex < this.cinemaLocationList.length; cinemaLocationIndex++) {
+
+      if(this.cinemaLocationList[cinemaLocationIndex].cinemaLocationName == searchCinemaLocationFormData.cinemaLocationName){
+
+        this.searchResultCinemaLocation = this.cinemaLocationList[cinemaLocationIndex];
+
+        // Removing visibility to 'handleListOfCinemaLocations' block
+        this.handleListOfCinemaLocations = false
+
+        // Showing visibility to 'handleUserSelectedCinemaLocation' block
+        this.handleUserSelectedCinemaLocation = true
+
+      }
+      
+    }
+
+  }
+
+  // Function - Implementation to reset 'Cinema Location and Halls' to initial state
+  resetSearchCinemaLocationForm(){
+
+    // Resetting 'searchCinemaLocationForm'
+    this.searchCinemaLocationForm.reset();
+
+    // Hiding visibility to 'handleUserSelectedCinemaLocation' block
+    this.handleUserSelectedCinemaLocation = false
+
+    // Showing visibility to 'handleListOfCinemaLocations' block
+    this.handleListOfCinemaLocations = true
+
+  }
+
+  
 }

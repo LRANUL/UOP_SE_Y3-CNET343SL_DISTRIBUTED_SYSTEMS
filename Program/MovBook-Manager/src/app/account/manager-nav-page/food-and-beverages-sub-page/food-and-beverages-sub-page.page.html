@@ -1,14 +1,47 @@
 <ion-content>
-  <ion-card style="min-height: 97%;
-                  position: relative;
-                  margin-top: 0.9%;">
-    <ion-card-content>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      
-
-
-    </ion-card-content>
-  </ion-card>
+  <ion-grid style="background-color: #374d58">
+    <ion-row>
+      <ion-col style="height:100%;width:80%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Beverages</b></h1>
+        </ion-row>
+        <ion-row style="height: 700px;overflow-y: scroll;">
+          <ion-card *ngFor="let beverage of Beverages" style="width: 250px;height: 350px;"
+            (click)="beverageUpdate(beverage)">
+            <ion-img src='{{beverage.imgURL}}' style="height: 200px;"></ion-img>
+            <ion-card-title>{{beverage.name}}</ion-card-title>
+            <ion-card-content>
+              <p>Price (LKR): {{beverage.price}}</p>
+              <p>Quantity: {{beverage.stock}}</p>
+              <ion-button (click)="beverageUpdate(beverage)" color="success">Select</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+      </ion-col>
+      <ion-col size="3" style="width:200px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Stock Quantity Update</b></h1>
+        </ion-row>
+        <ion-list>
+          <ion-item style="color: #ffffff;">Selection: {{selectedBeverage}}</ion-item>
+          <ion-item style="color: #ffffff;">Quantity: <ion-input style="color: #374d58;" [disabled]="selectedBeverage==undefined" type="number" name="Quantity" [(ngModel)]="Quantity" min="10" max="999" placeholder="10" required onKeyPress="if(this.value.length>=3) return false;">
+            </ion-input>
+          </ion-item>
+          <ion-button [disabled]="selectedBeverage==undefined || !Quantity" (click)="updateStock()" size="full">
+            Update</ion-button>
+        </ion-list>
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Stock Price Update</b></h1>
+        </ion-row>
+        <ion-list>
+          <ion-item style="color: #ffffff;">Selection: {{selectedBeverage}}</ion-item>
+            <ion-item style="color: #ffffff;">Price: <ion-input style="color: #374d58;" [disabled]="selectedBeverage==undefined" type="number" name="Price" [(ngModel)]="Price" min="10" max="999" placeholder="10" required onKeyPress="if(this.value.length>=4) return false;">
+            </ion-input>LKR
+          </ion-item>
+          <ion-button [disabled]="selectedBeverage==undefined || !Price" (click)="updatePrice()" size="full">
+            Update</ion-button>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

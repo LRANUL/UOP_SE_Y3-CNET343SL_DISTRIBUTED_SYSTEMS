@@ -3,14 +3,15 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const beveragesRoutes = require("./routes/beverages");
+const refreshmentsRoutes = require("./routes/refreshments");
 const usersRoutes = require("./routes/users");
 const moviesRoutes = require("./routes/movies");
-const loyaltyRoutes= require("./routes/loyalty");
-const ticketPriceRoutes= require("./routes/ticket-prices");
+const operatorRoutes = require("./routes/operators");
+const loyaltyRoutes = require("./routes/loyalty");
 const showingCinemaHall = require("./routes/showing-movie-hall");
 const bookingHistory = require("./routes/bookingHistory");
 const customerRoutes = require("./routes/customer");
+const messagesRoutes = require("./routes/messages");
 const managerRoutes = require("./routes/managers");
 const adminRoutes = require("./routes/admin");
 const cinemaHallRoutes = require("./routes/cinema-halls");
@@ -19,6 +20,9 @@ const upcomingMovieSearchResults = require("./routes/upcoming-movie-search-resul
 const bookingDetails = require("./routes/booking-details");
 const movieWaitLists = require("./routes/movie-wait-lists");
 const movies = require("./routes/movies");
+const showingExperiences = require("./routes/showing-experiences");
+const showingMovies = require("./routes/showing-movies");
+const showingCinemaHalls = require("./routes/showing-cinema-halls");
 
 const app = express();
 
@@ -26,7 +30,7 @@ const app = express();
 mongoose
   .connect(
     process.env.MONGODB_ATLAS_URI_PRIMARY,
-// Legacy Server Support Added, Server timeout set to 30 seconds
+    // Legacy Server Support Added, Server timeout set to 30 seconds
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -43,8 +47,8 @@ mongoose
     console.log("Connection Failed");
   });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -61,9 +65,10 @@ app.use((req, res, next) => {
 
 app.use("/api/movies", moviesRoutes);
 app.use("/api/users", usersRoutes);
-app.use("/api/beverages", beveragesRoutes);
+app.use("/api/refreshments", refreshmentsRoutes);
+app.use("/api/messages", messagesRoutes);
+app.use("/api/operators", operatorRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
-app.use("/api/ticket-prices", ticketPriceRoutes);
 app.use("/api/showing-cinema-hall", showingCinemaHall)
 app.use("/api/booking-history", bookingHistory);
 app.use("/api/booking-details", bookingDetails);
@@ -75,5 +80,8 @@ app.use("/api/cinema-halls", cinemaHallRoutes);
 app.use("/api/cinema-locations", cinemaLocationRoutes);
 app.use("/api/movie-wait-lists", movieWaitLists);
 app.use("/api/movies", movies);
+app.use("/api/showing-experiences", showingExperiences);
+app.use("/api/showing-movies", showingMovies);
+app.use("/api/showing-cinema-halls", showingCinemaHalls);
 
 module.exports = app;

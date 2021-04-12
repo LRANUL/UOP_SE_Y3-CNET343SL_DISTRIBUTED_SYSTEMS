@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,11 +10,14 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private authServ:AuthService) { }
+  constructor(private authServ:AuthService, private router: Router) { }
 
   ngOnInit() {
   }
 
+  dashboard(){
+    this.router.navigate(['operator']);
+  }
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;

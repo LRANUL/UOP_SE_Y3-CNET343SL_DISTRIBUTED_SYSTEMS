@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-//import { Observable } from 'rxjs/observable';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+//
 //import  'rxjs/add/operator/map';
 //import  'rxjs/add/operator/toPromise';
 import { Subject } from 'rxjs'
@@ -8,6 +8,15 @@ import { environment } from "src/environments/environment";
 
 import { Employee } from 'src/app/models/account/employee'
 import { NgForm } from '@angular/forms';
+
+import { Observable } from 'rxjs/observable';
+// // import 'rxjs/add/operator/of';
+// import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable'
 
 @Injectable({
   providedIn: 'root'
@@ -76,6 +85,16 @@ export class EmployeeService {
   }
 
 
+
+  //get manager details by ID -> manager-accounts-sub-page
+  getManagerDetailsbyID(id: string) {
+    //console.log(id)
+    //this.http.get<{ message: string, ManagerDetails: any }>(this.baseUrl + "api/get/").subscribe(res => {
+    return this.http.get<{ message: string, ManagerDetails: any }>(this.BASE_URL + "api/managers/get/" + id)
+    
+  }
+
+
   //delete manager -> manager-accounts-sub-page
   deleteManager(mID: string) {
     //return this.http.delete(this.baseUrl + "api/delete/" + mID)
@@ -85,8 +104,14 @@ export class EmployeeService {
 
 
   //Update Manager
-  updateManager(mID: string) {
+  updateManager(Prefix: string, FirstName: string, MiddleName: string, LastName: string, Email: string, Phone: string, StreetAddress: string, City: string, PostalCode: string, id: string) {
 
+    let updatedData: Employee;
+    let phoneNO: number = +Phone
+    updatedData = {Prefix:Prefix,FirstName:FirstName,MiddleName:MiddleName,LastName:LastName,Email:Email,Phone:phoneNO,StreetAddress:StreetAddress,City:City,PostalCode:PostalCode}
+    this.http.put(this.BASE_URL + "api/managers/update/" + id, updatedData).subscribe(res=>{
+      console.log(res)
+    })
   }
 
 
@@ -102,16 +127,21 @@ export class EmployeeService {
 
 
   statusOMDB() {
-    return this._http.get(this.BASE_URL + "api/omdb/upcoming-movies/search/tenet");
-    //return this._http.get("http://localhost:3000/api/omdb/upcoming-movies/search/:movieTitle/");
-    //return this._http.get("http://www.omdbapi.com/swagger.json")
-    //.map(result => result);
-    // .pipe(map(res =>{
-    //   console.log('bla bla')
-    // }))
+    return this._http.get(this.BASE_URL + "api/omdb/upcoming-movies/search/tenet")
+      .catch(this.errorHandler);
 
-    ////api/omdb/upcoming-movies/search/:movieTitle/
+  }
 
+
+  // getStatus() {
+  //   return this._http.get(this.BASE_URL + "api/omdb/upcoming-movies/search/tenet")
+  //     .catch(this.errorHandler);
+
+  // }
+
+
+  errorHandler(error: HttpErrorResponse){
+    return Observable.throw(error.message || "Server Error");
   }
 
   // statusStripe(){
@@ -122,7 +152,5 @@ export class EmployeeService {
   //     // }))
   // }
 
-
-
-
+ 
 }

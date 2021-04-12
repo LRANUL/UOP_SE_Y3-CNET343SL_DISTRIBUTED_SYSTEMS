@@ -7,6 +7,9 @@ import { MovieDetails } from 'src/app/models/account/manager/movie-details';
 import { MovieWaitList, AddMovieToMovieWaitList } from 'src/app/models/account/manager/movie-wait-list';
 import { environment } from 'src/environments/environment';
 import { CinemaHall } from 'src/app/models/account/manager/cinema-hall';
+import { ShowingExperience } from 'src/app/models/account/manager/showing-experience';
+import { ShowingMovie } from 'src/app/models/account/manager/showing-movie';
+import { ShowingCinemaHallList } from 'src/app/models/account/manager/showing-cinema-hall';
 
 @Injectable({
   providedIn: 'root'
@@ -24,19 +27,19 @@ export class ManagerService {
    */
   // GET - Retrieving movie search results from the backend according to the entered movie title and (optional) movie release year
   getMovieSearchResults(movieTitle: string, movieReleaseYear: string): Observable<MovieSearchResult> {
-    if(movieReleaseYear == ""){
+    if (movieReleaseYear == "") {
       return this.httpClient
         .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/search/" + movieTitle);
     }
-    else if(movieReleaseYear != ""){
+    else if (movieReleaseYear != "") {
       return this.httpClient
         .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/search/" + movieTitle + "/" + movieReleaseYear);
     }
   }
   // GET - Retrieving detailed movie details for one movie by passing the imdbId
-  getMovieDetailsForOneMovie(movieImdbId: string){
+  getMovieDetailsForOneMovie(movieImdbId: string) {
     return this.httpClient
-        .get<MovieDetails>(this.BASE_URL + "api/omdb/upcoming-movies/details/" + movieImdbId);
+      .get<MovieDetails>(this.BASE_URL + "api/omdb/upcoming-movies/details/" + movieImdbId);
   }
 
   /**
@@ -48,7 +51,7 @@ export class ManagerService {
       .post(this.BASE_URL + "api/movies/add-movie/" + movieStatus, movie);
   }
   // GET - Retrieving movieObjectId (_id) from the database by passing the movieImdbId
-  getMovieObjectId(movieImdbId: string){
+  getMovieObjectId(movieImdbId: string) {
     return this.httpClient
       .get(this.BASE_URL + "api/movies/movie-id/" + movieImdbId);
   }
@@ -64,13 +67,18 @@ export class ManagerService {
   }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
   updateMovieStatus(movieImdbId: string, newMovieStatus: string){
+    // Creating an object to pass the movie details
+    let movieDetails = {
+      movieImdbId: movieImdbId,
+      newMovieStatus: newMovieStatus
+    }
     return this.httpClient
-      .put(this.BASE_URL + "api/movies/update-movie-status/" + newMovieStatus, movieImdbId);
+      .put(this.BASE_URL + "api/movies/update-movie-status", movieDetails);
   }
-  // DELETE - Remove movie from wait list by passing the movie imdb ID
-  removeWaitListedMovie(movieImdbId: string){
+  // DELETE - Remove movie by passing the movie imdb ID
+  removeMovie(movieImdbId: string){
     return this.httpClient
-      .delete(this.BASE_URL + "api/movies/remove-wait-listed-movie/" + movieImdbId);
+      .delete(this.BASE_URL + "api/movies/remove-movie/" + movieImdbId);
   }
 
   /**
@@ -79,17 +87,17 @@ export class ManagerService {
    * 
    */
   // GET - Retrieving movie wait list from the database
-  getMovieWaitList(managerObjectId: string){
+  getMovieWaitList(managerObjectId: string) {
     return this.httpClient
       .get(this.BASE_URL + "api/movie-wait-lists/" + managerObjectId);
   }
   // POST - Creating a new movie wait list
-  createMovieWaitList(movieWaitList: MovieWaitList){
+  createMovieWaitList(movieWaitList: MovieWaitList) {
     return this.httpClient
       .post(this.BASE_URL + "api/movie-wait-lists/add", movieWaitList);
   }
   // PUT - Updating movie wait list (adding movies to the movie wait list)
-  addMovieToMovieWaitList(AddMovieToMovieWaitList: AddMovieToMovieWaitList){
+  addMovieToMovieWaitList(AddMovieToMovieWaitList: AddMovieToMovieWaitList) {
     return this.httpClient
       .put<AddMovieToMovieWaitList>(this.BASE_URL + "api/movie-wait-lists/add-movie", AddMovieToMovieWaitList);
   }
@@ -98,12 +106,12 @@ export class ManagerService {
    * Cinema Hall
    */
   // POST - Passing new cinema hall details to the server-side
-  addNewCinemaHall(cinemaHall: CinemaHall){
+  addNewCinemaHall(cinemaHall: CinemaHall) {
     return this.httpClient.post(this.BASE_URL + "api/cinema-halls/", cinemaHall);
   }
 
   // GET - Retrieving cinema hall details from the server-side
-  retrieveCinemaHalls(cinemaLocationObjectId){
+  retrieveCinemaHalls(cinemaLocationObjectId) {
     return this.httpClient.get(this.BASE_URL + "api/cinema-halls/" + cinemaLocationObjectId);
   }
 
@@ -111,13 +119,72 @@ export class ManagerService {
    * Cinema Location
    */
   // POST - Passing new cinema location details to the server-side
-  addNewCinemaLocation(cinemaLocation: CinemaLocation){
+  addNewCinemaLocation(cinemaLocation: CinemaLocation) {
     return this.httpClient.post(this.BASE_URL + "api/cinema-locations", cinemaLocation);
   }
 
   // GET - Retrieving cinema locations from the server-side
-  retrieveCinemaLocations(){
+  retrieveCinemaLocations() {
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
+  }
+
+
+  /** Beverages Management */
+  // GET beverages list
+  getBeverages() {
+    return this.httpClient.get(this.BASE_URL + "api/refreshments");
+  }
+  // Update beverages quantity
+  updateStock(name, quantity) {
+    const body = { name: name, quantity: quantity };
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-stock", body);
+  }
+  // Update beverages price
+  updatePrice(name, price) {
+    const body = { name: name, price: price };
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-price", body);
+  }
+/**
+ * Profile Settings
+ */
+// Get profile data
+getProfile(email){
+  return this.httpClient.get<any>(this.BASE_URL + "api/managers/" + email);
+}
+  /**
+   * Showing Experience
+   */
+  // POST - Passing new showing experience details to the server-side
+  addNewShowingExperience(showingExperience: ShowingExperience){
+    return this.httpClient.post(this.BASE_URL + "api/showing-experiences", showingExperience);
+  }
+  // GET - Retrieving list showing experiences from the server-side
+  retrieveListOfShowingExperiences(){
+    return this.httpClient.get(this.BASE_URL + "api/showing-experiences/");
+  }
+  // PUT - Updating showing experience by passing details to the server-side
+  editShowingExperience(showingExperience: any){
+    return this.httpClient.put(this.BASE_URL + "api/showing-experiences/update", showingExperience);
+  }
+  // DELETE - Remove showing experience by passing the showing experience ID
+  removeShowingExperience(showingExperienceId: string){
+    return this.httpClient.delete(this.BASE_URL + "api/showing-experiences/delete/" + showingExperienceId);
+  }
+
+  /**
+   * Showing Movie
+   */
+  // POST - Passing new showing movie details to the server-side
+  addNewShowingMovie(showingMovieDetails: ShowingMovie){
+    return this.httpClient.post(this.BASE_URL + "api/showing-movies/add-new-showing-movie", showingMovieDetails);
+  }
+
+  /**
+   * Showing Cinema Hall
+   */
+  // POST - Passing showing cinema hall details to the server-side
+  assignShowingCinemaHalls(showingCinemaHallList: any){
+    return this.httpClient.post(this.BASE_URL + "api/showing-cinema-halls/assign-showing-cinema-hall", showingCinemaHallList);
   }
 
 }

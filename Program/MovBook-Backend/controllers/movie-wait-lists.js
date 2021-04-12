@@ -16,7 +16,7 @@ exports.retrieveMovieWaitList = async (req, res, next) => {
   // Getting passed 'managerObjectId' from the URL
   let managerObjectId = req.params.managerObjectId;
 
-  // Using mongoDB's find() functionality to retrieve movie wait list for a manager user
+  // Using mongoose find() functionality to retrieve movie wait list for a manager user
   await movieWaitListModel.find({ managerObjectId: managerObjectId }, (error, returnedData) => {
 
       if(error){
@@ -55,7 +55,7 @@ exports.createMovieWaitList = async (req, res, next) => {
   // Getting passed 'movieObjectId' from the request body
   let passedMovieObjectId = req.body.movieObjectId;
 
-  // Using mongoDB's save() functionality to create a new movie wait list document (object)
+  // Using mongoose save() functionality to create a new movie wait list document (object)
   await new movieWaitListModel({
     managerObjectId: passedManagerObjectId,
     movieObjectId: passedMovieObjectId
@@ -129,7 +129,7 @@ exports.addMovieToMovieWaitList = async (req, res, next) => {
    * - Add the passed movie object ID into the moviewaitlist
    */
 
-  // Using mongoDB's findOneAndUpdate() functionality to update movie wait list document (object) with the passed movieObjectId
+  // Using mongoose findOneAndUpdate() functionality to update movie wait list document (object) with the passed movieObjectId
   movieWaitListModel.findOneAndUpdate(
     { managerObjectId: passedManagerObjectId }, 
     {

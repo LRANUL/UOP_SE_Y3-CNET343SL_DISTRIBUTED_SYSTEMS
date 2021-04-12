@@ -19,9 +19,16 @@ export class DashboardSubPagePage implements OnInit {
   @ViewChild('barChart') barChart;
   @ViewChild('barChartStat') barChartStat;
 
+  jsonResponse: any;
   headers: any;
   splitStatus:any;
   splitAddress:any;
+
+
+  jsonResponseManager: any;
+  headersManager: any;
+  splitStatusManager:any;
+  splitAddressManager:any;
 
 
   bars: any;
@@ -32,11 +39,11 @@ export class DashboardSubPagePage implements OnInit {
   admin_LastName: any;
   admin_Email: any;
 
-  jsonResponse: any;
+  //jsonResponse: any;
   public headerStat: any;
   public errorMsg;
 
-  constructor(private employeeService: EmployeeService,  private omdbStatus: EmployeeService, private handle: EmployeeService ) { }
+  constructor(private employeeService: EmployeeService, private handle: EmployeeService ) { }
 
   //BarChart Function
   ionViewDidEnter() {
@@ -66,14 +73,9 @@ export class DashboardSubPagePage implements OnInit {
       }
     );
 
-    //MongoDB statistics
-    // this.MongoDBStatus.statusMongoDB().subscribe((res)=>{
-    //   console.log(res);
-    // })
-
 
     //omdb statistic
-    this.omdbStatus.statusOMDB().subscribe(
+    this.employeeService.statusOMDB().subscribe(
       (res) => {
         //console.log("********////////////////////********");
         console.log(res);
@@ -86,27 +88,9 @@ export class DashboardSubPagePage implements OnInit {
         }
                 
       });
-
-    //  this.StripeStatus.statusStripe().subscribe((res)=>{
-    //    console.log(res)
-    //  })
-
-    // function splitStr(str){
-    //   var string = str.split(":")
-      
-    //   //console.log(string);
-    //   //console.log(string[0],[1],[2])
-    //   //console.log(string[3])
-    //   var responseStatus = string[3];
-    //   console.log(responseStatus)
-    //   //let headers = string[3]
-    //   this.headers = responseStatus;
-      
-    // }
         
 
-    this.employeeService.statusOMDB()
-    .subscribe((data) => 
+    this.employeeService.statusOMDB().subscribe((data) => 
       this.headerStat = data,
       error => {
         this.errorMsg = error;
@@ -116,18 +100,41 @@ export class DashboardSubPagePage implements OnInit {
         this.headers = this.errorMsg.split(":")
         this.splitAddress = this.headers[2];
         this.jsonResponse = "Server Error"
+       
+      },
+    );
+
+
+
+    //managerStatus
+    this.employeeService.managerStatus().subscribe(
+      (res) => {
+        //console.log("********////////////////////********");
+        console.log(res);
+        let value = JSON.stringify(res);
+        this.jsonResponseManager = res['message'];
+        // console.log(value)
+        if(res['message'] == "Data Retrieved"){
+          var status = "Status Code 200"
+          this.splitStatusManager = status;
+          //this.splitAddressManager = "api/managers/get/";
+        }
+                
+      });
         
-        //console.log(this.errorMsg)
-        //console.log("******************")
-        //let val = JSON.stringify(this.errorMsg);
-        //console.log(val)
-        // var split = this.errorMsg.split(":");
-        // var responseStatus = split[3];
-        // console.log(responseStatus);
+//Error Handling
+    this.employeeService.managerStatus().subscribe((data) => 
+      this.headerStat = data,
+      error => {
+        this.errorMsg = error;
         
-        //var str = error;
-        //splitStr(str);
-        //console.log(x)
+       this.headersManager = this.errorMsg.split(":")
+       console.log(this.headersManager)
+        this.splitStatusManager = this.headersManager[3];
+        console.log(this.splitStatusManager)
+        this.headersManager = this.errorMsg.split(":")
+        this.splitAddressManager = this.headersManager[2];
+        this.jsonResponseManager = "Server Error"
        
       },
     );

@@ -10,6 +10,8 @@ import { AlertController, LoadingController } from '@ionic/angular';
 export class ManagerNavPagePage implements OnInit {
 
   selectedSubPagePath = '';
+  name: string;
+  email: string;
 
   constructor(
     private router: Router,
@@ -22,6 +24,11 @@ export class ManagerNavPagePage implements OnInit {
   }
 
   ngOnInit() {
+    this.name = localStorage.getItem('name');
+    this.email = localStorage.getItem('email');
+    // Remove after getting login credentials
+    this.name = 'Mr. Lucas Anderson';
+    this.email = 'lucasanderson@gmail.com';
   }
 
   // Logout Alert Box Implementation

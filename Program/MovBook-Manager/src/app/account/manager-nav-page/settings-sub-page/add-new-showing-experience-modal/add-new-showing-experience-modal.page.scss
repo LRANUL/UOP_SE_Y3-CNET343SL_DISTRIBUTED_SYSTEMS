@@ -1,0 +1,18 @@
+ion-item{
+  border: #ccc solid 1px;
+  border-radius: 5px;
+  --ion-background-color: rgb(255, 255, 255);
+}
+
+#closeModalButton{
+  margin-right: 20px;
+}
+
+.add-new-showing-experience-form-text{
+  font-size: 17px;
+  color: #000000;
+  letter-spacing: 1px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

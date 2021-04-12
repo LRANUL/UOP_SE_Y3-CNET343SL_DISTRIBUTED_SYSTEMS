@@ -38,8 +38,12 @@ export class MovieWaitlistTabPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // Retrieving movies under 'WaitListed' when the page is initially rendered
+    this.retrieveMoviesAsWaitListed();
+  }
 
-    // Retrieving movies under 'WaitListed' when the page renders
+  ionViewWillEnter(){
+    // Retrieving movies under 'WaitListed' when the page is viewed
     this.retrieveMoviesAsWaitListed();
   }
 
@@ -48,12 +52,25 @@ export class MovieWaitlistTabPagePage implements OnInit {
     const movieCatalogTypesPopover = await this.popoverController.create({
       component: MovieCatalogTypesPopoverPage,
       componentProps: {
-        movieId: waitListedMovieImdbId,
-        movieDetails: waitListedMovieDetails
+        passingMovieImdbId: waitListedMovieImdbId,
+        passingMovieDetails: waitListedMovieDetails,
+        passingMovieCondition: "Movie-Exists"
       },
       event: evt
     });
     movieCatalogTypesPopover.present();
+
+    // Collecting response data when modal is dismissed
+    const { data } = await movieCatalogTypesPopover.onDidDismiss();
+
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        // Retrieving updated list of wait listed movies
+        this.retrieveMoviesAsWaitListed();
+      }
+    }
   }
 
   // Implementation for opening the 'Movie Details Modal' modal
@@ -167,7 +184,7 @@ export class MovieWaitlistTabPagePage implements OnInit {
     this.loadingSpinnerRemoveMovie = true;
 
     // Removing movie from wait list from the database
-    this.managerService.removeWaitListedMovie(movieImdbId)
+    this.managerService.removeMovie(movieImdbId)
       .subscribe((movieRemovedResponse: any) => {
         
       if(movieRemovedResponse.message == "Movie removed"){
@@ -178,6 +195,12 @@ export class MovieWaitlistTabPagePage implements OnInit {
         this.alertNotice("Movie Removed", "Movie was removed from the Wait List");
 
         console.log("Movie was removed from the Wait List");
+
+        // Checking the length of the 'movieDetailsAsWaitListed' to re-initialize the array
+        if(this.movieDetailsAsWaitListed.length == 1){
+          // Re-initializing array to hold new movies
+          this.movieDetailsAsWaitListed = new Array();
+        }
 
         // Re-rendering function to retrieve all movies in the wait list
         this.retrieveMoviesAsWaitListed();

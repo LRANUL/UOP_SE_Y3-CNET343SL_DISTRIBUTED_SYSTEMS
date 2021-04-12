@@ -8,7 +8,7 @@ exports.addMovie = async (req, res, next) => {
   // Retrieving the movie status
   let passedMovieStatus = req.params.movieStatus;
 
-  // Using mongoDB's save() functionality to create a new movie document (object)
+  // Using mongoose save() functionality to create a new movie document (object)
   await new movieModel({
     movieStatus: passedMovieStatus,
     movieTitle: req.body.Title,
@@ -65,7 +65,7 @@ exports.retrieveMovieObjectId = async (req, res, next) => {
   // Getting passed 'movieImdbId' from the url
   let passedMovieImdbId = req.params.movieImdbId;
 
-  // Using mongoDB's find() functionality to get the movieObjectId (_id) for the passed movieImdbId
+  // Using mongoose find() functionality to get the movieObjectId (_id) for the passed movieImdbId
   await movieModel.find({ 'imdb.imdbId': passedMovieImdbId }, "_id", (error, returnedData) => {
 
     // If condition - checking whether an error occurred during the query execution
@@ -103,7 +103,7 @@ exports.retrieveMovie = async (req, res, next) => {
   // Getting passed 'movieImdbId' from the URL
   let passedMovieImdbId = req.params.movieImdbId;
 
-  // Using mongoDB's findOne() functionality to retrieve one movie document object for the passed movieImdbId
+  // Using mongoose findOne() functionality to retrieve one movie document object for the passed movieImdbId
   await movieModel.findOne({ 'imdb.imdbId': passedMovieImdbId }, (error, returnedData) => {
 
     // If condition - checking whether an error occurred during the query execution
@@ -139,7 +139,7 @@ exports.retrieveAllMoviesAsStatus = async (req, res, next) => {
   // Getting passed 'movieStatus' from the url
   let passedMovieStatus = req.params.movieStatus;
 
-  // Using mongoDB's find() functionality to get the movies for the passed movie status
+  // Using mongoose find() functionality to get the movies for the passed movie status
   await movieModel.find({ movieStatus: passedMovieStatus }, (error, returnedData) => {
 
     // If condition - checking whether an error occurred during the query execution
@@ -171,16 +171,16 @@ exports.retrieveAllMoviesAsStatus = async (req, res, next) => {
 
 };
 
-// Function - Update movie status using route, 'BASE_URL/api/movies/update-movie-status/:newMovieStatus'
+// Function - Update movie status using route, 'BASE_URL/api/movies/update-movie-status'
 exports.updateMovieStatus = async (req, res, next) => {
 
   // Getting passed movie status
-  let passedNewMovieStatus = req.params.newMovieStatus;
+  let passedNewMovieStatus = req.body.newMovieStatus;
 
   // Getting passed movie imdb id
   let passedMovieImdbId = req.body.movieImdbId;
 
-  // Using mongoDB's findOneAndUpdate() functionality to update movie status
+  // Using mongoose findOneAndUpdate() functionality to update movie status
   await movieModel.findOneAndUpdate(
     {
       'imdb.imdbId': passedMovieImdbId
@@ -207,13 +207,13 @@ exports.updateMovieStatus = async (req, res, next) => {
     
 };
 
-// Function - Delete wait listed movie | Route: 'BASE_URL/api/movies/remove-wait-listed-movie/:movieImdbId'
-exports.removeWaitListedMovie = async (req, res, next) => {
-  console.log(req);
+// Function - Delete movie | Route: 'BASE_URL/api/movies/remove-movie/:movieImdbId'
+exports.removeMovie = async (req, res, next) => {
+
   // Getting passed movieImdbId
   let passedMovieImdbId = req.params.movieImdbId;
 
-  // Using mongoDB's findByIdAndDelete() functionality to remove the movie according to the passed movieImdbId
+  // Using mongoose findByIdAndDelete() functionality to remove the movie according to the passed movieImdbId
   await movieModel.deleteOne({ 'imdb.imdbId': passedMovieImdbId }, (error, returnedData) => {
 
     // If condition - checking whether an error occurred during the query execution

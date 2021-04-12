@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MovieDetailSubPagePageRoutingModule } from './movie-detail-sub-page-routing.module';
 
 import { MovieDetailSubPagePage } from './movie-detail-sub-page.page';
+import { HeaderComponentComponent } from 'src/app/header-component/header-component.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { MovieDetailSubPagePage } from './movie-detail-sub-page.page';
     IonicModule,
     MovieDetailSubPagePageRoutingModule
   ],
-  declarations: [MovieDetailSubPagePage]
+  declarations: [MovieDetailSubPagePage, HeaderComponentComponent]
 })
 export class MovieDetailSubPagePageModule {}

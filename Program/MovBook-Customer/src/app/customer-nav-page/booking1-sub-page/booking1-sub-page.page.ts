@@ -28,10 +28,11 @@ export class Booking1SubPagePage implements OnInit {
    }
 
   ngOnInit() {
-    this.routedID = this.router.snapshot.paramMap.get('id');
+    this.showingSlot = this.router.snapshot.paramMap.get('id');
     this.startTimer();
     console.log(this.time)
-    this.getShowingMovie();
+    console.log(this.showingSlot + " showing slot ID")
+    this.getShowingMovieHall(this.showingSlot);
   }
 
   movieDetails : Movie = {
@@ -67,23 +68,33 @@ export class Booking1SubPagePage implements OnInit {
   };
 
   // this is the showing movie collection  id
-  routedID;
   movieId;
+  showingMovieId;
+  showingSlot;
   hallId;
   movies : movie ={
-  movieObjectId: '',
-  cinemaHallObjectId: '',
-  cinemaLocationObjectId: '',
-  showingExperience: '',
-  showingStartDate: '',
-  showingEndDate: '',
-  showingTime: '',
-  cinemaLocationName : '',
-  cinemaLocationAddress : {
-    streetAddress : '',
-    city : '',
-    postalCode: ''
-  }
+    movieObjectId: '',
+    cinemaHallObjectId: '',
+    cinemaLocation: {
+    cinemaLocationObjectId : '',
+    cinemaLocationName : '',
+    cinemaLocationAddress : {
+      streetAddress : '',
+      city : '',
+      postalCode: '',
+    }
+  },
+    showingStartDate: '',
+    showingEndDate: '',
+    showingSlots: [{
+    _id: '',
+    showingExperience: '',
+    showingDate: '',
+    timeSlotStartTime: '',
+    timeSlotEndTime: '',
+    adultsTicketFeeLKR: '',
+    childrenTicketFeeLKR: ''
+    }]
   };
 
   tickets: ticketPrices = {
@@ -96,17 +107,22 @@ export class Booking1SubPagePage implements OnInit {
   };
 
   showingHallDetails: showingCinemaHall = {
-    movieShowingObjectId : '',
-    cinemaHallObjectId : '',
-    cinemaLocationObjectId : '',
-    showingSeatDetails : [{
-        seatId : '',
-        seatNumber: '',
-        seatUnavailable: '',
-        seatStatus : '',
-        seatType : '',
-        customerObjectId : ''
-      }]
+  showingCinemaHallObjectId: '',
+  slotObjectId: '',
+  showingMovieObjectId: '',
+  cinemaHallObjectID: '',
+  cinemaLocationObjectId : '',
+  showingSeatDetails : [
+    {
+      seatObjectId: '',
+      seatId : '',
+      seatNumber: '',
+      seatUnavailable: '',
+      seatStatus : '',
+      seatType : '',
+      customerObjectId : '',
+    }
+  ]
   };
 
   hallDetails : CinemaHall = {
@@ -128,6 +144,7 @@ export class Booking1SubPagePage implements OnInit {
     cinemaLocationId;
     allocatedPos;
     hall;
+    hallName;
 
   Aprice;
   Cprice;
@@ -138,11 +155,12 @@ export class Booking1SubPagePage implements OnInit {
   seat;
 
   seatinfo : seatingData ={
+    seatObjectId: '',
     seatId: '',
     seatNumber: '',
     seatUnavailable: '',
     seatStatus : '',
-    seatType: '',
+    seatActive: '',
     customerObjectId: ''
   };
 
@@ -153,26 +171,66 @@ export class Booking1SubPagePage implements OnInit {
     sec
   }
 
-  //get the showing movie details from the database using the movie ID
-  getShowingMovie()
+  //this is the object that will be used to send data to part B of the booking
+  allticketInformation: any ={
+    movieInfo: {},
+    showingMovieInfo: {},
+    ticketDetalis: {},
+    hallInformaion: {
+      seatNumbers: '',
+      adultTickets : '',
+      childrenTicket: '',
+      totalAmount: ''
+    }
+  }
+
+  getShowingMovieHall(id)
   {
-    this.customerService.getSpecificShowingMovie(this.routedID);
+   this.customerService.retrieveShowingCinemaHall(id);
+   this.customerService.getShowingCinemaHall().subscribe((cinemaHall: showingCinemaHall)=> {
+   this.showingHallDetails = cinemaHall;
+   this.hallinfo = cinemaHall
+   this.showingMovieId = cinemaHall[0].showingMovieObjectId;
+   console.log(this.showingMovieId);
+   this.getShowingMovie(this.showingMovieId);
+   let value = this.hallinfo[0].showingSeatDetails.length
+     let i = 0;
+     this.seat = -1;
+     for(i ; i < value; i++)
+     {
+      this.seatinfo = {
+        seatObjectId:  this.hallinfo[0].showingSeatDetails[i]._id,
+        seatId: this.hallinfo[0].showingSeatDetails[i].seatId,
+        seatNumber: this.hallinfo[0].showingSeatDetails[i].seatNumber,
+        seatUnavailable: this.hallinfo[0].showingSeatDetails[i].seatUnavailable,
+        seatStatus : this.hallinfo[0].showingSeatDetails[i].seatStatus,
+        seatActive : this.hallinfo[0].showingSeatDetails[i].seatActive,
+        customerObjectId : this.hallinfo[0].showingSeatDetails[i].customerObjectId
+    }
+    this.seatData.push(this.seatinfo)
+     this.seat = this.seat + 1;
+    }
+   })
+  }
+
+  //get the showing movie details from the database using the movie ID
+  getShowingMovie(id)
+  {
+    this.customerService.getSpecificShowingMovie(id);
     this.customerService.getShowingMovie().subscribe((movie: movie)=> {
       this.movies = movie;
-      console.log( this.movies);
-      console.log( movie);
       this.movieId =  movie.movieObjectId;
       this.hallId = movie.cinemaHallObjectId;
+      this.Aprice = movie.showingSlots[0].adultsTicketFeeLKR;
+      this.Cprice = movie.showingSlots[0].childrenTicketFeeLKR;
+      this.totalammount = this.numberoftickets * this.Aprice;
+      this.allticketInformation.showingMovieInfo = movie;
       if(this.movieId != undefined && this.hallId != undefined)
       {
-        console.log(this.movieId);
         // to get the movie details for this movie
         this.getMovieAdditionalDetails(this.movieId);
         this.getmoviehall(this.hallId);
-        this.getShowingMovieHall(this.hallId);
       }
-      // to get the price of the movie
-      this.getMoviePrices(this.routedID);
     })
   }
 
@@ -182,6 +240,7 @@ export class Booking1SubPagePage implements OnInit {
     this.customerService.getMovieDetail(id);
     this.customerService.getmovies().subscribe((movies: Movie)=> {
       this.movieDetails = movies;
+      this.allticketInformation.movieInfo = movies
       console.log( this.movieDetails);
     })
   }
@@ -192,39 +251,12 @@ export class Booking1SubPagePage implements OnInit {
      this.customerService.retrieveCinemaHall(id);
      this.customerService.gethall().subscribe((hall: CinemaHall)=>{
      this.hallDetails = hall;
+     this.allticketInformation.hallInformaion = hall;
      this.hall = hall;
-     console.log(hall);
-     console.log(this.hallDetails);
+     this.hallName = this.hallDetails[0].cinemaHallName
      this.NoOfColumns = this.hallDetails[0].seatingGridNoOfColumns;
      this.NoOfRows = this.hallDetails[0].seatingGridNoOfRows;
      this.cinemaLocationId = this.hallDetails[0].cinemaLocationObjectId
-   })
-  }
-
-
-
-  getShowingMovieHall(id)
-  {
-   this.customerService.retrieveShowingCinemaHall(id);
-   this.customerService.getShowingCinemaHall().subscribe((cinemaHall: showingCinemaHall)=> {
-   this.showingHallDetails = cinemaHall;
-   this.hallinfo = cinemaHall
-   let value = this.hallinfo[0].showingSeatDetails.length
-     let i = 0;
-     this.seat = -1;
-     for(i ; i <= value; i++)
-     {
-      this.seatinfo = {
-        seatId: this.hallinfo[0].showingSeatDetails[i].seatId,
-        seatNumber: this.hallinfo[0].showingSeatDetails[i].seatNumber,
-        seatUnavailable: this.hallinfo[0].showingSeatDetails[i].seatUnavailable,
-        seatStatus : this.hallinfo[0].showingSeatDetails[i].seatStatus,
-        seatType : this.hallinfo[0].showingSeatDetails[i].seatType,
-        customerObjectId : this.hallinfo[0].showingSeatDetails[i].customerObjectId
-    }
-    this.seatData.push(this.seatinfo)
-     this.seat = this.seat + 1;
-    }
    })
   }
 
@@ -241,9 +273,10 @@ export class Booking1SubPagePage implements OnInit {
   data = [];
   bookingTicket(Seatid, SeatNumber, SeatStatus)
   {
+    if(SeatStatus != "Booked")
+    {
     let seatElement = document.getElementById(Seatid);
 
-    this.getMoviePrices(this.routedID);
     let checkValue = this.data.includes(SeatNumber)
     if(checkValue == true)
     {
@@ -269,18 +302,9 @@ export class Booking1SubPagePage implements OnInit {
 
     }
     console.log(this.data);
+    this.allticketInformation.ticketDetalis.seatNumbers = this.data
     this.initilTickets(this.numberoftickets);
   }
-
-  getMoviePrices(id)
-  {
-   this.customerService.getTicketPrice(id);
-   this.customerService.getTicket().subscribe((ticket: ticketPrices)=> {
-    this.tickets = ticket;
-    this.Aprice = ticket.ticketCost.adult;
-    this.Cprice = ticket.ticketCost.children;
-    this.totalammount = this.numberoftickets * this.Aprice;
-  })
   }
 
   startTimer() {
@@ -302,7 +326,7 @@ export class Booking1SubPagePage implements OnInit {
 
   cancel()
   {
-    this.route.navigateByUrl('customer/Venue Selection/' + this.movieId);
+    this.route.navigate(['customer/Venue Selection/' + this.movieId]);
   }
 
   async failToast() {
@@ -323,6 +347,10 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+      // to get it into a object
+      this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+      this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+      this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }
     if(this.adulttickets > this.numberoftickets && this.adulttickets != 0)
     {
@@ -334,6 +362,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+     // to get it into a object
+     this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+     this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+     this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }
     if(this.childrenTickets != 0)
     {
@@ -344,6 +377,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+        // to get it into a object
+        this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+        this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+        this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }
   }
 
@@ -360,6 +398,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+        // to get it into a object
+        this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+        this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+        this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }else if(this.adulttickets < this.numberoftickets)
     {
       let e = this.adulttickets + 1;
@@ -369,6 +412,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+       // to get it into a object
+       this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+       this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+       this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }else{
       this.failToast();
     }
@@ -387,6 +435,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+       // to get it into a object
+       this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+       this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+       this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }else if(this.adulttickets < this.numberoftickets && this.childrenTickets == 0 || this.childrenTickets < this.numberoftickets)
     {
       let e = this.adulttickets - 1;
@@ -396,6 +449,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+       // to get it into a object
+       this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+       this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+       this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }
     else{
       this.failToast();
@@ -417,6 +475,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+       // to get it into a object
+       this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+       this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+       this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }else if(this.childrenTickets< this.numberoftickets)
     {
       let e = this.childrenTickets + 1;
@@ -426,6 +489,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+       // to get it into a object
+       this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+       this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+       this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }else
     {
      this.failToast();
@@ -446,6 +514,11 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+       // to get it into a object
+       this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+       this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+       this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }else if(this.childrenTickets < this.numberoftickets && this.adulttickets == 0 || this.adulttickets < this.numberoftickets)
     {
       let e = this.childrenTickets- 1;
@@ -455,10 +528,20 @@ export class Booking1SubPagePage implements OnInit {
       let Acal = this.adulttickets * this.Aprice;
       let Ccal = this.childrenTickets * this.Cprice;
       this.totalammount = Acal + Ccal;
+
+       // to get it into a object
+       this.allticketInformation.ticketDetalis.adultTickets = this.adulttickets
+       this.allticketInformation.ticketDetalis.childrenTickets = this.childrenTickets
+       this.allticketInformation.ticketDetalis.totalAmount = this.totalammount
     }
     else
     {
      this.failToast();
     }
+  }
+
+  continue()
+  {
+    console.log(this.allticketInformation);
   }
 }

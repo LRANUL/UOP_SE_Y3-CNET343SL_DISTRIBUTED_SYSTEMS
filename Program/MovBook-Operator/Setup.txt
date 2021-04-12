@@ -1,0 +1,3 @@
+1.  npx cap init
+2.  npx cap add electron
+3.  ionic build && npx cap copy (href ./)

@@ -1,0 +1,78 @@
+#closeAddNewShowingModalButton{
+  margin-right: 20px;
+}
+
+ion-item{
+  border: #ccc solid 1px;
+  border-radius: 5px;
+  --ion-background-color: rgb(255, 255, 255);
+}
+
+input{
+  border: #ccc 1px solid;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+}
+
+.add-new-showing-form-text{
+  font-size: 17px;
+  color: #000000;
+  letter-spacing: 1px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.add-new-showing-form-sub-text{
+  padding-left: 10%;
+}
+
+.session-details-summary-text{
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.seatingGridTableTableData{
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+.seatingGridTableOuterDiv{
+  border: 2px solid #ffffff;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+.seatingGridTableInnerDiv{
+  background-color: #d6d6d6;
+  color: #ffffff;
+  border-radius: 5px;
+  width: 10px;
+  height: 10px;
+}
+
+.seatingGridTableInnerDivSeatActive{
+  background-color: #0AAA64;
+  color: #ffffff;
+  border-radius: 5px;
+  width: 10px;
+  height: 10px;
+}
+
+.seatingGridTableInnerDivUnavailableSeat{
+  background-color: #D33131;
+  color: #ffffff;
+  border-radius: 5px;
+  width: 10px;
+  height: 10px;
+}
+
+.datepicker-textbox-icon{
+  position: absolute;
+  top: 13px;
+  right: 16px;
+  color: rgb(78, 78, 78);
+  font-size: 28px;
+}
