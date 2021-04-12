@@ -8,6 +8,7 @@ import { HomeSubPagePageRoutingModule } from './home-sub-page-routing.module';
 
 import { HomeSubPagePage } from './home-sub-page.page';
 import { HeaderComponentComponent } from 'src/app/header-component/header-component.component';
+import { FooterComponent } from 'src/app/footer/footer.component';
 
 
 @NgModule({
@@ -17,6 +18,6 @@ import { HeaderComponentComponent } from 'src/app/header-component/header-compon
     IonicModule,
     HomeSubPagePageRoutingModule
   ],
-  declarations: [HomeSubPagePage, HeaderComponentComponent]
+  declarations: [HomeSubPagePage, HeaderComponentComponent, FooterComponent]
 })
 export class HomeSubPagePageModule {}

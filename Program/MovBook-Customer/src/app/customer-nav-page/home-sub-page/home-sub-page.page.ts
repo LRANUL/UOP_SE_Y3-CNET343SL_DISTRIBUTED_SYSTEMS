@@ -74,27 +74,4 @@ export class HomeSubPagePage implements OnInit {
     console.log(id);
     this.router.navigate(['customer/Venue Selection/',id]);
   }
-
-  async openmodal()
-  {
-  const modal = await this.modalCtrl.create({
-    component: ContactUsComponent,
-    cssClass: 'customer-contact-us-css'
-  });
-  await modal.present();
-  }
-
-async openTermsmodal()
-{
-const modal = await this.modalCtrl.create({
-  component: TermsAndConditionsComponent,
-  cssClass: 'customer-terms-and-condition-css'
-});
-await modal.present();
-}
-
-  aboutUs()
-  {
-    this.router.navigateByUrl('customer/about-us');
-  }
 }

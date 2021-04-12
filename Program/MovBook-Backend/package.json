@@ -2,7 +2,7 @@
   "name": "server",
   "description": "Server",
   "scripts": {
-    "start:movbook": "nodemon server.js"
+    "start": "nodemon server.js"
   },
   "engines": {
     "node": "12"

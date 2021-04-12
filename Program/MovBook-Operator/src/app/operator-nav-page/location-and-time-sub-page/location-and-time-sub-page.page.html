@@ -1,0 +1,85 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="10" offset-md="1">
+        <ion-header style="font-size: xx-large; padding-top: 10px;">Buy Tickets</ion-header>
+        <br>
+        <br>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-select placeholder="All Locations" [(ngModel)]="location" (ionChange)="getlocation()">
+                  <ion-select-option value="All">All</ion-select-option>
+                  <ion-select-option *ngFor="let cinemaLocation of cinemaLocationList"
+                    value="{{cinemaLocation.cinemaLocationName}}">{{cinemaLocation.cinemaLocationName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-datetime displayFormat="MMM/DD/YYYY" placeholder="Today: {{date}}" (ionChange)="getTime()"
+                  [(ngModel)]="date"></ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-select placeholder="All Experiences" [(ngModel)]="experience" (ionChange)="getExperience()">
+                  <ion-select-option value="All">All</ion-select-option>
+                  <ion-select-option *ngFor="let cinemaExperience of cinemaExperienceList"
+                    value="{{cinemaExperience.showingExperience}}">{{cinemaExperience.showingExperience}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <br>
+        <ion-card>
+          <ion-grid>
+            <ion-row>
+              <ion-col style="padding-left: 30px;">
+                <ion-header>
+                  <ion-card-title style="font-size: larger;"> Movie Name: {{movieDetails.movieTitle}}</ion-card-title>
+                  <br>
+                  <img src="{{movieDetails.posterLink}}">
+                </ion-header>
+              </ion-col>
+              <ion-col>
+                <!-- <div *ngIf="movies==''" style="padding-top: 50px;">
+                  <ion-header style="text-align: center;">
+                    <ion-card-subtitle style="font-size: 20px;">The movie hall is not available</ion-card-subtitle>
+                  </ion-header>
+                </div> -->
+                <div *ngFor=" let movie of movies">
+                  <div *ngFor=" let location of movieLocationArray">
+                    <ion-header>
+                      <ion-card-title>Cinema Location: {{location.cinemaLocationName}} </ion-card-title>
+                    </ion-header>
+                    <div *ngFor=" let session of movieSessionArray">
+                      <ion-card-header>
+                        <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: {{session.showingExperience}}
+                        </ion-card-subtitle>
+                      </ion-card-header>
+                      <ion-card-content>
+                        <ion-grid>
+                          <ion-row>
+                            <ion-col>
+                              <ion-button (click)="openSeatSelector(movie._id, session.timeSlotStartTime)">
+                                {{session.timeSlotStartTime}}</ion-button>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+                      </ion-card-content>
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

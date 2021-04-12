@@ -24,3 +24,81 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-menu{
+    --background: #374d58;
+    --radius:25px
+}
+ion-content{            
+    --background: #374d58;
+}
+//#e8e8e8;
+ion-button{
+    --background: #2e8ded;
+}
+
+/* Declaring new color variable - green | #009595 */
+:root {
+    --ion-color-green: #009595;
+    --ion-color-green-rgb: 0,149,149;
+    --ion-color-green-contrast: #ffffff;
+    --ion-color-green-contrast-rgb: 255,255,255;
+    --ion-color-green-shade: #008383;
+    --ion-color-green-tint: #1aa0a0;
+}
+
+/* Declaring new color variable - green | #009595 */
+.ion-color-green {
+    --ion-color-base: var(--ion-color-green);
+    --ion-color-base-rgb: var(--ion-color-green-rgb);
+    --ion-color-contrast: var(--ion-color-green-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-green-contrast-rgb);
+    --ion-color-shade: var(--ion-color-green-shade);
+    --ion-color-tint: var(--ion-color-green-tint);
+}
+
+/* Declaring new color variable - dark-blue | #335470 */
+:root {
+    --ion-color-dark-blue: #335470;
+    --ion-color-dark-blue-rgb: 51,84,112;
+    --ion-color-dark-blue-contrast: #ffffff;
+    --ion-color-dark-blue-contrast-rgb: 255,255,255;
+    --ion-color-dark-blue-shade: #2d4a63;
+    --ion-color-dark-blue-tint: #47657e;
+}
+
+/* Declaring new color variable - dark-blue | #335470 */
+.ion-color-dark-blue {
+    --ion-color-base: var(--ion-color-dark-blue);
+    --ion-color-base-rgb: var(--ion-color-dark-blue-rgb);
+    --ion-color-contrast: var(--ion-color-dark-blue-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-dark-blue-contrast-rgb);
+    --ion-color-shade: var(--ion-color-dark-blue-shade);
+    --ion-color-tint: var(--ion-color-dark-blue-tint);
+}
+
+.customer-edit-profile-css .modal-wrapper {
+    height: 100%;
+    top: 2%;
+    position: absolute; 
+    display: block;  
+ }
+
+/* CSS styles for cinema halls modal */
+.cinema-halls-modal .modal-wrapper {
+    height: 80%;
+    width: 60%;
+    top: 8%;
+    position: absolute; 
+    display: block;  
+}
+
+/* CSS styles for add cinema locations modal */
+.add-location-modal .modal-wrapper {
+    height: 50%;
+    width: 40%;
+    top: 10%;
+    position: absolute;
+    display: block;
+}
+

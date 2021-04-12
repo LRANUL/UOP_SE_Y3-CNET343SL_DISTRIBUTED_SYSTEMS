@@ -10,12 +10,11 @@
           <h6>john@movbook.com</h6>
           <br />
         </div>
-        <ion-button expand="block" color="button" href="operator/dashboard">Dashboard</ion-button>
-        <ion-button expand="block" color="button" href="operator/movie-booking">Movie Bookings</ion-button>
-        <ion-button expand="block" color="button">Movie Catalogue</ion-button>
-
-        <ion-button expand="block" color="button" style="margin-top: 80%">Profile</ion-button>
-        <ion-button expand="block" color="light" href="operator/settings">Settings</ion-button>
+        <ion-button expand="block" color="button" (click)="goToDashboard()">Dashboard</ion-button>
+        <ion-button expand="block" color="button" (click)="goToBooking()">Movie Bookings</ion-button>
+        <ion-button expand="block" color="button" (click)="goToStock()">Beverages</ion-button>
+        <ion-button expand="block" color="button" (click)="goToSupport()">Support</ion-button>
+        <ion-button expand="block" color="light" style="margin-top: 80%" (click)="goToSettings()">Settings</ion-button>
       </ion-col>
       <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
         <ion-row>
@@ -23,21 +22,16 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <h3>Name: {{Name}}</h3>
-          <br>
-          <h4>Email: {{Email}}</h4>
-          <br>
-          <h4>Address: {{Address}}</h4>
-          <br>
-          <h4>Phone: {{Phone}}</h4>
-          <br>
-          <h4>Role: {{Type}}</h4>
+            <h3>Name: {{Prefix}} {{FirstName}} {{LastName}}</h3>
+            <h4>Email: {{Email}}</h4>
+            <h4>Address: {{StreetAddress}}, {{City}}, {{PostalCode}}</h4>
+            <h4>Phone: {{Phone}}</h4>
+            <h4>Role: {{Type}}</h4>
           </ion-col>
           <ion-col>
             <ion-button>Update Password</ion-button>
-            <ion-button>Update Email</ion-button>
+            <ion-button (click)="updateEmail()">Update Email</ion-button>
           </ion-col>
-          
         </ion-row>
       </ion-col>
     </ion-row>

@@ -1,51 +1,94 @@
 <ion-content>
-  <ion-grid style="background-color: #374d58">
+  <ion-grid style="background-color: #374d58" size="auto">
     <ion-row>
       <ion-col size="auto">
         <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
         <div class="profilePhoto">
           <img src="assets\images\operator.jpg" style="border-radius: 50px; width: 150px; height: 150px" />
           <span class="onlineStatus"></span>
-          <!-- Replace with {{Name}} and {{email}} plus add a online button-->
-          <h4>John Steve</h4>
-          <h6>john@movbook.com</h6>
-          <br/>
+          <h4>{{name}}</h4>
+          <h6>{{email}}</h6>
+          <br />
         </div>
-        <ion-button expand="block" color="light" href="operator/dashboard">Dashboard</ion-button>
-        <ion-button expand="block" color="button" href="operator/movie-booking">Movie Bookings</ion-button>
-        <ion-button expand="block" color="button">Movie Catalogue</ion-button>
-
-        <ion-button expand="block" color="button" style="margin-top: 80%">Profile</ion-button>
-        <ion-button expand="block" color="button" href="operator/settings">Settings</ion-button>
+        <ion-button expand="block" color="light" (click)="goToDashboard()">Dashboard</ion-button>
+        <ion-button expand="block" color="button" (click)="goToBooking()">Movie Bookings</ion-button>
+        <ion-button expand="block" color="button" (click)="goToStock()">Beverages</ion-button>
+        <ion-button expand="block" color="button" (click)="goToSupport()">Support</ion-button>
+        <ion-button expand="block" color="button" style="margin-top: 80%" (click)="goToSettings()">Settings</ion-button>
       </ion-col>
-      <ion-col style="width:100%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
-        <ion-row>
-          <h1 style="color: #374d58;"><b>Upcoming Movies</b></h1>
-        </ion-row>
-        <ion-row style="height: 280px;overflow-y: scroll;">
-          <ion-card *ngFor="let movie of Movies"  style="width: 250px;height: 500px;">
-            <ion-img src='{{movie.imgUrl}}'></ion-img>
-            <ion-card-title>{{movie.title}}</ion-card-title>
-            <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
-            <ion-card-content>
-              <p>Rating: {{movie.rating}}⭐</p>
-              <p>{{movie.description}}</p>
-            </ion-card-content>
-          </ion-card>
-        </ion-row>
+      <ion-col  size="3" style="height: 700px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;overflow-y: scroll">
         <ion-row>
           <h1 style="color: #374d58;"><b>Showing Now</b></h1>
         </ion-row>
-        <ion-row style="height: 280px;overflow-y: scroll;">
-          <ion-card *ngFor="let movie of Movies"  style="width: 250px;height: 500px;">
-            <ion-img src='{{movie.imgUrl}}'></ion-img>
-            <ion-card-title>{{movie.title}}</ion-card-title>
-            <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
-            <ion-card-content>
-              <p>Rating: {{movie.rating}}⭐</p>
-              <p>{{movie.description}}</p>
-            </ion-card-content>
-          </ion-card>
+        <ion-row>
+          <div *ngFor="let movie of Movies">
+            <ion-card *ngIf="movie.movieStatus == 'NowShowing'" style="width: 250px;">
+              <ion-img src='{{movie.posterLink}}' style="height: 300px;"></ion-img>
+              <ion-card-title>{{movie.title}} (Year: {{movie.releasedYear}})</ion-card-title>
+              <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
+              <ion-card-content>
+                <p>Actors: {{movie.actors}}</p>
+                <p>Awards: {{movie.awards}}</p>
+                <p>Country: {{movie.country}}</p>
+                <p>Director: {{movie.director}}</p>
+                <p>Votes: {{movie.imdbVotes}}</p>
+                <p>Language: {{movie.language}}</p>
+                <p>Plot: {{movie.plot}}</p>
+                <p>Production: {{movie.production}}</p>
+                <p>Rated: {{movie.rated}}</p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-row>
+      </ion-col>
+      <ion-col  size="3" style="height: 700px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;overflow-y: scroll">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Upcoming Movies</b></h1>
+        </ion-row>
+        <ion-row>
+          <div *ngFor="let upcomingMovie of Movies">
+            <ion-card *ngIf="upcomingMovie.movieStatus == 'Upcoming'" style="width: 250px;">
+              <ion-img src='{{upcomingMovie.posterLink}}' style="height: 300px;"></ion-img>
+              <ion-card-title>{{upcomingMovie.title}} (Year: {{upcomingMovie.releasedYear}})</ion-card-title>
+              <ion-card-subtitle>{{upcomingMovie.showTime}}</ion-card-subtitle>
+              <ion-card-content>
+                <p>Actors: {{upcomingMovie.actors}}</p>
+                <p>Awards: {{upcomingMovie.awards}}</p>
+                <p>Country: {{upcomingMovie.country}}</p>
+                <p>Director: {{upcomingMovie.director}}</p>
+                <p>Votes: {{upcomingMovie.imdbVotes}}</p>
+                <p>Language: {{upcomingMovie.language}}</p>
+                <p>Plot: {{upcomingMovie.plot}}</p>
+                <p>Production: {{upcomingMovie.production}}</p>
+                <p>Rated: {{upcomingMovie.rated}}</p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-row>
+      </ion-col>
+      <ion-col size="3" style="height: 700px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;overflow-y: scroll">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Waitlisted Movies</b></h1>
+        </ion-row>
+        <ion-row>
+          <div *ngFor="let waitlistedMovie of Movies">
+            <ion-card *ngIf="waitlistedMovie.movieStatus == 'WaitListed'" style="width: 250px;">
+              <ion-img src='{{waitlistedMovie.posterLink}}' style="height: 300px;"></ion-img>
+              <ion-card-title>{{waitlistedMovie.title}} (Year: {{waitlistedMovie.releasedYear}})</ion-card-title>
+              <ion-card-subtitle>{{waitlistedMovie.showTime}}</ion-card-subtitle>
+              <ion-card-content>
+                <p>Actors: {{waitlistedMovie.actors}}</p>
+                <p>Awards: {{waitlistedMovie.awards}}</p>
+                <p>Country: {{waitlistedMovie.country}}</p>
+                <p>Director: {{waitlistedMovie.director}}</p>
+                <p>Votes: {{waitlistedMovie.imdbVotes}}</p>
+                <p>Language: {{waitlistedMovie.language}}</p>
+                <p>Plot: {{waitlistedMovie.plot}}</p>
+                <p>Production: {{waitlistedMovie.production}}</p>
+                <p>Rated: {{waitlistedMovie.rated}}</p>
+              </ion-card-content>
+            </ion-card>
+          </div>
         </ion-row>
       </ion-col>
     </ion-row>

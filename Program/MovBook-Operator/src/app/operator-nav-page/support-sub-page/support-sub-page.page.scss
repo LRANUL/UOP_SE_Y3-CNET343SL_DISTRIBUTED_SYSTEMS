@@ -1,0 +1,28 @@
+.sideMenu {
+    background-color: #374d58;
+  }
+  .profilePhoto {
+    color: white;
+    text-align: center;
+  }
+  .pageContent {
+    background-color: #e8e8e8;
+    float: right;
+  }
+  ion-button:hover {
+      --ion-color: light
+  }
+  ion-content{
+    --background: #374d58 !important;
+  }
+  ion-input{
+    --background: #f2f2f2;
+  }
+  .onlineStatus {
+    height: 15px;
+    width: 15px;
+    background-color: rgb(37, 182, 8);
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: -10%;
+  }

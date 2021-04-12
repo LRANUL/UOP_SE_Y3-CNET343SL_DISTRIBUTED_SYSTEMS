@@ -3,13 +3,15 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const beveragesRoutes = require("./routes/beverages");
+const refreshmentsRoutes = require("./routes/refreshments");
 const usersRoutes = require("./routes/users");
 const moviesRoutes = require("./routes/movies");
-const loyaltyRoutes= require("./routes/loyalty");
+const operatorRoutes = require("./routes/operators");
+const loyaltyRoutes = require("./routes/loyalty");
 const showingCinemaHall = require("./routes/showing-movie-hall");
 const bookingHistory = require("./routes/bookingHistory");
 const customerRoutes = require("./routes/customer");
+const messagesRoutes = require("./routes/messages");
 const managerRoutes = require("./routes/managers");
 const adminRoutes = require("./routes/admin");
 const cinemaHallRoutes = require("./routes/cinema-halls");
@@ -28,7 +30,7 @@ const app = express();
 mongoose
   .connect(
     process.env.MONGODB_ATLAS_URI_PRIMARY,
-// Legacy Server Support Added, Server timeout set to 30 seconds
+    // Legacy Server Support Added, Server timeout set to 30 seconds
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -63,7 +65,9 @@ app.use((req, res, next) => {
 
 app.use("/api/movies", moviesRoutes);
 app.use("/api/users", usersRoutes);
-app.use("/api/beverages", beveragesRoutes);
+app.use("/api/refreshments", refreshmentsRoutes);
+app.use("/api/messages", messagesRoutes);
+app.use("/api/operators", operatorRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
 app.use("/api/showing-cinema-hall", showingCinemaHall)
 app.use("/api/booking-history", bookingHistory);

@@ -1,0 +1,69 @@
+<ion-content>
+  <ion-grid style="background-color: #374d58">
+    <ion-row>
+      <ion-col size="auto">
+        <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
+        <div class="profilePhoto">
+          <img src="assets\images\operator.jpg" style="border-radius: 50px; width: 150px; height: 150px" />
+          <span class="onlineStatus"></span>
+          <h4>{{name}}</h4>
+          <h6>{{email}}</h6>
+          <br />
+        </div>
+        <ion-button expand="block" color="button" (click)="goToDashboard()">Dashboard</ion-button>
+        <ion-button expand="block" color="button" (click)="goToBooking()">Movie Bookings</ion-button>
+        <ion-button expand="block" color="button" (click)="goToStock()">Beverages</ion-button>
+        <ion-button expand="block" color="light" (click)="goToSupport()">Support</ion-button>
+        <ion-button expand="block" color="button" style="margin-top: 80%" (click)="goToSettings()">Settings</ion-button>
+      </ion-col>
+      <ion-col style="width:80%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;overflow-y: scroll;">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Support</b></h1>
+        </ion-row>
+        <ion-row style="height: fit-content;">
+          <div *ngFor="let messages of Messages"> 
+            <ion-card (click)="selectMessage(messages)" style="width: 250px;height: fit-content;;overflow-y: scroll">
+              <ion-card-title>Subject: {{messages.subject}}</ion-card-title>
+              <ion-card-subtitle>Email: {{messages.email}}</ion-card-subtitle>
+              <ion-card-content>
+                <p>Message: {{messages.message}}</p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-row>
+      </ion-col>
+      <ion-col size="auto" style="width:80%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>System Operations</b></h1>
+        </ion-row>
+        <ion-list>
+          <ion-item>
+            <ion-label>Seasonal promotions</ion-label>
+            <ion-toggle color="warning" [(ngModel)]="promotion" (ngModelChange)="updatePromotion(promotion)">
+            </ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Maintainence Down</ion-label>
+            <ion-toggle color="danger" [(ngModel)]="maintainence" (ngModelChange)="updateMaintainence(maintainence)">
+            </ion-toggle>
+          </ion-item>
+        </ion-list>
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Message</b></h1>
+        </ion-row>
+        <ion-list>
+          <ion-item>Email: {{selectedMessageEmail}}</ion-item>
+          <ion-item>Subject: {{selectedMessageSubject}}</ion-item>
+          <ion-item>Response:
+            <ion-textarea [disabled]="selectedMessage==undefined" type="" name="MessageResponse"
+              [(ngModel)]="MessageResponse" placeholder="Message reponse" required>
+            </ion-textarea>
+          </ion-item>
+          <ion-button [disabled]="selectedMessage==undefined || !MessageResponse" (click)="sendReply()" size="full">
+            Reply</ion-button>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

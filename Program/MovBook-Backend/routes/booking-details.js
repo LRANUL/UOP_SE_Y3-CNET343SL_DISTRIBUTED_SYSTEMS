@@ -26,7 +26,7 @@ router.get('/:id' ,(req,res,next)=>{
 });
 
 router.get('/id/:showingId' ,(req,res,next)=>{
-    booking.findById(req.params.showingId) // changed this change if error happens
+    booking.findById(req.params.showingId)
       .then((data)=>{
         if(data)
       {
@@ -44,48 +44,4 @@ router.get('/id/:showingId' ,(req,res,next)=>{
        console.log(err);
       })
 });
-
-//get information with cinemaExperience
-router.get('/experience/:experience' ,(req,res,next)=>{
-    booking.find({showingSessionDetails: {$elemMatch: {showingExperience: req.params.experience}}})
-      .then((data)=>{
-        console.log(data)
-        if(data)
-      {
-        res.status(200).json({
-          message: "It works",
-          tickets: data
-        })
-      }else
-      {
-        res.status(404).json({
-          message: "The experience category does not exist"
-        })
-      } 
-      }).catch(err => {
-       console.log(err);
-      })
-});
-
-//get information with the location
-router.get('/location/:location' ,(req,res,next)=>{
-    booking.find({cinemaLocationName: req.params.location})
-      .then((data)=>{
-        if(data)
-      {
-        res.status(200).json({
-          message: "It works",
-          tickets: data
-        })
-      }else
-      {
-        res.status(404).json({
-          message: "No data available for the entered location"
-        })
-      } 
-      }).catch(err => {
-       console.log(err);
-      })
-});
-
 module.exports = router;

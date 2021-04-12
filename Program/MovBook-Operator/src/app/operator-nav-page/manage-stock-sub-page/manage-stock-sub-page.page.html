@@ -1,0 +1,51 @@
+<ion-content>
+  <ion-grid style="background-color: #374d58">
+    <ion-row>
+      <ion-col size="auto">
+        <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
+        <div class="profilePhoto">
+          <img src="assets\images\operator.jpg" style="border-radius: 50px; width: 150px; height: 150px" />
+          <span class="onlineStatus"></span>
+          <h4>{{name}}</h4>
+          <h6>{{email}}</h6>
+          <br />
+        </div>
+        <ion-button expand="block" color="button" (click)="goToDashboard()">Dashboard</ion-button>
+        <ion-button expand="block" color="button" (click)="goToBooking()">Movie Bookings</ion-button>
+        <ion-button expand="block" color="light" (click)="goToStock()">Beverages</ion-button>
+        <ion-button expand="block" color="button" (click)="goToSupport()">Support</ion-button>
+        <ion-button expand="block" color="button" style="margin-top: 80%" (click)="goToSettings()">Settings</ion-button>
+      </ion-col>
+      <ion-col style="width:80%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Beverages</b></h1>
+        </ion-row>
+        <ion-row style="height: 500px;overflow-y: scroll;">
+          <ion-card *ngFor="let beverage of Beverages" style="width: 250px;height: 350px;"
+            (click)="beverageUpdate(beverage)">
+            <ion-img src='{{beverage.imgURL}}' style="height: 200px;"></ion-img>
+            <ion-card-title>{{beverage.name}}</ion-card-title>
+            <ion-card-content>
+              <p>Price (LKR): {{beverage.price}}</p>
+              <p>Quantity: {{beverage.stock}}</p>
+              <ion-button (click)="beverageUpdate(beverage)" color="success">Select</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+      </ion-col>
+      <ion-col size="3" style="width:200px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
+        <ion-row>
+          <h1 style="color: #374d58;"><b>Stock Update</b></h1>
+        </ion-row>
+        <ion-list>
+          <ion-item>Selection: {{selectedBeverage}}</ion-item>
+          <ion-item>Quantity: <ion-input [disabled]="selectedBeverage==undefined" type="number" name="Quantity" [(ngModel)]="Quantity" min="10" max="999" placeholder="10" required onKeyPress="if(this.value.length>=3) return false;">
+            </ion-input>
+          </ion-item>
+          <ion-button [disabled]="selectedBeverage==undefined || !Quantity" (click)="updateStock()" size="full">
+            Update</ion-button>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

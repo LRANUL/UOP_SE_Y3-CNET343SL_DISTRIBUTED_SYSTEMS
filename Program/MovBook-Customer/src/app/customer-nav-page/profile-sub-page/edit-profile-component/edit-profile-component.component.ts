@@ -48,7 +48,7 @@ export class EditProfileComponentComponent implements OnInit {
   UAddress;
   Uemail;
 
-  temoryid = "nidulatesting@movbook.com";
+  temoryid = "test@test.com";
 
   closemodal()
   {

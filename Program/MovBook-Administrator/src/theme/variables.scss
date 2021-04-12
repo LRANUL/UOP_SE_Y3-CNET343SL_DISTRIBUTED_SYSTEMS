@@ -74,8 +74,24 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+ /** button **/
+  --ion-color-button: #374d58;
+  --ion-color-button-rgb: 232,232,232;
+  --ion-color-button-contrast: #fff8f8;
+  --ion-color-button-contrast-rgb: 0,0,0;
+  --ion-color-button-shade: #dbdbdb;
+  --ion-color-button-tint: #374d58;  
 }
 
+.ion-color-button {
+  --ion-color-base: var(--ion-color-button) !important;
+  --ion-color-base-rgb: var(--ion-color-button-rgb) !important;
+  --ion-color-contrast: var(--ion-color-button-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-button-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-button-shade) !important;
+  --ion-color-tint: var(--ion-color-button-tint) !important;
+}
 @media (prefers-color-scheme: dark) {
   /*
    * Dark Colors
@@ -145,6 +161,7 @@
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+
   }
 
   /*
@@ -179,15 +196,11 @@
     --ion-color-step-900: #e6e6e6;
     --ion-color-step-950: #f2f2f2;
 
+    --ion-toolbar-background: #0d0d0d;
+
     --ion-item-background: #000000;
 
     --ion-card-background: #1c1c1d;
-  }
-
-  .ios ion-modal {
-    --ion-background-color: var(--ion-color-step-100);
-    --ion-toolbar-background: var(--ion-color-step-150);
-    --ion-toolbar-border-color: var(--ion-color-step-250);
   }
 
 
@@ -234,3 +247,5 @@
     --ion-card-background: #1e1e1e;
   }
 }
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

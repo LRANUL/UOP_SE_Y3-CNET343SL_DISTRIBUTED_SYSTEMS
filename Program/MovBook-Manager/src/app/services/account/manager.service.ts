@@ -27,19 +27,19 @@ export class ManagerService {
    */
   // GET - Retrieving movie search results from the backend according to the entered movie title and (optional) movie release year
   getMovieSearchResults(movieTitle: string, movieReleaseYear: string): Observable<MovieSearchResult> {
-    if(movieReleaseYear == ""){
+    if (movieReleaseYear == "") {
       return this.httpClient
         .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/search/" + movieTitle);
     }
-    else if(movieReleaseYear != ""){
+    else if (movieReleaseYear != "") {
       return this.httpClient
         .get<MovieSearchResult>(this.BASE_URL + "api/omdb/upcoming-movies/search/" + movieTitle + "/" + movieReleaseYear);
     }
   }
   // GET - Retrieving detailed movie details for one movie by passing the imdbId
-  getMovieDetailsForOneMovie(movieImdbId: string){
+  getMovieDetailsForOneMovie(movieImdbId: string) {
     return this.httpClient
-        .get<MovieDetails>(this.BASE_URL + "api/omdb/upcoming-movies/details/" + movieImdbId);
+      .get<MovieDetails>(this.BASE_URL + "api/omdb/upcoming-movies/details/" + movieImdbId);
   }
 
   /**
@@ -51,7 +51,7 @@ export class ManagerService {
       .post(this.BASE_URL + "api/movies/add-movie/" + movieStatus, movie);
   }
   // GET - Retrieving movieObjectId (_id) from the database by passing the movieImdbId
-  getMovieObjectId(movieImdbId: string){
+  getMovieObjectId(movieImdbId: string) {
     return this.httpClient
       .get(this.BASE_URL + "api/movies/movie-id/" + movieImdbId);
   }
@@ -87,17 +87,17 @@ export class ManagerService {
    * 
    */
   // GET - Retrieving movie wait list from the database
-  getMovieWaitList(managerObjectId: string){
+  getMovieWaitList(managerObjectId: string) {
     return this.httpClient
       .get(this.BASE_URL + "api/movie-wait-lists/" + managerObjectId);
   }
   // POST - Creating a new movie wait list
-  createMovieWaitList(movieWaitList: MovieWaitList){
+  createMovieWaitList(movieWaitList: MovieWaitList) {
     return this.httpClient
       .post(this.BASE_URL + "api/movie-wait-lists/add", movieWaitList);
   }
   // PUT - Updating movie wait list (adding movies to the movie wait list)
-  addMovieToMovieWaitList(AddMovieToMovieWaitList: AddMovieToMovieWaitList){
+  addMovieToMovieWaitList(AddMovieToMovieWaitList: AddMovieToMovieWaitList) {
     return this.httpClient
       .put<AddMovieToMovieWaitList>(this.BASE_URL + "api/movie-wait-lists/add-movie", AddMovieToMovieWaitList);
   }
@@ -106,11 +106,11 @@ export class ManagerService {
    * Cinema Hall
    */
   // POST - Passing new cinema hall details to the server-side
-  addNewCinemaHall(cinemaHall: CinemaHall){
+  addNewCinemaHall(cinemaHall: CinemaHall) {
     return this.httpClient.post(this.BASE_URL + "api/cinema-halls/", cinemaHall);
   }
   // GET - Retrieving cinema hall details from the server-side
-  retrieveCinemaHalls(cinemaLocationObjectId){
+  retrieveCinemaHalls(cinemaLocationObjectId) {
     return this.httpClient.get(this.BASE_URL + "api/cinema-halls/" + cinemaLocationObjectId);
   }
   // PUT - Updating cinema hall details by sending the updated details to the server-side
@@ -122,14 +122,37 @@ export class ManagerService {
    * Cinema Location
    */
   // POST - Passing new cinema location details to the server-side
-  addNewCinemaLocation(cinemaLocation: CinemaLocation){
+  addNewCinemaLocation(cinemaLocation: CinemaLocation) {
     return this.httpClient.post(this.BASE_URL + "api/cinema-locations", cinemaLocation);
   }
   // GET - Retrieving cinema locations from the server-side
-  retrieveCinemaLocations(){
+  retrieveCinemaLocations() {
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
   }
 
+
+  /** Beverages Management */
+  // GET beverages list
+  getBeverages() {
+    return this.httpClient.get(this.BASE_URL + "api/refreshments");
+  }
+  // Update beverages quantity
+  updateStock(name, quantity) {
+    const body = { name: name, quantity: quantity };
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-stock", body);
+  }
+  // Update beverages price
+  updatePrice(name, price) {
+    const body = { name: name, price: price };
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-price", body);
+  }
+/**
+ * Profile Settings
+ */
+// Get profile data
+getProfile(email){
+  return this.httpClient.get<any>(this.BASE_URL + "api/managers/" + email);
+}
   /**
    * Showing Experience
    */
