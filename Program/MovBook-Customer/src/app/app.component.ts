@@ -28,8 +28,8 @@ FirebaseRemoteConfig.initializeFirebase({
 export class AppComponent {
   remoteConfig: any = null;
 
-  constructor(private alertCtrl: AlertController,private modalCtrl: ModalController ) { }
-/** REMOTE CONFIG FIREBASE */
+  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController) { }
+  /** REMOTE CONFIG FIREBASE */
   async ngOnInit() {
     const { FirebaseRemoteConfig } = Plugins;
     this.remoteConfig = FirebaseRemoteConfig as any;
@@ -64,22 +64,23 @@ export class AppComponent {
     })
   }
   async openContactUsModal()
-{
-const modal = await this.modalCtrl.create({
-  component: ContactUsComponent,
-  cssClass: 'customer-contact-us-css'
-});
-await modal.present();
-}
 
-async openTermsmodal()
-{
-const modal = await this.modalCtrl.create({
-  component: TermsAndConditionsComponent,
-  cssClass: 'customer-terms-and-condition-css'
-});
-await modal.present();
-}
+  async openContactUsModal() {
+    const modal = await this.modalCtrl.create({
+      component: ContactUsComponent,
+      cssClass: 'customer-contact-us-css'
+    });
+    await modal.present();
+  }
+
+  async openTermsmodal() {
+    const modal = await this.modalCtrl.create({
+      component: TermsAndConditionsComponent,
+      cssClass: 'customer-terms-and-condition-css'
+    });
+    await modal.present();
+  }
+
   async maintenanceLockCheck() {
     if (this.remoteConfig) {
       const maintenanceLock = await this.maintenanceLock() || 'false';
