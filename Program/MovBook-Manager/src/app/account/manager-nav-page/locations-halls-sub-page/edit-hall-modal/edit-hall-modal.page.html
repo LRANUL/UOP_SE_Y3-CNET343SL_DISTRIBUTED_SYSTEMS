@@ -20,7 +20,8 @@
     <ion-card-content>
 
       <form [formGroup]="editHallForm" (ngSubmit)="confirmBoxEditHall('Confirmation', 
-        'Cinema hall will be updated to these preferences, do you want to continue?', editHallForm.value)">
+        'Cinema hall will be updated to these preferences, do you want to continue? 
+        This action will not reflect on cinema halls that has now showings.', editHallForm.value)">
 
         <div id="editHallFormCustomizationSection">
           <!-- EDIT HALL FORM - MOVIE NAME, HALL SEATING STATISTICS -->

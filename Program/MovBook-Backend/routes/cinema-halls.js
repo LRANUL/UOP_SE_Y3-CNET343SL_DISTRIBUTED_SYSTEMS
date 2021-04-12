@@ -13,8 +13,8 @@ router.get("/:cinemaLocationObjectId", cinemaHallsController.retrieveCinemaHalls
 // GET - Getting one cinema hall details
 router.get("/hall/:id", cinemaHallsController.retrieveCinemaHall)
 
-// PUT - Updating cinema hall details
-
+// PUT - Updating cinema hall details | Route: 'BASE_URL/api/cinema-halls/update-cinema-hall'
+router.put("/update-cinema-hall", cinemaHallsController.updateCinemaHallDetails);
 
 // DELETE - Delete cinema hall details
 

@@ -634,6 +634,23 @@ export class AddHallModalPage implements OnInit {
   }
 
 
+  // Function -  Add Cinema Hall Alert Box Implementation
+  async addCinemaHallAlertBox (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          this.closeAddHallModal();
+        }
+      }]
+    });
+    await alert.present();
+  }
+
+
+
   // Function - adding new cinema hall details into the database by sending the
   // details to the server-side
   addNewHall(newCinemaHallForm){
@@ -659,12 +676,9 @@ export class AddHallModalPage implements OnInit {
 
       // Passing data to the server-side
       this.managerService.addNewCinemaHall(newCinemaHallDetails).subscribe((res: any) => {
-        console.log('Create new cinema hall: ', res);
 
         // Showing success message box to user
-        this.alertNotice("Added", "New Cinema Hall Successfully Added");
-
-        alert("New Cinema Hall Successfully Added");
+        this.addCinemaHallAlertBox("Added", "New Cinema Hall Successfully Added");
 
         // Enabling form submit
         this.addNewHallForm.valid;
@@ -679,8 +693,6 @@ export class AddHallModalPage implements OnInit {
 
         // Showing error message box to user
         this.alertNotice("ERROR", "Unable to add New Cinema Hall");
-
-        alert("Unable to add New Cinema Hall");
 
         // Enabling form submit
         this.addNewHallForm.valid;

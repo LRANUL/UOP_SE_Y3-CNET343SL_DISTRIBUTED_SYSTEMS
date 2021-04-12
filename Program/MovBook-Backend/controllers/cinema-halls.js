@@ -72,6 +72,7 @@ exports.retrieveCinemaHalls = async (req, res, next) => {
   })
 };
 
+
 // to get one cinema hall
 exports.retrieveCinemaHall = async (req, res, next) => {
   cinemaHallModel.findById(req.params.id)
@@ -91,4 +92,40 @@ exports.retrieveCinemaHall = async (req, res, next) => {
   }).catch(err => {
    console.log(err);
   })
+};
+
+
+// Function - Update showing experience using route, 'BASE_URL/api/cinema-halls/update-cinema-hall'
+exports.updateCinemaHallDetails = async (req, res, next) => {
+
+  // Extracting the 'cinemaHallObjectId' from the sent request body
+  let cinemaHallObjectId = req.body._id;
+
+  // Using mongoose findOneAndUpdate() functionality to update cinema hall
+  await cinemaHallModel.findOneAndUpdate(
+    {
+      _id: cinemaHallObjectId
+    },
+    {
+      cinemaHallName: req.body.cinemaHallName,
+      seatingDetails: req.body.seatingDetails
+    }, (error, returnedData) => {
+
+      // If condition - checking whether an error occurred during the query execution
+      if (error) {
+        res.status(500).json({
+          message:
+            "Unable to update cinema hall",
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Cinema hall updated",
+          returnedData
+        });
+      }
+
+    })
+    
 };

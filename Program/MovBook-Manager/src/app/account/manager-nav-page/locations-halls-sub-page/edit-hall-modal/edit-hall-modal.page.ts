@@ -145,7 +145,7 @@ export class EditHallModalPage implements OnInit {
     const alert = await this.alertController.create({
       header: title,
       message: content,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }
@@ -274,12 +274,14 @@ export class EditHallModalPage implements OnInit {
     return new Array(value);
   }
 
+  
 
   // Function - Incrementing value before execution
   preIncrementValue(value: number){
     // Pre increment - incrementing one to 'value' before the execution and returning the value
     return ++value;
   }
+
 
 
   // Function - extract cinema hall seating details for the initially loaded or user selected cinema hall
@@ -361,21 +363,55 @@ export class EditHallModalPage implements OnInit {
   }
 
 
+
+  // Function -  Updated Cinema Hall Alert Box Implementation
+  async updatedCinemaHallAlertBox (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          this.closeEditHallModal();
+        }
+      }]
+    });
+    await alert.present();
+  }
+  
+
+
+  // Function - Implementation to update cinema hall details by sending the updated details to the server-side
   doEditCinemaHall(editHallForm){
 
-    console.log(editHallForm);
-
-    console.log(this.activeSeatLayout);
-
+    // Assign user enter hall name into the current cinema hall array
     this.activeSeatLayout.cinemaHallName = editHallForm.hallName;
 
-    console.log(this.activeSeatLayout);
+    // Updating cinema hall details, 'cinemahalls' collection
+    this.managerService.updateCinemaHallDetails(this.activeSeatLayout)
+      .subscribe((cinemaHallResponse: any) => {
 
-    // Update cinema-halls collection
+      if(cinemaHallResponse.message == "Cinema hall updated"){
+        
+        // Showing success message box to the user
+        this.updatedCinemaHallAlertBox("Cinema Hall updated", "Cinema hall was successfully updated.");
 
+        console.log("Showing Cinema Hall Updated.");
+        
+      }
+      else if(cinemaHallResponse.message == "Unable to update cinema hall"){
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to edit cinema hall, apologies for the inconvenience. Please contact administrator.");
 
+        console.log("Unable to edit cinema hall");
+      }
 
-    // Update showing-showing-halls collection
+    }, (error: ErrorEvent) => {
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to edit cinema hall, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to edit cinema hall, ", error);
+    });
 
   }
   

@@ -83,7 +83,7 @@ export class ManagerService {
 
   /**
    * 
-   * Movie Wait List - DEPRECATED
+   * Movie Wait List - DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS 
    * 
    */
   // GET - Retrieving movie wait list from the database
@@ -109,10 +109,13 @@ export class ManagerService {
   addNewCinemaHall(cinemaHall: CinemaHall){
     return this.httpClient.post(this.BASE_URL + "api/cinema-halls/", cinemaHall);
   }
-
   // GET - Retrieving cinema hall details from the server-side
   retrieveCinemaHalls(cinemaLocationObjectId){
     return this.httpClient.get(this.BASE_URL + "api/cinema-halls/" + cinemaLocationObjectId);
+  }
+  // PUT - Updating cinema hall details by sending the updated details to the server-side
+  updateCinemaHallDetails(updatedCinemaHallDetails: any){
+    return this.httpClient.put(this.BASE_URL + "api/cinema-halls/update-cinema-hall", updatedCinemaHallDetails);
   }
 
   /**
@@ -122,7 +125,6 @@ export class ManagerService {
   addNewCinemaLocation(cinemaLocation: CinemaLocation){
     return this.httpClient.post(this.BASE_URL + "api/cinema-locations", cinemaLocation);
   }
-
   // GET - Retrieving cinema locations from the server-side
   retrieveCinemaLocations(){
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
@@ -166,6 +168,11 @@ export class ManagerService {
   // POST - Passing showing cinema hall details to the server-side
   assignShowingCinemaHalls(showingCinemaHallList: any){
     return this.httpClient.post(this.BASE_URL + "api/showing-cinema-halls/assign-showing-cinema-hall", showingCinemaHallList);
+  }
+  /** DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS */
+  // PUT - Update showing cinema hall details by passing update details to the server-side
+  updateShowingCinemaHallDetails(updatedCinemaHallDetails: any){
+    return this.httpClient.put(this.BASE_URL + "api/showing-cinema-halls/update-showing-cinema-hall", updatedCinemaHallDetails);
   }
 
 }
