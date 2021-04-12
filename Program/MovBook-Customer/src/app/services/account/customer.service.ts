@@ -209,9 +209,9 @@ export class CustomerService {
         }
 
 
-getUser(id:string)
+getUser(email :string)
 {
-  return this.http.get<{message: string, users: any}>(this.BASE_URL + "/api/customers/" + id)
+  return this.http.get<{message: string, users: any}>(this.BASE_URL + "api/customers/" + email)
 }
 
 private listeners = new Subject<any>();
@@ -254,14 +254,6 @@ getshowingmoviedetails(id: string)
   })
 }
 
-getSelectedShowingMovieDetails(location: string)
-{
-  return this.http.get<{tickets:movie}>(this.BASE_URL +'api/booking-details/location/' + location).subscribe(res=>{
-    this.moviesUpdated = res.tickets;
-    this.currentmovies.next(this.moviesUpdated);
-  })
-}
-
 retrieveCinemaHall(id){
   return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +'api/cinema-halls/hall/' + id).subscribe(res=>{
     this.hallupdated = res.returnedData;
@@ -297,20 +289,6 @@ retrieveAllExperience(){
     this.ExperienceUpdated = res.returnedData;
     this.experience.next(this.ExperienceUpdated);
   });
-}
-
-getmoviedetails(id: string)
-{
-  // have to write the code to get the movie here
-}
-
-getmovieexperience(experience: string)
-{
-  return this.http.get<{message : string, tickets : any}>(this.BASE_URL + "api/booking-details/experience/" + experience).subscribe(res=>{
-  console.log(res.tickets);
-  this.moviesUpdated= res.tickets;
-  this.currentmovies.next(this.moviesUpdated);
-})
 }
 
 getmovielocation(location: string)

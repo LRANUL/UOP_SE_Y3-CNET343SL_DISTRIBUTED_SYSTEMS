@@ -41,7 +41,7 @@ export class ProfileSubPagePage implements OnInit {
     this.getuser(this.temoryid);
   }
 
-  temoryid: string = "nidulatesting@movbook.com";
+  temoryid: string = "test@test.com";
 
   async editprofilemodal()
   {

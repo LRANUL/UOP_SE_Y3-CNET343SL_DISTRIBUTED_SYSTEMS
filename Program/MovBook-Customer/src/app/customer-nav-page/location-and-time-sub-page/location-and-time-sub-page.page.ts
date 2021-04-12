@@ -89,7 +89,9 @@ export class LocationAndTimeSubPagePage implements OnInit {
     childrenTicketFeeLKR: ''
   }
 
-  movieSessionArray = new Array();
+  movie2DArray = new Array();
+  movie3DArray = new Array();
+  movieDolbyArray = new Array();
 
   movieExperienceSessionArray = new Array();
 
@@ -117,7 +119,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
 
   getmoviedetails(id)
   {
-   this.customerService.getmoviedetails(id);
+   this.customerService.getMovieDetail(id);
   }
 
   getMovieAdditionalDetails()
@@ -129,7 +131,16 @@ export class LocationAndTimeSubPagePage implements OnInit {
     })
   }
 
+  showingExperience;
+  experienceCheck2D = false;
+  experienceCheck3D = false;
+  experienceCheckDolby = false;
+  experienceCheckOther = false;
   getshowingmoviedetails(id) {
+    this.experienceCheck2D = false;
+    this.experienceCheck3D = false;
+    this.experienceCheckDolby = false;
+    this.experienceCheckOther = false;
     this.customerService.getshowingmoviedetails(id);
     this.customerService.getmovie().subscribe((moviedetail: movie) => {
       this.movies = moviedetail; // this is the way it should be done to get multiple locations
@@ -142,7 +153,9 @@ export class LocationAndTimeSubPagePage implements OnInit {
       let length1 = value1.length;
       console.log(length1);
       let counter1 = 0;
-      this.movieSessionArray = [];
+      this.movie2DArray = [];
+      this.movie3DArray = [];
+      this.movieDolbyArray = [];
       this.movieLocationArray = [];
       for(counter; counter < length; counter++)
       {
@@ -155,13 +168,24 @@ export class LocationAndTimeSubPagePage implements OnInit {
             postalCode: moviedetail[counter].cinemaLocation.cinemaLocationAddress.postalCode
           }
         };
-        this.movieLocationArray.push(this.movieLocation);
+        let checkValue = moviedetail[counter].cinemaLocation.cinemaLocationName;
+        if(this.movieLocationArray.includes(checkValue))
+        {
+         console.log("value Exist");
+         console.log(checkValue);
+        }else {
+          console.log(checkValue);
+          this.movieLocationArray.push(this.movieLocation);
+        }
         console.log(this.movieLocationArray)
        for(counter1; counter1 < length1; counter1++)
         {
           let showingDate = moviedetail[counter].showingSlots[counter1].showingDate;
           if(showingDate == this.date)
           {
+           this.showingExperience = moviedetail[counter].showingSlots[counter1].showingExperience;
+            if(this.showingExperience == "2D")
+            {
           this.movieSession = {
             slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
             showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
@@ -171,8 +195,37 @@ export class LocationAndTimeSubPagePage implements OnInit {
             adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
             childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
           }
-        this.movieSessionArray.push(this.movieSession);
-        console.log(this.movieSessionArray)
+            this.movie2DArray.push(this.movieSession);
+            this.experienceCheck2D = true
+            }
+           else if(this.showingExperience == "3D")
+            {
+          this.movieSession = {
+            slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
+            showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
+            showingExperience: moviedetail[counter].showingSlots[counter1].showingExperience,
+            timeSlotStartTime:  moviedetail[counter].showingSlots[counter1].timeSlotStartTime,
+            timeSlotEndTime:  moviedetail[counter].showingSlots[counter1].timeSlotEndTime,
+            adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
+            childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
+          }
+        this.movie3DArray.push(this.movieSession);
+        this.experienceCheck3D = true
+            }
+            else if(this.showingExperience == "ATMOS Dolby")
+            {
+          this.movieSession = {
+            slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
+            showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
+            showingExperience: moviedetail[counter].showingSlots[counter1].showingExperience,
+            timeSlotStartTime:  moviedetail[counter].showingSlots[counter1].timeSlotStartTime,
+            timeSlotEndTime:  moviedetail[counter].showingSlots[counter1].timeSlotEndTime,
+            adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
+            childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
+          }
+        this.movieDolbyArray.push(this.movieSession);
+        this.experienceCheckDolby = true
+            }
         }
       }
     }
@@ -218,11 +271,16 @@ export class LocationAndTimeSubPagePage implements OnInit {
 
 
   getlocation() {
+    console.log(this.location);
     if(this.location == "All")
     {
       this.getshowingmoviedetails(this.routedID);
     }else
     {
+      this.experienceCheck2D = false;
+      this.experienceCheck3D = false;
+      this.experienceCheckDolby = false;
+      this.experienceCheckOther = false;
       this.customerService.getshowingmoviedetails(this.routedID);
       this.customerService.getmovie().subscribe((moviedetail: movie) => {
         this.movies = moviedetail; // this is the way it should be done to get multiple locations
@@ -234,13 +292,16 @@ export class LocationAndTimeSubPagePage implements OnInit {
         let value1 = Object.keys(moviedetail[counter].showingSlots)
         let length1 = value1.length;
         let counter1 = 0;
-        this.movieSessionArray = [];
+        this.movie2DArray = [];
+        this.movie3DArray = [];
+        this.movieDolbyArray = [];
         this.movieLocationArray = [];
         for(counter; counter < length; counter++)
         {
         let location = moviedetail[counter].cinemaLocation.cinemaLocationName;
-        let showingDate = moviedetail[counter].showingSlots[counter1].showingDate
-          if(location == this.location && showingDate == this.date)
+        console.log(location);
+        console.log(this.date)
+          if(location == this.location)
           {
         this.movieLocation = {
           cinemaLocationObjectId: moviedetail[counter].cinemaLocation.cinemaLocationObjectId,
@@ -254,6 +315,10 @@ export class LocationAndTimeSubPagePage implements OnInit {
         this.movieLocationArray.push(this.movieLocation);
          for(counter1; counter1 < length1; counter1++)
           {
+            this.showingExperience = moviedetail[counter].showingSlots[counter1].showingExperience;
+            let showingDate = moviedetail[counter].showingSlots[counter1].showingDate
+            if(this.showingExperience == "2D" && showingDate == this.date)
+            {
           console.log(location);
           this.movieSession = {
             slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
@@ -265,9 +330,40 @@ export class LocationAndTimeSubPagePage implements OnInit {
             childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
           }
           console.log(this.movieSession)
-          this.movieSessionArray.push(this.movieSession);
+          this.experienceCheck2D = true
+          this.movie2DArray.push(this.movieSession);
+          } else if(this.showingExperience == "3D" && showingDate == this.date)
+          {
+        console.log(location);
+        this.movieSession = {
+          slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
+          showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
+          showingExperience: moviedetail[counter].showingSlots[counter1].showingExperience,
+          timeSlotStartTime: moviedetail[counter].showingSlots[counter1].timeSlotStartTime,
+          timeSlotEndTime: moviedetail[counter].showingSlots[counter1].timeSlotEndTime,
+          adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
+          childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
+        }
+        console.log(this.movieSession)
+        this.experienceCheck3D = true
+        this.movie3DArray.push(this.movieSession);
+        }else if(this.showingExperience == "ATMOS Dolby" && showingDate == this.date)
+        {
+        console.log(location);
+         this.movieSession = {
+        slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
+        showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
+        showingExperience: moviedetail[counter].showingSlots[counter1].showingExperience,
+        timeSlotStartTime: moviedetail[counter].showingSlots[counter1].timeSlotStartTime,
+        timeSlotEndTime: moviedetail[counter].showingSlots[counter1].timeSlotEndTime,
+        adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
+        childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
+      }
+      console.log(this.movieSession)
+      this.experienceCheckDolby = true
+      this.movieDolbyArray.push(this.movieSession);
+      }
        }
-        console.log(this.movieSessionArray);
       }
     }
     })
@@ -275,6 +371,10 @@ export class LocationAndTimeSubPagePage implements OnInit {
   }
 
   getTime() {
+    this.experienceCheck2D = false;
+    this.experienceCheck3D = false;
+    this.experienceCheckDolby = false;
+    this.experienceCheckOther = false;
     let updateddate = this.pipe.transform(this.date, "mediumDate");
     this.customerService.getshowingmoviedetails(this.routedID);
     this.customerService.getmovie().subscribe((moviedetail: movie) => {
@@ -288,7 +388,9 @@ export class LocationAndTimeSubPagePage implements OnInit {
       let length1 = value1.length;
       console.log(length1);
       let counter1 = 0;
-      this.movieSessionArray = [];
+      this.movie2DArray = [];
+      this.movie3DArray = [];
+      this.movieDolbyArray = [];
       this.movieLocationArray = [];
       for(counter; counter < length; counter++)
       {
@@ -309,6 +411,9 @@ export class LocationAndTimeSubPagePage implements OnInit {
           let showingDate = moviedetail[counter].showingSlots[counter1].showingDate;
           if(showingDate == updateddate)
           {
+            this.showingExperience = moviedetail[counter].showingSlots[counter1].showingExperience;
+            if(this.showingExperience == "2D")
+            {
           this.movieSession = {
             slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
             showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
@@ -319,8 +424,37 @@ export class LocationAndTimeSubPagePage implements OnInit {
             childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
           }
           console.log(this.movieSession);
-        this.movieSessionArray.push(this.movieSession);
-        console.log(this.movieSessionArray);
+          this.experienceCheck2D = true
+          this.movie2DArray.push(this.movieSession);
+            } if(this.showingExperience == "3D")
+            {
+          this.movieSession = {
+            slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
+            showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
+            showingExperience: moviedetail[counter].showingSlots[counter1].showingExperience,
+            timeSlotStartTime:  moviedetail[counter].showingSlots[counter1].timeSlotStartTime,
+            timeSlotEndTime:  moviedetail[counter].showingSlots[counter1].timeSlotEndTime,
+            adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
+            childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
+          }
+          console.log(this.movieSession);
+          this.experienceCheck3D = true
+          this.movie3DArray.push(this.movieSession);
+            } if(this.showingExperience == "ATMOS Dolby")
+            {
+          this.movieSession = {
+            slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
+            showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
+            showingExperience: moviedetail[counter].showingSlots[counter1].showingExperience,
+            timeSlotStartTime:  moviedetail[counter].showingSlots[counter1].timeSlotStartTime,
+            timeSlotEndTime:  moviedetail[counter].showingSlots[counter1].timeSlotEndTime,
+            adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
+            childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
+          }
+          console.log(this.movieSession);
+          this.experienceCheckDolby = true
+          this.movieDolbyArray.push(this.movieSession);
+            }
         }
       }
     }
@@ -333,6 +467,10 @@ export class LocationAndTimeSubPagePage implements OnInit {
       this.getshowingmoviedetails(this.routedID);
     }else
     {
+      this.experienceCheck2D = false;
+      this.experienceCheck3D = false;
+      this.experienceCheckDolby = false;
+      this.experienceCheckOther = false;
       this.customerService.getshowingmoviedetails(this.routedID);
       this.customerService.getmovie().subscribe((moviedetail: movie) => {
         this.movies = moviedetail; // this is the way it should be done to get multiple locations
@@ -343,7 +481,9 @@ export class LocationAndTimeSubPagePage implements OnInit {
         let value1 = Object.keys(moviedetail[counter].showingSlots)
         let length1 = value1.length;
         let counter1 = 0;
-        this.movieSessionArray = [];
+        this.movie2DArray = [];
+        this.movie3DArray = [];
+        this.movieDolbyArray = [];
         this.movieLocationArray = [];
         for(counter; counter < length; counter++)
         {
@@ -363,6 +503,9 @@ export class LocationAndTimeSubPagePage implements OnInit {
          let showingDate =  moviedetail[counter].showingSlots[counter1].showingDate;
          if(experience == this.experience && showingDate == this.date)
          {
+          this.showingExperience = moviedetail[counter].showingSlots[counter1].showingExperience;
+          if(this.showingExperience == "2D")
+          {
           console.log(experience);
           this.movieSession = {
             slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
@@ -374,10 +517,47 @@ export class LocationAndTimeSubPagePage implements OnInit {
             childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
           }
           console.log(this.movieSession)
-          this.movieSessionArray.push(this.movieSession);
+          this.experienceCheck2D = true
+          this.experienceCheck3D = false
+         this.experienceCheckDolby = false
+          this.movie2DArray.push(this.movieSession);
+         }if(this.showingExperience == "3D")
+         {
+         console.log(experience);
+         this.movieSession = {
+           slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
+           showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
+           showingExperience: moviedetail[counter].showingSlots[counter1].showingExperience,
+           timeSlotStartTime: moviedetail[counter].showingSlots[counter1].timeSlotStartTime,
+           timeSlotEndTime: moviedetail[counter].showingSlots[counter1].timeSlotEndTime,
+           adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
+           childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
+         }
+         console.log(this.movieSession)
+         this.experienceCheck3D = true
+         this.experienceCheck2D = false
+         this.experienceCheckDolby = false
+         this.movie3DArray.push(this.movieSession);
+        }if(this.showingExperience == "Dolby Atmos")
+        {
+        console.log(experience);
+        this.movieSession = {
+          slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
+          showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
+          showingExperience: moviedetail[counter].showingSlots[counter1].showingExperience,
+          timeSlotStartTime: moviedetail[counter].showingSlots[counter1].timeSlotStartTime,
+          timeSlotEndTime: moviedetail[counter].showingSlots[counter1].timeSlotEndTime,
+          adultsTicketFeeLKR: moviedetail[counter].showingSlots[counter1].adultsTicketFeeLKR,
+          childrenTicketFeeLKR: moviedetail[counter].showingSlots[counter1].childrenTicketFeeLKR
         }
+        console.log(this.movieSession)
+        this.experienceCheckDolby = true
+        this.experienceCheck3D = false
+         this.experienceCheck2D = false
+        this.movieDolbyArray.push(this.movieSession);
+        }
+         }
        }
-        console.log(this.movieSessionArray);
       }
     })
    }
