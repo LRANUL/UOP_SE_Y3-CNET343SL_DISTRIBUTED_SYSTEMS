@@ -22,7 +22,7 @@
         </ion-row>
         <ion-row style="height: 280px;overflow-y: scroll;">
           <div *ngFor="let movie of Movies">
-            <ion-card *ngIf="movie.movieStatus == 'NowShowing'" style="width: 240px;" (click)="selectMovie(movie._id)">
+            <ion-card *ngIf="movie.movieStatus == 'NowShowing'" style="width: 220px;" (click)="selectMovie(movie._id)">
               <ion-img src='{{movie.posterLink}}' style="height: 250px;"></ion-img>
               <ion-card-title>{{movie.title}} (Year: {{movie.releasedYear}})</ion-card-title>
               <ion-card-subtitle>{{movie.showTime}}</ion-card-subtitle>
@@ -39,24 +39,25 @@
           <h1 style="color: #374d58;"><b>Beverages</b></h1>
         </ion-row>
         <ion-row style="height: 280px;overflow-y: scroll;">
-          <ion-card *ngFor="let beverage of Beverages" style="width: 230px;height: 330px;"
-            (click)="beverageUpdate(beverage)">
+          <ion-card *ngFor="let beverage of Beverages" style="width: 230px;height: 370px;">
             <ion-img src='{{beverage.imgURL}}' style="height: 200px;"></ion-img>
             <ion-card-title>{{beverage.name}}</ion-card-title>
             <ion-card-content>
               <p>Price (LKR): {{beverage.price}}</p>
               <p>Available Quantity: {{beverage.stock}}</p>
-              <ion-button (click)="beverageUpdate(beverage)" color="success" size="full">Add</ion-button>
+              <ion-input placeholder="Quantity" [(ngModel)]="beverage.quantity" type="Number"></ion-input>
+              <ion-button [disabled]="beverage.quantity==undefined || !beverage.quantity"
+                (click)="beverageUpdate(beverage)" color="success" size="full">Add</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-row>
       </ion-col>
       <ion-col size="3"
-        style="width:200px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;overflow-y: scroll;">
+        style="width:200px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
         <ion-row>
           <h1 style="color: #374d58;"><b>Booking Selection</b></h1>
         </ion-row>
-        <ion-list>
+        <ion-list style="overflow-y: scroll;">
           <ion-item>
             <ion-label>Movie Title: {{title}}</ion-label>
           </ion-item>
@@ -69,8 +70,13 @@
           <ion-item *ngFor="let seats of seatNumbers">
             <ion-label>Seat Numbers: {{seats}}</ion-label>
           </ion-item>
-          <ion-item *ngFor="let items of Refreshments">
-            <ion-label>Item: {{items}}</ion-label>
+          <div style="padding-left: 5px;" *ngFor="let items of Refreshments">
+            <ion-label>{{items}}
+            </ion-label>
+            <ion-icon name="remove-circle" (click)="beverageRemove()" color="danger" style="height:25px"></ion-icon>
+          </div>
+          <ion-item>
+            <ion-label>Total: {{Total}}</ion-label>
           </ion-item>
           <ngx-stripe-card-group [elementsOptions]="elementsOptions">
             <ion-item>
@@ -81,7 +87,7 @@
             Card Expiry: <ngx-stripe-card-expiry [options]="cardOptions"></ngx-stripe-card-expiry>
             Card CVC: <ngx-stripe-card-cvc [options]="cardOptions"></ngx-stripe-card-cvc>
           </ngx-stripe-card-group>
-          <ion-button (click)="book(800,test)">Pay Now</ion-button>
+          <ion-button (click)="book()">Pay Now</ion-button>
         </ion-list>
       </ion-col>
     </ion-row>

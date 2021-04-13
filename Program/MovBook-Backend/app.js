@@ -10,6 +10,7 @@ const operatorRoutes = require("./routes/operators");
 const loyaltyRoutes = require("./routes/loyalty");
 const showingCinemaHall = require("./routes/showing-movie-hall");
 const bookingHistory = require("./routes/bookingHistory");
+const bookingRoutes = require("./routes/bookings");
 const customerRoutes = require("./routes/customer");
 const messagesRoutes = require("./routes/messages");
 const managerRoutes = require("./routes/managers");
@@ -47,8 +48,8 @@ mongoose
     console.log("Connection Failed");
   });
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -71,6 +72,7 @@ app.use("/api/operators", operatorRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
 app.use("/api/showing-cinema-hall", showingCinemaHall)
 app.use("/api/booking-history", bookingHistory);
+app.use("/api/booking", bookingRoutes);
 app.use("/api/booking-details", bookingDetails);
 app.use("/api/omdb/upcoming-movies", upcomingMovieSearchResults);
 app.use("/api/customers", customerRoutes);

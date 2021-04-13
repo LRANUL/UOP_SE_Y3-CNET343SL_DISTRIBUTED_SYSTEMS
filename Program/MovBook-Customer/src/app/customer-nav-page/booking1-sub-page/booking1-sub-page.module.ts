@@ -8,6 +8,7 @@ import { Booking1SubPagePageRoutingModule } from './booking1-sub-page-routing.mo
 
 import { Booking1SubPagePage } from './booking1-sub-page.page';
 import { HeaderComponentComponent } from 'src/app/header-component/header-component.component';
+import { PaymentPage } from '../payment/payment.page';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { HeaderComponentComponent } from 'src/app/header-component/header-compon
     IonicModule,
     Booking1SubPagePageRoutingModule
   ],
-  declarations: [Booking1SubPagePage, HeaderComponentComponent]
+  declarations: [Booking1SubPagePage, HeaderComponentComponent,PaymentPage]
 })
 export class Booking1SubPagePageModule {}

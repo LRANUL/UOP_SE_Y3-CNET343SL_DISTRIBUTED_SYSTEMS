@@ -3,7 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { EmailValidator } from "@angular/forms";
 import { environment } from "src/environments/environment";
-import { bookedTickets, movie} from 'src/app/models/account/operators';
+import { bookedTickets, movie } from 'src/app/models/operators';
+import { MovieBookingSubPagePage } from "../operator-nav-page/movie-booking-sub-page/movie-booking-sub-page.page";
 
 @Injectable({
   providedIn: "root",
@@ -46,7 +47,7 @@ export class OperatorService {
   getMovie(movieTitle) {
     return this.http.get(this.BASE_URL + "api/movie?title=" + movieTitle);
   }
-  updateEmail(oldEmail, newEmail){
+  updateEmail(oldEmail, newEmail) {
     const body = { oldEmail: oldEmail, newEmail: newEmail };
     return this.http.put<any>(this.BASE_URL + "api/operators/update", body);
 
@@ -55,21 +56,17 @@ export class OperatorService {
     const body = { name: name, quantity: quantity };
     return this.http.put<any>(this.BASE_URL + "api/refreshments/update", body);
   }
-  createBooking(movieTitle, Time, Status) {
-    return this.http
-      .post<any>(this.BASE_URL + "api/booking", {
-        title: movieTitle,
-        time: Time,
-        status: Status,
-      })
-      .subscribe(
-        (response) => console.log(response),
-        (err) => console.log(err)
-      );
+  storeBooking(refreshments, movie) {
+    var email = localStorage.getItem('email');
+    email = 'john@movbook.com'
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments };
+    console.log(body)
+    return this.http.post<any>(this.BASE_URL + "api/booking/add", body);
   }
 
-/* BOOKING P1 FUNCTIONS*/
-public updatedBookedtickets: bookedTickets
+
+  /* BOOKING P1 FUNCTIONS*/
+  public updatedBookedtickets: bookedTickets
   private currentBookedtickets = new Subject();
 
   gettickets() {

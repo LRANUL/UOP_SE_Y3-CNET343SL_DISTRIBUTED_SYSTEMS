@@ -19,7 +19,16 @@ export class CustomerService {
   gettickets(){
     return this.currentBookedtickets.asObservable();
   }
-
+  getBeverages() {
+    return this.http.get(this.BASE_URL + "api/refreshments");
+  }
+  storeBooking(refreshments, movie) {
+    var email = localStorage.getItem('email');
+    email = 'john@movbook.com'
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments };
+    console.log(body)
+    return this.http.post<any>(this.BASE_URL + "api/booking/add", body);
+  }
   public moviesUpdated = {
     movieObjectId: '',
     cinemaHallObjectId: '',

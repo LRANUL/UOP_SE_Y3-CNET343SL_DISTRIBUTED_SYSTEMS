@@ -26,7 +26,8 @@
                         <b>
                           Hall: {{hallName}}
                           <br>
-                          Cinema: {{movies.cinemaLocation.cinemaLocationName}}, {{movies.cinemaLocation.cinemaLocationAddress.city}}
+                          Cinema: {{movies.cinemaLocation.cinemaLocationName}},
+                          {{movies.cinemaLocation.cinemaLocationAddress.city}}
                           <br>
                           Experience: {{movies.showingSlots[0].showingExperience}}</b>
                       </ion-col>
@@ -44,40 +45,42 @@
         <ion-grid>
           <ion-row>
             <ion-col>
-              <table style="border: none;
-             position: relative;
-             left: 49%;
-             transform: translateX(-49%);">
-                <tr *ngFor="let in of covertNumberToArray(NoOfRows); let row = index">
-                  <td class="seatingGridTableTableData"
-                    *ngFor="let in of covertNumberToArray(NoOfColumns); let column = index">
-                    <div class="seatingGridTableOuterDiv">
-                      <ng-container *ngFor="let Details of seatData">
-                        <ng-template *ngIf="Details?.seatId == cinemaLocationId + '|0|' + preIncrementValue(row) + '|' + preIncrementValue(column);
-                              then showSeatDetails;">
-                        </ng-template>
-                        <ng-template #showSeatDetails>
-                          <div [ngClass]="{
-                          'seatingGridTableInnerDivUnavailableSeat': Details.seatUnavailable != 'false',
-                          'seatingGridTableInnerDiv': Details.seatUnavailable != 'true',
-                          'bookedSeatingGridTableInnerDiv': Details.seatStatus != 'null' && Details.seatUnavailable != 'true'
-                          }" id="{{ Details?.seatId }}">
-                            <p class="seatingGridTableInnerDivP" *ngIf="Details.seatUnavailable != 'true'"
-                              (click)="bookingTicket(Details.seatId, Details.seatNumber, Details.seatStatus)">
-                              {{Details.seatNumber}}
-                            </p>
-                          </div>
-                        </ng-template>
-                      </ng-container>
-                    </div>
-                  </td>
-                </tr>
-              </table>
+              <div>
+                <table style="border: none;
+              position: relative;
+              left: 49%;
+              transform: translateX(-49%);">
+                  <tr *ngFor="let in of covertNumberToArray(NoOfRows); let row = index">
+                    <td class="seatingGridTableTableData"
+                      *ngFor="let in of covertNumberToArray(NoOfColumns); let column = index">
+                      <div class="seatingGridTableOuterDiv">
+                        <ng-container *ngFor="let Details of seatData">
+                          <ng-template *ngIf="Details?.seatId == cinemaLocationId + '|0|' + preIncrementValue(row) + '|' + preIncrementValue(column);
+                               then showSeatDetails;">
+                          </ng-template>
+                          <ng-template #showSeatDetails>
+                            <div [ngClass]="{
+                           'seatingGridTableInnerDivUnavailableSeat': Details.seatUnavailable,
+                           'seatingGridTableInnerDiv': !Details.seatUnavailable,
+                           'bookedSeatingGridTableInnerDiv': Details.seatStatus != 'null' && !Details.seatUnavailable
+                           }" id="{{ Details?.seatId }}">
+                              <p class="seatingGridTableInnerDivP" *ngIf="!Details.seatUnavailable"
+                                (click)="bookingTicket(Details.seatId, Details.seatNumber, Details.seatStatus)">
+                                {{Details.seatNumber}}
+                              </p>
+                            </div>
+                          </ng-template>
+                        </ng-container>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
               <br>
               <ion-img src="../../assets/images/movie-screen.png" style="height: 100px;"></ion-img>
               <ion-grid>
                 <ion-row>
-                  <ion-col size-md="5" offset-md="3.5">
+                  <ion-col size-md="8" offset-md="2">
                     <ion-card>
                       <ion-card-content>
                         <ion-grid>
@@ -150,7 +153,7 @@
                     <ion-button expand="block" (click)="continue()">Continue</ion-button>
                   </ion-col>
                   <ion-col>
-                    <ion-button expand="block" (click)="cancel()"> Cancel</ion-button>
+                    <ion-button expand="block" (click)="cancelBooking()"> Cancel</ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
