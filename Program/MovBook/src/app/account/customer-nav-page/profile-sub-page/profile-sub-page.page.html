@@ -1,48 +1,49 @@
-
+<app-header></app-header>
 <ion-content>
-  <div style="padding-top: 30px;">
-    <ion-header style="text-align: center; font-size: xx-large;">Account Information</ion-header>
-  </div>
-  <br>
   <br>
   <ion-grid>
     <ion-row>
-      <ion-col size-md="5.5" offset-md="5.6">
-              <ion-avatar style="height: 110px; width: 110px; text-align: center;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-md="5" offset-md="5.8">
+              <ion-avatar style="height: 110px; width: 110px;">
                 <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
               </ion-avatar>
-      </ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
     </ion-row>
     <ion-row>
-    <ion-col size-md="5" offset-md="5">
-             <ion-label style="text-align: center; font-weight: bold; font-size: x-large;">{{user.email}}</ion-label>     
-    </ion-col>
+      <ion-grid>
+        <ion-row>
+          <ion-col  size-md="5" offset-md="5">
+            <ion-label style="font-weight: bold; font-size: x-large;">{{user.email}}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-row>
   </ion-grid>
-  <ion-grid> 
-    <ion-row>
-      <ion-col size-md="10" offset-md="1">
-        <div style="padding-top: 20px; padding-left: 20px;">
-          <ion-header style="font-size: medium;">My Profile details</ion-header>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <br>
   <ion-grid>
     <ion-row>
       <ion-col size-md="10" offset-md="1">
-        <ion-card> 
+          <ion-title>Your Profile details</ion-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="10" offset-md="1">
+        <ion-card>
           <ion-card-content >
-            prefix: {{user.name[0].prefix}}
+            prefix: {{user.name.prefix}}
             <br>
             <br>
-            First Name: {{user.name[0].firstName}}
+            First Name: {{user.name.firstName}}
             <br>
             <br>
-            Middle Name: {{user.name[0].middleName}}
+            Middle Name: {{user.name.middleName}}
             <br>
             <br>
-            Last Name: {{user.name[0].lastName}}
+            Last Name: {{user.name.lastName}}
             <br>
             <br>
             Mobile Number:{{user.phone}}
@@ -51,13 +52,13 @@
             E-mail: {{user.email}}
             <br>
             <br>
-            street Address: {{user.address[0].streetAddress}}
+            street Address: {{user.address.streetAddress}}
             <br>
             <br>
-            city: {{user.address[0].city}}
+            city: {{user.address.city}}
             <br>
             <br>
-            postal Zip Code: {{user.address[0].postalZipCode}}
+            postal Zip Code: {{user.address.postalZipCode}}
             <br>
             <br>
             Registered Date: {{user.registeredDateTime}}

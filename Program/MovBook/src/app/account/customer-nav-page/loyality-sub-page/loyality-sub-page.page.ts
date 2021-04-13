@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/services/account/customer.service';
 
@@ -16,6 +17,7 @@ export class LoyalitySubPagePage implements OnInit {
   }
 
   temporyemail = "6031255303a242238e0c0d67";
+  pipe = new DatePipe("en-US");
   constructor(private customerService: CustomerService) { }
 
   ngOnInit() {
@@ -25,12 +27,12 @@ export class LoyalitySubPagePage implements OnInit {
   getinformation(email: any)
   {
     this.customerService.getloyality(email).subscribe(data => {
-      this.loyality = 
+      this.loyality =
       {
         email: data.users.email,
         pointsAvailable: data.users.pointsAvailable,
         totalPoints: data.users.totalPoints,
-        lastDatePointsEarned: data.users.lastEarnedDate
+        lastDatePointsEarned: this.pipe.transform(data.users.lastEarnedDate, "mediumDate")
       };
     });
   }

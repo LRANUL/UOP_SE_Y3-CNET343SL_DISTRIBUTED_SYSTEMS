@@ -1,18 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { movie} from 'src/app/models/account/customers';
+import { Observable, Subject } from 'rxjs';
+import { bookedTickets, movie} from 'src/app/models/account/customers';
+import { Movie } from 'src/app/models/account/customers';
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
+  private BASE_URL = environment.MOVBOOK_BACKEND_URL;
   constructor(private http: HttpClient) { }
 
-  public updatedBookedtickets:[] = [];
+  public updatedBookedtickets : bookedTickets
   private currentBookedtickets = new Subject();
-  
+
   gettickets(){
     return this.currentBookedtickets.asObservable();
   }
@@ -20,14 +23,29 @@ export class CustomerService {
   public moviesUpdated = {
     movieObjectId: '',
     cinemaHallObjectId: '',
-    cinemaLocationObjectId: '',
-    showingExperience: '',
+    cinemaLocation: {
+    cinemaLocationObjectId : '',
+    cinemaLocationName : '',
+    cinemaLocationAddress : {
+      streetAddress : '',
+      city : '',
+      postalCode: '',
+    }
+  },
     showingStartDate: '',
     showingEndDate: '',
-    showingTime: ''
+    showingSlots: [{
+    _id: '',
+    showingDate: '',
+    showingExperience: '',
+    timeSlotStartTime: '',
+    timeSlotEndTime: '',
+    adultsTicketFeeLKR: '',
+    childrenTicketFeeLKR: ''
+    }]
   };
   private currentmovies = new Subject();
-  
+
   getmovie()
   {
     return this.currentmovies.asObservable();
@@ -43,7 +61,7 @@ export class CustomerService {
   };
 
   private location = new Subject();
-  
+
   getlocation()
   {
     return this.location.asObservable();
@@ -63,18 +81,45 @@ export class CustomerService {
     }]
   };
   private hall = new Subject();
-  
+
   gethall()
   {
     return this.hall.asObservable();
   }
 
+  public showinghallupdated = {
+    showingCinemaHallObjectId: '',
+    slotObjectId: '',
+    showingMovieObjectId: '',
+    cinemaHallObjectID: '',
+    cinemaLocationObjectId : '',
+    showingSeatDetails : [
+      {
+        _id: '',
+        seatId : '',
+        seatNumber: '',
+        seatUnavailable: '',
+        seatStatus : '',
+        seatActive : '',
+        customerObjectId : '',
+      }
+    ]
+  };
+  private showingcinemahall = new Subject();
+
+  getShowingCinemaHall()
+  {
+    return this.showingcinemahall.asObservable();
+  }
+
+
   public movieupdated = {
-    title: '',
-    year: '',
+    movieStatus: '',
+    movieTitle: '',
     rated: '',
-    released: '',
-    runtime: '',
+    releasedYear: '',
+    releasedDate: '',
+    movieRuntime: '',
     genre: '',
     director: '',
     writer: '',
@@ -83,96 +128,172 @@ export class CustomerService {
     language: '',
     country: '',
     awards: '',
-    poster: '',
-    ratings: [{
-      Source: '',
-      Value: ''
-    }],
-    metascore: '',
-    imdbRating: '',
-    imdbVotes: '',
-    imdbId: '',
-    type: '',
-    dvd: '',
+    posterLink: '',
+    ratings: [
+      {
+        Source: '',
+        Value: '',
+      }
+    ],
+    imdb: {
+      imdbID: '',
+      imdbRating: '',
+      imdbVotes: ''
+    },
     boxOffice: '',
     production: '',
     website: ''
     };
     private movie = new Subject();
-    
+
     getmovies()
     {
       return this.movie.asObservable();
-    }  
- 
-getUser(id:string) 
+    }
+
+    public movieShowingUpdated = {
+      movieObjectId: '',
+      cinemaHallObjectId: '',
+      cinemaLocation: {
+      cinemaLocationObjectId : '',
+      cinemaLocationName : '',
+      cinemaLocationAddress : {
+        streetAddress : '',
+        city : '',
+        postalCode: '',
+      }
+    },
+      showingStartDate: '',
+      showingEndDate: '',
+      showingSlots: [{
+      _id: '',
+      showingExperience: '',
+      showingDate: '',
+      timeSlotStartTime: '',
+      timeSlotEndTime: '',
+      adultsTicketFeeLKR: '',
+      childrenTicketFeeLKR: ''
+    }]
+      };
+      private Showingmovie = new Subject();
+
+      getShowingMovie()
+      {
+        return this.Showingmovie.asObservable();
+      }
+
+      public ticketPricesUpdated = {
+        movieObjectId: '',
+        showingTimeSlot:  '',
+        ticketCost: {
+        adult: '',
+        children: '',
+        }
+        };
+        private ticketPrice = new Subject();
+
+        getTicket()
+        {
+          return this.ticketPrice.asObservable();
+        }
+
+        public ExperienceUpdated = {
+          showingExperience: '',
+          description: ''
+          };
+          private experience = new Subject();
+
+          getExperience()
+        {
+          return this.experience.asObservable();
+        }
+
+
+getUser(email :string)
 {
-  return this.http.get<{message: string, users: any}>('http://localhost:5000/api/customers/' + id)
+  return this.http.get<{message: string, users: any}>(this.BASE_URL + "api/customers/" + email)
+}
+
+private listeners = new Subject<any>();
+listen():Observable<any>{
+  return this.listeners.asObservable();
+}
+
+filter(filterBy)
+{
+ this.listeners.next(filterBy);
 }
 
 updateuser(value, id)
 {
   console.log(value);
-  this.http.put<{message: string}>('http://localhost:5000/api/customers/' + id, value).subscribe((responsestatus) => {
+  this.http.put<{message: string}>(this.BASE_URL +"api/customers/" + id, value).subscribe((responsestatus) => {
     console.log(responsestatus);
-});   
+});
 }
 
 getloyality(email:string)
 {
-  return this.http.get<{message: string, users}>('http://localhost:5000/api/loyalty/' + email)
+  return this.http.get<{message: string, users}>(this.BASE_URL +"api/loyalty/" + email)
 }
 
-getbookinghistory(email: string)
+getbookinghistory(id: string)
 {
-  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-history/' + email).subscribe(res=>{
-  this.updatedBookedtickets= res.tickets;
-  this.currentBookedtickets.next([...this.updatedBookedtickets]);
+  return this.http.get<{message : string, tickets : any}>(this.BASE_URL +"api/booking-history/" + id).subscribe(res=>{
+  this.updatedBookedtickets = res.tickets;
+  this.currentBookedtickets.next(this.updatedBookedtickets);
 })
 }
 
 getshowingmoviedetails(id: string)
-{
-  return this.http.get<{tickets:movie}>('http://localhost:5000/api/booking-details/' + id).subscribe(res=>{
+{ //change made
+  return this.http.get<{tickets:movie}>(this.BASE_URL +"api/showing-movies/" + id).subscribe(res=>{
+    console.log(res.tickets)
     this.moviesUpdated = res.tickets;
     this.currentmovies.next(this.moviesUpdated);
   })
 }
 
-retrieveCinemaHall(cinemaLocationObjectId){
-  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-halls/hall/' + cinemaLocationObjectId).subscribe(res=>{
+retrieveCinemaHall(id){
+  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +'api/cinema-halls/hall/' + id).subscribe(res=>{
     this.hallupdated = res.returnedData;
     this.hall.next([this.hallupdated]);
-  });;
+  });
 }
 
-retrieveCinemaLocation(cinemaLocationObjectId){ 
-  return this.http.get<{message: string, returnedData: any}>('http://localhost:5000/api/cinema-locations/location/' + cinemaLocationObjectId).subscribe(res=>{
+retrieveShowingCinemaHall(id){
+  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +'api/showing-cinema-halls/' + id).subscribe(res=>{
+    console.log(res.returnedData);
+    this.showinghallupdated = res.returnedData;
+    this.showingcinemahall.next(this.showinghallupdated);
+  });
+}
+
+retrieveCinemaLocation(cinemaLocationObjectId){
+  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +"api/cinema-locations/location/" + cinemaLocationObjectId).subscribe(res=>{
     this.locationupdated = res.returnedData;
     this.location.next([this.locationupdated]);
   });
 }
 
 retrieveAllCinemaLocations(){
-  return this.http.get("http://localhost:5000/api/cinema-locations");
+  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +"api/cinema-locations").subscribe(res=>{
+    this.locationupdated = res.returnedData;
+    this.location.next(this.locationupdated);
+  });
 }
 
-getmoviedetails(id: string)
-{
-  // have to write the code to get the movie here
-}
-
-getmovieexperience(exp: string)
-{
-  return this.http.get<{message : string, tickets : any}>('http://localhost:5000/api/booking-details/experience/' + exp).subscribe(res=>{
-  this.moviesUpdated= res.tickets;
-  this.currentmovies.next(this.moviesUpdated);
-})
+retrieveAllExperience(){
+  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +"api/showing-experiences").subscribe(res=>{
+    console.log(res.returnedData)
+    this.ExperienceUpdated = res.returnedData;
+    this.experience.next(this.ExperienceUpdated);
+  });
 }
 
 getmovielocation(location: string)
 {
-  return this.http.get<{message : string, returnedData : any}>('http://localhost:5000/api/cinema-locations/find/location/' + location).subscribe(res=>{
+  return this.http.get<{message : string, returnedData : any}>(this.BASE_URL + "api/cinema-locations/find/location/" + location).subscribe(res=>{
     this.locationupdated= res.returnedData;
     this.location.next(this.locationupdated);
   });
@@ -180,15 +301,24 @@ getmovielocation(location: string)
 
 getShowingMovies()
 {
-  return this.http.get<{message : string, returnedData : any}>('http://localhost:5000/api/movies').subscribe(res=>{
+  return this.http.get<{returnedData : any}>(this.BASE_URL + "api/movies").subscribe(res=>{
     this.movieupdated= res.returnedData;
     this.movie.next(this.movieupdated);
  });
 }
 
+getSpecificShowingMovie(showingId: string)
+{//change made
+  return this.http.get<{message : string, tickets : movie}>(this.BASE_URL + "api/showing-movies/id/" + showingId).subscribe(res=>{
+    console.log(res.tickets);
+    this.movieShowingUpdated = res.tickets;
+    this.Showingmovie.next(this.movieShowingUpdated);
+ });
+}
+
 getMovieDetail(movieId)
 {
-  return this.http.get<{message : string, returnedData : any}>('http://localhost:5000/api/movies/' + movieId).subscribe(res=>{
+  return this.http.get<{message : string, returnedData : any}>(this.BASE_URL + "api/movies/" + movieId).subscribe(res=>{
     this.movieupdated= res.returnedData;
     this.movie.next(this.movieupdated);
  });

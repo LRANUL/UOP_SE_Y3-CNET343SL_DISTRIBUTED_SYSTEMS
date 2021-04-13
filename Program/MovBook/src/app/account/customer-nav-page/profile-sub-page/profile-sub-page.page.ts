@@ -19,25 +19,21 @@ export class ProfileSubPagePage implements OnInit {
 
   user: profile = {
     name:
-    [
       {
       prefix: '',
       lastName: '',
       firstName: '',
       middleName: '',
-     }
-    ],
+      },
     email: '',
     password: '',
     registeredDateTime: '',
-    address: 
-    [
+    address:
     {
       streetAddress: '',
       city: '',
       postalZipCode: ''
-    }
-    ],
+    },
     phone: '',
   }
 
@@ -45,14 +41,14 @@ export class ProfileSubPagePage implements OnInit {
     this.getuser(this.temoryid);
   }
 
-  temoryid: string = "lolsss@movbook.com";
+  temoryid: string = "test@test.com";
 
   async editprofilemodal()
   {
     const Emodal = await this.modalctrl.create({
       component: EditProfileComponentComponent,
       cssClass: 'customer-edit-profile-css'
-    }); 
+    });
    await Emodal.present();
   }
 
@@ -68,26 +64,24 @@ export class ProfileSubPagePage implements OnInit {
   {
     this.customerService.getUser(id).subscribe(profiles => {
       console.log(profiles);
-      this.user = 
+      this.user =
       {
         email: profiles.users.email,
         password: profiles.users.email,
-        name: [
+        name:
           {
-            prefix: profiles.users.name[0].prefix,
-            firstName: profiles.users.name[0].firstName,
-            middleName: profiles.users.name[0].middleName,
-            lastName : profiles.users.name[0].lastName    
-          }
-        ],
+            prefix: profiles.users.name.prefix,
+            firstName: profiles.users.name.firstName,
+            middleName: profiles.users.name.middleName,
+            lastName : profiles.users.name.lastName
+          },
         registeredDateTime: profiles.users.registeredDateTime,
-        address:[
+        address:
           {
-            streetAddress: profiles.users.address[0].streetAddress,
-            city: profiles.users.address[0].city,
-            postalZipCode: profiles.users.address[0].postalZipCode
-          }
-        ],
+            streetAddress: profiles.users.address.streetAddress,
+            city: profiles.users.address.city,
+            postalZipCode: profiles.users.address.postalZipCode
+          },
         phone: profiles.users.phone,
       };
       console.log(this.user);

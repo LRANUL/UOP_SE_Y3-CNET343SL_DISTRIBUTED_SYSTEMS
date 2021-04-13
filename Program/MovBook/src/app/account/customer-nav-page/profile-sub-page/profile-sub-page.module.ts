@@ -9,6 +9,7 @@ import { ProfileSubPagePageRoutingModule } from './profile-sub-page-routing.modu
 import { ProfileSubPagePage } from './profile-sub-page.page';
 import { EditProfileComponentComponent } from './edit-profile-component/edit-profile-component.component';
 import { PasswordChangeComponentComponent } from './password-change-component/password-change-component.component';
+import { HeaderComponent } from '../header/header.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { PasswordChangeComponentComponent } from './password-change-component/pa
     IonicModule,
     ProfileSubPagePageRoutingModule
   ],
-  declarations: [ProfileSubPagePage, EditProfileComponentComponent, PasswordChangeComponentComponent],
+  declarations: [ProfileSubPagePage, EditProfileComponentComponent, PasswordChangeComponentComponent, HeaderComponent],
   entryComponents: [EditProfileComponentComponent,PasswordChangeComponentComponent]
 })
 export class ProfileSubPagePageModule {}

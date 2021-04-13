@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Plugins } from '@capacitor/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import '@capacitor-community/firebase-remote-config';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { ContactUsComponentComponent } from './home-nav-page/contact-us-component/contact-us-component.component';
+import { TermsAndConditionsComponent } from './home-nav-page/terms-and-conditions/terms-and-conditions.component';
 AngularFireModule.initializeApp(environment.firebase)
 const { FirebaseRemoteConfig } = Plugins;
 FirebaseRemoteConfig.initializeFirebase({
@@ -23,7 +25,7 @@ FirebaseRemoteConfig.initializeFirebase({
 export class AppComponent {
   remoteConfig: any = null;
 
-  constructor(private alertCtrl: AlertController) { }
+  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController) { }
 
   async ngOnInit() {
     const { FirebaseRemoteConfig } = Plugins;
@@ -98,4 +100,19 @@ export class AppComponent {
     });
   }
 
+  async openContactUsModal() {
+    const modal = await this.modalCtrl.create({
+      component: ContactUsComponentComponent,
+      cssClass: 'customer-contact-us-css'
+    });
+    await modal.present();
+  }
+
+  async openTermsmodal() {
+    const modal = await this.modalCtrl.create({
+      component: TermsAndConditionsComponent,
+      cssClass: 'customer-terms-and-condition-css'
+    });
+    await modal.present();
+  }
 }

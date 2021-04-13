@@ -1,0 +1,51 @@
+<div style=" display: flex;flex-direction: column;">
+    <div style="flex: 1; padding-top: 3px; color: white; background-color: #18191a;">
+        <ion-grid>
+            <ion-row>
+                <ion-col size-md="4" offset-md="3">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-label>Home</ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col (click)="aboutUs()">
+                                <ion-label>About Us</ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col (click)="openmodal()">
+                                <ion-label>Contact Us</ion-label>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-col>
+                <ion-col>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-label>Follow Us:</ion-label>
+                                <br>
+                                <a href="https://www.instagram.com/">
+                                <ion-icon name="logo-instagram" style="padding-right: 20px;"></ion-icon>
+                                </a>
+                                <a href="https://twitter.com/movbook1">
+                                <ion-icon name="logo-twitter" style="padding-right: 20px;"></ion-icon>
+                                </a>
+                              <a href="https://www.facebook.com/mov.book.5/">
+                                <ion-icon name="logo-facebook" style="padding-right: 20px;"></ion-icon>
+                              </a>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col (click)="openTermsmodal()">
+                                <ion-label>Terms And Conditions</ion-label>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+  </div>

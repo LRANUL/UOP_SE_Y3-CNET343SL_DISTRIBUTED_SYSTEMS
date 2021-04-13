@@ -30,7 +30,7 @@ ion-menu{
     --radius:25px
 }
 ion-content{            
-    --background: #374d58;
+    --background: #808080;
 }
 //#e8e8e8;
 ion-button{
@@ -101,4 +101,20 @@ ion-button{
     position: absolute;
     display: block;
 }
+
+  .customer-contact-us-css .modal-wrapper {
+    height: 30%;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  
+  .customer-terms-and-condition-css .modal-wrapper {
+    height: 90%;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
 

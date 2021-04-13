@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { WatchlistSubPagePage } from './watchlist-sub-page.page';
+import { FooterComponent } from './footer.component';
 
-describe('WatchlistSubPagePage', () => {
-  let component: WatchlistSubPagePage;
-  let fixture: ComponentFixture<WatchlistSubPagePage>;
+describe('FooterComponent', () => {
+  let component: FooterComponent;
+  let fixture: ComponentFixture<FooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WatchlistSubPagePage ],
+      declarations: [ FooterComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WatchlistSubPagePage);
+    fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BookedTicketsSubPagePageRoutingModule } from './booked-tickets-sub-page-routing.module';
 
 import { BookedTicketsSubPagePage } from './booked-tickets-sub-page.page';
+import { HeaderComponent } from '../header/header.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { BookedTicketsSubPagePage } from './booked-tickets-sub-page.page';
     IonicModule,
     BookedTicketsSubPagePageRoutingModule
   ],
-  declarations: [BookedTicketsSubPagePage]
+  declarations: [BookedTicketsSubPagePage, HeaderComponent]
 })
 export class BookedTicketsSubPagePageModule {}

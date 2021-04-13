@@ -1,3 +1,4 @@
+<app-header></app-header>
 <ion-content>
   <div style="padding-top: 30px;">
     <ion-header style="text-align: center; font-size: xx-large; padding-bottom: 20px;">Booking History</ion-header>
@@ -5,24 +6,24 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="10" offset-md="1">
-        <div *ngFor="let tickets of bookedTickets">
-        <ion-card>
+        <div>
+        <ion-card *ngFor="let tickets of bookedticket">
           <ion-row>
             <ion-col>
           <ion-grid>
             <ion-row>
               <ion-col offset-md="0.4">
-                <img src="{{tickets.imgUrl}}" style="height: 130px;">
+                <img src="{{tickets.movieTickets.moviePoster}}" style="height: 150px; width: 150px;">
               </ion-col>
               <ion-col size-md="4" offset-md="1">
                 <ion-card-header>
-                  <ion-card-title>Movie Name: {{tickets.movieName}}</ion-card-title>
-                  <ion-card-subtitle>Location: {{tickets.location}}</ion-card-subtitle>
-                  <ion-card-subtitle>Time: {{tickets.time}}</ion-card-subtitle>
-                  <ion-card-subtitle>Movie Hall: {{tickets.hall}}</ion-card-subtitle>
-                  <ion-card-subtitle>Seat Number: {{tickets.seatNumber}}</ion-card-subtitle>
+                  <ion-card-title>Movie Name: {{tickets.movieTickets.movieName}}</ion-card-title>
+                  <ion-card-subtitle>Location: {{tickets.movieTickets.location}}</ion-card-subtitle>
+                  <ion-card-subtitle>Time: {{tickets.movieTickets.timeSlot}}</ion-card-subtitle>
+                  <ion-card-subtitle>Movie Hall: {{tickets.movieTickets.hallName}}</ion-card-subtitle>
+                  <ion-card-subtitle>Seat Number: {{tickets.movieTickets.seatNumber}}</ion-card-subtitle>
                 </ion-card-header>
-              </ion-col> 
+              </ion-col>
             </ion-row>
           </ion-grid>
             </ion-col>
@@ -30,7 +31,7 @@
             <ion-item-divider>
               <ion-card-content>
                 <ion-label>
-                  Total cost Of Tickets: {{tickets.totalCost}} 
+                  Total cost Of Tickets: {{tickets.totalCostLKR}}
                 </ion-label>
               </ion-card-content>
             </ion-item-divider>
