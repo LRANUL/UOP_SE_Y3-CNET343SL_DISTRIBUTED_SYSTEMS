@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { CinemaHall, seatingData, showingCinemaHall } from 'src/app/models/account/cinema-hall';
 import { movie } from 'src/app/models/account/customers';
 import { Movie, ticketPrices } from 'src/app/models/account/movie';
 import { CustomerService } from 'src/app/services/account/customer.service';
+import { PaymentPage } from "../payment/payment.page";
 
 
 
@@ -19,7 +20,8 @@ export class Booking1SubPagePage implements OnInit {
   seatUnavailable: any;
 
   time;
-  constructor(private route: Router, private toastCtrl: ToastController, private customerService: CustomerService, private router: ActivatedRoute) {
+    
+    constructor(private route: Router, private toastCtrl: ToastController,private modalCtrl: ModalController, private customerService: CustomerService, private router: ActivatedRoute) {
     this.router.queryParams.subscribe(params => {
       if (this.route.getCurrentNavigation().extras.state) {
         this.time = this.route.getCurrentNavigation().extras.state.Time;
@@ -540,8 +542,18 @@ export class Booking1SubPagePage implements OnInit {
     }
   }
 
-  continue()
+  async continue()
   {
+    const Payment = this.modalCtrl.create({
+      component: PaymentPage,
+    });
     console.log(this.allticketInformation);
+    this.sendTicketDetails(this.allticketInformation)
+
+ 
+    return await (await Payment).present();
+  }
+  sendTicketDetails(allticketInformation) {
+    this.customerService.allticketInformation.next(allticketInformation);
   }
 }

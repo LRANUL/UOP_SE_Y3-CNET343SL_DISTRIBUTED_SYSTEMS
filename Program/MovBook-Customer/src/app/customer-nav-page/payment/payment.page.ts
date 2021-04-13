@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CustomerService } from "./../../services/account/customer.service";
 import { switchMap } from "rxjs/operators";
 import { StripeService, StripeCardNumberComponent } from "ngx-stripe";
@@ -24,6 +24,7 @@ let movieSelectionData;
 })
 
 export class PaymentPage implements OnInit {
+  @Input() id: any;
   @ViewChild(StripeCardNumberComponent) card: StripeCardNumberComponent;
   cardOptions: StripeCardElementOptions = {
     style: {
@@ -45,18 +46,36 @@ export class PaymentPage implements OnInit {
     fonts: [{ cssSrc: "https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" }]
   };
   private PAY_BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
-  
+
   Beverages: Object;
-  Refreshments: any;
+  Refreshments: any = [];
   Total: number;
   CustomerEmail: any;
+  title: any;
+  adultQuantity: any;
+  childQuantity: any;
+  seatNumbers: any;
 
-  constructor(private customerService:CustomerService, private modalCtrl: ModalController,
+  constructor(private customerService: CustomerService, private modalCtrl: ModalController,
     public http: HttpClient,
     private stripeService: StripeService,
     private alertCtrl: AlertController,) { }
+    allticketInformation: any;
 
   ngOnInit() {
+    console.log(this.id)
+    var ticketData = this.id;
+    movieSelectionData = ticketData
+    this.customerService.allticketInformation.subscribe(ticketData => {
+        movieSelectionData = ticketData
+        movieTotal = ticketData['ticketDetalis']['totalAmount']
+        billTotal += movieTotal
+        this.Total = billTotal
+        this.title = ticketData['movieInfo']['movieTitle'];
+        this.adultQuantity = ticketData['ticketDetalis']['adultTickets'];
+        this.childQuantity = ticketData['ticketDetalis']['childrenTickets'];
+        this.seatNumbers = ticketData['ticketDetalis']['seatNumbers'];
+      })
     this.customerService.getBeverages().subscribe(
       (data) => {
         this.Beverages = data;
@@ -79,7 +98,6 @@ export class PaymentPage implements OnInit {
     );
   }
   beverageUpdate(beverage) {
-
     let name: string = beverage.name
     let price: number = beverage.price
     let quantity: number = beverage.quantity
