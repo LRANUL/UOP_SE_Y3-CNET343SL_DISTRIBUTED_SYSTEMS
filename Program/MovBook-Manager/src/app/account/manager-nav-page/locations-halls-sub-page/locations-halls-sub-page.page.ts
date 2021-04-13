@@ -19,6 +19,9 @@ export class LocationsHallsSubPagePage implements OnInit {
   // Declaration - stores list of cinema locations
   cinemaLocationList = [];
 
+  // Declaration - stores used selected Cinema Location's object ID
+  selectedCinemaLocationObjectId;
+
   // Declaration - stores the search results for the user selected cinema location
   searchResultCinemaLocation;
 
@@ -106,8 +109,21 @@ export class LocationsHallsSubPagePage implements OnInit {
     if(data != null){
       // If condition - checking whether response data contains true
       if(data == true){
-        // Retrieving updated list of cinema locations
-        this.retrieveCinemaLocations();
+        if(this.handleUserSelectedCinemaLocation == true){
+          // Re-initializing array
+          this.cinemaLocationList = [];
+          this.listOfAmountOfCinemaHalls = new Array();
+          // Retrieving updated list of cinema locations
+          this.retrieveCinemaLocations();
+          this.searchCinemaLocation(this.selectedCinemaLocationObjectId);
+        }
+        else{
+          // Re-initializing array
+          this.cinemaLocationList = [];
+          this.listOfAmountOfCinemaHalls = new Array();
+          // Retrieving updated list of cinema locations
+          this.retrieveCinemaLocations();
+        }
       }
     }
   }
@@ -198,14 +214,17 @@ export class LocationsHallsSubPagePage implements OnInit {
   }
 
   // Filtering the cinema locations to render the user selected cinema location
-  searchCinemaLocation(searchCinemaLocationFormData){
+  searchCinemaLocation(selectedCinemaLocationObjectId){
+    
+    // Defining 'selectedCinemaLocationObjectId' with the user selected cinema location name
+    this.selectedCinemaLocationObjectId = selectedCinemaLocationObjectId;
 
     // Hiding visibility to 'handleUserSelectedCinemaLocation' block
     this.handleUserSelectedCinemaLocation = false
 
     for (let cinemaLocationIndex = 0; cinemaLocationIndex < this.cinemaLocationList.length; cinemaLocationIndex++) {
 
-      if(this.cinemaLocationList[cinemaLocationIndex].cinemaLocationName == searchCinemaLocationFormData.cinemaLocationName){
+      if(this.cinemaLocationList[cinemaLocationIndex]._id == selectedCinemaLocationObjectId){
 
         this.searchResultCinemaLocation = this.cinemaLocationList[cinemaLocationIndex];
 
