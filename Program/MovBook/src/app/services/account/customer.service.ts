@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { bookedTickets, movie} from 'src/app/models/account/customers';
 import { Movie } from 'src/app/models/account/customers';
 import { environment } from "src/environments/environment";
@@ -11,6 +11,8 @@ import { environment } from "src/environments/environment";
 export class CustomerService {
 
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
+  allticketInformation: BehaviorSubject<any> = new BehaviorSubject(null);
+  ticketInformation = this.allticketInformation.asObservable();
   constructor(private http: HttpClient) { }
 
   public updatedBookedtickets : bookedTickets
@@ -19,7 +21,16 @@ export class CustomerService {
   gettickets(){
     return this.currentBookedtickets.asObservable();
   }
-
+  getBeverages() {
+    return this.http.get(this.BASE_URL + "api/refreshments");
+  }
+  storeBooking(refreshments, movie) {
+    var email = localStorage.getItem('email');
+    email = 'john@movbook.com'
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments };
+    console.log(body)
+    return this.http.post<any>(this.BASE_URL + "api/booking/add", body);
+  }
   public moviesUpdated = {
     movieObjectId: '',
     cinemaHallObjectId: '',

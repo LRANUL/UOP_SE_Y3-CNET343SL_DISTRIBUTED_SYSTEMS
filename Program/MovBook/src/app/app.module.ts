@@ -19,22 +19,24 @@ import { AddLocationModalPageModule } from './account/manager-nav-page/locations
 import { CinemaHallsModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/cinema-halls-modal/cinema-halls-modal.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxStripeModule } from 'ngx-stripe';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-      MovieCatalogTypesPopoverPageModule,
-      MovieDetailsModalPageModule,
-      AddHallModalPageModule,
-      AssignHallSeatPopoverPageModule,
-      AddLocationModalPageModule,
-      CinemaHallsModalPageModule,
-      BrowserAnimationsModule,
-      NgbModule
+    MovieCatalogTypesPopoverPageModule,
+    MovieDetailsModalPageModule,
+    AddHallModalPageModule,
+    AssignHallSeatPopoverPageModule,
+    AddLocationModalPageModule,
+    CinemaHallsModalPageModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    NgxStripeModule.forRoot('pk_test_51IEFJWJcuxwrCkGRQaDQ8ycbMSxyrsApmMnXmb9Zlnvo3rcws57a5fRf8gdD6n1meV9yH8KctT2OUbN8kfRka2hi00T1GM5O0W')
   ],
   providers: [
     StatusBar,
@@ -43,4 +45,4 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
