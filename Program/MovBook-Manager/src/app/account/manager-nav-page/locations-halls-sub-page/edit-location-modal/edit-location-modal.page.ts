@@ -68,6 +68,22 @@ export class EditLocationModalPage implements OnInit {
     await alert.present();
   }
 
+  // Edit Location Success Alert Box Implementation
+  async editLocationSuccessAlertBox (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          // Closing EditLocationModal
+          this.closeEditLocationModal();
+        }
+      }]
+    });
+    await alert.present();
+  }
+
    // Function - Edit Cinema Location Alert Box Implementation
    async editCinemaLocationAlert( title: string, content: string, cinemaLocationFormData ) {
     const alert = await this.alertController.create({
@@ -97,60 +113,63 @@ export class EditLocationModalPage implements OnInit {
 
   // Function - Edit cinema location details
   editCinemaLocationDetails(cinemaLocationFormData){
-
+    
     if(cinemaLocationFormData.locationName != this.passedCinemaLocation.cinemaLocationName || 
       cinemaLocationFormData.locationAddressStreetAddress != this.passedCinemaLocation.cinemaLocationAddress.streetAddress || 
       cinemaLocationFormData.locationAddressCity != this.passedCinemaLocation.cinemaLocationAddress.city || 
       cinemaLocationFormData.locationAddressPostalCode != this.passedCinemaLocation.cinemaLocationAddress.postalCode){
 
-      //  // Passing updated cinema location details to the server-side application to update the database
-      //  this.managerService.updateCinemaLocation(cinemaLocationFormData)
-      // .subscribe((cinemaLocationUpdateResponse: any) => {
+      // Assigning loading spinner to true, starts loading spinner
+      this.loadingSpinnerEditCinemaLocation = true;
 
-      //   if(cinemaLocationUpdateResponse.message == "New refreshment added"){
-      //     // Assigning loading spinner to false - stops spinning
-      //     this.loadingSpinnerAddBeverage = false;
+       // Passing updated cinema location details to the server-side application to update the database
+       this.managerService.updateCinemaLocation(this.passedCinemaLocation._id, cinemaLocationFormData)
+      .subscribe((cinemaLocationUpdateResponse: any) => {
 
-      //     // Assigning function status to true
-      //     this.addBeverageStatus = true;
+        if(cinemaLocationUpdateResponse.message == "Cinema location updated"){
+          // Assigning loading spinner to false - stops spinning
+          this.loadingSpinnerEditCinemaLocation = false;
 
-      //     // Showing success message box to user
-      //     this.addBeverageSuccessAlertBox("Added", "New Beverage Successfully Added");
+          // Assigning function status to true
+          this.editCinemaLocationStatus = true;
 
-      //     // Enabling form submit
-      //     this.editCinemaLocationForm.valid;
-      //   }
-      //   else{
-      //     // Assigning loading spinner to false - stops spinning
-      //     this.loadingSpinnerAddBeverage = false;
+          // Showing success message box to user
+          this.editLocationSuccessAlertBox("Updated", "Cinema Location Updated");
 
-      //     // Assigning function status to false
-      //     this.editCinemaLocationStatus = false;
+          // Enabling form submit
+          this.editCinemaLocationForm.valid;
+        }
+        else{
+          // Assigning loading spinner to false - stops spinning
+          this.loadingSpinnerEditCinemaLocation = false;
+
+          // Assigning function status to false
+          this.editCinemaLocationStatus = false;
           
-      //     console.log('Error - Unable to add beverage');
+          console.log('Error - Unable to update cinema location');
 
-      //     // Showing error message box to user
-      //     this.alertNotice("ERROR", "Unable to add beverage");
+          // Showing error message box to user
+          this.alertNotice("ERROR", "Unable to update cinema location");
 
-      //     // Enabling form submit
-      //     this.editCinemaLocationForm.valid;
-      //   }
+          // Enabling form submit
+          this.editCinemaLocationForm.valid;
+        }
 
-      // }, (error: ErrorEvent) => {
-      //   // Assigning loading spinner to false - stops spinning
-      //   this.loadingSpinnerAddBeverage = false;
+      }, (error: ErrorEvent) => {
+        // Assigning loading spinner to false - stops spinning
+        this.loadingSpinnerEditCinemaLocation = false;
 
-      //   // Assigning function status to false
-      //   this.editCinemaLocationStatus = false;
+        // Assigning function status to false
+        this.editCinemaLocationStatus = false;
         
-      //   console.log('Error - Unable to add beverage: ', error);
+        console.log('Error - Unable to update cinema location: ', error);
 
-      //   // Showing error message box to user
-      //   this.alertNotice("ERROR", "Unable to add beverage");
+        // Showing error message box to user
+        this.alertNotice("ERROR", "Unable to update cinema location");
 
-      //   // Enabling form submit
-      //   this.editCinemaLocationForm.valid;
-      // });
+        // Enabling form submit
+        this.editCinemaLocationForm.valid;
+      });
 
     }
     else{

@@ -28,7 +28,7 @@
 
       <!-- SEARCH BY CINEMA LOCATION NAME FORM -->
       <div>
-        <form [formGroup]="searchCinemaLocationForm" (ngSubmit)="searchCinemaLocation(searchCinemaLocationForm.value)">
+        <form [formGroup]="searchCinemaLocationForm" (ngSubmit)="searchCinemaLocation(searchCinemaLocationForm.value.cinemaLocationName)">
           <ion-grid>
             <ion-row>
               <ion-col size="10">
@@ -39,7 +39,7 @@
                   <ion-select okText="SELECT" cancelText="DISMISS" formControlName="cinemaLocationName">
                     <ion-select-option 
                       *ngFor="let cinemaLocation of cinemaLocationList" 
-                      value="{{ cinemaLocation.cinemaLocationName }}"
+                      value="{{ cinemaLocation._id }}"
                     >
                       {{ cinemaLocation.cinemaLocationName }}
                     </ion-select-option>
@@ -178,7 +178,7 @@
                                   </ion-col>
                                   <ion-col size="6">
                                     <ion-button expand="block" 
-                                      (click)="openCinemaHallsModal()"
+                                      (click)="alertNotice('Coming Soon', 'Functionality Coming Soon')"
                                       style="min-width: 100%;
                                             --border-radius: 10px;"
                                       color="warning">
@@ -266,7 +266,7 @@
                                 <ion-row>
                                   <ion-col size="6">
                                     <ion-button expand="block" 
-                                      (click)="openEditLocationModal(searchResultCinemaLocation._id)"
+                                      (click)="openEditLocationModal(searchResultCinemaLocation)"
                                       style="min-width: 100%;
                                             --border-radius: 10px;"
                                       color="medium">
@@ -277,6 +277,7 @@
                                   </ion-col>
                                   <ion-col size="6">
                                     <ion-button expand="block" 
+                                      (click)="alertNotice('Coming Soon', 'Functionality Coming Soon')"
                                       style="min-width: 100%;
                                             --border-radius: 10px;"
                                       color="warning">

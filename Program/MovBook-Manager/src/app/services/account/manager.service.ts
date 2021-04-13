@@ -130,8 +130,15 @@ export class ManagerService {
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
   }
   // UPDATE - Updating cinema location details
-  updateCinemaLocation(updateCinemaLocationDetails: any){
-    return this.httpClient.put(this.BASE_URL + "api/cinema-locations/update", updateCinemaLocationDetails);
+  updateCinemaLocation(cinemaLocationObjectId: String, updatedCinemaLocationDetails: any){
+    let cinemaLocationObject = {
+      _id: cinemaLocationObjectId,
+      locationName: updatedCinemaLocationDetails.locationName,
+      locationAddressStreetAddress: updatedCinemaLocationDetails.locationAddressStreetAddress,
+      locationAddressCity: updatedCinemaLocationDetails.locationAddressCity,
+      locationAddressPostalCode: updatedCinemaLocationDetails.locationAddressPostalCode
+    }
+    return this.httpClient.put(this.BASE_URL + "api/cinema-locations/update", cinemaLocationObject);
   }
 
   /** Beverages Management */

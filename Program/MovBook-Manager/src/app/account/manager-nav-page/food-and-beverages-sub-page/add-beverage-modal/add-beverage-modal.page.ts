@@ -80,7 +80,7 @@ export class AddBeverageModalPage implements OnInit {
     await alert.present();
   }
 
-  // Alert Box Implementation
+  // Add Beverage Success Alert Box Implementation
   async addBeverageSuccessAlertBox (title: string, content: string) {
     const alert = await this.alertController.create({
       header: title,
