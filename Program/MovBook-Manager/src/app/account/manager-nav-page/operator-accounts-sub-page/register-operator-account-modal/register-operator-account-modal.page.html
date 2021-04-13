@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>UPDATE ACCOUNT DETAILS</ion-title>
+    <ion-title>REGISTER NEW OPERATOR ACCOUNT</ion-title>
     <ion-button
-      (click)="closeUpdateAccountDetailsModal()" 
+      (click)="closeRegisterOperatorAccountModal()" 
       slot="end" 
       shape="round" 
       fill="outline" 
@@ -23,11 +23,11 @@
                   position: relative;
                   left: 50%;
                   transform: translateX(-50%);">
-        <form [formGroup]="updateAccountDetailsForm" (ngSubmit)="updateAccountDetails(updateAccountDetailsForm.value)">
+        <form [formGroup]="addAccountDetailsForm" (ngSubmit)="doAddNewOperatorAccount(addAccountDetailsForm.value)">
           <ion-grid>
             <ion-row>
               <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: relative;
+                <ion-label class="register-operator-account-form-text" style="position: relative;
                                                                             top: 10%;">
                   Name:
                 </ion-label>
@@ -40,6 +40,11 @@
                       <ion-item>
                         <ion-select placeholder="Select Prefix" okText="SELECT" cancelText="DISMISS" formControlName="namePrefix">
                           <ion-select-option value="Mr.">Mr.</ion-select-option>
+                          <ion-select-option value="Sir.">Sir.</ion-select-option>
+                          <ion-select-option value="Ms.">Ms.</ion-select-option>
+                          <ion-select-option value="Mrs.">Mrs.</ion-select-option>
+                          <ion-select-option value="Miss.">Miss.</ion-select-option>
+                          <ion-select-option value="Dr.">Dr.</ion-select-option>
                         </ion-select>
                       </ion-item>
                     </ion-col>
@@ -71,7 +76,7 @@
             </ion-row>
             <ion-row>
               <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: relative;
+                <ion-label class="register-operator-account-form-text" style="position: relative;
                                                                             top: 10%;">
                   Address:
                 </ion-label>
@@ -106,7 +111,7 @@
             </ion-row>
             <ion-row>
               <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
+                <ion-label class="register-operator-account-form-text" style="position: absolute;
                                                                             top: 50%;
                                                                             transform: translateY(-50%);">
                   Phone Number:
@@ -141,7 +146,7 @@
             </ion-row>
             <ion-row>
               <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
+                <ion-label class="register-operator-account-form-text" style="position: absolute;
                                                                             top: 50%;
                                                                             transform: translateY(-50%);">
                   Email Address:
@@ -162,53 +167,39 @@
             </ion-row>
             <ion-row>
               <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
+                <ion-label class="register-operator-account-form-text" style="position: absolute;
                                                                             top: 50%;
                                                                             transform: translateY(-50%);">
-                  Old Password:
+                  Password:
                 </ion-label>
               </ion-col>
               <ion-col size="8" style="padding: 3%;">
                 <ion-item>
-                  <ion-input type="password" placeholder="Enter Old Password" clearInput formControlName="oldPassword"></ion-input>
+                  <ion-input type="password" placeholder="Enter Password" clearInput formControlName="password"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
+                <ion-label class="register-operator-account-form-text" style="position: absolute;
                                                                             top: 50%;
                                                                             transform: translateY(-50%);">
-                  New Password:
+                  Confirm Password:
                 </ion-label>
               </ion-col>
               <ion-col size="8" style="padding: 3%;">
                 <ion-item>
-                  <ion-input type="password" placeholder="Enter New Password" clearInput formControlName="newPassword"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);">
-                  Confirm New Password:
-                </ion-label>
-              </ion-col>
-              <ion-col size="8" style="padding: 3%;">
-                <ion-item>
-                  <ion-input type="password" placeholder="Enter New Password" clearInput formControlName="confirmNewPassword"></ion-input>
+                  <ion-input type="password" placeholder="Enter Password" clearInput formControlName="confirmPassword"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
             <ion-row style="margin-top: 10px;">
-              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!updateAccountDetailsForm.valid" style="min-width: 250px;
+              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!addAccountDetailsForm.valid" style="min-width: 250px;
                                                                                                                               min-height: 40px;
                                                                                                                               position: relative;
                                                                                                                               left: 50%;
                                                                                                                               transform: translateX(-50%);">
-                UPDATE DETAILS
+                REGISTER
               </ion-button>
             </ion-row>
           </ion-grid>
