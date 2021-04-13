@@ -100,7 +100,7 @@ export class CustomerService {
         seatNumber: '',
         seatUnavailable: '',
         seatStatus : '',
-        seatType : '',
+        seatActive : '',
         customerObjectId : '',
       }
     ]
@@ -246,8 +246,8 @@ getbookinghistory(id: string)
 }
 
 getshowingmoviedetails(id: string)
-{
-  return this.http.get<{tickets:movie}>(this.BASE_URL +"api/booking-details/" + id).subscribe(res=>{
+{ //change made
+  return this.http.get<{tickets:movie}>(this.BASE_URL +"api/showing-movies/" + id).subscribe(res=>{
     console.log(res.tickets)
     this.moviesUpdated = res.tickets;
     this.currentmovies.next(this.moviesUpdated);
@@ -262,7 +262,7 @@ retrieveCinemaHall(id){
 }
 
 retrieveShowingCinemaHall(id){
-  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +'api/showing-cinema-hall/' + id).subscribe(res=>{
+  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +'api/showing-cinema-halls/' + id).subscribe(res=>{
     console.log(res.returnedData);
     this.showinghallupdated = res.returnedData;
     this.showingcinemahall.next(this.showinghallupdated);
@@ -308,8 +308,8 @@ getShowingMovies()
 }
 
 getSpecificShowingMovie(showingId: string)
-{
-  return this.http.get<{message : string, tickets : movie}>(this.BASE_URL + "api/booking-details/id/" + showingId).subscribe(res=>{
+{//change made
+  return this.http.get<{message : string, tickets : movie}>(this.BASE_URL + "api/showing-movies/id/" + showingId).subscribe(res=>{
     console.log(res.tickets);
     this.movieShowingUpdated = res.tickets;
     this.Showingmovie.next(this.movieShowingUpdated);

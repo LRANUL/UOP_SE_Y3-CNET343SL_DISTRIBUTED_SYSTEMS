@@ -127,7 +127,6 @@ export class LocationAndTimeSubPagePage implements OnInit {
     this.customerService.getMovieDetail(this.routedID);
     this.customerService.getmovies().subscribe((movie: Movie)=> {
       this.movieDetails = movie;
-      console.log( this.movieDetails);
     })
   }
 
@@ -144,14 +143,15 @@ export class LocationAndTimeSubPagePage implements OnInit {
     this.customerService.getshowingmoviedetails(id);
     this.customerService.getmovie().subscribe((moviedetail: movie) => {
       this.movies = moviedetail; // this is the way it should be done to get multiple locations
+      console.log(moviedetail);
       console.log(moviedetail)
       let value = Object.keys(moviedetail)
+      console.log(value)
       let length = value.length;
       let counter = 0;
       // to get all the values of the location
       let value1 = Object.keys(moviedetail[counter].showingSlots)
       let length1 = value1.length;
-      console.log(length1);
       let counter1 = 0;
       this.movie2DArray = [];
       this.movie3DArray = [];
@@ -212,7 +212,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
         this.movie3DArray.push(this.movieSession);
         this.experienceCheck3D = true
             }
-            else if(this.showingExperience == "ATMOS Dolby")
+            else if(this.showingExperience == "Dolby ATMOS")
             {
           this.movieSession = {
             slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
@@ -242,13 +242,34 @@ export class LocationAndTimeSubPagePage implements OnInit {
     });
   }
 
+  descriptionAtmos;
+  description3D;
+  description2D;
   getListOfExperience()
   {
     this.customerService.retrieveAllExperience();
-    this.customerService. getExperience().subscribe((val: CinemaExperience)=>
+    this.customerService. getExperience().subscribe((experienceList: CinemaExperience)=>
     {
-      console.log(val);
-      this.cinemaExperienceList = val;
+      this.cinemaExperienceList = experienceList;
+        let value = Object.keys(experienceList[0].description)
+        let length = value.length;
+        let counter = 0;
+      for(counter; counter < length; counter++)
+      {
+      let experience = experienceList[counter].showingExperience
+      if(experience== "Dolby ATMOS")
+      {
+         this.descriptionAtmos = experienceList[counter].description;
+         console.log(this.descriptionAtmos);
+      }else if(experience == "3D")
+      {
+        this.description3D = experienceList[counter].description;
+        console.log(this.experienceCheck3D);
+      }else
+      {
+        this.description2D = experienceList[counter].description;
+      }
+     }
     });
   }
 
@@ -347,7 +368,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
         console.log(this.movieSession)
         this.experienceCheck3D = true
         this.movie3DArray.push(this.movieSession);
-        }else if(this.showingExperience == "ATMOS Dolby" && showingDate == this.date)
+        }else if(this.showingExperience == "Dolby ATMOS" && showingDate == this.date)
         {
         console.log(location);
          this.movieSession = {
@@ -440,7 +461,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
           console.log(this.movieSession);
           this.experienceCheck3D = true
           this.movie3DArray.push(this.movieSession);
-            } if(this.showingExperience == "ATMOS Dolby")
+            } if(this.showingExperience == "Dolby ATMOS")
             {
           this.movieSession = {
             slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
@@ -538,7 +559,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
          this.experienceCheck2D = false
          this.experienceCheckDolby = false
          this.movie3DArray.push(this.movieSession);
-        }if(this.showingExperience == "Dolby Atmos")
+        }if(this.showingExperience == "Dolby ATMOS")
         {
         console.log(experience);
         this.movieSession = {
