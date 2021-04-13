@@ -40,6 +40,7 @@
     "ionic4-tooltips": "^2.0.2",
     "jquery": "^3.5.1",
     "mongoose": "^5.11.13",
+    "ngx-stripe": "^11.0.0",
     "ngx-toastr": "^13.2.0",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.6.6",

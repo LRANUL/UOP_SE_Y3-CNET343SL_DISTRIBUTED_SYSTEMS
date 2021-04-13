@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { CustomerService } from "./../../services/account/customer.service";
+import { CustomerService } from "./../../../services/account/customer.service";
 import { switchMap } from "rxjs/operators";
 import { StripeService, StripeCardNumberComponent } from "ngx-stripe";
 import {
@@ -63,7 +63,6 @@ export class PaymentPage implements OnInit {
   allticketInformation: any;
 
   ngOnInit() {
-    console.log(this.id)
     var ticketData = this.id;
     movieSelectionData = ticketData
     this.customerService.allticketInformation.subscribe(ticketData => {
