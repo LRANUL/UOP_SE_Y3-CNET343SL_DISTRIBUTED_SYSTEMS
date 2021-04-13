@@ -109,6 +109,42 @@ export class SettingSubPagePage implements OnInit {
     await alert.present();
   }
 
+  async updatePassword() {
+    const alert = await this.alertController.create({
+      header: "Password Update",
+      inputs: [
+        {
+          name: "password",
+          type: "password",
+          placeholder: "Enter Password",
+        },
+      ],
+      message: 'Enter your new password to update',
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+          },
+        },
+        {
+          text: "Change",
+          handler: async (alertData) => {
+            let password = alertData.password; // Bandara (10673936) use 'password' value for password update purpose
+            
+            const alert = await this.alertController.create({
+              header: 'Email Updated',
+              message: this.Email + ' was update to ' + alertData.email,
+            });
+
+            await alert.present();
+          }
+        }
+      ],
+    });
+    await alert.present();
+  }
   /** Navigation */
   goToDashboard() {
     this.router.navigate(['operator']);
