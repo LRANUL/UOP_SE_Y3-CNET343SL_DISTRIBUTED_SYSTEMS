@@ -129,9 +129,16 @@ export class ManagerService {
   retrieveCinemaLocations() {
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
   }
-
+  // UPDATE - Updating cinema location details
+  updateCinemaLocation(updateCinemaLocationDetails: any){
+    return this.httpClient.put(this.BASE_URL + "api/cinema-locations/update", updateCinemaLocationDetails);
+  }
 
   /** Beverages Management */
+  // POST - Add new beverage
+  addBeverage(newBeverageDetails: any){
+    return this.httpClient.post(this.BASE_URL + "api/refreshments/add-new", newBeverageDetails);
+  }
   // GET beverages list
   getBeverages() {
     return this.httpClient.get(this.BASE_URL + "api/refreshments");
@@ -146,13 +153,19 @@ export class ManagerService {
     const body = { name: name, price: price };
     return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-price", body);
   }
-/**
- * Profile Settings
- */
-// Get profile data
-getProfile(email){
-  return this.httpClient.get<any>(this.BASE_URL + "api/managers/" + email);
-}
+  // DELETE - Remove one beverage
+  removeBeverage(refreshmentObjectId: String){
+    return this.httpClient.delete(this.BASE_URL + "api/refreshments/remove/" + refreshmentObjectId);
+  }
+
+  /**
+   * Profile Settings
+   */
+  // Get profile data
+  getProfile(email){
+    return this.httpClient.get<any>(this.BASE_URL + "api/managers/" + email);
+  }
+
   /**
    * Showing Experience
    */

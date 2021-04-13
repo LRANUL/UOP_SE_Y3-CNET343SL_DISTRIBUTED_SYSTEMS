@@ -372,6 +372,7 @@ export class EditHallModalPage implements OnInit {
       buttons: [{
         text: 'OK',
         handler: () => {
+          // Closing EditHallModal
           this.closeEditHallModal();
         }
       }]

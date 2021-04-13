@@ -27,6 +27,8 @@ import { EditShowingExperienceModalPageModule } from './account/manager-nav-page
 import { EditHallModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/edit-hall-modal/edit-hall-modal.module';
 import { RegisterOperatorAccountModalPageModule } from './account/manager-nav-page/operator-accounts-sub-page/register-operator-account-modal/register-operator-account-modal.module';
 import { VerifyEmailAddressPopoverPageModule } from './account/manager-nav-page/settings-sub-page/verify-email-address-popover/verify-email-address-popover.module';
+import { AddBeverageModalPageModule } from './account/manager-nav-page/food-and-beverages-sub-page/add-beverage-modal/add-beverage-modal.module';
+import { EditLocationModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/edit-location-modal/edit-location-modal.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,7 +51,9 @@ import { VerifyEmailAddressPopoverPageModule } from './account/manager-nav-page/
       EditShowingExperienceModalPageModule,
       EditHallModalPageModule,
       RegisterOperatorAccountModalPageModule,
-      VerifyEmailAddressPopoverPageModule
+      VerifyEmailAddressPopoverPageModule,
+      AddBeverageModalPageModule,
+      EditLocationModalPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
