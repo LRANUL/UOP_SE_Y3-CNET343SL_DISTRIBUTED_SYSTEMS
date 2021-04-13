@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
+import { AddBeverageModalPage } from './add-beverage-modal/add-beverage-modal.page';
 
 @Component({
   selector: 'app-food-and-beverages-sub-page',
@@ -18,11 +19,32 @@ export class FoodAndBeveragesSubPagePage implements OnInit {
 
   constructor(
     public managerService: ManagerService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public modalController: ModalController
   ) { }
 
   ngOnInit() {
     this.getBeverages();
+  }
+  // Function - Implementation for opening the 'Add Beverage' modal
+  async openAddBeverageModal(){
+    const addBeverageModal = await this.modalController.create({
+      component: AddBeverageModalPage,
+      cssClass: 'add-location-modal',
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    addBeverageModal.present();
+    // Collecting response data when modal is dismissed
+    const { data } = await addBeverageModal.onDidDismiss();
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        // Retrieving updated list of beverages
+        this.getBeverages();
+      }
+    }
   }
   getBeverages() {
     this.managerService.getBeverages().subscribe(

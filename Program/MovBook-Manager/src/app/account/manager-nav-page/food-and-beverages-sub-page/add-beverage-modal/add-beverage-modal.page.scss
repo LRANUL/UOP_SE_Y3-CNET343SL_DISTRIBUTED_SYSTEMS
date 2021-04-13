@@ -1,0 +1,19 @@
+ion-item{
+  border: #ccc solid 1px;
+  border-radius: 5px;
+  --ion-background-color: rgb(255, 255, 255);
+}
+
+#closeAddBeverageModalButton{
+  margin-right: 20px;
+}
+
+#addBeverageFormText{
+  margin-left: 10%;
+  font-size: 18px;
+  color: rgb(0, 0, 0);
+  letter-spacing: 1px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

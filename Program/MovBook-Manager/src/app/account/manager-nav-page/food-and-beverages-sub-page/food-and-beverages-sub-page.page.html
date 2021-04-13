@@ -4,16 +4,60 @@
       <ion-col style="height:100%;width:80%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
         <ion-row>
           <h1 style="color: #374d58;"><b>Beverages</b></h1>
+          <!-- ADD BEVERAGE BUTTON -->
+          <div style="position: absolute;
+                      right: 2%;
+                      top: 1%;">
+            <ion-button style="--border-radius: 40px;" color="tertiary" (click)="openAddBeverageModal()">
+              <ion-label>
+                <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/meal-icon.png" style="width: 25px;
+                                                                                                            margin-right: 5px;"></ion-img>
+              </ion-label>
+              <ion-label>
+                ADD BEVERAGE
+              </ion-label>
+            </ion-button>
+          </div>
         </ion-row>
         <ion-row style="height: 700px;overflow-y: scroll;">
-          <ion-card *ngFor="let beverage of Beverages" style="width: 250px;height: 350px;"
+          <ion-card *ngFor="let beverage of Beverages" style="width: 250px;height: auto;"
             (click)="beverageUpdate(beverage)">
             <ion-img src='{{beverage.imgURL}}' style="height: 200px;"></ion-img>
             <ion-card-title>{{beverage.name}}</ion-card-title>
             <ion-card-content>
               <p>Price (LKR): {{beverage.price}}</p>
               <p>Quantity: {{beverage.stock}}</p>
-              <ion-button (click)="beverageUpdate(beverage)" color="success">Select</ion-button>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-button (click)="beverageUpdate(beverage)" color="success" expand="block">
+                      <ion-label>
+                        <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/select-icon.png" style="width: 25px;
+                                                                                                                        margin-right: 5px;"></ion-img>
+                      </ion-label>
+                      <ion-label>
+                        SELECT
+                      </ion-label>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-button color="warning" expand="block">
+                      <ion-label>
+                        <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/edit-icon.png" style="width: 25px;"></ion-img>
+                      </ion-label>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-button color="danger" expand="block">
+                      <ion-label>
+                        <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/remove-icon.png" style="width: 25px;"></ion-img>
+                      </ion-label>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-card-content>
           </ion-card>
         </ion-row>
