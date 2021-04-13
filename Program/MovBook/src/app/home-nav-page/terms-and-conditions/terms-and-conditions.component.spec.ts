@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { HomeSubPagePage } from './home-sub-page.page';
+import { TermsAndConditionsComponent } from './terms-and-conditions.component';
 
-describe('HomeSubPagePage', () => {
-  let component: HomeSubPagePage;
-  let fixture: ComponentFixture<HomeSubPagePage>;
+describe('TermsAndConditionsComponent', () => {
+  let component: TermsAndConditionsComponent;
+  let fixture: ComponentFixture<TermsAndConditionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeSubPagePage ],
+      declarations: [ TermsAndConditionsComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HomeSubPagePage);
+    fixture = TestBed.createComponent(TermsAndConditionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

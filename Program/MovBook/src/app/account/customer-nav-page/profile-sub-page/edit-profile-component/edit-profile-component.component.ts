@@ -15,28 +15,24 @@ export class EditProfileComponentComponent implements OnInit {
   constructor(private modalcntrl: ModalController, private customerService: CustomerService, private route: Router) { }
 
   public users : Observable<profile[]>;
-  
+
     profile: profile = {
       name:
-      [
         {
         prefix: '',
         lastName: '',
         firstName: '',
         middleName: '',
-       }
-      ],
+       },
       email: '',
       password: '',
       registeredDateTime: '',
-      address: 
-      [
+      address:
       {
         streetAddress: '',
         city: '',
         postalZipCode: '',
-      }
-      ],
+      },
       phone: '',
   };
 
@@ -52,7 +48,7 @@ export class EditProfileComponentComponent implements OnInit {
   UAddress;
   Uemail;
 
-  temoryid = "lolsss@movbook.com";
+  temoryid = "test@test.com";
 
   closemodal()
   {
@@ -63,26 +59,24 @@ export class EditProfileComponentComponent implements OnInit {
   {
     this.customerService.getUser(id).subscribe(profiles => {
       console.log(profiles);
-      this.profile = 
+      this.profile =
       {
         email: profiles.users.email,
         password: profiles.users.email,
-        name: [
+        name:
           {
-            prefix: profiles.users.name[0].prefix,
-            firstName: profiles.users.name[0].firstName,
-            middleName: profiles.users.name[0].middleName,
-            lastName : profiles.users.name[0].lastName     
-          }
-        ],
+            prefix: profiles.users.name.prefix,
+            firstName: profiles.users.name.firstName,
+            middleName: profiles.users.name.middleName,
+            lastName : profiles.users.name.lastName
+          },
         registeredDateTime: profiles.users.registeredDateTime,
-        address:[
+        address:
           {
-            streetAddress: profiles.users.address[0].streetAddress,
-            city: profiles.users.address[0].city,
-            postalZipCode: profiles.users.address[0].postalZipCode
-          }
-        ],
+            streetAddress: profiles.users.address.streetAddress,
+            city: profiles.users.address.city,
+            postalZipCode: profiles.users.address.postalZipCode
+          },
         phone: profiles.users.phone,
       };
       console.log(this.profile);

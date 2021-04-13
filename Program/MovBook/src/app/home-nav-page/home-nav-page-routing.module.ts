@@ -9,24 +9,22 @@ const routes: Routes = [
     component: HomeNavPagePage
   },
   {
-    path: 'home-sub-page',
-    loadChildren: () => import('./home-sub-page/home-sub-page.module').then( m => m.HomeSubPagePageModule)
-  },
-  {
     path: 'movies-sub-page',
     loadChildren: () => import('./movies-sub-page/movies-sub-page.module').then( m => m.MoviesSubPagePageModule)
   },
   {
-    path: 'contact-us-sub-page',
-    loadChildren: () => import('./contact-us-sub-page/contact-us-sub-page.module').then( m => m.ContactUsSubPagePageModule)
+    path: 'about us',
+    loadChildren: () => import('./about-us-sub-page/about-us-sub-page.module').then( m => m.AboutUsSubPagePageModule)
   },
   {
-    path: 'about-us-sub-page',
-    loadChildren: () => import('./about-us-sub-page/about-us-sub-page.module').then( m => m.AboutUsSubPagePageModule)
-  },  {
-    path: 'loyality-information-sub-page',
+    path: 'loyality information',
     loadChildren: () => import('./loyality-information-sub-page/loyality-information-sub-page.module').then( m => m.LoyalityInformationSubPagePageModule)
+  },
+  {
+    path: 'movie details/:id',
+    loadChildren: () => import('./movie-detail-sub-page/movie-detail-sub-page.module').then( m => m.MovieDetailSubPagePageModule)
   }
+
 
 ];
 

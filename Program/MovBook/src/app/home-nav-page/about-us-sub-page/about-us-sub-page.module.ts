@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AboutUsSubPagePageRoutingModule } from './about-us-sub-page-routing.module';
 
 import { AboutUsSubPagePage } from './about-us-sub-page.page';
+import { HeaderComponent } from 'src/app/account/customer-nav-page/header/header.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { AboutUsSubPagePage } from './about-us-sub-page.page';
     IonicModule,
     AboutUsSubPagePageRoutingModule
   ],
-  declarations: [AboutUsSubPagePage]
+  declarations: [AboutUsSubPagePage, HeaderComponent]
 })
 export class AboutUsSubPagePageModule {}
