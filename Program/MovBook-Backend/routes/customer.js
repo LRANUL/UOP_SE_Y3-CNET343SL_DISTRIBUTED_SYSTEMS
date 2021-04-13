@@ -28,25 +28,11 @@ router.get('/:email', (req, res, next) => {
 //update the user 
 router.put('/:id', (req, res, next) => {
   console.log(req.body);
+  console.log('Name:'+req.body.firstName);
   Users.updateOne({ email: req.params.id },
-    {
-      name:{
-        "prefix":req.body.prefix,
-        "firstName":req.body.firstName,
-        'middleName':req.body.firstName,
-        'lastName':req.body.lastName,
-      },
-      address:
-        {
-          'streetAddress':req.body.streetAddress,
-          'city':req.body.city,
-          'postalZipCode':req.body.postalZipCode,
-        }
-      ,
-      "phone": req.body.phone
-    })
+    req.body)
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.send(data)
     })
 });
