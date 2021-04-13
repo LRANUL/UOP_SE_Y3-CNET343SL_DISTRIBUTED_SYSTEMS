@@ -134,7 +134,7 @@ export class AddBeverageModalPage implements OnInit {
         console.log('Error - Unable to add beverage');
 
         // Showing error message box to user
-        this.alertNotice("ERROR", "Unable to add Beverage");
+        this.alertNotice("ERROR", "Unable to add beverage");
 
         // Enabling form submit
         this.addBeverageForm.valid;
@@ -150,7 +150,7 @@ export class AddBeverageModalPage implements OnInit {
       console.log('Error - Unable to add beverage: ', error);
 
       // Showing error message box to user
-      this.alertNotice("ERROR", "Unable to add Beverage");
+      this.alertNotice("ERROR", "Unable to add beverage");
 
       // Enabling form submit
       this.addBeverageForm.valid;

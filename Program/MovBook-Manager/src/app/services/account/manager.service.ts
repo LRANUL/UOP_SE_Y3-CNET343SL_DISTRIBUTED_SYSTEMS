@@ -149,6 +149,10 @@ export class ManagerService {
     const body = { name: name, price: price };
     return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-price", body);
   }
+  // DELETE - Remove one beverage
+  removeBeverage(refreshmentObjectId: String){
+    return this.httpClient.delete(this.BASE_URL + "api/refreshments/remove/" + refreshmentObjectId);
+  }
 
   /**
    * Profile Settings

@@ -63,4 +63,25 @@ router.put('/update-price', (req, res, next) => {
     })
 });
 
+// Remove One Refreshment
+router.delete('/remove/:refreshmentObjectId', (req, res, next) => {
+  Refreshments.deleteOne({
+    '_id': req.params.refreshmentObjectId
+  }, (error, returnedData) => {
+    if(error){
+      res.status(500).json({
+        message:
+          "Error - Unable to remove refreshment"
+      });
+    }
+    else{
+      res.status(200).json({
+        message: 
+          "Refreshment removed",
+        returnedData
+      });
+    }
+  })
+});
+
 module.exports = router;
