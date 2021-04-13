@@ -129,6 +129,10 @@ export class ManagerService {
   retrieveCinemaLocations() {
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
   }
+  // UPDATE - Updating cinema location details
+  updateCinemaLocation(updateCinemaLocationDetails: any){
+    return this.httpClient.put(this.BASE_URL + "api/cinema-locations/update", updateCinemaLocationDetails);
+  }
 
   /** Beverages Management */
   // POST - Add new beverage

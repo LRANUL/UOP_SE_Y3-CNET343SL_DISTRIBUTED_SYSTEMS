@@ -4,6 +4,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddLocationModalPage } from './add-location-modal/add-location-modal.page';
 import { CinemaHallsModalPage } from './cinema-halls-modal/cinema-halls-modal.page';
+import { EditLocationModalPage } from './edit-location-modal/edit-location-modal.page';
 
 @Component({
   selector: 'app-locations-halls-sub-page',
@@ -74,6 +75,32 @@ export class LocationsHallsSubPagePage implements OnInit {
 
     // Collecting response data when modal is dismissed
     const { data } = await addLocationModal.onDidDismiss();
+
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        // Retrieving updated list of cinema locations
+        this.retrieveCinemaLocations();
+      }
+    }
+  }
+
+  // Function - Implementation for opening the 'Edit Location' modal
+  async openEditLocationModal(cinemaLocationDetails: any){
+    const editLocationModal = await this.modalController.create({
+      component: EditLocationModalPage,
+      cssClass: 'add-location-modal',
+      componentProps: {
+        passingCinemaLocation: cinemaLocationDetails
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    editLocationModal.present();
+
+    // Collecting response data when modal is dismissed
+    const { data } = await editLocationModal.onDidDismiss();
 
     // If Condition - checking whether there is data in the response 'data' object
     if(data != null){
