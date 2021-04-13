@@ -17,7 +17,7 @@ export class AuthService{
 
       login(email:string,passwrd:string){
         const loginData= {email:email , password: passwrd };
-          this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,name:string}>("http://localhost:5000/api/users/login",loginData).subscribe(res =>{
+          this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,name:string}>("http://localhost:5000/api/users/manager-login",loginData).subscribe(res =>{
               const token = res.token;
               this.token =token
               if(this.token){
@@ -35,6 +35,20 @@ export class AuthService{
               console.log(res);
 
           })
+      }
+
+      onEmailSent(email:string){
+        const emailSent = {email:email}
+        this.httpCli.post<{message:string}>('http://localhost:5000/api/users/forgotPassword',emailSent).subscribe(res=>{
+          console.log(res);
+        })
+      }
+
+      sendNewPassword(password:string, token:string, email:string){
+      const passwordData = {password:password, passwordToken:token , email:email};
+        this.httpCli.post<{message:string}>('http://localhost:5000/api/users/new-password',passwordData).subscribe(res=>{
+          console.log(res);
+        })
       }
 
       getToken(){
