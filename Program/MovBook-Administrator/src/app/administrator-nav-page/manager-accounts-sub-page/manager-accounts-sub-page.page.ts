@@ -57,23 +57,27 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
   ngOnInit() {
 
     //sidebar Details
-    var Email = "wef";
-    this.employeeService.getDetails(Email).subscribe(
-      (data) => {
-        //console.log(data);
+    // var Email = "wef";
+    // this.employeeService.getDetails(Email).subscribe(
+    //   (data) => {
+    //     //console.log(data);
 
-        //name/email = backend
-        // this.name_admin = data['name'];
-        // this.email_admin = data['email'];
-        this.admin_Prefix = data['Prefix'];
-        this.admin_FirstName = data['FirstName'];
-        this.admin_LastName = data['LastName'];
-        this.admin_Email = data['Email'];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    //     //name/email = backend
+    //     // this.name_admin = data['name'];
+    //     // this.email_admin = data['email'];
+    //     this.admin_Prefix = data['Prefix'];
+    //     this.admin_FirstName = data['FirstName'];
+    //     this.admin_LastName = data['LastName'];
+    //     this.admin_Email = data['Email'];
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
+
+    this.admin_FirstName = "admin"
+    this.admin_LastName = "admin"
+    this.admin_Email = "admin@gmail.com"
 
     
 
