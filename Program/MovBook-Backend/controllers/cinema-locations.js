@@ -104,7 +104,7 @@ exports.retrieveSpecificCinemaLocation = async (req, res, next) => {
 
 // Function - Update cinema location using route, 'BASE_URL/api/cinema-locations/update'
 exports.updateCinemaLocation = async (req, res, next) => {
-console.log(req);
+
   // Using mongoose findOneAndUpdate() functionality to update cinema location
   await cinemaLocationModel.findOneAndUpdate(
     {

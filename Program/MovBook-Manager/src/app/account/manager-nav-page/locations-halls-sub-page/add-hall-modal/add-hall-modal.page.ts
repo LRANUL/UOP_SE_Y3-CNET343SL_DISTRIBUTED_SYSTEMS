@@ -245,7 +245,7 @@ export class AddHallModalPage implements OnInit {
     //console.log(data);
 
     // If Condition - checking whether there is data in the response 'data' object
-    if(data != null){
+    if(data != null){console.log(data);
       // Updating hall seating according to the modifications
       this.updateHallSeating(data);
     }
@@ -642,6 +642,7 @@ export class AddHallModalPage implements OnInit {
       buttons: [{
         text: 'OK',
         handler: () => {
+          // Closing AddHallModal modal
           this.closeAddHallModal();
         }
       }]
@@ -686,8 +687,6 @@ export class AddHallModalPage implements OnInit {
         // Assigning 'passingActiveCinemaHallObjectId' with the new created 'CinemaHallObjectId'
         this.passingActiveCinemaHallObjectId = res.returnedData._id;
 
-        // Closing AddHallModal modal
-        this.closeAddHallModal();
       }, (error) => {
         console.log('Error', error);
 

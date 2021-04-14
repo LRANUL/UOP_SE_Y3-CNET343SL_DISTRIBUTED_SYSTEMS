@@ -77,7 +77,8 @@ export class UpcomingMoviesTabPagePage implements OnInit {
       componentProps: {
         passingMovieObjectId: movieObjectId,
         passingMovieImdbId: movieImdbId,
-        passingMovieCondition: "Movie-Exists"
+        passingMovieCondition: "Movie-Exists",
+        passingModalOpenPath: "Upcoming-Movies-Tab-Page"
       },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,

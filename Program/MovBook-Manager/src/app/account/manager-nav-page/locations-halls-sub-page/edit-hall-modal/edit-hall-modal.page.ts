@@ -395,7 +395,7 @@ export class EditHallModalPage implements OnInit {
       if(cinemaHallResponse.message == "Cinema hall updated"){
         
         // Showing success message box to the user
-        this.updatedCinemaHallAlertBox("Cinema Hall updated", "Cinema hall was successfully updated.");
+        this.updatedCinemaHallAlertBox("Cinema Hall Updated", "Cinema hall was successfully updated.");
 
         console.log("Showing Cinema Hall Updated.");
         

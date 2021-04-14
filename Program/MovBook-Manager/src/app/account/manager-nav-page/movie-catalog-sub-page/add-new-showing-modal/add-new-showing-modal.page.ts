@@ -5,6 +5,7 @@ import { MovieDetails } from 'src/app/models/account/manager/movie-details';
 import { ShowingCinemaHallList, ShowingSeatDetails } from 'src/app/models/account/manager/showing-cinema-hall';
 import { ShowingMovie } from 'src/app/models/account/manager/showing-movie';
 import { ManagerService } from 'src/app/services/account/manager.service';
+import { ViewShowingModalPage } from '../view-showing-modal/view-showing-modal.page';
 
 @Component({
   selector: 'app-add-new-showing-modal',
@@ -79,6 +80,9 @@ export class AddNewShowingModalPage implements OnInit {
   // Declaration | Initialization - string variable to store passingMovieCondition
   passedMovieCondition = null;
 
+  // Declaration | Initialization - string variable to store passingModalOpenPath
+  passedModalOpenPath = null;
+
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerAddNewShowing' block
   loadingSpinnerAddNewShowing: Boolean = false;
 
@@ -135,6 +139,8 @@ export class AddNewShowingModalPage implements OnInit {
     // Assigning variable with 'passingMovieCondition'
     this.passedMovieCondition = this.navParams.get('passingMovieCondition');
 
+    // Assigning variable with 'passingModalOpenPath'
+    this.passedModalOpenPath = this.navParams.get('passingModalOpenPath');
 
     // Retrieving list of cinema locations upon page load
     this.retrieveCinemaLocations();
@@ -156,6 +162,9 @@ export class AddNewShowingModalPage implements OnInit {
 
   // Implementation to close 'Add New Showing' modal
   async closeAddNewShowingModal(){
+    if(this.passedModalOpenPath == "View-Showing-Modal-Page"){
+      this.openViewShowingModal(this.passedMovieObjectId);
+    }
     await this.modalController.dismiss(this.addNewShowingStatus);
   }
 
@@ -209,6 +218,21 @@ export class AddNewShowingModalPage implements OnInit {
   public setAdultTicketCost(value: Number) {
     this.adultTicketCost = value;
     this.enableAssignSlotDetailsButton();
+  }
+  
+
+  // Implementation for opening the 'View Showing Modal'
+  async openViewShowingModal(selectedMovieObjectId: string){
+    const viewShowingModal = await this.modalController.create({
+      component: ViewShowingModalPage,
+      cssClass: 'cinema-halls-modal',
+      componentProps: {
+        passingMovieObjectId: selectedMovieObjectId
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    viewShowingModal.present();
   }
 
 
@@ -369,6 +393,24 @@ export class AddNewShowingModalPage implements OnInit {
     }
 
   }
+
+
+  // Function - Add Showing Success Alert Box Implementation
+  async addShowingSuccessAlertNotice (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          // Closing 'Add New Showing' modal
+          this.closeAddNewShowingModal();
+        }
+      }]
+    });
+    await alert.present();
+  }
+
 
   // Adding new showing details
   addNewShowingDetails(newShowingDetailsFormDetails){
@@ -643,12 +685,10 @@ export class AddNewShowingModalPage implements OnInit {
                                 this.addNewShowingStatus = true;
 
                                 // Showing success message box to the user
-                                this.alertNotice("New Showing Added", "New showing details were successfully added.");
+                                this.addShowingSuccessAlertNotice("New Showing Added", "New showing details were successfully added.");
 
                                 console.log("Movie was moved to movie catalog (Now Showing)");
 
-                                // Closing 'Add New Showing' modal
-                                this.closeAddNewShowingModal();
                               }
 
                             },

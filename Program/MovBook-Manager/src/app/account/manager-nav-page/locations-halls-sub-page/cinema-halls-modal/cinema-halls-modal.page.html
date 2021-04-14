@@ -45,13 +45,15 @@
           <tbody>
             <tr>
               <td *ngFor="let cinemaHall of cinemaHallList">
-                <ion-button color="dark-blue" style="height: 50px;
-                                                      min-width: 300px;
-                                                      --border-radius: 10px;
-                                                      margin-right: 20px;" 
-                    (click)="setActiveCinemaHallObjectId(cinemaHall._id)">
-                  <h1 style="color: #ffffff;
-                            font-size: 20px;">{{cinemaHall.cinemaHallName}}</h1>
+                <ion-button 
+                  color="{{activeCinemaHallObjectId == cinemaHall._id ? 'dark-blue' : 'light-blue'}}" 
+                  style="height: 50px;
+                        min-width: 300px;
+                        --border-radius: 10px;
+                        margin-right: 20px;" 
+                  (click)="setActiveCinemaHallObjectId(cinemaHall._id)">
+                  <ion-label style="color: #ffffff;
+                                    font-size: 20px;">{{cinemaHall.cinemaHallName}}</ion-label>
                 </ion-button>
               </td>
             </tr>

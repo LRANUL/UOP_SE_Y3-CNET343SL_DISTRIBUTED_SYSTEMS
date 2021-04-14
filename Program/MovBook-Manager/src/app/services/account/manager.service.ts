@@ -113,6 +113,10 @@ export class ManagerService {
   retrieveCinemaHalls(cinemaLocationObjectId) {
     return this.httpClient.get(this.BASE_URL + "api/cinema-halls/" + cinemaLocationObjectId);
   }
+  // GET - Retrieving one cinema hall by cinemaHallObjectId from the server-side
+  retrieveCinemaHallById(cinemaHallObjectId: string){
+    return this.httpClient.get(this.BASE_URL + "api/cinema-halls/hall/" + cinemaHallObjectId);
+  }
   // PUT - Updating cinema hall details by sending the updated details to the server-side
   updateCinemaHallDetails(updatedCinemaHallDetails: any){
     return this.httpClient.put(this.BASE_URL + "api/cinema-halls/update-cinema-hall", updatedCinemaHallDetails);
@@ -203,6 +207,10 @@ export class ManagerService {
   // POST - Checking availability of showing movie
   checkShowingMovieAvailability(showingMovieDetails: any){
     return this.httpClient.post(this.BASE_URL + "api/showing-movies/check-showing-movie-availability", showingMovieDetails);
+  }
+  // GET - Retrieve showing movie by movieObjectId
+  retrieveShowingMovieByMovieObjectId(movieObjectId: string){
+    return this.httpClient.get(this.BASE_URL + "api/showing-movies/by-movie-object-id/" + movieObjectId);
   }
 
   /**

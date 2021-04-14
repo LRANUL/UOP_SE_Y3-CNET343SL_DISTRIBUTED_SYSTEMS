@@ -123,7 +123,7 @@ export class AssignHallSeatPopoverPage implements OnInit {
       // Possible instance:
       //  - 'Edit Cinema Hall' functionality
       // If 'passedSeatObjectId' is available
-      // Assigning user populated preferences
+      // Assigning according to user populated preferences
       this.responseData = {
         _id: this.passedSeatObjectId,
         seatId: this.passedSeatId,
@@ -133,11 +133,11 @@ export class AssignHallSeatPopoverPage implements OnInit {
         seatAllocatedPositionNo: this.passedSeatAllocatedPositionNo
       };
     }
-    else if(this.passedSeatAllocatedPositionNo != null){
+    else{
       // Possible instance:
       //  - 'Add New Cinema Hall' functionality
       // If 'passedSeatAllocatedPositionNo' is available
-      // Assigning user populated preferences
+      // Assigning according to user populated preferences
       this.responseData = {
         seatId: this.passedSeatId,
         seatActive: formValue.seatActive,
