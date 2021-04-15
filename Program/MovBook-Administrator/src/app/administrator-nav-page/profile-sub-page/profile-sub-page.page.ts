@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { EmployeeService } from './../../services/account/employee.service'
 
 @Component({
@@ -19,15 +20,21 @@ export class ProfileSubPagePage implements OnInit {
   admin_Phone: any;
   admin_StreetAddress: any;
   admin_City: any;
-  admin_PostalCode: any; 
-   
+  admin_PostalCode: any;
 
-  constructor(private employeeService: EmployeeService) { }
+
+  constructor(private employeeService: EmployeeService, private authServ:AuthService) { }
 
   ngOnInit() {
+      const userEMail = localStorage.getItem("email");
+        const name = localStorage.getItem("name");
+        console.log(name + userEMail);
+        this.admin_FirstName = name
+        this.admin_LastName = name
+        this.admin_Email = userEMail;
 
     //admin profile details
-    var email = "wef";
+    var email = this.admin_Email;
     this.employeeService.getDetails(email).subscribe(
       (data) => {
         console.log(data);
@@ -44,9 +51,13 @@ export class ProfileSubPagePage implements OnInit {
       (error) => {
         console.log(error);
       }
-      
+
     );
-      
+
   }
- 
+
+  logout(){
+    this.authServ.logOut();
+  }
+
 }

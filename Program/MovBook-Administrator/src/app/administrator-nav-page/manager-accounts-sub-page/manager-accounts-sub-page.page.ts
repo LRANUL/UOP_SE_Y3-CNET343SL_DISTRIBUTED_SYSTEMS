@@ -75,9 +75,12 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
     //   }
     // );
 
-    this.admin_FirstName = "admin"
-    this.admin_LastName = "admin"
-    this.admin_Email = "admin@gmail.com"
+        const userEMail = localStorage.getItem("email");
+        const name = localStorage.getItem("name");
+        console.log(name + userEMail);
+        this.admin_FirstName = name
+        this.admin_LastName = name
+        this.admin_Email = userEMail;
 
 
 

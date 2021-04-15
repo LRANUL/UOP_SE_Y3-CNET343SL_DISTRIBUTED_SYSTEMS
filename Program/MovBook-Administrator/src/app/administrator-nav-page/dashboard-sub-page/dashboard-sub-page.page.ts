@@ -3,6 +3,7 @@ import { AppComponent } from 'src/app/app.component';
 import { EmployeeService } from './../../services/account/employee.service'
 //import { AccountService } from '../../../services/account/account.service'
 import { Chart } from 'chart.js'
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -14,7 +15,7 @@ import { Chart } from 'chart.js'
   providers: [EmployeeService],
 })
 export class DashboardSubPagePage implements OnInit {
-   
+
 
   @ViewChild('barChart') barChart;
   @ViewChild('barChartStat') barChartStat;
@@ -34,17 +35,14 @@ export class DashboardSubPagePage implements OnInit {
   bars: any;
   colorArray: any;
 
-  admin_Prefix: any;
-  admin_FirstName: any;
-  admin_LastName: any;
-  admin_Email: any;
 
-  
+
+
   //jsonResponse: any;
   public headerStat: any;
   public errorMsg;
 
-  constructor(private employeeService: EmployeeService, private handle: EmployeeService ) { }
+  constructor(private employeeService: EmployeeService, private handle: EmployeeService , private authServ:AuthService) { }
 
   //BarChart Function
   ionViewDidEnter() {
@@ -52,9 +50,22 @@ export class DashboardSubPagePage implements OnInit {
     this.barChartStatis();
   }
 
+  admin_Prefix: any;
+  admin_FirstName: any;
+  admin_LastName: any;
+  admin_Email: string;
 
 
   ngOnInit() {
+    const token = localStorage.getItem("token");
+
+
+        const userEMail = localStorage.getItem("email");
+        const name = localStorage.getItem("name");
+        console.log(name + userEMail);
+        this.admin_FirstName = name
+        this.admin_LastName = name
+        this.admin_Email = userEMail;
     //sidebar details
     // var Email = "wef";
     // this.employeeService.getDetails(Email).subscribe(
@@ -74,9 +85,8 @@ export class DashboardSubPagePage implements OnInit {
     //   }
     // );
 
-    this.admin_FirstName = "admin"
-    this.admin_LastName = "admin"
-    this.admin_Email = "admin@gmail.com"
+
+
 
 
     //omdb statistic
@@ -91,21 +101,21 @@ export class DashboardSubPagePage implements OnInit {
           this.splitStatus = status;
           this.splitAddress = "api/omdb/upcoming-movies/search/tenet";
         }
-                
-      });
-        
 
-    this.employeeService.statusOMDB().subscribe((data) => 
+      });
+
+
+    this.employeeService.statusOMDB().subscribe((data) =>
       this.headerStat = data,
       error => {
         this.errorMsg = error;
-        
+
         this.headers = this.errorMsg.split(":")
         this.splitStatus = this.headers[3];
         this.headers = this.errorMsg.split(":")
         this.splitAddress = this.headers[2];
         this.jsonResponse = "Server Error"
-       
+
       },
     );
 
@@ -124,15 +134,15 @@ export class DashboardSubPagePage implements OnInit {
           this.splitStatusManager = status;
           //this.splitAddressManager = "api/managers/get/";
         }
-                
+
       });
-        
+
 //Error Handling
-    this.employeeService.managerStatus().subscribe((data) => 
+    this.employeeService.managerStatus().subscribe((data) =>
       this.headerStat = data,
       error => {
         this.errorMsg = error;
-        
+
        this.headersManager = this.errorMsg.split(":")
        console.log(this.headersManager)
         this.splitStatusManager = this.headersManager[3];
@@ -140,12 +150,12 @@ export class DashboardSubPagePage implements OnInit {
         this.headersManager = this.errorMsg.split(":")
         this.splitAddressManager = this.headersManager[2];
         this.jsonResponseManager = "Server Error"
-       
+
       },
     );
   }
 
- 
+
 
   createBarChart() {
     this.bars = new Chart(this.barChart.nativeElement, {

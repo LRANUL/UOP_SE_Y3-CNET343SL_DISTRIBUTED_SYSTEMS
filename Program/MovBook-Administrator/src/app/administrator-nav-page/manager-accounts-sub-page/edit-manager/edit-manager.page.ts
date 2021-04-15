@@ -46,9 +46,12 @@ export class EditManagerPage implements OnInit {
     //   }
     // );
 
-    this.admin_FirstName = "admin"
-    this.admin_LastName = "admin"
-    this.admin_Email = "admin@gmail.com"
+        const userEMail = localStorage.getItem("email");
+        const name = localStorage.getItem("name");
+        console.log(name + userEMail);
+        this.admin_FirstName = name
+        this.admin_LastName = name
+        this.admin_Email = userEMail;
 
 
 
@@ -80,14 +83,14 @@ export class EditManagerPage implements OnInit {
       'streetAddress':new FormControl(null, {validators:[Validators.required]}),
       'city':new FormControl(null, {validators:[Validators.required]}),
       'postalCode':new FormControl(null, {validators:[Validators.required]})
-      
+
     })
 
-    
+
     this.updateRoute.params.subscribe((res: ParamMap) => {
       //console.log("********************")
       //console.log(res)
-      
+
       // if (res.has('managerid')) {
         this.managerID = res
         this.details = res['managerid']

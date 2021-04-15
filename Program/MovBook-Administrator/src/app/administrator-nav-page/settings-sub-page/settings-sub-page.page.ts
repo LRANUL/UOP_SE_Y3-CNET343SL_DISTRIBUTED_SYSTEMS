@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from './../../services/account/employee.service'
 import { NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-settings-sub-page',
@@ -14,9 +15,9 @@ export class SettingsSubPagePage implements OnInit {
   admin_FirstName: any;
   admin_LastName: any;
   admin_Email: any;
-  
 
-  constructor(private employeeService: EmployeeService) { }
+
+  constructor(private employeeService: EmployeeService,private authServ:AuthService) { }
 
   ngOnInit() {
 
@@ -25,7 +26,7 @@ export class SettingsSubPagePage implements OnInit {
         // this.employeeService.getDetails(Email).subscribe(
         //   (data) => {
         //     //console.log(data);
-    
+
         //     //name/email = backend
         //     // this.name_admin = data['name'];
         //     // this.email_admin = data['email'];
@@ -40,13 +41,16 @@ export class SettingsSubPagePage implements OnInit {
         // );
 
 
-        this.admin_FirstName = "admin"
-        this.admin_LastName = "admin"
-        this.admin_Email = "admin@gmail.com"
+        const userEMail = localStorage.getItem("email");
+        const name = localStorage.getItem("name");
+        console.log(name + userEMail);
+        this.admin_FirstName = name
+        this.admin_LastName = name
+        this.admin_Email = userEMail;
   }
 
   onSubmit(form : NgForm){
-          
+
     // if(this.email_admin == this.emailValidation){
     //   console.log("Data Matched");
     // }else {
@@ -54,6 +58,10 @@ export class SettingsSubPagePage implements OnInit {
     //   console.log("Data not Matching")
     // }
 
+  }
+
+  logout(){
+    this.authServ.logOut();
   }
 
 }
