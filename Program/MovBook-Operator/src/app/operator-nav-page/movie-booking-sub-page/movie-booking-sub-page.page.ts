@@ -156,7 +156,7 @@ export class MovieBookingSubPagePage implements OnInit {
           await alert.present();
         } else if (result.paymentIntent.status === "succeeded") {
 
-          this.operatorService.storeBooking(this.Refreshments, movieSelectionData).subscribe(
+          this.operatorService.storeBooking(this.Refreshments, movieSelectionData, billTotal).subscribe(
             async (data) => {
               const alert = await this.alertCtrl.create({
                 header: 'Payment Sucessful',

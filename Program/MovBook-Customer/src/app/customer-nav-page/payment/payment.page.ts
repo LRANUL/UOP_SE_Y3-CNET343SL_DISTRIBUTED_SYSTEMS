@@ -137,7 +137,7 @@ export class PaymentPage implements OnInit {
           await alert.present();
         } else if (result.paymentIntent.status === "succeeded") {
 
-          this.customerService.storeBooking(this.Refreshments, movieSelectionData).subscribe(
+          this.customerService.storeBooking(this.Refreshments, movieSelectionData, billTotal).subscribe(
             async (data) => {
               const alert = await this.alertCtrl.create({
                 header: 'Payment Sucessful',

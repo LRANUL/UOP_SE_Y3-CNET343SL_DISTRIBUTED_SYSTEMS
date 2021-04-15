@@ -56,10 +56,10 @@ export class OperatorService {
     const body = { name: name, quantity: quantity };
     return this.http.put<any>(this.BASE_URL + "api/refreshments/update", body);
   }
-  storeBooking(refreshments, movie) {
+  storeBooking(refreshments, movie, total) {
     var email = localStorage.getItem('email');
     email = 'john@movbook.com'
-    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments };
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() };
     console.log(body)
     return this.http.post<any>(this.BASE_URL + "api/booking/add", body);
   }
