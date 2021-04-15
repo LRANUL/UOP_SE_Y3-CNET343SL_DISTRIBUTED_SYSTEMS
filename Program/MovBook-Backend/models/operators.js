@@ -2,15 +2,24 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const OperatorSchema = mongoose.Schema({
-    Prefix: { type: String, required: true},
-    FirstName: { type: String, required: true },
-    MiddleName: { type: String, required: true },
-    LastName: { type: String, required: true },
-    Email: { type: String, required: true, unique: true },
-    Phone: { type: Number, required: true },
-    StreetAddress: { type: String, required: true },
-    City: { type: String, required: true},
-    PostalCode: { type: String, required: true },
+    emailAddress: { type: String, required: true, unique: true },
+    name: {
+        prefix: { type: String, required: true },
+        firstName: { type: String, required: true },
+        middleName: { type: String, required: true },
+        lastName: { type: String, required: true },
+    },
+    phoneNumber: { type: Number, required: true },
+    address: {
+        streetAddress: { type: String, required: true },
+        city: { type: String, required: true },
+        postalZipCode: { type: String, required: true },
+    },
+    accountStatus: { type: String, required: true, default: 'Disabled' },
+    registeredDateTime: {
+        type: String,
+        default: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString(),
+    },
 })
 
 OperatorSchema.plugin(uniqueValidator);

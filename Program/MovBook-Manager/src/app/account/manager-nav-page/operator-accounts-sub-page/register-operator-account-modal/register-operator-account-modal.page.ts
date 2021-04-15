@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { VerifyEmailAddressPopoverPage } from '../../settings-sub-page/verify-email-address-popover/verify-email-address-popover.page';
 
@@ -18,6 +18,7 @@ export class RegisterOperatorAccountModalPage implements OnInit {
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private managerService: ManagerService,
+    private alertCtrl: AlertController,
     private popoverController: PopoverController
   ) { }
 
@@ -41,12 +42,12 @@ export class RegisterOperatorAccountModalPage implements OnInit {
   }
 
   // Implementation to close 'Register Operator Account' modal
-  async closeRegisterOperatorAccountModal(){
+  async closeRegisterOperatorAccountModal() {
     await this.modalController.dismiss();
   }
 
   // Implementation for opening the 'Verify Email Address' popover
-  async openVerifyEmailAddressPopover(evt: Event){
+  async openVerifyEmailAddressPopover(evt: Event) {
     const VerifyEmailAddressPopover = await this.popoverController.create({
       component: VerifyEmailAddressPopoverPage,
       event: evt
@@ -57,15 +58,44 @@ export class RegisterOperatorAccountModalPage implements OnInit {
     const { data } = await VerifyEmailAddressPopover.onDidDismiss();
 
     // If Condition - checking whether there is data in the response 'data'
-    if(data != null){
+    if (data != null) {
       // If condition - checking whether response data contains true
-      if(data == true){
+      if (data == true) {
 
 
 
       }
     }
   }
+  // Creating an operator account
+  doAddNewOperatorAccount(addAccountDetailsForm) {
+    // Operator Profile
+    this.managerService.createOperatorAccount(addAccountDetailsForm).subscribe(
+      async (data) => {
+        console.log(data)
+        if (data == 'Operator Added') {
+          const alert = await this.alertCtrl.create({
+            header: 'Operator Account Created',
+            backdropDismiss: true,
+          })
+          await alert.present();
+        }
+        else if (data == 'Operator Not Added') {
+          const alert = await this.alertCtrl.create({
+            header: 'Operator Account Creation Failed, Try Again!',
+            backdropDismiss: true,
+          })
+          await alert.present();
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    // Operator Credentials
 
-
+    var email = addAccountDetailsForm.emailAddress
+    var password = addAccountDetailsForm.confirmPassword
+    // Add the Login crendentials here
+  }
 }

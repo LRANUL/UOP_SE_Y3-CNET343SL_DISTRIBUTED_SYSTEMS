@@ -59,7 +59,7 @@ export class OperatorService {
   storeBooking(refreshments, movie, total) {
     var email = localStorage.getItem('email');
     email = 'john@movbook.com'
-    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() };
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
     console.log(body)
     return this.http.post<any>(this.BASE_URL + "api/booking/add", body);
   }
