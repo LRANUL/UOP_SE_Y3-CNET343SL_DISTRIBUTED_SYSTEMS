@@ -43,19 +43,19 @@
               <div class="col-6 col-sm-7">
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input  name="Prefix" type="text" placeholder="Prefix" #name="ngModel" ngModel></ion-input>
+                  <ion-input  name="prefix" type="text" placeholder="Prefix" #name="ngModel" ngModel></ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input name="FirstName" type="text" placeholder="First Name" #name="ngModel" ngModel></ion-input>
+                  <ion-input name="firstName" type="text" placeholder="First Name" #name="ngModel" ngModel></ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input name="MiddleName" type="text" placeholder="Middle Name" #name="ngModel" ngModel></ion-input>
+                  <ion-input name="middleName" type="text" placeholder="Middle Name" #name="ngModel" ngModel></ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input name="LastName" type="text" placeholder="Last Name" #name="ngModel" ngModel></ion-input>
+                  <ion-input name="lastName" type="text" placeholder="Last Name" #name="ngModel" ngModel></ion-input>
                 </ion-item>
               </div>
 
@@ -68,7 +68,7 @@
 
               <div class="col-6 col-sm-7">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input  name="Email" type="email" placeholder="manager@email.com" #email="ngModel" ngModel>
+                  <ion-input  name="email" type="email" placeholder="manager@email.com" #email="ngModel" ngModel>
                   </ion-input>
                 </ion-item>
               </div>
@@ -82,7 +82,7 @@
 
               <div class="col-6 col-sm-7">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="Password" type="password" placeholder="Password" #password="ngModel" ngModel>
+                  <ion-input name="password" type="password" placeholder="Password" #password="ngModel" ngModel>
                   </ion-input>
                 </ion-item>
               </div>
@@ -96,7 +96,7 @@
 
               <div class="col-6 col-sm-7">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="RetypePassword" type="password" placeholder="Retype Password" #password="ngModel" ngModel>
+                  <ion-input name="retypePassword" type="password" placeholder="Retype Password" #password="ngModel" ngModel>
                   </ion-input>
                 </ion-item>
               </div>
@@ -112,7 +112,7 @@
 
               <div class="col-6 col-sm-5">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="Phone" type="text" placeholder="Phone No" #phone="ngModel" ngModel></ion-input>
+                  <ion-input name="phone" type="text" placeholder="Phone No" #phone="ngModel" ngModel></ion-input>
                 </ion-item>
               </div>
 
@@ -124,17 +124,17 @@
               </div>
               <div class="col-6 col-sm-7">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="StreetAddress" type="text" placeholder="Street Address" #address="ngModel" ngModel>
+                  <ion-input name="streetAddress" type="text" placeholder="Street Address" #address="ngModel" ngModel>
                   </ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px; margin-top: 5px;">
-                  <ion-input name="City" type="text" placeholder="City" #address="ngModel" ngModel>
+                  <ion-input name="city" type="text" placeholder="City" #address="ngModel" ngModel>
                   </ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input name="PostalCode" type="text" placeholder="Postal Code" #address="ngModel" ngModel>
+                  <ion-input name="postalCode" type="text" placeholder="Postal Code" #address="ngModel" ngModel>
                   </ion-input>
                 </ion-item>
               </div>
@@ -178,10 +178,10 @@
 
               <div style="margin-left: 20px;">
                 <h6 style="color: black">ID : {{ManagerDetails._id}}</h6>
-                <h6 style="color: black">Name : {{ ManagerDetails.Prefix }} {{ManagerDetails.FirstName}} {{ ManagerDetails.MiddleName }} {{ManagerDetails.LastName}}</h6>
-                <h6 style="color: black">Email : {{ ManagerDetails.Email }}</h6>
-                <h6 style="color: black">Phone : {{ ManagerDetails.Phone }}</h6>
-                <h6 style="color: black">Address : {{ ManagerDetails.StreetAddress }},{{ ManagerDetails.City }},{{ ManagerDetails.PostalCode }}</h6>
+                <h6 style="color: black">Name : {{ ManagerDetails.name.prefix }} {{ManagerDetails.name.firstName}} {{ ManagerDetails.name.middleName }} {{ManagerDetails.name.lastName}}</h6>
+                <h6 style="color: black">Email : {{ ManagerDetails.email }}</h6>
+                <h6 style="color: black">Phone : {{ ManagerDetails.phone }}</h6>
+                <h6 style="color: black">Address : {{ ManagerDetails.address.streetAddress }},{{ ManagerDetails.address.city }},{{ ManagerDetails.address.postalCode }}</h6>
               </div>
               <!--<ion-button><a [routerLink]="['/administrator/manager-accounts/edit-manager']"> Update Details</a></ion-button>
                 -->

@@ -31,17 +31,17 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
 
 
   //Angular Page
-  Prefix: any;
-  FirstName: any;
-  MiddleName: any;
-  LastName: any;
-  Email: any;
-  Password: any;
-  RetypePassword: any;
-  Phone: any;
-  StreetAddress: any;
-  City: any;
-  PostalCode: any;
+  prefix: any;
+  firstName: any;
+  middleName: any;
+  lastName: any;
+  email: any;
+  password: any;
+  retypePassword: any;
+  phone: any;
+  streetAddress: any;
+  city: any;
+  postalCode: any;
 
 
   // name: any;
@@ -79,7 +79,7 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
     this.admin_LastName = "admin"
     this.admin_Email = "admin@gmail.com"
 
-    
+
 
     //pass the data to the list
     this.employeeService.getManagerDetails();
@@ -110,17 +110,26 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
     if (form)
       form.reset();
     this.employeeService.selectedEmployee = {
-      Prefix: "",
-      FirstName: "",
-      MiddleName: "",
-      LastName: "",
-      Email: "",
-      Password: "",
-      RetypePassword: "",
-      Phone: null,
-      StreetAddress: "",
-      City: "",
-      PostalCode: "",
+      email: "",
+      name: {
+        prefix: "",
+        firstName: "",
+        middleName: "",
+        lastName: ""
+      },
+      // Prefix: "",
+      // FirstName: "",
+      // MiddleName: "",
+      // LastName: "",
+
+      password: "",
+      retypePassword: "",
+      phone: null,
+      address: {
+        streetAddress: "",
+        city: "",
+        postalCode: ""
+      },
     }
 
   }

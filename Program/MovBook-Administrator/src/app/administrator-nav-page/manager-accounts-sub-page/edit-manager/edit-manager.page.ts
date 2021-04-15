@@ -16,7 +16,7 @@ export class EditManagerPage implements OnInit {
   admin_LastName: any;
   admin_Email: any;
 
-  Prefix: any;
+  prefix: any;
 
   id: string;
 
@@ -57,8 +57,8 @@ export class EditManagerPage implements OnInit {
         this.id = res.get('managerid');
 
         this.employeeService.getManagerDetailsbyID(this.id).subscribe((res)=>{
-          this.Prefix = res.ManagerDetails['Prefix']
-          //console.log(this.Prefix)
+          this.prefix = res.ManagerDetails.name['prefix']
+          console.log(this.prefix)
         })
       }
 
@@ -69,17 +69,17 @@ export class EditManagerPage implements OnInit {
 
 
     this.UpdateForm = new FormGroup({
-      'Prefix':new FormControl(null, {validators:[Validators.required]}),
-      'FirstName':new FormControl(null, {validators:[Validators.required]}),
-      'MiddleName':new FormControl(null, {validators:[Validators.required]}),
-      'LastName':new FormControl(null, {validators:[Validators.required]}),
-      'Email':new FormControl(null, {validators:[Validators.required]}),
-      'Password':new FormControl(null, {validators:[Validators.required]}),
-      'RetypePassword':new FormControl(null, {validators:[Validators.required]}),
-      'Phone':new FormControl(null, {validators:[Validators.required]}),
-      'StreetAddress':new FormControl(null, {validators:[Validators.required]}),
-      'City':new FormControl(null, {validators:[Validators.required]}),
-      'PostalCode':new FormControl(null, {validators:[Validators.required]})
+      'prefix':new FormControl(null, {validators:[Validators.required]}),
+      'firstName':new FormControl(null, {validators:[Validators.required]}),
+      'middleName':new FormControl(null, {validators:[Validators.required]}),
+      'lastName':new FormControl(null, {validators:[Validators.required]}),
+      'email':new FormControl(null, {validators:[Validators.required]}),
+      'password':new FormControl(null, {validators:[Validators.required]}),
+      'retypePassword':new FormControl(null, {validators:[Validators.required]}),
+      'phone':new FormControl(null, {validators:[Validators.required]}),
+      'streetAddress':new FormControl(null, {validators:[Validators.required]}),
+      'city':new FormControl(null, {validators:[Validators.required]}),
+      'postalCode':new FormControl(null, {validators:[Validators.required]})
       
     })
 
@@ -96,19 +96,22 @@ export class EditManagerPage implements OnInit {
 
         this.employeeService.getManagerDetailsbyID(this.details).subscribe((res) => {
           this.UpdateForm.setValue({
-            Prefix:res.ManagerDetails.Prefix,
-            FirstName:res.ManagerDetails.FirstName,
-            MiddleName:res.ManagerDetails.MiddleName,
-            LastName:res.ManagerDetails.LastName,
-            Email:res.ManagerDetails.Email,
-            Password:res.ManagerDetails.Password,
-            RetypePassword:res.ManagerDetails.RetypePassword,
-            Phone:res.ManagerDetails.Phone,
-            StreetAddress:res.ManagerDetails.StreetAddress,
-            City:res.ManagerDetails.City,
-            PostalCode:res.ManagerDetails.PostalCode,
+
+            prefix:res.ManagerDetails.name.prefix,
+            firstName:res.ManagerDetails.name.firstName,
+            middleName:res.ManagerDetails.name.middleName,
+            lastName:res.ManagerDetails.name.lastName,
+
+            email:res.ManagerDetails.email,
+
+            password:res.ManagerDetails.password,
+            retypePassword:res.ManagerDetails.retypePassword,
+            phone:res.ManagerDetails.phone,
+            streetAddress:res.ManagerDetails.address.streetAddress,
+            city:res.ManagerDetails.address.city,
+            postalCode:res.ManagerDetails.address.postalCode,
           })
-          //console.log("********************")
+          console.log("********************")
           //console.log(res)
           //console.log("********************")
         })
@@ -120,15 +123,15 @@ export class EditManagerPage implements OnInit {
 
   updateSubmit(){
     this.employeeService.updateManager(
-      this.UpdateForm.value.Prefix,
-      this.UpdateForm.value.FirstName,
-      this.UpdateForm.value.MiddleName,
-      this.UpdateForm.value.LastName,
-      this.UpdateForm.value.Email,
-      this.UpdateForm.value.Phone,
-      this.UpdateForm.value.StreetAddress,
-      this.UpdateForm.value.City,
-      this.UpdateForm.value.PostalCode,
+      this.UpdateForm.value.prefix,
+      this.UpdateForm.value.firstName,
+      this.UpdateForm.value.middleName,
+      this.UpdateForm.value.lastName,
+      this.UpdateForm.value.email,
+      this.UpdateForm.value.phone,
+      this.UpdateForm.value.streetAddress,
+      this.UpdateForm.value.city,
+      this.UpdateForm.value.postalCode,
       this.details)
 
 

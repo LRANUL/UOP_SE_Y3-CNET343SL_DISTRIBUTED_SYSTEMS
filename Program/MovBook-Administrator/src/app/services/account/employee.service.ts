@@ -53,17 +53,21 @@ export class EmployeeService {
   //Add a new Manager
   postEmployee(adminDetails: NgForm) {
     const manager = {
-      Prefix: adminDetails.value.Prefix,
-      FirstName: adminDetails.value.FirstName,
-      MiddleName: adminDetails.value.MiddleName,
-      LastName: adminDetails.value.LastName,
-      Email: adminDetails.value.Email,
-      Password: adminDetails.value.Password,
-      RetypePassword: adminDetails.value.RetypePassword,
-      Phone: adminDetails.value.Phone,
-      StreetAddress: adminDetails.value.StreetAddress,
-      City: adminDetails.value.City,
-      PostalCode: adminDetails.value.PostalCode,
+      email: adminDetails.value.email,
+      name: {
+        prefix: adminDetails.value.prefix,
+        firstName: adminDetails.value.firstName,
+        middleName: adminDetails.value.middleName,
+        lastName: adminDetails.value.lastName,
+      },
+      password: adminDetails.value.password,
+      retypePassword: adminDetails.value.retypePassword,
+      phone: adminDetails.value.phone,
+      address: {
+        streetAddress: adminDetails.value.streetAddress,
+        city: adminDetails.value.city,
+        postalCode: adminDetails.value.postalCode
+      },
 
     }
     console.log(manager)
@@ -91,7 +95,7 @@ export class EmployeeService {
     //console.log(id)
     //this.http.get<{ message: string, ManagerDetails: any }>(this.baseUrl + "api/get/").subscribe(res => {
     return this.http.get<{ message: string, ManagerDetails: any }>(this.BASE_URL + "api/managers/get/" + id)
-    
+
   }
 
 
@@ -104,12 +108,29 @@ export class EmployeeService {
 
 
   //Update Manager
-  updateManager(Prefix: string, FirstName: string, MiddleName: string, LastName: string, Email: string, Phone: string, StreetAddress: string, City: string, PostalCode: string, id: string) {
+  updateManager(
+    prefix: string, FirstName: string, MiddleName: string, LastName: string, 
+    email: string, Phone: string, 
+    StreetAddress: string, City: string, PostalCode: string, id: string) {
 
     let updatedData: Employee;
     let phoneNO: number = +Phone
-    updatedData = {Prefix:Prefix,FirstName:FirstName,MiddleName:MiddleName,LastName:LastName,Email:Email,Phone:phoneNO,StreetAddress:StreetAddress,City:City,PostalCode:PostalCode}
-    this.http.put(this.BASE_URL + "api/managers/update/" + id, updatedData).subscribe(res=>{
+    updatedData = {
+      name: {
+        prefix: prefix,
+        firstName: FirstName,
+        middleName: MiddleName,
+        lastName: LastName
+      },
+      email: email,
+      phone: phoneNO,
+      address: {
+        streetAddress: StreetAddress,
+        city: City,
+        postalCode: PostalCode
+      }
+    }
+    this.http.put(this.BASE_URL + "api/managers/update/" + id, updatedData).subscribe(res => {
       console.log(res)
     })
   }
@@ -121,7 +142,7 @@ export class EmployeeService {
   }
 
 
-  statusStripe(){
+  statusStripe() {
     return this._http.get("status.stripe.com")
   }
 
@@ -130,10 +151,10 @@ export class EmployeeService {
       .catch(this.errorHandler);
   }
 
-  errorHandler(error: HttpErrorResponse){
+  errorHandler(error: HttpErrorResponse) {
     return Observable.throw(error.message || "Server Error");
   }
 
 
- 
+
 }
