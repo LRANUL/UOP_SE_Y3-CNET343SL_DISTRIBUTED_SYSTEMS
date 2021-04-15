@@ -7,7 +7,7 @@ const bookingsSchema = mongoose.Schema({
   totalCostLKR: { type: String },
   purchaseDate: {
     type: String,
-    default: new Date().toLocaleDateString(),
+    default: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString(),
   },
 })
 
