@@ -171,6 +171,40 @@ exports.retrieveAllMoviesAsStatus = async (req, res, next) => {
 
 };
 
+// Function - Retrieve five latest movies using route, 'BASE_URL/api/movies/latest-movies/top-five'
+exports.retrieveLatestMovies = async (req, res, next) => {
+  // Using mongoose find() functionality to get the latest five movies
+  await movieModel.find({}).sort({releasedDate: "descending"}).limit(5).exec((error, returnedData) => {
+
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve latest movies",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No movies available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Latest movies retrieved",
+          returnedData
+        });
+      }
+    }
+  })
+};
+
+
+
 // Function - Update movie status using route, 'BASE_URL/api/movies/update-movie-status'
 exports.updateMovieStatus = async (req, res, next) => {
 

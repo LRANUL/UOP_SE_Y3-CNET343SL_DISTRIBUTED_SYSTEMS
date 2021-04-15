@@ -60,6 +60,9 @@ router.get("/movie-details/:movieImdbId", movieController.retrieveMovie);
 // GET - Retrieve all movie according to the movie status | Route: 'BASE_URL/api/movies/movie-status/:movieStatus'
 router.get("/movie-status/:movieStatus", movieController.retrieveAllMoviesAsStatus);
 
+// GET - Retrieve five movie according to the latest date | Route: 'BASE_URL/api/movies/latest-movies/top-five'
+router.get("/latest-movies/top-five", movieController.retrieveLatestMovies);
+
 // PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status'
 router.put("/update-movie-status", movieController.updateMovieStatus);
 

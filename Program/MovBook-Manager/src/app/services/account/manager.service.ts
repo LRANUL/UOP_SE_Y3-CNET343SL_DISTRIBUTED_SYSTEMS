@@ -65,6 +65,11 @@ export class ManagerService {
     return this.httpClient
       .get(this.BASE_URL + "api/movies/movie-status/" + movieStatus);
   }
+  // GET - Retrieving latest five movie from the database
+  getLatestFiveMovies(){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movies/latest-movies/top-five");
+  }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
   updateMovieStatus(movieImdbId: string, newMovieStatus: string) {
     // Creating an object to pass the movie details
