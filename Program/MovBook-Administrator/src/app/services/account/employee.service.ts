@@ -143,7 +143,7 @@ export class EmployeeService {
 
 
   statusStripe() {
-    return this._http.get("status.stripe.com")
+    return this._http.get("https://movbook-admin.herokuapp.com/api/stripe-status")
   }
 
   managerStatus() {
