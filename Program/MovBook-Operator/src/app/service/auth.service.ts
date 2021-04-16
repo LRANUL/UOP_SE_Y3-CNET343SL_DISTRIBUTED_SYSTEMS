@@ -31,11 +31,17 @@ export class AuthService{
                 this.saveAuthData(token, expirationDate,this.userId,this.userEmail,this.userName);
                 this.authStatusListener.next(true);
                 this.AuthStatus = true;
-                this.router.navigate(['/']);
+                this.router.navigate(['/operator']);
               }
               console.log(res);
 
           })
+      }
+      onEmailSent(email:string){
+        const emailSent = {email:email}
+        this.httpCli.post<{message:string}>('http://localhost:5000/api/users/forgotPassword',emailSent).subscribe(res=>{
+          console.log(res);
+        })
       }
 
       getToken(){

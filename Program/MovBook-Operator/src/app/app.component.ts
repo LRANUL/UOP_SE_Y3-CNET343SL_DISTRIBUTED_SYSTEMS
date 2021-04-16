@@ -23,6 +23,7 @@ FirebaseRemoteConfig.initializeFirebase({
 export class AppComponent {
   remoteConfig: any = null;
 
+
   constructor(private alertCtrl: AlertController) { }
 
   async ngOnInit() {
