@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddBeverageModalPage } from './add-beverage-modal/add-beverage-modal.page';
+import { UpdateBeverageModalPage } from './update-beverage-modal/update-beverage-modal.page';
 
 @Component({
   selector: 'app-food-and-beverages-sub-page',
@@ -60,6 +61,34 @@ export class FoodAndBeveragesSubPagePage implements OnInit {
     }
   }
 
+  // Function - Implementation for opening the 'Edit Beverage Modal' modal
+  async openEditBeverageModal(beverageObjectId: String, beverageName: String, beverageImageURL: String){
+    const editBeverageModal = await this.modalController.create({
+      component: UpdateBeverageModalPage,
+      cssClass: 'add-new-showing-experience-modal',
+      componentProps: {
+        passingBeverageObjectId: beverageObjectId,
+        passingBeverageName: beverageName,
+        passingBeverageImageURL: beverageImageURL
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    editBeverageModal.present();
+
+    // Collecting response data when modal is dismissed
+    const { data } = await editBeverageModal.onDidDismiss();
+
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        // Retrieving updated list of beverages
+        this.getBeverages();
+      }
+    }
+  }
+
   // Function - Retrieving list of beverages
   getBeverages() {
     this.loadingSpinnerGetBeverages = true;
@@ -67,7 +96,6 @@ export class FoodAndBeveragesSubPagePage implements OnInit {
       (data) => {
         this.loadingSpinnerGetBeverages = false;
         this.Beverages = data;
-        console.log(data);
       },
       (error) => {
         this.loadingSpinnerGetBeverages = false;
@@ -169,7 +197,7 @@ export class FoodAndBeveragesSubPagePage implements OnInit {
   }
 
   // Function - Removing one beverage item
-  removeBeverage(beverageObjectId: String){console.log(beverageObjectId)
+  removeBeverage(beverageObjectId: String){
     // Passing 'beverageObjectId' to the server-side to remove document from the database
     this.managerService.removeBeverage(beverageObjectId).subscribe((removeBeverageResponse: any) => {
       if(removeBeverageResponse.message == "Refreshment removed"){

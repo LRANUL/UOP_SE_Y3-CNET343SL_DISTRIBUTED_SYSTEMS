@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Beverage Details</ion-title>
+    <!-- Loading Spinner - Edit beverage details -->
+    <ion-spinner name="crescent" style="height: 50px;
+                                        width: 50px;
+                                        position: absolute;
+                                        top: 5%;
+                                        left: 60%;
+                                        transform: translateX(-40%);" *ngIf="loadingSpinnerBeverageDetails"></ion-spinner>
+    <ion-button
+      (click)="closeUpdateBeverageModal()" 
+      slot="end" 
+      shape="round" 
+      fill="outline" 
+      color="danger" 
+      id="closeModalButton">
+      <ion-icon name="close-outline" style="font-size: 30px;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- CONTENT CARD -->
+  <ion-card>
+    <ion-card-content>
+
+      <ion-label style="font-size: 20px;
+                        color: #000000;">
+       Beverage Details
+      </ion-label>
+
+      <div>
+        <form [formGroup]="editBeverageDetailsForm" (ngSubmit)="updateBeverageDetails(editBeverageDetailsForm.value)">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="5">
+                <ion-label class="edit-beverage-form-text">
+                  Name:
+                </ion-label>
+              </ion-col>
+              <ion-col size="7">
+                <ion-item>
+                  <ion-input type="text" placeholder="Enter experience" clearInput formControlName="name"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="5">
+                <ion-label class="edit-beverage-form-text">
+                  Image Link:
+                </ion-label>
+              </ion-col>
+              <ion-col size="7">
+                <ion-item>
+                  <ion-input type="text" placeholder="Enter description" clearInput formControlName="imageUrl"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: 10px;">
+              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!editBeverageDetailsForm.valid" style="min-width: 250px;
+                                                                                                                              min-height: 40px;
+                                                                                                                              position: relative;
+                                                                                                                              left: 50%;
+                                                                                                                              transform: translateX(-50%);">
+                EDIT BEVERAGE DETAILS
+              </ion-button>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

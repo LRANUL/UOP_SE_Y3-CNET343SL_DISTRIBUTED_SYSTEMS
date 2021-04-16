@@ -140,3 +140,31 @@ exports.updateCinemaHallDetails = async (req, res, next) => {
     })
 
 };
+
+// Function - Remove cinema hall details from the database
+exports.removeCinemaHall = async (req, res, next) => {
+
+  // Extracting passed cinemaHallObjectId from the URL
+  let passedCinemaHallObjectId = req.params.cinemaHallObjectId;
+
+  // Using mongoose findByIdAndDelete() functionality to remove the cinema hall according to the passed cinemaHallObjectId
+  await cinemaHallModel.deleteOne({ '_id': passedCinemaHallObjectId }, (error, returnedData) => {
+
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to remove cinema hall",
+      });
+    }
+    else {
+      res.status(200).json({
+        message:
+          "Cinema hall removed",
+        returnedData
+      });
+    }
+
+  })
+
+};

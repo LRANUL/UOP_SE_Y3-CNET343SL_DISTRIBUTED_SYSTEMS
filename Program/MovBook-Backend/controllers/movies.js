@@ -203,7 +203,42 @@ exports.retrieveLatestMovies = async (req, res, next) => {
   })
 };
 
+// Function - Retrieving the count of movies for a particular movie status using route,
+// 'BASE_URL/api/movies/count/:movieStatus'
+exports.retrieveMoviesCountByStatus = async (req, res, next) => {
 
+  // Getting passed movie status
+  let passedMovieStatus = req.params.movieStatus;
+
+  // Using mongoose find() functionality to get the count of movies under a movie status
+  await movieModel.find({ "movieStatus": passedMovieStatus }).count().exec((error, returnedData) => {
+
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve count of movies",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No movies available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Count of movies retrieved",
+          returnedData
+        });
+      }
+    }
+  })
+};
 
 // Function - Update movie status using route, 'BASE_URL/api/movies/update-movie-status'
 exports.updateMovieStatus = async (req, res, next) => {

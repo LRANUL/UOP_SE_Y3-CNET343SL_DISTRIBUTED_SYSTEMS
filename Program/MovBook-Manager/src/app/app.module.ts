@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+
+import { AuthInterceptor } from './services/auth-interceptor';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
@@ -30,11 +32,13 @@ import { VerifyEmailAddressPopoverPageModule } from './account/manager-nav-page/
 import { AddBeverageModalPageModule } from './account/manager-nav-page/food-and-beverages-sub-page/add-beverage-modal/add-beverage-modal.module';
 import { EditLocationModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/edit-location-modal/edit-location-modal.module';
 import { ViewShowingModalPageModule } from './account/manager-nav-page/movie-catalog-sub-page/view-showing-modal/view-showing-modal.module';
+import { UpdateBeverageModalPageModule } from './account/manager-nav-page/food-and-beverages-sub-page/update-beverage-modal/update-beverage-modal.module';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -55,10 +59,19 @@ import { ViewShowingModalPageModule } from './account/manager-nav-page/movie-cat
       VerifyEmailAddressPopoverPageModule,
       AddBeverageModalPageModule,
       EditLocationModalPageModule,
-      ViewShowingModalPageModule
+      ViewShowingModalPageModule,
+      UpdateBeverageModalPageModule
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { 
+      provide: HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true
+    },
+    { 
+      provide: RouteReuseStrategy, 
+      useClass: IonicRouteStrategy 
+    }
   ],
   bootstrap: [AppComponent]
 })

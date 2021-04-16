@@ -10,7 +10,7 @@ router.post('/add-new', (req, res, next) => {
     name: req.body.beverageName,
     price: req.body.beveragePrice,
     stock: req.body.beverageQuantity,
-    imgUrl: req.body.beverageImageLink,
+    imgURL: req.body.beverageImageLink,
   }).save((error, returnedData) => {
     if(error){
       res.status(500).json({
@@ -32,7 +32,6 @@ router.post('/add-new', (req, res, next) => {
 router.get('', (req, res, next) => {
   Refreshments.find({})
     .then((data) => {
-      console.log(data);
       res.send(data)
     }).catch(err => {
       res.status.send({
@@ -61,6 +60,35 @@ router.put('/update-price', (req, res, next) => {
     }).catch(err => {
       res.send(JSON.stringify("Not Updated: "+ err))
     })
+});
+
+// Update Refreshment Name and Image URL
+router.put('/update-name-image-url', (req, res, next) => {
+  let passedRefreshmentObjectId = req.body.refreshmentObjectId;
+  let passedRefreshmentName = req.body.refreshmentName;
+  let passedRefreshmentImageURL = req.body.refreshmentImageURL;
+  Refreshments.findByIdAndUpdate({
+    '_id': passedRefreshmentObjectId
+  },
+  {
+    'name': passedRefreshmentName,
+    'imgURL': passedRefreshmentImageURL
+  }, (error, returnedData) => {
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to update refreshment",
+      });
+    }
+    else {
+      res.status(200).json({
+        message:
+          "Refreshment updated",
+        returnedData
+      });
+    }
+  })
 });
 
 // Remove One Refreshment

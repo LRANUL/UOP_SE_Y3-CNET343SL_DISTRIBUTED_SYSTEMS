@@ -70,6 +70,11 @@ export class ManagerService {
     return this.httpClient
       .get(this.BASE_URL + "api/movies/latest-movies/top-five");
   }
+  // GET - Retrieving count of movies under a movie status
+  getCountOfMoviesByMovieStatus(movieStatus: string){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movies/movie-status/count/" + movieStatus);
+  }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
   updateMovieStatus(movieImdbId: string, newMovieStatus: string) {
     // Creating an object to pass the movie details
@@ -126,6 +131,10 @@ export class ManagerService {
   updateCinemaHallDetails(updatedCinemaHallDetails: any) {
     return this.httpClient.put(this.BASE_URL + "api/cinema-halls/update-cinema-hall", updatedCinemaHallDetails);
   }
+  // DELETE - Remove cinema hall details from the database by sending cinemaHallObjectId to the server-side
+  removeCinemaHall(cinemaHallObjectId: string){
+    return this.httpClient.delete(this.BASE_URL + "api/cinema-halls/remove-hall/" + cinemaHallObjectId);
+  }
 
   /**
    * Cinema Location
@@ -168,6 +177,15 @@ export class ManagerService {
   updatePrice(name, price) {
     const body = { name: name, price: price };
     return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-price", body);
+  }
+  // UPDATE - Updating refreshment name and image url
+  updateRefreshmentNameImageURL(refreshmentObjectId: String, refreshmentName: String, refreshmentImageURL: String){
+    const updatedRefreshmentDetails = {
+      refreshmentObjectId: refreshmentObjectId,
+      refreshmentName: refreshmentName,
+      refreshmentImageURL: refreshmentImageURL
+    };
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-name-image-url", updatedRefreshmentDetails);
   }
   // DELETE - Remove one beverage
   removeBeverage(refreshmentObjectId: String) {

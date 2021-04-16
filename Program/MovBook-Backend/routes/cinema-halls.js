@@ -16,7 +16,7 @@ router.get("/hall/:id", cinemaHallsController.retrieveCinemaHall)
 // PUT - Updating cinema hall details | Route: 'BASE_URL/api/cinema-halls/update-cinema-hall'
 router.put("/update-cinema-hall", cinemaHallsController.updateCinemaHallDetails);
 
-// DELETE - Delete cinema hall details
-
+// DELETE - Delete cinema hall details | Route: 'BASE_URL/api/cinema-halls/remove-hall/:cinemaHallObjectId'
+router.delete("/remove-hall/:cinemaHallObjectId", cinemaHallsController.removeCinemaHall);
 
 module.exports = router;

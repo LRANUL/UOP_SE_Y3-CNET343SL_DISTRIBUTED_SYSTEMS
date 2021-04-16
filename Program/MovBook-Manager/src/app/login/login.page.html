@@ -1,5 +1,108 @@
-<ion-content >
-  <div style="padding-top: 120px;">
+<!-- Splash Screen -->
+<div *ngIf="splashContent" style="height: 100%;
+                                  width: 100%;">
+  <ion-grid style="min-width: 100%;
+                  min-height: 100%;
+                  background-color: #374d58;">
+    <ion-row style="margin-top: 3%;">
+      <ion-col>
+        <div style="width: 24vw;
+                    height: 22vh;
+                    position: relative;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: white;
+                    border-radius: 20px;
+                    box-shadow: 0px 0px 30px #000000;">
+          <ion-img src="assets/images/Logo/MovBook-Logo-v2.png" style="width: 100%;
+                                                                  position: relative;
+                                                                  top: 50%;
+                                                                  left: 50%;
+                                                                  transform: translate(-50%, -50%);"></ion-img>
+        </div>
+  
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: 20%;">
+      <ion-col size="12">
+        <ion-img src="assets/images/account/manager/login-page/ellipsis-loader.svg" style="height: 180px;
+                                                                                          width: 100%;"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row style="min-width: 20vw;
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);">
+      <ion-col size="12">
+        <div>
+          <ion-grid>
+            <ion-rol>
+              <ion-col size="12">
+                <ion-label style="font-size: 20px;
+                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                  font-weight: 400;
+                                  letter-spacing: 1px;
+                                  color: #ffffff;
+                                  position: relative;
+                                  left: 10%;
+                                  transform: translateX(-90%);">
+                  Developed By:
+                </ion-label>
+              </ion-col>
+            </ion-rol>
+            <ion-row style="margin-top: 1%;">
+              <ion-col size="12">
+                <ion-label style="font-size: 20px;
+                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                  font-weight: 500;
+                                  letter-spacing: 2px;
+                                  position: relative;
+                                  left: 25%;
+                                  transform: translateX(-75%);
+                                  color: #ffffff;">
+                  H.V.L. HASANKA
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label style="font-size: 20px;
+                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                  font-weight: 500;
+                                  letter-spacing: 2px;
+                                  position: relative;
+                                  left: 25%;
+                                  transform: translateX(-75%);
+                                  color: #ffffff;">
+                  -
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label style="font-size: 20px;
+                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                  font-weight: 500;
+                                  letter-spacing: 2px;
+                                  position: relative;
+                                  left: 25%;
+                                  transform: translateX(-75%);
+                                  color: #ffffff;">
+                  R.P. LADDUWAHETTY
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+<!-- Login Screen Content -->
+<ion-content [hidden]="!loginContent">
+  <div style="padding-top: 10%;">
       <ion-grid>
         <ion-row>
           <ion-col size-md="6" offset-md="3">
@@ -7,14 +110,14 @@
               <ion-card-header>
                 <ion-grid>
                   <ion-row>
-                    <ion-col  size-md="5" offset-md="3.5">
+                    <ion-col  size-md="5" offset-md="3">
                       <ion-avatar style="width: 100px; height: 100px; margin: auto;">
                       <img src="../../assets/images/profile.png">
                     </ion-avatar>
                     </ion-col>
                   </ion-row>
                   <ion-row>
-                    <ion-col size-md="5" offset-md="4.2" style="text-align: center;">
+                    <ion-col size-md="5" offset-md="3" style="text-align: center;">
                       <ion-label style="margin-left: 15px; font-size: x-large; font-weight: bolder;">Welcome Back!!!</ion-label>
                     </ion-col>
                   </ion-row>
@@ -24,7 +127,7 @@
                 <ion-grid>
                   <ion-row>
                     <ion-col size-md="6" offset-md="3">
-                      <form [formGroup]="loginform" (ngSubmit)="login()">
+                      <form [formGroup]="loginform" (ngSubmit)="onLogin()">
                         <ion-item>
                           <ion-label position="floating">Username</ion-label>
                           <ion-input type="email" placeholder="example@email.com" formControlName="emailControl" required></ion-input>
@@ -53,9 +156,9 @@
                             <ion-col size-md="6" style="padding-right: 100px;">
                               <ion-button  size="medium" type="submit" [disabled]="loginform.invalid" expand="block">Login</ion-button>
                             <br>
-                              <ion-button size="medium" expand="block" >Sign Up</ion-button>
-                            <br>
-                            <ion-button size="medium" expand="block" >Forgot Password ?</ion-button>
+
+                              <ion-button size="medium" expand="block" [routerLink]="['/','login','password-reset']">Forgot Password ?</ion-button>
+
                             </ion-col>
                         </div>
                       </form>
