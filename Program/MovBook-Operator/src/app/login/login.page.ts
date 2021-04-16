@@ -10,14 +10,11 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private authServ:AuthService, private router: Router) { }
+  constructor(private authServ: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  dashboard(){
-    this.router.navigate(['operator']);
-  }
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
@@ -25,8 +22,9 @@ export class LoginPage implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-  this.authServ.login(email,password);
-
+    // this.authServ.login(email,password);
+    // Only for Beta Test
+    this.router.navigate(['operator']);
 
   }
 }

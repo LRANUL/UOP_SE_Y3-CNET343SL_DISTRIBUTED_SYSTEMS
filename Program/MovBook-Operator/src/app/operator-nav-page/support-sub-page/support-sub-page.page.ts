@@ -29,7 +29,7 @@ export class SupportSubPagePage implements OnInit {
   async ngOnInit() {
     this.name = localStorage.getItem('name');
     this.email = localStorage.getItem('email');
-// Remove after getting login credentials
+    // Remove after getting login credentials
     this.name = 'John Steve';
     this.email = 'john@movbook.com';
 
@@ -37,10 +37,10 @@ export class SupportSubPagePage implements OnInit {
     this.operatorService.getOfferStatus().subscribe(
       (data) => {
         console.log(data)
-        if(data=='true'){
+        if (data == 'true') {
           this.promotion = true
         }
-        else{
+        else {
           this.promotion = false
         }
       },
@@ -51,10 +51,10 @@ export class SupportSubPagePage implements OnInit {
     this.operatorService.getMaintenanceStatus().subscribe(
       (data) => {
         console.log(data)
-        if(data=='true'){
+        if (data == 'true') {
           this.maintainence = true;
         }
-        else{
+        else {
           this.maintainence = false;
         }
       },
@@ -63,7 +63,7 @@ export class SupportSubPagePage implements OnInit {
       }
     );
   }
-  updatePromotion(promotion){
+  updatePromotion(promotion) {
     this.operatorService.setOfferStatus(promotion).subscribe(
       (data) => {
         this.ngOnInit();
@@ -73,7 +73,7 @@ export class SupportSubPagePage implements OnInit {
       }
     );
   }
-  updateMaintainence(maintainence){
+  updateMaintainence(maintainence) {
     this.operatorService.setMaintenanceStatus(maintainence).subscribe(
       (data) => {
         this.ngOnInit();
@@ -94,7 +94,7 @@ export class SupportSubPagePage implements OnInit {
       }
     );
   }
-  selectMessage(messages){
+  selectMessage(messages) {
     this.selectedMessage = messages._id
     this.selectedMessageEmail = messages.email
     this.selectedMessageSubject = messages.subject
@@ -103,8 +103,13 @@ export class SupportSubPagePage implements OnInit {
     this.operatorService.sendMessage(this.selectedMessage, this.MessageResponse).subscribe(
       async (data) => {
         console.log(data)
-         if (data == 'Message Sent') {
+        if (data == 'Message Sent') {
           this.getMessages();
+          // Data clean 
+          this.selectedMessage = null
+          this.selectedMessageEmail = null
+          this.selectedMessageSubject = null
+          this.MessageResponse = null
           const alert = await this.alertController.create({
             header: 'Reponse sent',
             message: 'Reply was sent to ' + this.selectedMessageEmail,

@@ -4,12 +4,12 @@ ion-item {
 }
 
 ion-content{            
-  --background: #374d58;
+  --background: darkgray !important;
 }
 
 #side-menu-nav{
   max-width: 15%;
-  --ion-background-color: #374d58;
+  --ion-background-color: darkgray !important;
   border: none;
 }
 

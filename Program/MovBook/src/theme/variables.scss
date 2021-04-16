@@ -76,12 +76,12 @@
   --ion-color-light-tint: #f5f6f9;
 
  /** button **/
-  --ion-color-button: #374d58;
+  --ion-color-button: darkgray !important;
   --ion-color-button-rgb: 232,232,232;
   --ion-color-button-contrast: #fff8f8;
   --ion-color-button-contrast-rgb: 0,0,0;
   --ion-color-button-shade: #dbdbdb;
-  --ion-color-button-tint: #374d58;  
+  --ion-color-button-tint: darkgray !important;  
 }
 
 .ion-color-button {

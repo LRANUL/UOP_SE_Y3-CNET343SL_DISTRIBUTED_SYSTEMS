@@ -1,9 +1,9 @@
 <ion-content>
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
-      <div style="background-color:#f2f2f2a1 ; height: 50%;width: 40%;margin-top: 10%;margin-left: 30%;padding: 5%;">
+      <div style="background-color:#f2f2f2a1 ; height: 50%;width: 40%;margin-top: 10%;margin-left: 30%;padding: 5%;border-radius: 5px;">
         <ion-row align="center">
-          <ion-img src="assets/icon/MovBook-Logo.jpeg" style="height: 100px;"></ion-img>
+          <ion-img src="assets/icon/MovBook-Logo.png" style="height: 100px;"></ion-img>
           <ion-col>
             <ion-list>
               <ion-item>
@@ -33,7 +33,6 @@
             <ion-button type="submit" color="primary" expand="block" [disabled]="!f.valid">
               Login
             </ion-button>
-            <ion-button (click)="dashboard()">Dashboard</ion-button>
           </ion-col>
         </ion-row>
       </div>

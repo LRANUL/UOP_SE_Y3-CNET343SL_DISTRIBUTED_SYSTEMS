@@ -1,5 +1,5 @@
 .sideMenu {
-    background-color: #374d58;
+    background-color: darkgray !important;
   }
   .profilePhoto {
     color: white;
@@ -11,6 +11,9 @@
   }
   ion-button:hover {
       --ion-color: light
+  }
+  ion-content{
+    --background: darkgray !important;
   }
   .onlineStatus {
     height: 15px;

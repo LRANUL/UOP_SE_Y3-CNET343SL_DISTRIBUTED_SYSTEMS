@@ -13,6 +13,7 @@ export class OperatorService {
   allticketInformation: BehaviorSubject<any> = new BehaviorSubject(null);
   ticketInformation = this.allticketInformation.asObservable();
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
+  private BASE_URL_ADMIN = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
 
   constructor(public http: HttpClient) { }
 
@@ -20,16 +21,16 @@ export class OperatorService {
     return this.http.get(this.BASE_URL + "api/movies");
   }
   getOfferStatus() {
-    return this.http.get(this.BASE_URL + "api/offer-status");
+    return this.http.get(this.BASE_URL_ADMIN + "api/offer-status");
   }
   setOfferStatus(value) {
-    return this.http.get(this.BASE_URL + "api/offer?value=" + value);
+    return this.http.get(this.BASE_URL_ADMIN + "api/offer?value=" + value);
   }
   getMaintenanceStatus() {
-    return this.http.get(this.BASE_URL + "api/maintenance-status");
+    return this.http.get(this.BASE_URL_ADMIN + "api/maintenance-status");
   }
   setMaintenanceStatus(value) {
-    return this.http.get(this.BASE_URL + "api/maintenance?value=" + value);
+    return this.http.get(this.BASE_URL_ADMIN + "api/maintenance?value=" + value);
   }
   getBeverages() {
     return this.http.get(this.BASE_URL + "api/refreshments");
@@ -42,7 +43,7 @@ export class OperatorService {
     return this.http.put<any>(this.BASE_URL + "api/messages/reply", body);
   }
   getProfile(email) {
-    return this.http.get(this.BASE_URL + "api/operators?email=" + email);
+    return this.http.get(this.BASE_URL + "api/operators/" + email);
   }
   getMovie(movieTitle) {
     return this.http.get(this.BASE_URL + "api/movie?title=" + movieTitle);
@@ -54,7 +55,7 @@ export class OperatorService {
   }
   updateStock(name, quantity) {
     const body = { name: name, quantity: quantity };
-    return this.http.put<any>(this.BASE_URL + "api/refreshments/update", body);
+    return this.http.put<any>(this.BASE_URL + "api/refreshments/update-stock", body);
   }
   storeBooking(refreshments, movie, total) {
     var email = localStorage.getItem('email');

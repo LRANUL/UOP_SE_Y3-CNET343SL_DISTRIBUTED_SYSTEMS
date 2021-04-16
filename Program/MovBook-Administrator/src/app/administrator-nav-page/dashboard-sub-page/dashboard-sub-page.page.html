@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-grid style="background-color: #374d58">
+  <ion-grid style="background-color: darkgray !important;">
     <ion-row>
       <ion-col size="auto">
         <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
@@ -32,7 +32,7 @@
 
           <!-- Database -->
           <div class="col-6 col-sm-6">
-            <h3 style="color: #374d58;"><b>Database status statistics</b></h3><br>
+            <h3 style="color: darkgray !important;;"><b>Database status statistics</b></h3><br>
             <ion-card style="width: 400px;background-color: rgb(231, 231, 231);">
               <canvas #barChart></canvas>
             </ion-card>
@@ -44,19 +44,19 @@
           </div>
 
           <div class="col-6 col-sm-6">
-            <h3 style="color: #374d58;"><b>OMDB API status statistics</b></h3>
+            <h3 style="color: darkgray !important;;"><b>OMDB API status statistics</b></h3>
             <h6 style="color: #000000;"><b>API Response Status : {{jsonResponse}}</b></h6>
             <h6 style="color: #000000;"><b>API Response Code : {{splitStatus}}</b></h6>
             <h6 style="color: #000000;"><b>API Response Address : {{splitAddress}}</b></h6>
             <br>
 
-            <h3 style="color: #374d58;"><b>STRIPE API status statistics</b></h3>
+            <h3 style="color: darkgray !important;;"><b>STRIPE API status statistics</b></h3>
             <h6 style="color: #000000;"><b>API Response Status : {{jsonResponse}}</b></h6>
             <h6 style="color: #000000;"><b>API Response Code : {{splitStatus}}</b></h6>
             <h6 style="color: #000000;"><b>API Response Address : {{splitAddress}}</b></h6>
             <br>
 
-            <h3 style="color: #374d58;"><b>Employers status statistics</b></h3>
+            <h3 style="color: darkgray !important;;"><b>Employers status statistics</b></h3>
             <h6 style="color: #000000;"><b>Admin Status : {{jsonResponseManager}} - {{splitStatusManager}}  {{splitAddressManager}}</b></h6>
             <br><h6 style="color: #000000;"><b>Managers Status : {{jsonResponseManager}} - {{splitStatusManager}}  {{splitAddressManager}}</b></h6>
             <br><h6 style="color: #000000;"><b>Operators Status : {{jsonResponseManager}} - {{splitStatusManager}}  {{splitAddressManager}}</b></h6>

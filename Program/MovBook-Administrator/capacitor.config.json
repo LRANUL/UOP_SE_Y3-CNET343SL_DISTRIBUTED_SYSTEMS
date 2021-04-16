@@ -1,0 +1,13 @@
+{
+  "appId": "com.administrator.movbook",
+  "appName": "MovBook-Administrator",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

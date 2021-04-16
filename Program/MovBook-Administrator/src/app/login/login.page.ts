@@ -10,33 +10,33 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private authServ:AuthService,public formBuilder: FormBuilder, private router: Router) {
+  constructor(private authServ: AuthService, public formBuilder: FormBuilder, private router: Router) {
     this.loginform = formBuilder.group({
-    emailControl: [
-      "",[
-        Validators.minLength(4),
-        Validators.pattern("[0-9a-z-A-Z@.]*"),
-        Validators.required
+      emailControl: [
+        "", [
+          Validators.minLength(4),
+          Validators.pattern("[0-9a-z-A-Z@.]*"),
+          Validators.required
+        ]
+      ],
+      passwordControl: [
+        "", [
+          Validators.minLength(6),
+          Validators.pattern("[0-9a-z-A-Z@.#*$!?&+-/]*"),
+          Validators.required
+        ]
       ]
-    ],
-    passwordControl: [
-      "",[
-        Validators.minLength(6),
-        Validators.pattern("[0-9a-z-A-Z@.#*$!?&+-/]*"),
-        Validators.required
-      ]
-    ]
-  });
-}
+    });
+  }
 
   ngOnInit() {
   }
 
-  get email(){
+  get email() {
     return this.loginform.get('emailControl');
   }
 
-  get password(){
+  get password() {
     return this.loginform.get('passwordControl');
   }
 
@@ -45,12 +45,14 @@ export class LoginPage implements OnInit {
 
 
 
-  onLogin(){
-    if(!this.loginform.valid){return;}
+  onLogin() {
+    if (!this.loginform.valid) { return; }
     const email = this.loginform.get('emailControl').value;
-    const password =this.loginform.get('passwordControl').value
-    console.log(email + " " +password);
-    this.authServ.login(email,password);
+    const password = this.loginform.get('passwordControl').value
+    console.log(email + " " + password);
+    // this.authServ.login(email,password);
+    // Only for Beta Test
+    this.router.navigate(['administrator']);
   }
 
 }

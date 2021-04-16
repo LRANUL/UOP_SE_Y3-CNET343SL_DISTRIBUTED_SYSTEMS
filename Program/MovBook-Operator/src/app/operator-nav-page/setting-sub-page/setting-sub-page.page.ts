@@ -12,16 +12,12 @@ import { OperatorService } from "./../../service/operator.service";
 export class SettingSubPagePage implements OnInit {
   name: string;
   email: string;
-  Type: any;
-  Prefix: any;
-  FirstName: any;
-  LastName: any;
+  Name: string;
   Email: any;
   Phone: any;
-  StreetAddress: any;
-  City: any;
-  PostalCode: any;
+  Address: string;
   RegisteredDateTime: any;
+ 
 
 
   constructor(
@@ -39,16 +35,13 @@ export class SettingSubPagePage implements OnInit {
     this.email = 'john@movbook.com';
     this.operatorService.getProfile(this.email).subscribe(
       (data) => {
-        this.Type = data['0']['Role'];
-        this.Prefix = data['0']['Prefix'];
-        this.FirstName = data['0']['FirstName'];
-        this.LastName = data['0']['LastName'];
-        this.Email = data['0']['Email'];
-        this.Phone = data['0']['Phone'];
-        this.StreetAddress = data['0']['StreetAddress'];
-        this.City = data['0']['City'];
-        this.PostalCode = data['0']['PostalCode'];
-        this.RegisteredDateTime = data['0']['RegisteredDateTime'];
+        console.log(data)
+        var details = data['0']
+        this.Name = details['name']['prefix'] + '. ' + details['name']['firstName'] + ' ' + details['name']['lastName'];
+        this.Email = details['emailAddress'];
+        this.Phone = details['phoneNumber'];
+        this.Address = details['address']['streetAddress'] + ', ' + details['address']['city'] + ', ' + details['address']['postalZipCode']
+        this.RegisteredDateTime = details['registeredDateTime'];
       },
       (error) => {
         console.log(error);
