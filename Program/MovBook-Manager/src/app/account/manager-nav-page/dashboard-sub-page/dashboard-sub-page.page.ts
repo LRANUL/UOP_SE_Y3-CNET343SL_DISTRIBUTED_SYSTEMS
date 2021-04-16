@@ -18,9 +18,15 @@ export class DashboardSubPagePage implements OnInit {
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerLatestMovies' block
   loadingSpinnerLatestMovies: Boolean = false;
 
-  // Declaration | to store list of recent movies
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerDashboard' block
+  loadingSpinnerDashboard: Boolean = false;
+
+  // Declaration - to store list of recent movies
   listOfLatestMovies = new Array();
 
+  // Declaration | Initialization - to store count of movies as 'WaitListed'
+  countOfMoviesWaitListed: Number = 0;
+  
   constructor(
     private managerService: ManagerService,
     private alertController: AlertController,
@@ -93,13 +99,13 @@ export class DashboardSubPagePage implements OnInit {
     this.movieShowingsLines = new Chart(this.movieShowingsLineChart.nativeElement, {
       type: 'line',
       data: {
-        labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        labels: ['Oct 2021', 'Nov 2021', 'Dec 2021', 'Jan 2021', 'Feb 2021', 'Mar 2021', 'Apr 2021'],
         datasets: [{
           label: 'Movie Showings',
-          data: [314,342,330,332,333,329,295],
-          backgroundColor: 'rgb(40, 117, 209)', 
-          borderColor: 'rgb(109, 219, 235)',
-          borderWidth: 1
+          fill: false,
+          data: [0, 0, 0, 0, 0, 1, 46],
+          borderColor: 'rgb(62, 128, 236)',
+          borderWidth: 3
         }]
       },
       options: {
@@ -111,7 +117,7 @@ export class DashboardSubPagePage implements OnInit {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true,
+              beginAtZero: false,
               display: true
             },
             gridLines: {
@@ -142,13 +148,13 @@ export class DashboardSubPagePage implements OnInit {
     this.bookingLines = new Chart(this.bookingLineChart.nativeElement, {
       type: 'line',
       data: {
-        labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        labels: ['Oct 2021', 'Nov 2021', 'Dec 2021', 'Jan 2021', 'Feb 2021', 'Mar 2021', 'Apr 2021'],
         datasets: [{
           label: 'Bookings',
-          data: [314,342,330,332,333,329,295],
-          backgroundColor: 'rgb(62, 128, 236 )', 
-          borderColor: 'rgb(109, 219, 235)',
-          borderWidth: 1
+          fill: false,
+          data: [0, 0, 0, 0, 0, 0, 13],
+          borderColor: 'rgb(62, 128, 236)',
+          borderWidth: 3
         }]
       },
       options: {
@@ -160,7 +166,7 @@ export class DashboardSubPagePage implements OnInit {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true,
+              beginAtZero: false,
               display: true
             },
             gridLines: {
@@ -199,6 +205,12 @@ export class DashboardSubPagePage implements OnInit {
   // Function - Retrieving latest five movies from the database
   retrieveLatestMovies(){
 
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Assigning 'loadingSpinnerLatestMovies' to true (starts loading spinner)
+    this.loadingSpinnerLatestMovies = true;
+
     // Adding new showing experience
     this.managerService.getLatestFiveMovies()
       .subscribe((latestMoviesResponse: any) => {
@@ -208,11 +220,17 @@ export class DashboardSubPagePage implements OnInit {
         // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
         this.loadingSpinnerLatestMovies = false;
 
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
         // Assigning the retrieve recent movies into the 'listOfLatestMovies' array
         this.listOfLatestMovies = latestMoviesResponse.returnedData;
 console.log(this.listOfLatestMovies);
       }
       else if(latestMoviesResponse.message == "No movies available"){
+
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
 
         // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
         this.loadingSpinnerLatestMovies = false;
@@ -220,6 +238,9 @@ console.log(this.listOfLatestMovies);
       }
       else if(latestMoviesResponse.message == "Unable to retrieve latest movies"){
 
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+        
         // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
         this.loadingSpinnerLatestMovies = false;
 
@@ -231,6 +252,10 @@ console.log(this.listOfLatestMovies);
       }
 
     }, (error: ErrorEvent) => {
+
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
+
       // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
       this.loadingSpinnerLatestMovies = false;
       
@@ -242,5 +267,55 @@ console.log(this.listOfLatestMovies);
 
   }
 
+  
+
+  // Function - Retrieving count movies as 'WaitListed'
+  retrieveCountOfMoviesWaitListed(){
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Adding new showing experience
+    this.managerService.getCountOfMoviesByMovieStatus("WaitListed")
+      .subscribe((latestMoviesResponse: any) => {
+
+      if(latestMoviesResponse.message == "Count of movies retrieved"){
+
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning the retrieved count into the 'countOfMoviesWaitListed'
+        this.countOfMoviesWaitListed = latestMoviesResponse.returnedData;
+
+      }
+      else if(latestMoviesResponse.message == "No movies available"){
+
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+      }
+      else if(latestMoviesResponse.message == "Unable to retrieve count of movies"){
+
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to retrieve count of movies, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to retrieve count of movies");
+
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
+      this.loadingSpinnerLatestMovies = false;
+      
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to retrieve count of movies, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to retrieve count of movies");
+    });
+
+  }
 
 }

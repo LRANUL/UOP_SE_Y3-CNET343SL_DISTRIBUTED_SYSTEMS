@@ -63,6 +63,9 @@ router.get("/movie-status/:movieStatus", movieController.retrieveAllMoviesAsStat
 // GET - Retrieve five movie according to the latest date | Route: 'BASE_URL/api/movies/latest-movies/top-five'
 router.get("/latest-movies/top-five", movieController.retrieveLatestMovies);
 
+// GET - Retrieve the count of movies for a particular movie status | Route: 'BASE_URL/api/movies/movie-status/count/:movieStatus'
+router.get("/movie-status/count/:movieStatus", movieController.retrieveMoviesCountByStatus);
+
 // PUT - Update movie status | Route: 'BASE_URL/api/movies/update-movie-status'
 router.put("/update-movie-status", movieController.updateMovieStatus);
 

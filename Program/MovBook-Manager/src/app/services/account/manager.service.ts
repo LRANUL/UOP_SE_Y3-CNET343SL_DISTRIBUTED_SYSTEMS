@@ -70,6 +70,11 @@ export class ManagerService {
     return this.httpClient
       .get(this.BASE_URL + "api/movies/latest-movies/top-five");
   }
+  // GET - Retrieving count of movies under a movie status
+  getCountOfMoviesByMovieStatus(movieStatus: string){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movies/movie-status/count/" + movieStatus);
+  }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
   updateMovieStatus(movieImdbId: string, newMovieStatus: string) {
     // Creating an object to pass the movie details

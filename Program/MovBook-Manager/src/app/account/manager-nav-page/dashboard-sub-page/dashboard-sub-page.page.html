@@ -55,10 +55,17 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
-
               
             </ion-col>
             <ion-col size="4">
+
+              <ion-img src="assets/images/account/manager/dashboard-sub-page/ripple-loader.svg" 
+                style="width: 150px;
+                      position: absolute;
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);" *ngIf="loadingSpinnerDashboard"></ion-img>
+
             </ion-col>
             <ion-col size="4">
               <ion-label style="font-size: 25px;
@@ -147,7 +154,7 @@
 
                   <div style="background-color: #ffffff;
                               border-radius: 10px;
-                              height: auto;">
+                              height: 30.5vh;">
                     <ion-row>
                       <ion-col>
                         <div style="padding-top: 10px;
@@ -163,6 +170,15 @@
                     </ion-row>
                     <ion-row>
                       <ion-col>
+
+                        <!-- Loading Spinner - Retrieving latest movies upon page load -->
+                        <ion-spinner name="dots" style="height: 100px;
+                                                        width: 100px;
+                                                        position: relative;
+                                                        left: 50%;
+                                                        top: 50%;
+                                                        transform: translate(-50%,-50%);
+                                                        margin-top: 20px;" *ngIf="loadingSpinnerLatestMovies"></ion-spinner>
 
                         <ion-slides [options]="latestMoviesSliderConfig">
                           <ion-slide *ngFor="let movie of listOfLatestMovies">
@@ -193,8 +209,6 @@
                             </ion-card>
                           </ion-slide>
                         </ion-slides>
-  
-                        
   
                       </ion-col>
                     </ion-row>
@@ -253,7 +267,9 @@
                                                   left: 50%;
                                                   transform: translate(-50%, -50%);
                                                   border-radius: 5px;">
-                                        <ion-badge color="dark-blue">11</ion-badge>
+                                        <ion-badge color="dark-blue">
+                                          {{countOfMoviesWaitListed}}
+                                        </ion-badge>
                                       </div>
                                     </ion-col>
                                   </ion-row>

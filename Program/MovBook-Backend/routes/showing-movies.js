@@ -13,6 +13,9 @@ router.post("/check-showing-movie-availability", showingMoviesController.checkSh
 // GET - Retrieve showing movie by movieObjectId | Route: 'BASE_URL/api/showing-movies/by-movie-object-id/:movieObjectId'
 router.get("/by-movie-object-id/:movieObjectId", showingMoviesController.getShowingMovieByMovieObjectId); 
 
+// GET - Retrieve number of showing movie slots per day for the previous 6 months | Route: 'BASE_URL/api/showing-movies/showing-movies-by-months'
+router.get("/showing-movies-by-months", showingMoviesController.getShowingMoviesByMonths); 
+
 router.get("/:id", showingMoviesController.getShowingMovieByMovieId); 
 
 router.get("/id/:showingId", showingMoviesController.getShowingMovieByShowingId);

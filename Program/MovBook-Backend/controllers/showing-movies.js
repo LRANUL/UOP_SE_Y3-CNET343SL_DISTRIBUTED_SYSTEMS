@@ -116,6 +116,61 @@ exports.getShowingMovieByMovieObjectId = async (req, res, next) => {
   })
 };
 
+// Function - Retrieve number of showing movie slots per mouth for the previous 6 months using route,
+// Route: 'BASE_URL/api/showing-movies/showing-movies-by-months'
+exports.getShowingMoviesByMonths = async (req, res, next) => {
+
+  let currentDateTime = new Date();
+  currentDateTime.setMonth(currentDateTime.getMonth() - 1);
+  let month = (new Date(currentDateTime).toLocaleString('default', { month: 'short' }));
+  let year = (new Date(currentDateTime).toLocaleString('default', { year: 'numeric' }));
+  let regexPatternString = `([${month}])\\w+[ ]\\d\\d\\,[ ][${year}]+`;
+  let regexPatternObject = new RegExp(regexPatternString);
+
+  // Using mongoose aggregate() functionality to get the showing slots for each month for the past 12 months
+  await showingMovieModel.aggregate(
+    [
+        { "$match": 
+          { 
+            "showingSlots.showingDate": { 
+              $regex: regexPatternObject 
+            }  
+          } 
+        },
+        { "$group": { 
+            "_id": "$_id",
+            "showingDate": { "$first": "$showingSlots.showingDate" }
+        }}
+    ],
+    function(error, returnedData) {
+
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve showing movies",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No showing movies available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Showing movies retrieved",
+          returnedData
+        });
+      }
+    }
+  })
+};
+
 exports.getShowingMovieByMovieId = async (req, res, next) => {
   await showingMovieModel.find({movieObjectId: req.params.id})
       .then((data)=>{
