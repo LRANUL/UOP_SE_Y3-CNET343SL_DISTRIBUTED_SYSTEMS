@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-
 
 @Component({
   selector: 'app-login',
@@ -10,6 +9,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+
   constructor(private authServ:AuthService,public formBuilder: FormBuilder, private router: Router) {
     this.loginform = formBuilder.group({
     emailControl: [
@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
     ],
     passwordControl: [
       "",[
-        Validators.minLength(8),
+        Validators.minLength(6),
         Validators.pattern("[0-9a-z-A-Z@.#*$!?&+-/]*"),
         Validators.required
       ]
@@ -30,10 +30,6 @@ export class LoginPage implements OnInit {
 }
 
   ngOnInit() {
-    this.loginform =new FormGroup({
-      'emailControl':new FormControl(null,{validators:[Validators.required,Validators.minLength(3)]}),
-      'passwordControl':  new FormControl(null,{validators:[Validators.required]})
-    });
   }
 
   get email(){
@@ -47,15 +43,15 @@ export class LoginPage implements OnInit {
 
   loginform: FormGroup;
 
-  login() {
-    if (!this.loginform.valid) {
-      return;
-   }
-  const email = this.loginform.value.email;
-   const password = this.loginform.value.password;
-
-  this.authServ.login(email,password);
 
 
+  onLogin(){
+    if(!this.loginform.valid){ return; }
+    const email = this.loginform.get('emailControl').value;
+    const password =this.loginform.get('passwordControl').value
+    console.log(email + " " +password);
+    this.authServ.login(email,password);
+    this.loginform.reset();
   }
+
 }

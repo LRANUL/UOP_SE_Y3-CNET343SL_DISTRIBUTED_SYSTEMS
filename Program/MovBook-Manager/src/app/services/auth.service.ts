@@ -30,7 +30,7 @@ export class AuthService{
                 this.saveAuthData(token, expirationDate,this.userId,this.userEmail,this.userName);
                 this.authStatusListener.next(true);
                 this.AuthStatus = true;
-                this.router.navigate(['/']);
+                this.router.navigate(['/manager/dashboard']);
               }
               console.log(res);
 
