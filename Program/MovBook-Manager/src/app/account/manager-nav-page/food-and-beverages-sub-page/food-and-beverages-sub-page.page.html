@@ -1,16 +1,18 @@
 <ion-content>
-  <ion-grid style="background-color: #374d58">
+  <ion-grid style="background-color: #374d58;">
     <ion-row>
-      <ion-col style="height: 100%;
-                      width:80%;
-                      border-radius: 25px; 
+      <ion-col style="width:80%;
+                      border-radius: 15px; 
                       background-color: #e8e8e8;
-                      margin: 10px;">
+                      margin: 10px;
+                      min-height: 97%;
+                      position: relative;">
         <ion-row>
           <h1 style="color: #374d58;
                     padding-top: 2%;
-                    padding-left: 2%;">
-            <b>Beverages</b>
+                    padding-left: 2%;
+                    letter-spacing: 2px;">
+            <b>BEVERAGES</b>
           </h1>
           <!-- ADD BEVERAGE BUTTON -->
           <div style="position: absolute;
@@ -27,7 +29,7 @@
             </ion-button>
           </div>
         </ion-row>
-        <ion-row style="height: 700px;
+        <ion-row style="height: 87vh;
                         overflow-y: scroll;">
           <!-- Loading Spinner - Get Beverages -->
           <ion-spinner name="dots" style="height: 100px;
@@ -64,7 +66,7 @@
                 </ion-row>
                 <ion-row>
                   <ion-col size="6">
-                    <ion-button color="warning" expand="block">
+                    <ion-button color="warning" expand="block" (click)="openEditBeverageModal(beverage._id, beverage.name, beverage.imgURL)">
                       <ion-label>
                         <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/edit-icon.png" style="width: 25px;"></ion-img>
                       </ion-label>
@@ -84,7 +86,7 @@
         </ion-row>
       </ion-col>
       <ion-col size="3" style="width:200px;
-                              border-radius: 25px; 
+                              border-radius: 15px; 
                               background-color: #e8e8e8;
                               margin: 10px;">
         <ion-row>

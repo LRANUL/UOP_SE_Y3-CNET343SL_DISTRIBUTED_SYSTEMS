@@ -270,7 +270,6 @@ export class DashboardSubPagePage implements OnInit {
 
   }
 
-  
 
   // Function - Retrieving count movies as 'WaitListed'
   retrieveCountOfMoviesWaitListed(){

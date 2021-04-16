@@ -178,6 +178,15 @@ export class ManagerService {
     const body = { name: name, price: price };
     return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-price", body);
   }
+  // UPDATE - Updating refreshment name and image url
+  updateRefreshmentNameImageURL(refreshmentObjectId: String, refreshmentName: String, refreshmentImageURL: String){
+    const updatedRefreshmentDetails = {
+      refreshmentObjectId: refreshmentObjectId,
+      refreshmentName: refreshmentName,
+      refreshmentImageURL: refreshmentImageURL
+    };
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-name-image-url", updatedRefreshmentDetails);
+  }
   // DELETE - Remove one beverage
   removeBeverage(refreshmentObjectId: String) {
     return this.httpClient.delete(this.BASE_URL + "api/refreshments/remove/" + refreshmentObjectId);

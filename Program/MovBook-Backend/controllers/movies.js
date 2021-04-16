@@ -137,7 +137,7 @@ exports.retrieveMovie = async (req, res, next) => {
 exports.retrieveAllMoviesAsStatus = async (req, res, next) => {
 
   // Getting passed 'movieStatus' from the url
-  let passedMovieStatus = req.params.test;
+  let passedMovieStatus = req.params.movieStatus;
 
   // Using mongoose find() functionality to get the movies for the passed movie status
   await movieModel.find({ movieStatus: passedMovieStatus }, (error, returnedData) => {

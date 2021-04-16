@@ -315,7 +315,7 @@ export class ViewShowingModalPage implements OnInit {
       .subscribe((showingMovieResponse: any) => {
 
         if(showingMovieResponse.message == "Showing movie retrieved"){
-
+          console.log(showingMovieResponse.returnedData);
           // Returning returned data as a resolved promise
           resolve(showingMovieResponse.returnedData);
 

@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FoodAndBeveragesSubPagePage } from './food-and-beverages-sub-page.page';
+import { UpdateBeverageModalPage } from './update-beverage-modal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: FoodAndBeveragesSubPagePage
+    component: UpdateBeverageModalPage
   }
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FoodAndBeveragesSubPagePageRoutingModule {}
+export class UpdateBeverageModalPageRoutingModule {}
