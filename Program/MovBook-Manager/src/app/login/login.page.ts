@@ -66,7 +66,7 @@ export class LoginPage implements OnInit {
     // this.authServ.login(email,password);
     this.loginform.reset();
      // Only for Beta Test
-     this.router.navigate(['manager']);
+     this.router.navigate(['manager/dashboard']);
   }
 
 
