@@ -89,13 +89,14 @@ export class LocationAndTimeSubPagePage implements OnInit {
     childrenTicketFeeLKR: ''
   }
 
-  movie2DArray = new Array();
-  movie3DArray = new Array();
-  movieDolbyArray = new Array();
+  movie2DArray = [];
+  movie3DArray = [];
+  movieDolbyArray = [];
 
-  movieExperienceSessionArray = new Array();
+ // movieExperienceSessionArray = new Array();
 
   moviehall;
+  minDate;
 
   routedID;
 
@@ -104,6 +105,12 @@ export class LocationAndTimeSubPagePage implements OnInit {
     const now = Date.now();
     const myFormattedDate = this.pipe.transform(now, "mediumDate");
     this.date = myFormattedDate;
+
+    let month = (new Date(this.date).toLocaleString('default', { month: '2-digit' }));
+    let day = (new Date(this.date).toLocaleString('default', { day: '2-digit' }));
+    let year = (new Date(this.date).toLocaleString('default', { year: 'numeric' }));
+    this.minDate = year + "-" + month + "-" + day;
+    console.log(this.minDate);
 
     this.getListOfLocations();
     this.getListOfExperience();
@@ -129,12 +136,13 @@ export class LocationAndTimeSubPagePage implements OnInit {
       this.movieDetails = movie;
     })
   }
-
+  availableCheck;
   showingExperience;
   experienceCheck2D = false;
   experienceCheck3D = false;
   experienceCheckDolby = false;
   experienceCheckOther = false;
+
   getshowingmoviedetails(id) {
     this.experienceCheck2D = false;
     this.experienceCheck3D = false;
@@ -214,6 +222,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
             }
             else if(this.showingExperience == "Dolby ATMOS")
             {
+              console.log(counter)
           this.movieSession = {
             slotObjectId: moviedetail[counter].showingSlots[counter1]._id,
             showingDate: moviedetail[counter].showingSlots[counter1].showingDate,
@@ -228,6 +237,17 @@ export class LocationAndTimeSubPagePage implements OnInit {
             }
         }
       }
+    }
+    let movie2DArrayDetais = this.movie2DArray.length;
+    let movie3DArrayDetais = this.movie3DArray.length;
+    let movieDolbyArrayDetais = this.movieDolbyArray.length;
+    console.log(this.movieDolbyArray.length)
+    if(movie2DArrayDetais==0 && movie3DArrayDetais == 0 && movieDolbyArrayDetais ==0)
+    {
+      this.availableCheck = false
+    }else
+    {
+      this.availableCheck = true
     }
     });
   }
@@ -251,7 +271,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
     this.customerService. getExperience().subscribe((experienceList: CinemaExperience)=>
     {
       this.cinemaExperienceList = experienceList;
-        let value = Object.keys(experienceList[0].description)
+        let value = Object.keys(experienceList)
         let length = value.length;
         let counter = 0;
       for(counter; counter < length; counter++)
@@ -295,7 +315,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
     console.log(this.location);
     if(this.location == "All")
     {
-      this.getshowingmoviedetails(this.routedID);
+      this.getTime();
     }else
     {
       this.experienceCheck2D = false;
@@ -336,9 +356,11 @@ export class LocationAndTimeSubPagePage implements OnInit {
         this.movieLocationArray.push(this.movieLocation);
          for(counter1; counter1 < length1; counter1++)
           {
-            this.showingExperience = moviedetail[counter].showingSlots[counter1].showingExperience;
+            // the movie location error is here
+            let showingExperience = moviedetail[counter].showingSlots[counter1].showingExperience;
             let showingDate = moviedetail[counter].showingSlots[counter1].showingDate
-            if(this.showingExperience == "2D" && showingDate == this.date)
+            let updateddate = this.pipe.transform(this.date, "mediumDate");
+            if(showingExperience == "2D" && showingDate == updateddate)
             {
           console.log(location);
           this.movieSession = {
@@ -353,7 +375,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
           console.log(this.movieSession)
           this.experienceCheck2D = true
           this.movie2DArray.push(this.movieSession);
-          } else if(this.showingExperience == "3D" && showingDate == this.date)
+          } else if(showingExperience == "3D" && showingDate == updateddate)
           {
         console.log(location);
         this.movieSession = {
@@ -368,7 +390,7 @@ export class LocationAndTimeSubPagePage implements OnInit {
         console.log(this.movieSession)
         this.experienceCheck3D = true
         this.movie3DArray.push(this.movieSession);
-        }else if(this.showingExperience == "Dolby ATMOS" && showingDate == this.date)
+        }else if(showingExperience == "Dolby ATMOS" && showingDate == updateddate)
         {
         console.log(location);
          this.movieSession = {
@@ -387,7 +409,18 @@ export class LocationAndTimeSubPagePage implements OnInit {
        }
       }
     }
-    })
+    let movie2DArrayDetais = this.movie2DArray.length;
+    let movie3DArrayDetais = this.movie3DArray.length;
+    let movieDolbyArrayDetais = this.movieDolbyArray.length;
+    console.log(this.movieDolbyArray.length)
+    if(movie2DArrayDetais==0 && movie3DArrayDetais == 0 && movieDolbyArrayDetais ==0)
+    {
+      this.availableCheck = false
+    }else
+    {
+      this.availableCheck = true
+    }
+    });
    }
   }
 
@@ -479,13 +512,24 @@ export class LocationAndTimeSubPagePage implements OnInit {
         }
       }
     }
+    let movie2DArrayDetais = this.movie2DArray.length;
+    let movie3DArrayDetais = this.movie3DArray.length;
+    let movieDolbyArrayDetais = this.movieDolbyArray.length;
+    console.log(this.movieDolbyArray.length)
+    if(movie2DArrayDetais==0 && movie3DArrayDetais == 0 && movieDolbyArrayDetais ==0)
+    {
+      this.availableCheck = false
+    }else
+    {
+      this.availableCheck = true
+    }
     });
   }
 
   getExperience() {
     if(this.experience == "All")
     {
-      this.getshowingmoviedetails(this.routedID);
+      this.getTime();
     }else
     {
       this.experienceCheck2D = false;
@@ -522,7 +566,8 @@ export class LocationAndTimeSubPagePage implements OnInit {
           {
          let experience = moviedetail[counter].showingSlots[counter1].showingExperience;
          let showingDate =  moviedetail[counter].showingSlots[counter1].showingDate;
-         if(experience == this.experience && showingDate == this.date)
+         let updated =  this.pipe.transform(this.date, "mediumDate");
+         if(experience == this.experience && showingDate == updated)
          {
           this.showingExperience = moviedetail[counter].showingSlots[counter1].showingExperience;
           if(this.showingExperience == "2D")
@@ -580,7 +625,18 @@ export class LocationAndTimeSubPagePage implements OnInit {
          }
        }
       }
-    })
+      let movie2DArrayDetais = this.movie2DArray.length;
+      let movie3DArrayDetais = this.movie3DArray.length;
+      let movieDolbyArrayDetais = this.movieDolbyArray.length;
+      console.log(this.movieDolbyArray.length)
+      if(movie2DArrayDetais==0 && movie3DArrayDetais == 0 && movieDolbyArrayDetais ==0)
+      {
+        this.availableCheck = false
+      }else
+      {
+        this.availableCheck = true
+      }
+    });
    }
  }
 }
