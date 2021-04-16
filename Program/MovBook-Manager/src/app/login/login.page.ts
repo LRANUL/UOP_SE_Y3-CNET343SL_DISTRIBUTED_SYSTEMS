@@ -10,26 +10,42 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private authServ:AuthService,public formBuilder: FormBuilder, private router: Router) {
+  // Declaration | Initialization - Handling visibility of splash screen content
+  splashContent: Boolean = true;
+
+  // Declaration | Initialization - Handling visibility of login screen content
+  loginContent: Boolean = false;
+
+  constructor(
+    private authServ:AuthService,
+    public formBuilder: FormBuilder, 
+    private router: Router
+  ) {
     this.loginform = formBuilder.group({
     emailControl: [
-      "",[
+      "",
+      [
         Validators.minLength(4),
         Validators.pattern("[0-9a-z-A-Z@.]*"),
         Validators.required
-      ]
+      ] 
     ],
     passwordControl: [
-      "",[
+      "",
+      [
         Validators.minLength(6),
         Validators.pattern("[0-9a-z-A-Z@.#*$!?&+-/]*"),
         Validators.required
       ]
-    ]
-  });
-}
+    ]});
+  }
 
   ngOnInit() {
+    // Setting timer for the splash screen
+    setTimeout(() => {
+      this.splashContent = false;
+      this.loginContent = true;
+    }, 3000);
   }
 
   get email(){
@@ -40,10 +56,7 @@ export class LoginPage implements OnInit {
     return this.loginform.get('passwordControl');
   }
 
-
   loginform: FormGroup;
-
-
 
   onLogin(){
     if(!this.loginform.valid){ return; }
@@ -53,5 +66,6 @@ export class LoginPage implements OnInit {
     this.authServ.login(email,password);
     this.loginform.reset();
   }
+
 
 }

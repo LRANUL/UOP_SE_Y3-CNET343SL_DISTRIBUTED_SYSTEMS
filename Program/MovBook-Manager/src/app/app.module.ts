@@ -63,9 +63,15 @@ import { UpdateBeverageModalPageModule } from './account/manager-nav-page/food-a
       UpdateBeverageModalPageModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-
+    { 
+      provide: HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true
+    },
+    { 
+      provide: RouteReuseStrategy, 
+      useClass: IonicRouteStrategy 
+    }
   ],
   bootstrap: [AppComponent]
 })
