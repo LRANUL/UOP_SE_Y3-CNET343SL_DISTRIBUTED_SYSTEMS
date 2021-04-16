@@ -18,7 +18,7 @@
             </ion-col>
             <ion-col>
               <ion-item>
-                 <ion-datetime displayFormat="MMM/DD/YYYY" placeholder="Today: {{date}}" (ionChange)="getTime()" [(ngModel)]="date"></ion-datetime>
+                 <ion-datetime displayFormat="MMM/DD/YYYY" placeholder="Today: {{date}}" min="{{minDate}}" (ionChange)="getTime()" [(ngModel)]="date"></ion-datetime>
               </ion-item>
             </ion-col>
             <ion-col>
@@ -43,7 +43,7 @@
                 </ion-header>
               </ion-col>
               <ion-col>
-                <div>
+                <div *ngIf="availableCheck">
                   <div *ngFor=" let location of movieLocationArray">
                   <ion-header>
                     <ion-card-title>Cinema Location: {{location.cinemaLocationName}} </ion-card-title>
@@ -106,7 +106,7 @@
                           <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: 2D</ion-card-subtitle>
                         </ion-col>
                         <ion-col size-md="1">
-                          <ion-buttons tooltip="{{description2D}}" positionV="bottom" arrow>
+                          <ion-buttons tooltip="description2D" positionV="bottom" arrow>
                             <ion-icon name="help-circle-outline" style="font-size: large;"></ion-icon>
                           </ion-buttons>
                         </ion-col>

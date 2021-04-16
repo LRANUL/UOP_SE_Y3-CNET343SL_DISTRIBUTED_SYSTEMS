@@ -13,7 +13,11 @@ import { PasswordChangeComponentComponent } from './password-change-component/pa
 })
 export class ProfileSubPagePage implements OnInit {
 
-  constructor( private modalctrl: ModalController, private customerService: CustomerService) { }
+  constructor( private modalctrl: ModalController, private customerService: CustomerService) {
+    this.customerService.listen().subscribe((data: any) =>{
+      this.user = data;
+    })
+   }
 
   public users : Observable<profile[]>;
 

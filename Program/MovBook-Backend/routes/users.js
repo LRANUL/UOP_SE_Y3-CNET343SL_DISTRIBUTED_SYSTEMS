@@ -172,7 +172,7 @@ router.post("/operator-login",(req,res,next)=>{
       if(!user){
         return res.status(401).json({message:"Unregisterd Email!"}); 
       }
-      if(user.type != "Operator"){
+      if(!user.type == "Operator"){
         return res.status(401).json({message:"user type mismatch"}); 
       }else{
         fetchedUSer = user;
@@ -236,7 +236,7 @@ router.post("/forgotPassword",(req , res, next)=>{
       const email = req.body.email;
       
       
-      users.findOne({email:email})
+      Users.findOne({email:email})
         .then(result =>{
           if(!result){
            return res.status(404).json({message:"invalid email"});
@@ -257,6 +257,7 @@ router.post("/forgotPassword",(req , res, next)=>{
               
               Users.updateOne({email: email}, {passwordResetToken:resetToken,passwordTokenExpitation:tokenExiration})
                 .then((data) => {
+                    
                         res.status(201).json({message:"password token updated"});
                     })
             })
