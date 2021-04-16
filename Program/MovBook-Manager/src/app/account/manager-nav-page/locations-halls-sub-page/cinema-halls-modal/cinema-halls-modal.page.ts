@@ -20,6 +20,9 @@ export class CinemaHallsModalPage implements OnInit {
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerCinemaHalls' block
   loadingSpinnerCinemaHalls: Boolean = false;
 
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerHallRemove' block
+  loadingSpinnerHallRemove: Boolean = false;
+
   // Declaration - stores the initially loaded and user selected cinema hall object Id
   activeCinemaHallObjectId;
 
@@ -209,6 +212,76 @@ export class CinemaHallsModalPage implements OnInit {
       
     }
     
+  }
+
+  // Confirm Box Implementation - Remove cinema hall
+  async confirmBoxRemoveHall (title: string, content: string, cinemaHallObjectId: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log("Confirm Box: Request denied");
+          }
+        },
+        {
+          text: 'Continue',
+          handler: () => {
+            console.log("Confirm Box: Request accepted");
+
+            // Edit cinema hall details
+            this.removeCinemaHall(cinemaHallObjectId);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // Function - Remove cinema hall from the database
+  removeCinemaHall(cinemaHallObjectId){
+
+    // Assigning 'loadingSpinnerHallRemove' to true (starts loading spinner)
+    this.loadingSpinnerHallRemove = true;
+
+    // Adding new showing experience
+    this.managerService.removeCinemaHall(cinemaHallObjectId)
+      .subscribe((cinemaHallRemoveResponse: any) => {
+
+      if(cinemaHallRemoveResponse.message == "Count of movies retrieved"){
+
+        // Assigning 'loadingSpinnerHallRemove' to false (stops loading spinner)
+        this.loadingSpinnerHallRemove = false;
+
+        // Showing success message box to the user
+        this.alertNotice("Removed", "Cinema hall has been successfully removed.");
+
+      }
+      else if(cinemaHallRemoveResponse.message == "Unable to retrieve count of movies"){
+
+        // Assigning 'loadingSpinnerHallRemove' to false (stops loading spinner)
+        this.loadingSpinnerHallRemove = false;
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to remove cinema hall, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to remove cinema hall");
+
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerHallRemove' to false (stops loading spinner)
+      this.loadingSpinnerHallRemove = false;
+      
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to remove cinema hall, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to remove cinema hall");
+    });
+
   }
 
 

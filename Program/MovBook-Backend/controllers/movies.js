@@ -206,9 +206,9 @@ exports.retrieveLatestMovies = async (req, res, next) => {
 // Function - Retrieving the count of movies for a particular movie status using route,
 // 'BASE_URL/api/movies/count/:movieStatus'
 exports.retrieveMoviesCountByStatus = async (req, res, next) => {
-  console.log(req.body);
+
   // Getting passed movie status
-  let passedMovieStatus = req.body.movieStatus;
+  let passedMovieStatus = req.params.movieStatus;
 
   // Using mongoose find() functionality to get the count of movies under a movie status
   await movieModel.find({ "movieStatus": passedMovieStatus }).count().exec((error, returnedData) => {

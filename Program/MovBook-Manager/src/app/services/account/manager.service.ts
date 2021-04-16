@@ -131,6 +131,10 @@ export class ManagerService {
   updateCinemaHallDetails(updatedCinemaHallDetails: any) {
     return this.httpClient.put(this.BASE_URL + "api/cinema-halls/update-cinema-hall", updatedCinemaHallDetails);
   }
+  // DELETE - Remove cinema hall details from the database by sending cinemaHallObjectId to the server-side
+  removeCinemaHall(cinemaHallObjectId: string){
+    return this.httpClient.delete(this.BASE_URL + "api/cinema-halls/remove-hall/" + cinemaHallObjectId);
+  }
 
   /**
    * Cinema Location

@@ -27,6 +27,13 @@
       id="closeCinemaHallsButton">
       <ion-icon name="close-outline" style="font-size: 30px;"></ion-icon>
     </ion-button>
+    <!-- Loading Spinner - Cinema Hall Remove -->
+    <ion-spinner name="crescent" style="height: 50px;
+                                        width: 50px;
+                                        position: absolute;
+                                        left: 40%;
+                                        top: 50%;
+                                        transform: translate(-60%, -50%);" *ngIf="loadingSpinnerHallRemove"></ion-spinner>
   </ion-toolbar>
 </ion-header>
 
@@ -188,7 +195,11 @@
                     position: absolute;
                     right: 15px;
                     top: 24%;">
-          <ion-button shape="block" color="warning" style="--border-radius: 5px;">
+          <ion-button 
+            shape="block" 
+            color="warning" 
+            style="--border-radius: 5px;"
+            (click)="confirmBoxRemoveHall('Confirmation', 'This cinema hall will be removed, no new movie showings can be created for this cinema hall. Do you want to continue?', activeCinemaHallObjectId)">
             <ion-label>
               <ion-img src="assets/images/account/manager/locations-halls-sub-page/remove-icon.png" style="width: 25px;
                                                                                                           margin-left: 0px;"></ion-img>

@@ -46,6 +46,9 @@ export class DashboardSubPagePage implements OnInit {
 
     // Retrieving recent five movies upon page render
     this.retrieveLatestMovies();
+
+    // Retrieving count of movies assigned as 'WaitListed'
+    this.retrieveCountOfMoviesWaitListed();
     
   }
 
@@ -225,7 +228,7 @@ export class DashboardSubPagePage implements OnInit {
 
         // Assigning the retrieve recent movies into the 'listOfLatestMovies' array
         this.listOfLatestMovies = latestMoviesResponse.returnedData;
-console.log(this.listOfLatestMovies);
+
       }
       else if(latestMoviesResponse.message == "No movies available"){
 
