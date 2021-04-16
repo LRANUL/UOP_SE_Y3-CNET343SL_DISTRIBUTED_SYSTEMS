@@ -24,7 +24,7 @@ export class LoginPage implements OnInit {
 
     // this.authServ.login(email,password);
     // Only for Beta Test
-    this.router.navigate(['operator']);
+    this.router.navigate(['manager']);
 
   }
 }
