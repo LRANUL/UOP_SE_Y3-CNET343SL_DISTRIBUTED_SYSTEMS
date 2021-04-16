@@ -86,6 +86,7 @@ export class EditProfileComponentComponent implements OnInit {
   userupdate()
   {
     this.customerService.updateuser(this.profile, this.temoryid);
+    this.customerService.filter(this.profile)
     this.modalcntrl.dismiss();
   }
 }

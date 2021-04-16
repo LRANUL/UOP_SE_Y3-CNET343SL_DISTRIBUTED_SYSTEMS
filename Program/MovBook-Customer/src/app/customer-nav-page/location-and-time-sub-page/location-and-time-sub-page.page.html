@@ -43,7 +43,7 @@
                 </ion-header>
               </ion-col>
               <ion-col>
-                <div>
+                <div *ngIf="availableCheck">
                   <div *ngFor=" let location of movieLocationArray">
                   <ion-header>
                     <ion-card-title>Cinema Location: {{location.cinemaLocationName}} </ion-card-title>
