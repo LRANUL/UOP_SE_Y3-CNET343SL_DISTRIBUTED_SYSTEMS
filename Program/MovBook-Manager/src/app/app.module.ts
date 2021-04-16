@@ -33,6 +33,7 @@ import { AddBeverageModalPageModule } from './account/manager-nav-page/food-and-
 import { EditLocationModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/edit-location-modal/edit-location-modal.module';
 import { ViewShowingModalPageModule } from './account/manager-nav-page/movie-catalog-sub-page/view-showing-modal/view-showing-modal.module';
 import { UpdateBeverageModalPageModule } from './account/manager-nav-page/food-and-beverages-sub-page/update-beverage-modal/update-beverage-modal.module';
+import { ErrorInterceptor } from './services/account/error-interceptor';
 
 
 @NgModule({
@@ -63,14 +64,16 @@ import { UpdateBeverageModalPageModule } from './account/manager-nav-page/food-a
       UpdateBeverageModalPageModule
   ],
   providers: [
-    { 
+    {
       provide: HTTP_INTERCEPTORS,
       useClass:AuthInterceptor,
       multi:true
     },
-    { 
-      provide: RouteReuseStrategy, 
-      useClass: IonicRouteStrategy 
+    {provide: HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
+
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
     }
   ],
   bootstrap: [AppComponent]
