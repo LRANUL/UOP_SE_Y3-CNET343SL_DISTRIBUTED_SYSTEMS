@@ -190,8 +190,8 @@
                                             background-color: #159292;">
                                   <div style="width: 100%; 
                                               border-radius: 5px;">
-                                    <ion-img src="{{ movie?.posterLink }}" style="max-width:auto;
-                                                                                  max-height:22vh;"></ion-img>
+                                    <img src="{{ movie?.posterLink }}" style="max-width:auto;
+                                                                                  max-height:22vh;" />
                                   </div>
                                 </div>
                                 <ion-button expand="block" 
@@ -306,7 +306,7 @@
                                                   border-radius: 5px;">
                                         <ion-badge color="dark-blue" style="font-size: 20px;
                                                                             font-weight: 200;">
-                                          11
+                                          {{countOfMoviesWaitListed + countOfMoviesUpcoming + countOfMoviesNowShowing}}
                                         </ion-badge>
                                       </div>
                                     </ion-col>
@@ -345,7 +345,7 @@
                                                   border-radius: 5px;">
                                         <ion-badge color="dark-blue" style="font-size: 20px;
                                                                             font-weight: 200;">
-                                          11
+                                          {{countOfMoviesUpcoming}}
                                         </ion-badge>
                                       </div>
                                     </ion-col>
@@ -373,7 +373,7 @@
                                                   border-radius: 5px;">
                                         <ion-badge color="dark-blue" style="font-size: 20px;
                                                                             font-weight: 200;">
-                                          11
+                                          {{countOfMoviesNowShowing}}
                                         </ion-badge>
                                       </div>
                                     </ion-col>
@@ -410,7 +410,7 @@
                                                   border-radius: 5px;">
                                         <ion-badge color="dark-blue" style="font-size: 20px;
                                                                             font-weight: 200;">
-                                          11
+                                          {{countOfCinemaHalls}}
                                         </ion-badge>
                                       </div>
                                     </ion-col>
@@ -438,7 +438,7 @@
                                                   border-radius: 5px;">
                                         <ion-badge color="dark-blue" style="font-size: 20px;
                                                                             font-weight: 200;">
-                                          11
+                                          {{countOfCinemaLocations}}
                                         </ion-badge>
                                       </div>
                                     </ion-col>
@@ -507,7 +507,7 @@
                                                 border-radius: 5px;">
                                           <ion-badge color="dark-blue" style="font-size: 20px;
                                                                               font-weight: 200;">
-                                            11
+                                            {{countOfRefreshments}}
                                           </ion-badge>
                                         </div>
                                       </ion-col>
@@ -560,7 +560,7 @@
                                                       display: flex;
                                                       align-items: center;
                                                       justify-content: center;">
-                                          Active Accounts
+                                          Enabled Accounts
                                         </ion-label>
                                       </div>
                                     </ion-col>
@@ -572,7 +572,7 @@
                                           border-radius: 5px;">
                                         <ion-badge color="dark-blue" style="font-size: 20px;
                                                                             font-weight: 200;">
-                                          11
+                                          {{countOfEnabledOperatorAccounts}}
                                         </ion-badge>
                                       </div>
                                     </ion-col>
@@ -588,7 +588,7 @@
                                                       display: flex;
                                                       align-items: center;
                                                       justify-content: center;">
-                                          Inactive Accounts
+                                          Disabled Accounts
                                         </ion-label>
                                       </div>
                                     </ion-col>
@@ -600,7 +600,7 @@
                                           border-radius: 5px;">
                                         <ion-badge color="dark-blue" style="font-size: 20px;
                                                                             font-weight: 200;">
-                                          11
+                                          {{countOfDisabledOperatorAccounts}}
                                         </ion-badge>
                                       </div>
                                     </ion-col>

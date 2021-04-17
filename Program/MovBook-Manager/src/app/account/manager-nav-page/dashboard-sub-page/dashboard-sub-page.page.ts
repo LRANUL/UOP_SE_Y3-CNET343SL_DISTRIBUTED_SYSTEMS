@@ -26,6 +26,27 @@ export class DashboardSubPagePage implements OnInit {
 
   // Declaration | Initialization - to store count of movies as 'WaitListed'
   countOfMoviesWaitListed: Number = 0;
+
+  // Declaration | Initialization - to store count of movies as 'countOfMoviesUpcoming'
+  countOfMoviesUpcoming: Number = 0;
+
+  // Declaration | Initialization - to store count of movies as 'countOfMoviesNowShowing'
+  countOfMoviesNowShowing: Number = 0;
+  
+  // Declaration | Initialization - to store count of cinema halls
+  countOfCinemaHalls: Number = 0;
+
+  // Declaration | Initialization - to store count of cinema locations
+  countOfCinemaLocations: Number = 0;
+
+  // Declaration | Initialization - to store count of refreshments
+  countOfRefreshments: Number = 0;
+
+  // Declaration | Initialization - to store count of enabled operator accounts
+  countOfEnabledOperatorAccounts: Number = 0;
+
+  // Declaration | Initialization - to store count of disabled operator accounts
+  countOfDisabledOperatorAccounts: Number = 0;
   
   constructor(
     private managerService: ManagerService,
@@ -47,9 +68,30 @@ export class DashboardSubPagePage implements OnInit {
     // Retrieving recent five movies upon page render
     this.retrieveLatestMovies();
 
-    // Retrieving count of movies assigned as 'WaitListed'
+    // Retrieving count of movies assigned as 'WaitListed' upon page render
     this.retrieveCountOfMoviesWaitListed();
     
+    // Retrieving count of movies assigned as 'Upcoming' upon page render
+    this.retrieveCountOfMoviesNowShowing();
+
+    // Retrieving count of movies assigned as 'NowShowing' upon page render
+    this.retrieveCountOfCinemaLocations();
+
+    // Retrieving count of cinema halls upon page render
+    this.retrieveCountOfCinemaHalls();
+
+    // Retrieving count of cinema locations upon page render
+    this.retrieveCountOfMoviesUpcoming();
+
+    // Retrieving count of refreshments (beverages) upon page render
+    this.retrieveCountOfRefreshments();
+
+    // Retrieving count of enabled operator accounts upon page render
+    this.retrieveCountOfEnabledAccounts();
+
+    // Retrieving count of disabled operator accounts upon page render
+    this.retrieveCountOfDisabledAccounts();
+
   }
 
   
@@ -247,9 +289,6 @@ export class DashboardSubPagePage implements OnInit {
         // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
         this.loadingSpinnerLatestMovies = false;
 
-        // Showing error message box to the user
-        this.alertNotice("ERROR", "Unable to retrieve latest movies, apologies for the inconvenience. Please contact administrator.");
-
         console.log("Unable to retrieve latest movies");
 
       }
@@ -262,16 +301,13 @@ export class DashboardSubPagePage implements OnInit {
       // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
       this.loadingSpinnerLatestMovies = false;
       
-      // Showing error message box to the user
-      this.alertNotice("ERROR", "Unable to retrieve latest movies, apologies for the inconvenience. Please contact administrator.");
-
       console.log("Unable to retrieve latest movies");
     });
 
   }
 
 
-  // Function - Retrieving count movies as 'WaitListed'
+  // Function - Retrieving count of movies as 'WaitListed'
   retrieveCountOfMoviesWaitListed(){
 
     // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
@@ -279,45 +315,313 @@ export class DashboardSubPagePage implements OnInit {
 
     // Adding new showing experience
     this.managerService.getCountOfMoviesByMovieStatus("WaitListed")
-      .subscribe((latestMoviesResponse: any) => {
+      .subscribe((waitListedMoviesResponse: any) => {
 
-      if(latestMoviesResponse.message == "Count of movies retrieved"){
-
+      if(waitListedMoviesResponse.message == "Count of movies retrieved"){
         // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
         this.loadingSpinnerDashboard = false;
 
-        // Assigning the retrieved count into the 'countOfMoviesWaitListed'
-        this.countOfMoviesWaitListed = latestMoviesResponse.returnedData;
-
+        // Assigning the retrieved count into 'countOfMoviesWaitListed'
+        this.countOfMoviesWaitListed = waitListedMoviesResponse.returnedData;
       }
-      else if(latestMoviesResponse.message == "No movies available"){
-
+      else if(waitListedMoviesResponse.message == "No movies available"){
         // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
         this.loadingSpinnerDashboard = false;
 
+        console.log("No wait listed movies available");
       }
-      else if(latestMoviesResponse.message == "Unable to retrieve count of movies"){
-
+      else if(waitListedMoviesResponse.message == "Unable to retrieve count of movies"){
         // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
         this.loadingSpinnerDashboard = false;
 
-        // Showing error message box to the user
-        this.alertNotice("ERROR", "Unable to retrieve count of movies, apologies for the inconvenience. Please contact administrator.");
+        console.log("Unable to retrieve count of wait listed movies");
+      }
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
+      this.loadingSpinnerLatestMovies = false;
 
-        console.log("Unable to retrieve count of movies");
+      console.log("Unable to retrieve count of wait listed movies");
+    });
 
+  }
+
+  
+  // Function - Retrieving count of movies as 'Upcoming'
+  retrieveCountOfMoviesUpcoming(){
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Adding new showing experience
+    this.managerService.getCountOfMoviesByMovieStatus("Upcoming")
+      .subscribe((upcomingMoviesResponse: any) => {
+
+      if(upcomingMoviesResponse.message == "Count of movies retrieved"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning the retrieved count into 'countOfMoviesWaitListed'
+        this.countOfMoviesUpcoming = upcomingMoviesResponse.returnedData;
+      }
+      else if(upcomingMoviesResponse.message == "No movies available"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("No wait listed movies available");
+      }
+      else if(upcomingMoviesResponse.message == "Unable to retrieve count of movies"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("Unable to retrieve count of upcoming movies");
+      }
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
+      this.loadingSpinnerLatestMovies = false;
+
+      console.log("Unable to retrieve count of upcoming movies");
+    });
+
+  }
+
+
+  // Function - Retrieving count of movies as 'NowShowing'
+  retrieveCountOfMoviesNowShowing(){
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Adding new showing experience
+    this.managerService.getCountOfMoviesByMovieStatus("WaitListed")
+      .subscribe((nowShowingMoviesResponse: any) => {
+
+      if(nowShowingMoviesResponse.message == "Count of movies retrieved"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning the retrieved count into 'countOfMoviesWaitListed'
+        this.countOfMoviesNowShowing = nowShowingMoviesResponse.returnedData;
+      }
+      else if(nowShowingMoviesResponse.message == "No movies available"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("No wait listed movies available");
+      }
+      else if(nowShowingMoviesResponse.message == "Unable to retrieve count of movies"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("Unable to retrieve count of now showing movies");
+      }
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
+      this.loadingSpinnerLatestMovies = false;
+
+      console.log("Unable to retrieve count of now showing movies");
+    });
+
+  }
+
+
+  // Function - Retrieving count of cinema halls
+  retrieveCountOfCinemaHalls(){
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Retrieve count of cinema halls from the database
+    this.managerService.retrieveCountOfCinemaHalls()
+      .subscribe((cinemaHallsCountResponse: any) => {
+
+      if(cinemaHallsCountResponse.message == "Count of cinema halls retrieved"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning the retrieved count into 'countOfCinemaHalls'
+        this.countOfCinemaHalls = cinemaHallsCountResponse.returnedData;
+      }
+      else if(cinemaHallsCountResponse.message == "No cinema halls available"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("No cinema halls available");
+      }
+      else if(cinemaHallsCountResponse.message == "Unable to retrieve count of cinema halls"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("Unable to retrieve count of cinema halls");
       }
 
     }, (error: ErrorEvent) => {
       // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
       this.loadingSpinnerLatestMovies = false;
-      
-      // Showing error message box to the user
-      this.alertNotice("ERROR", "Unable to retrieve count of movies, apologies for the inconvenience. Please contact administrator.");
 
-      console.log("Unable to retrieve count of movies");
+      console.log("Unable to retrieve count of cinema halls: ", error);
     });
 
   }
+
+
+  // Function - Retrieving count of cinema locations
+  retrieveCountOfCinemaLocations(){
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Retrieving the count of cinema locations
+    this.managerService.retrieveCountOfCinemaLocations()
+      .subscribe((cinemaLocationsCountResponse: any) => {
+
+      if(cinemaLocationsCountResponse.message == "Count of cinema locations retrieved"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning the retrieved count into 'countOfCinemaHalls'
+        this.countOfCinemaLocations = cinemaLocationsCountResponse.returnedData;
+      }
+      else if(cinemaLocationsCountResponse.message == "No cinema locations available"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("No cinema locations available");
+      }
+      else if(cinemaLocationsCountResponse.message == "Unable to retrieve count of cinema locations"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("Unable to retrieve count of cinema locations");
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
+      this.loadingSpinnerLatestMovies = false;
+
+      console.log("Unable to retrieve count of cinema locations: ", error);
+    });
+
+  }
+
+
+  // Function - Retrieving count of refreshments
+  retrieveCountOfRefreshments(){
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Retrieving the count of refreshments
+    this.managerService.getCountOfRefreshments()
+      .subscribe((refreshmentsCountResponse: any) => {
+
+      if(refreshmentsCountResponse.message == "Count of refreshments retrieved"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning the retrieved count into 'countOfRefreshments'
+        this.countOfRefreshments = refreshmentsCountResponse.returnedData;
+      }
+      else if(refreshmentsCountResponse.message == "No refreshments available"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("No refreshments available");
+      }
+      else if(refreshmentsCountResponse.message == "Unable to retrieve count of refreshments"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("Unable to retrieve count of refreshments");
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
+      this.loadingSpinnerLatestMovies = false;
+
+      console.log("Unable to retrieve count of refreshments: ", error);
+    });
+
+  }
+
+
+  // Function - Retrieving count of enabled operator accounts
+  retrieveCountOfEnabledAccounts(){
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Retrieving the count of refreshments
+    this.managerService.getCountOfOperatorAccounts("Enabled")
+      .subscribe((accountsCountResponse: any) => {
+
+      if(accountsCountResponse.message == "Count of accounts retrieved"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning the retrieved count into 'countOfEnabledOperatorAccounts'
+        this.countOfEnabledOperatorAccounts = accountsCountResponse.returnedData;
+      }
+      else if(accountsCountResponse.message == "No accounts available"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("No enabled accounts available");
+      }
+      else if(accountsCountResponse.message == "Unable to retrieve count of accounts"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("Unable to retrieve count of enabled accounts");
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
+      this.loadingSpinnerLatestMovies = false;
+
+      console.log("Unable to retrieve count of enabled accounts: ", error);
+    });
+
+  }
+
+
+  // Function - Retrieving count of disabled operator accounts
+  retrieveCountOfDisabledAccounts(){
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Retrieving the count of refreshments
+    this.managerService.getCountOfOperatorAccounts("Disabled")
+      .subscribe((accountsCountResponse: any) => {
+
+      if(accountsCountResponse.message == "Count of accounts retrieved"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning the retrieved count into 'countOfEnabledOperatorAccounts'
+        this.countOfDisabledOperatorAccounts = accountsCountResponse.returnedData;
+      }
+      else if(accountsCountResponse.message == "No accounts available"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("No disabled accounts available");
+      }
+      else if(accountsCountResponse.message == "Unable to retrieve count of accounts"){
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        console.log("Unable to retrieve count of disabled accounts");
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
+      this.loadingSpinnerLatestMovies = false;
+
+      console.log("Unable to retrieve count of disabled accounts: ", error);
+    });
+
+  }
+
 
 }

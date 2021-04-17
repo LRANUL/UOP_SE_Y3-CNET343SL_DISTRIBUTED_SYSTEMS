@@ -48,6 +48,41 @@ router.get('/', (req, res, next) => {
   });
 });
 
+// Get count of operator account for thw particular account status (Enabled or Disabled)
+router.get('/count-operator-accounts/account-status/:AccountStatus', (req, res, next) => {
+  // Extracting the retrieved accountStatus from the URL
+  let passedAccountStatus = req.params.accountStatus;
+  // Using mongoose find() and count() functionalities to get the count of refreshments
+  Operators.find({
+    'accountStatus': passedAccountStatus
+  }).count().exec((error, returnedData) => {
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve count of accounts",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No accounts available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Count of accounts retrieved",
+          returnedData
+        });
+      }
+    }
+  })
+});
+
 // Update Operator Email
 router.put('/update', (req, res, next) => {
   console.log(req.body)

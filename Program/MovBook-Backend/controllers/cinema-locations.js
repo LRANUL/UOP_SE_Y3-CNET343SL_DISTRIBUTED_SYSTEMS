@@ -52,6 +52,39 @@ exports.retrieveListCinemaLocations = async (req, res, next) => {
 
 };
 
+// Function - Retrieving count of cinema location using route, 'BASE_URL/api/cinema-location/count'
+exports.retrieveCinemaLocationsCount = async (req, res, next) => {
+
+  // Using mongoose find() and count() functionalities to get the count of cinema location
+  await cinemaLocationModel.find().count().exec((error, returnedData) => {
+    
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve count of cinema locations",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No cinema locations available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Count of cinema locations retrieved",
+          returnedData
+        });
+      }
+    }
+  })
+};
+
 // Function - Retrieve one cinema location
 exports.retrieveCinemaLocation = (req, res, next) => {
   let id = req.params.cinemaLocationObjectId;

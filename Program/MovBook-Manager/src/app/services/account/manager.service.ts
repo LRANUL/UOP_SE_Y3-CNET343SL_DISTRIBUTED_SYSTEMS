@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 import { CinemaHall } from 'src/app/models/account/manager/cinema-hall';
 import { ShowingExperience } from 'src/app/models/account/manager/showing-experience';
 import { ShowingMovie } from 'src/app/models/account/manager/showing-movie';
-import { ShowingCinemaHallList } from 'src/app/models/account/manager/showing-cinema-hall';
 
 @Injectable({
   providedIn: 'root'
@@ -131,6 +130,10 @@ export class ManagerService {
   updateCinemaHallDetails(updatedCinemaHallDetails: any) {
     return this.httpClient.put(this.BASE_URL + "api/cinema-halls/update-cinema-hall", updatedCinemaHallDetails);
   }
+  // GET - Retrieving count of cinema halls
+  retrieveCountOfCinemaHalls(){
+    return this.httpClient.get(this.BASE_URL + "api/cinema-halls/count/cinema-halls");
+  }
   // DELETE - Remove cinema hall details from the database by sending cinemaHallObjectId to the server-side
   removeCinemaHall(cinemaHallObjectId: string){
     return this.httpClient.delete(this.BASE_URL + "api/cinema-halls/remove-hall/" + cinemaHallObjectId);
@@ -146,6 +149,10 @@ export class ManagerService {
   // GET - Retrieving cinema locations from the server-side
   retrieveCinemaLocations() {
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
+  }
+  // GET - Retrieving count of cinema locations
+  retrieveCountOfCinemaLocations(){
+    return this.httpClient.get(this.BASE_URL + "api/cinema-locations/count");
   }
   // UPDATE - Updating cinema location details
   updateCinemaLocation(cinemaLocationObjectId: String, updatedCinemaLocationDetails: any) {
@@ -167,6 +174,10 @@ export class ManagerService {
   // GET beverages list
   getBeverages() {
     return this.httpClient.get(this.BASE_URL + "api/refreshments");
+  }
+  // GET - Retrieve count of refreshments
+  getCountOfRefreshments(){
+    return this.httpClient.get(this.BASE_URL + "api/refreshments/count");
   }
   // Update beverages quantity
   updateStock(name, quantity) {
@@ -205,6 +216,10 @@ export class ManagerService {
     const lastName = searchOperatorAccountForm.lastName
     console.log(searchOperatorAccountForm)
     return this.httpClient.get(this.BASE_URL + "api/operators/?firstName=" + firstName + '&' + 'lastName=' + lastName + '&' + 'prefix=' + prefix);
+  }
+  // GET - Retrieve count of operator account according account status
+  getCountOfOperatorAccounts(accountStatus: String){
+    return this.httpClient.get(this.BASE_URL + "api/operators/count-operator-accounts/account-status/" + accountStatus);
   }
 
   // Set Operator Account Status

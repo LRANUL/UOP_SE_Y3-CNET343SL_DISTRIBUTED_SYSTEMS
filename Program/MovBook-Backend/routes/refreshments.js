@@ -40,6 +40,37 @@ router.get('', (req, res, next) => {
     })
 });
 
+// Get Count of Refreshments
+router.get('/count', (req, res, next) => {
+  // Using mongoose find() and count() functionalities to get the count of refreshments
+  Refreshments.find().count().exec((error, returnedData) => {
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve count of refreshments",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No refreshments available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Count of refreshments retrieved",
+          returnedData
+        });
+      }
+    }
+  })
+});
+
 // Update Refreshments Stock
 router.put('/update-stock', (req, res, next) => {
   Refreshments.findOneAndUpdate(

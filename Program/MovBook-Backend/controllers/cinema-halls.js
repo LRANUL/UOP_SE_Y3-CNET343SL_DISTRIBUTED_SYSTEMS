@@ -105,7 +105,39 @@ exports.retrieveCinemaHall = async (req, res, next) => {
     })
 };
 
+// Function - Retrieving the count of cinema halls | Route: 'BASE_URL/api/cinema-halls/count/cinema-halls'
+exports.retrieveCinemaHallsCount = async (req, res, next) => {
 
+  // Using mongoose find() and count() functionalities to get the count of cinema halls
+  await cinemaHallModel.find().count().exec((error, returnedData) => {
+    
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve count of cinema halls",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No cinema halls available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Count of cinema halls retrieved",
+          returnedData
+        });
+      }
+    }
+  })
+};
+  
 // Function - Update showing experience using route, 'BASE_URL/api/cinema-halls/update-cinema-hall'
 exports.updateCinemaHallDetails = async (req, res, next) => {
 

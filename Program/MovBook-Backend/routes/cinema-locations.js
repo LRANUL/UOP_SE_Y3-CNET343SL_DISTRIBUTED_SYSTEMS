@@ -10,6 +10,9 @@ router.post("/", cinemaLocationsController.createCinemaLocation);
 // GET - Getting list of cinema hall details | Route: 'BASE_URL/api/cinema-locations'
 router.get("", cinemaLocationsController.retrieveListCinemaLocations);
 
+// GET - Retrieve the count of cinema locations | Route: 'BASE_URL/api/cinema-locations/count'
+router.get("/count", cinemaLocationsController.retrieveCinemaLocationsCount);
+
 // PUT - Updating cinema location details
 router.put("/update", cinemaLocationsController.updateCinemaLocation);
 

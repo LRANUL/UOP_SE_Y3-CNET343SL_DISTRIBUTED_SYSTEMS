@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
+  // Development URL
   MOVBOOK_BACKEND_URL: "http://localhost:5000/"
+  // Production URL
+  //MOVBOOK_BACKEND_URL: "https://movbook-app.herokuapp.com/",
 };
 
 /*
