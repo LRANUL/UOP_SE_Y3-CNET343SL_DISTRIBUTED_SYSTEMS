@@ -392,7 +392,7 @@ export class DashboardSubPagePage implements OnInit {
     this.loadingSpinnerDashboard = true;
 
     // Adding new showing experience
-    this.managerService.getCountOfMoviesByMovieStatus("WaitListed")
+    this.managerService.getCountOfMoviesByMovieStatus("NowShowing")
       .subscribe((nowShowingMoviesResponse: any) => {
 
       if(nowShowingMoviesResponse.message == "Count of movies retrieved"){

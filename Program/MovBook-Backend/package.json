@@ -9,6 +9,7 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.2",
     "bcrypt": "^5.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -16,9 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.4",
     "mongoose-unique-validator": "^2.0.3",
-    "node-fetch": "^2.6.1",
-    "nodemailer": "^6.5.0",
-    "nodemailer-sendgrid-transport": "^0.2.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0",

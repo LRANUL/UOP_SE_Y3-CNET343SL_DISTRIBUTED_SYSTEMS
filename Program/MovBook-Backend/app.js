@@ -24,6 +24,7 @@ const movies = require("./routes/movies");
 const showingExperiences = require("./routes/showing-experiences");
 const showingMovies = require("./routes/showing-movies");
 const showingCinemaHalls = require("./routes/showing-cinema-halls");
+const emailVerifications = require("./routes/email-verifications");
 
 const app = express();
 
@@ -86,5 +87,6 @@ app.use("/api/movies", movies);
 app.use("/api/showing-experiences", showingExperiences);
 app.use("/api/showing-movies", showingMovies);
 app.use("/api/showing-cinema-halls", showingCinemaHalls);
+app.use("/api/email-verifications", emailVerifications);
 
 module.exports = app;
