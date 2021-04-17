@@ -4,7 +4,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 
 const Customers = require("../models/customers");
-const Users = require("../models/users");
+const Users = require("../models/logins");
 const customers = require("../models/customers");
 const nodemailer =require("nodemailer");
 const sendgridTransport =require("nodemailer-sendgrid-transport");
@@ -135,14 +135,14 @@ router.post("/manager-login",(req,res,next)=>{
   let fetchedUSer;
   Users.findOne({ email:req.body.email })
     .then(user =>{
-      console.log(user);
       if(!user){
         return res.status(401).json({message:"Unregisterd Email!"}); 
       }
-      if(user.type != "manager"){
+      if(!user.type == "manager"){
         return res.status(401).json({message:"user type mismatch"}); 
       }else{
         fetchedUSer = user;
+        console.log(fetchedUSer._id + ' ' +'manager Logged in');
         return bcrypt.compare(req.body.password ,user.password);
       }
       
@@ -257,6 +257,7 @@ router.post("/forgotPassword",(req , res, next)=>{
               
               Users.updateOne({email: email}, {passwordResetToken:resetToken,passwordTokenExpitation:tokenExiration})
                 .then((data) => {
+                    
                         res.status(201).json({message:"password token updated"});
                     })
             })

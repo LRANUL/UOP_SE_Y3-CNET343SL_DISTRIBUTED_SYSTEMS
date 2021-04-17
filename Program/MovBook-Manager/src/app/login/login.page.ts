@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private authServ:AuthService,
-    public formBuilder: FormBuilder, 
+    public formBuilder: FormBuilder,
     private router: Router
   ) {
     this.loginform = formBuilder.group({
@@ -28,7 +28,7 @@ export class LoginPage implements OnInit {
         Validators.minLength(4),
         Validators.pattern("[0-9a-z-A-Z@.]*"),
         Validators.required
-      ] 
+      ]
     ],
     passwordControl: [
       "",
