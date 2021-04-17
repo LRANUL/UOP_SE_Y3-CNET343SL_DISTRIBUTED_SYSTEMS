@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, AlertController, PopoverController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
+import { ChangePasswordModalPage } from '../change-password-modal/change-password-modal.page';
 import { VerifyEmailAddressPopoverPage } from '../verify-email-address-popover/verify-email-address-popover.page';
 
 @Component({
@@ -34,10 +35,7 @@ export class UpdateAccountDetailsModalPage implements OnInit {
       addressCity: new FormControl('', Validators.required),
       addressPostalCode: new FormControl('', Validators.required),
       phoneNumber: new FormControl('', Validators.required),
-      emailAddress: new FormControl('', Validators.required),
-      oldPassword: new FormControl('', Validators.required),
-      newPassword: new FormControl('', Validators.required),
-      confirmNewPassword: new FormControl('', Validators.required)
+      emailAddress: new FormControl('', Validators.required)
     });
 
   }
@@ -68,6 +66,19 @@ export class UpdateAccountDetailsModalPage implements OnInit {
       }
     }
   }
+
+  // Function - Implementation for opening the 'Change Password' modal
+  async openChangePasswordModal(){
+    this.closeUpdateAccountDetailsModal();
+    const addNewShowingExperienceModal = await this.modalController.create({
+      component: ChangePasswordModalPage,
+      cssClass: 'add-new-showing-experience-modal',
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    addNewShowingExperienceModal.present();
+  }
+
 
   // Alert Box Implementation
   async alertNotice (title: string, content: string) {

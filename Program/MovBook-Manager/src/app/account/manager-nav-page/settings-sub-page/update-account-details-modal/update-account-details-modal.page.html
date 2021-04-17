@@ -160,56 +160,21 @@
                 </div>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);">
-                  Old Password:
-                </ion-label>
-              </ion-col>
-              <ion-col size="8" style="padding: 3%;">
-                <ion-item>
-                  <ion-input type="password" placeholder="Enter Old Password" clearInput formControlName="oldPassword"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);">
-                  New Password:
-                </ion-label>
-              </ion-col>
-              <ion-col size="8" style="padding: 3%;">
-                <ion-item>
-                  <ion-input type="password" placeholder="Enter New Password" clearInput formControlName="newPassword"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);">
-                  Confirm New Password:
-                </ion-label>
-              </ion-col>
-              <ion-col size="8" style="padding: 3%;">
-                <ion-item>
-                  <ion-input type="password" placeholder="Enter New Password" clearInput formControlName="confirmNewPassword"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
             <ion-row style="margin-top: 10px;">
-              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!updateAccountDetailsForm.valid" style="min-width: 250px;
-                                                                                                                              min-height: 40px;
-                                                                                                                              position: relative;
-                                                                                                                              left: 50%;
-                                                                                                                              transform: translateX(-50%);">
-                UPDATE DETAILS
-              </ion-button>
+              <ion-col size="6">
+                <ion-button color="tertiary" expand="block" type="submit" [disabled]="!updateAccountDetailsForm.valid" style="min-width: 100%;
+                                                                                                                              height: 50px;
+                                                                                                                              --border-radius: 10px;">
+                  UPDATE DETAILS
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button style="min-width: 100%;
+                                  height: 50px;
+                                  --border-radius: 10px;" color="green" (click)="openChangePasswordModal()">
+                  CHANGE ACCOUNT PASSWORD
+                </ion-button>
+              </ion-col>
             </ion-row>
           </ion-grid>
         </form>

@@ -34,6 +34,7 @@ import { EditLocationModalPageModule } from './account/manager-nav-page/location
 import { ViewShowingModalPageModule } from './account/manager-nav-page/movie-catalog-sub-page/view-showing-modal/view-showing-modal.module';
 import { UpdateBeverageModalPageModule } from './account/manager-nav-page/food-and-beverages-sub-page/update-beverage-modal/update-beverage-modal.module';
 import { ErrorInterceptor } from './services/account/error-interceptor';
+import { ChangePasswordModalPageModule } from './account/manager-nav-page/settings-sub-page/change-password-modal/change-password-modal.module';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { ErrorInterceptor } from './services/account/error-interceptor';
       AddBeverageModalPageModule,
       EditLocationModalPageModule,
       ViewShowingModalPageModule,
-      UpdateBeverageModalPageModule
+      UpdateBeverageModalPageModule,
+      ChangePasswordModalPageModule
   ],
   providers: [
     {
@@ -69,8 +71,11 @@ import { ErrorInterceptor } from './services/account/error-interceptor';
       useClass:AuthInterceptor,
       multi:true
     },
-    {provide: HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:ErrorInterceptor,
+      multi:true
+    },
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
