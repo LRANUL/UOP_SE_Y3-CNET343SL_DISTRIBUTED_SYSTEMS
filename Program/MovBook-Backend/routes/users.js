@@ -257,7 +257,6 @@ router.post("/forgotPassword",(req , res, next)=>{
               
               Users.updateOne({email: email}, {passwordResetToken:resetToken,passwordTokenExpitation:tokenExiration})
                 .then((data) => {
-                    
                         res.status(201).json({message:"password token updated"});
                     })
             })

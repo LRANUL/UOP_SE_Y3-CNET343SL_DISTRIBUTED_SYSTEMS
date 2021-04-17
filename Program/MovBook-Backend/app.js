@@ -36,6 +36,7 @@ mongoose
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
+      useCreateIndex: true,
       serverSelectionTimeoutMS: 30000,
       poolSize: 5,
       keepAlive: true,
