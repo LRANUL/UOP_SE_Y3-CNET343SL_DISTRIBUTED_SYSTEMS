@@ -67,7 +67,7 @@
                     <ion-grid>
                       <ion-row>
                         <ion-col *ngFor=" let session of movieDolbyArray">
-                          <ion-button (click)="gotourl(session.slotObjectId, session.timeSlotStartTime)">{{session.timeSlotStartTime}}</ion-button>
+                          <ion-button (click)="gotourl(session.slotObjectId, session.timeSlotStartTime, session.timeSlotEndTime)">{{session.timeSlotStartTime}}</ion-button>
                       </ion-col>
                       </ion-row>
                     </ion-grid>
@@ -92,7 +92,7 @@
                     <ion-grid>
                       <ion-row>
                         <ion-col *ngFor=" let session of movie3DArray">
-                          <ion-button (click)="gotourl(session.slotObjectId, session.timeSlotStartTime)">{{session.timeSlotStartTime}}</ion-button>
+                          <ion-button (click)="gotourl(session.slotObjectId, session.timeSlotStartTime, session.timeSlotEndTime)">{{session.timeSlotStartTime}}</ion-button>
                       </ion-col>
                       </ion-row>
                     </ion-grid>
@@ -117,7 +117,7 @@
                     <ion-grid>
                       <ion-row>
                         <ion-col *ngFor=" let session of movie2DArray">
-                          <ion-button (click)="gotourl(session.slotObjectId, session.timeSlotStartTime)">{{session.timeSlotStartTime}}</ion-button>
+                          <ion-button (click)="gotourl(session.slotObjectId, session.timeSlotStartTime, session.timeSlotEndTime)">{{session.timeSlotStartTime}}</ion-button>
                       </ion-col>
                       </ion-row>
                     </ion-grid>

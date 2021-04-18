@@ -18,7 +18,7 @@ let refreshmentsTotal = 0;
 let movieTotal = 0;
 let billTotal = 0;
 let refreshmentsLastItem: number;
-let movieSelectionData;
+let movieSelectionData: Object;
 
 @Component({
   selector: "app-movie-booking-sub-page",
@@ -63,6 +63,12 @@ export class MovieBookingSubPagePage implements OnInit {
   Refreshments: any = [];
   bookQuantity: any;
   Total: number;
+  location: any;
+  timeSlot: any;
+  posterLink: any;
+  reservedDate: any;
+  hall: any;
+  slotObjectId: any;
   constructor(private menu: MenuController,
     public operatorService: OperatorService,
     private modalCtrl: ModalController,
@@ -107,6 +113,8 @@ export class MovieBookingSubPagePage implements OnInit {
       }
     );
   }
+
+  
   beverageUpdate(beverage) {
 
     let name: string = beverage.name
@@ -119,15 +127,48 @@ export class MovieBookingSubPagePage implements OnInit {
     this.Total = billTotal;
     console.log("Total:" + billTotal)
   }
-  beverageRemove() {
+  beverageRemove(item) {
     refreshmentsTotal -= refreshmentsLastItem
-    this.Refreshments.pop();
+    this.Refreshments.pop('item');
     billTotal -= refreshmentsLastItem;
     this.Total = billTotal;
     console.log("Total:" + billTotal)
   }
+/** 
+ * Getting Data from Booking Part 1 (includes venue and movie selection) 
+ * to Proceed with Booking Part 2 (includes Payment processing and Refreshments selection) 
+ * */
+  async selectMovie(id) {
+    const locationTime = this.modalCtrl.create({
+      component: LocationAndTimeSubPagePage,
+      componentProps: {
+        'id': id
+      }
+    });
+    (await locationTime).onDidDismiss().then(async () => {
+      this.operatorService.allticketInformation.subscribe(ticketData => {
+        movieTotal = ticketData['ticketDetalis']['totalAmount']
+        billTotal += movieTotal
+        this.Total = billTotal
+        this.slotObjectId = ticketData['slotID']
+        this.location = ticketData['showingMovieInfo']['cinemaLocation']['cinemaLocationName'];
+        this.reservedDate = ticketData['showingMovieInfo']['showingSlots']['0']['showingDate']
+        this.hall = ticketData['hallInformaion']['0']['cinemaHallName']
+        this.timeSlot = ticketData['timeSlot']['state']['Time']
+        this.title = ticketData['movieInfo']['movieTitle'];
+        this.posterLink = ticketData['movieInfo']['posterLink'];
+        this.adultQuantity = ticketData['ticketDetalis']['adultTickets'];
+        this.childQuantity = ticketData['ticketDetalis']['childrenTickets'];
+        this.seatNumbers = ticketData['ticketDetalis']['seatNumbers'];
 
+        movieSelectionData = ({ 'movieTotal': movieTotal, 'location': this.location, 'reservedDate': this.reservedDate, 'hall': this.hall, 'timeSlot': this.timeSlot, 'title': this.title, 'posterLink': this.posterLink, 'adultQuantity': this.adultQuantity, 'childQuantity': this.childQuantity, 'seatNumbers': this.seatNumbers, 'slotObjectId': this.slotObjectId })
+        console.log(movieSelectionData)
+      })
+    });
 
+    return await (await locationTime).present();
+  }
+  /** Booking of Ticket and Payment Service */
   book() {
     this.createPaymentIntent(billTotal)
       .pipe(
@@ -156,7 +197,7 @@ export class MovieBookingSubPagePage implements OnInit {
           await alert.present();
         } else if (result.paymentIntent.status === "succeeded") {
 
-          this.operatorService.storeBooking(this.Refreshments, movieSelectionData, billTotal).subscribe(
+          this.operatorService.storeBooking(this.Refreshments, movieSelectionData, refreshmentsTotal, billTotal).subscribe(
             async (data) => {
               const alert = await this.alertCtrl.create({
                 header: 'Payment Sucessful',
@@ -183,32 +224,7 @@ export class MovieBookingSubPagePage implements OnInit {
       { amount }
     );
   }
-  beverages(beverage) {
-    console.log(beverage.title);
-
-  }
-  async selectMovie(id) {
-    const locationTime = this.modalCtrl.create({
-      component: LocationAndTimeSubPagePage,
-      componentProps: {
-        'id': id
-      }
-    });
-    (await locationTime).onDidDismiss().then(async () => {
-      this.operatorService.allticketInformation.subscribe(ticketData => {
-        movieSelectionData = ticketData
-        movieTotal = ticketData['ticketDetalis']['totalAmount']
-        billTotal += movieTotal
-        this.Total = billTotal
-        this.title = ticketData['movieInfo']['movieTitle'];
-        this.adultQuantity = ticketData['ticketDetalis']['adultTickets'];
-        this.childQuantity = ticketData['ticketDetalis']['childrenTickets'];
-        this.seatNumbers = ticketData['ticketDetalis']['seatNumbers'];
-      })
-    });
-
-    return await (await locationTime).present();
-  }
+ 
   /** Navigation */
   goToDashboard() {
     this.router.navigate(['operator']);

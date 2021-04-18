@@ -115,13 +115,14 @@ export class LocationAndTimeSubPagePage implements OnInit {
     this.getMovieAdditionalDetails();
   }
 
-  async openSeatSelector(id, timeSlotStartTime) {
+  async openSeatSelector(id, timeSlotStartTime, timeSlotEndTime) {
     var allticketInformation
     let navigationExtras: NavigationExtras = {
       state: {
-        Time: timeSlotStartTime
+        Time: timeSlotStartTime +" - "+ timeSlotEndTime
       }
     };
+    console.log(navigationExtras+"timeslot")
     const BookingPage = this.modelCtrl.create({
       component: BookingSubPagePage,
       componentProps: {

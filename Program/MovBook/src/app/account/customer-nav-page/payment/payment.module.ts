@@ -14,6 +14,6 @@ import { NgxStripeModule } from 'ngx-stripe';
     IonicModule,
     NgxStripeModule.forRoot('pk_test_51IEFJWJcuxwrCkGRQaDQ8ycbMSxyrsApmMnXmb9Zlnvo3rcws57a5fRf8gdD6n1meV9yH8KctT2OUbN8kfRka2hi00T1GM5O0W')
   ],
-  declarations: [PaymentPage]
+  declarations: []
 })
 export class PaymentPageModule {}

@@ -293,11 +293,11 @@ export class LocationAndTimeSubPagePage implements OnInit {
     });
   }
 
-  gotourl(id,time) {
+  gotourl(id,time, timeSlotEndTime) {
     console.log(id);
     let navigationExtras: NavigationExtras = {
       state: {
-        Time : time
+        Time : time +" - "+ timeSlotEndTime
       }
     };
     this.route.navigate(['customer/booking/',id], navigationExtras);

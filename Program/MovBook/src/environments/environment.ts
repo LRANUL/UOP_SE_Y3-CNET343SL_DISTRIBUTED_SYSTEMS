@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
   MOVBOOK_BACKEND_URL: "http://localhost:5000/",
   MOVBOOK_BACKEND_ADMIN_SERVER_URL:"http://localhost:4242/",
+  production: true,
   firebase: {
   apiKey: "AIzaSyDgIZg9bO1QslkIm_c00Ivp4Qql-C-lyKI",
   authDomain: "movbook-18609.firebaseapp.com",

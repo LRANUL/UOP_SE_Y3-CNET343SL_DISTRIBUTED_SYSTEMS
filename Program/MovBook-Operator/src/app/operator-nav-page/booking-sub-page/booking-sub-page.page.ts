@@ -169,6 +169,8 @@ export class BookingSubPagePage implements OnInit {
 
   //this is the object that will be used to send data to part B of the booking
   allticketInformation: any = {
+    slotID: '',
+    timeSlot: '',
     movieInfo: {},
     showingMovieInfo: {},
     ticketDetalis: {},
@@ -506,6 +508,8 @@ export class BookingSubPagePage implements OnInit {
   }
 
   async continue() {
+    this.allticketInformation.slotID = this.id
+    this.allticketInformation.timeSlot = this.Time
     console.log(this.allticketInformation);
     await this.modelCtrl.dismiss(this.allticketInformation);
   }

@@ -24,12 +24,12 @@ export class CustomerService {
   getBeverages() {
     return this.http.get(this.BASE_URL + "api/refreshments");
   }
-  storeBooking(refreshments, movie, total) {
+  storeBooking(refreshments, movie, refreshmentsTotal, total) {
     var email = localStorage.getItem('email');
     email = 'john@movbook.com'
-    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, mealCostLKR: refreshmentsTotal, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
     console.log(body)
-    return this.http.post<any>(this.BASE_URL + "api/booking/add", body);
+    return this.http.post<any>(this.BASE_URL + "api/bookings/add", body);
   }
   public moviesUpdated = {
     movieObjectId: '',
