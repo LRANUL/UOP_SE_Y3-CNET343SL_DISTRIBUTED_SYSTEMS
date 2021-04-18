@@ -23,8 +23,10 @@
                                         <ion-label>Genre: {{movieDetails.genre}}</ion-label>
                                         <br>
                                         <br>
+                                        <div *ngIf="showingCheck">
                                             <ion-button style="text-align: center;" expand="full" (click)="venuSelection(movieDetails._id)">Book Tickets</ion-button>
-                                    </ion-col>
+                                        </div>
+                                          </ion-col>
                                     <ion-col>
                                         <div>
                                         <ion-label style="font-size: x-large; font-weight: bold;">Cast</ion-label>
