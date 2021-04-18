@@ -54,11 +54,6 @@
                         <ion-col>
                           <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: Dolby Atmos</ion-card-subtitle>
                         </ion-col>
-                        <ion-col size-md="1">
-                          <ion-buttons tooltip="{{descriptionAtmos}}" positionV="bottom" arrow>
-                            <ion-icon name="help-circle-outline" style="font-size: large;"></ion-icon>
-                          </ion-buttons>
-                        </ion-col>
                       </ion-row>
                     </ion-grid>
                   </ion-card-header>
@@ -66,7 +61,7 @@
                     <ion-grid>
                       <ion-row>
                         <ion-col *ngFor=" let session of movieDolbyArray">
-                          <ion-button (click)="openSeatSelector(session.slotObjectId, session.timeSlotStartTime)">{{session.timeSlotStartTime}}</ion-button>
+                          <ion-button (click)="openSeatSelector(session.slotObjectId, session.timeSlotStartTime, session.timeSlotEndTime)">{{session.timeSlotStartTime}}</ion-button>
                       </ion-col>
                       </ion-row>
                     </ion-grid>
@@ -79,11 +74,6 @@
                           <ion-col>
                             <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: 3D</ion-card-subtitle>
                           </ion-col>
-                          <ion-col size-md="1">
-                            <ion-buttons tooltip="{{description3D}}" positionV="bottom" arrow>
-                              <ion-icon name="help-circle-outline" style="font-size: large;"></ion-icon>
-                            </ion-buttons>
-                          </ion-col>
                         </ion-row>
                       </ion-grid>
                   </ion-card-header>
@@ -91,7 +81,7 @@
                     <ion-grid>
                       <ion-row>
                         <ion-col *ngFor=" let session of movie3DArray">
-                          <ion-button (click)="openSeatSelector(session.slotObjectId, session.timeSlotStartTime)">{{session.timeSlotStartTime}}</ion-button>
+                          <ion-button (click)="openSeatSelector(session.slotObjectId, session.timeSlotStartTime, session.timeSlotEndTime)">{{session.timeSlotStartTime}}</ion-button>
                       </ion-col>
                       </ion-row>
                     </ion-grid>
@@ -104,11 +94,6 @@
                         <ion-col>
                           <ion-card-subtitle style="font-weight: bold;">Cinema Experinece: 2D</ion-card-subtitle>
                         </ion-col>
-                        <ion-col size-md="1">
-                          <ion-buttons tooltip="description2D" positionV="bottom" arrow>
-                            <ion-icon name="help-circle-outline" style="font-size: large;"></ion-icon>
-                          </ion-buttons>
-                        </ion-col>
                       </ion-row>
                     </ion-grid>
                   </ion-card-header>
@@ -116,7 +101,7 @@
                     <ion-grid>
                       <ion-row>
                         <ion-col *ngFor=" let session of movie2DArray">
-                          <ion-button (click)="openSeatSelector(movie._id, session.timeSlotStartTime)">{{session.timeSlotStartTime}}</ion-button>
+                          <ion-button (click)="openSeatSelector(session.slotObjectId, session.timeSlotStartTime, session.timeSlotEndTime)">{{session.timeSlotStartTime}}</ion-button>
                       </ion-col>
                       </ion-row>
                     </ion-grid>

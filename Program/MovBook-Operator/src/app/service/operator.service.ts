@@ -10,6 +10,9 @@ import { MovieBookingSubPagePage } from "../operator-nav-page/movie-booking-sub-
   providedIn: "root",
 })
 export class OperatorService {
+  reserveSeat(seatNumbers: any) {
+    throw new Error("Method not implemented.");
+  }
   allticketInformation: BehaviorSubject<any> = new BehaviorSubject(null);
   ticketInformation = this.allticketInformation.asObservable();
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
@@ -57,12 +60,12 @@ export class OperatorService {
     const body = { name: name, quantity: quantity };
     return this.http.put<any>(this.BASE_URL + "api/refreshments/update-stock", body);
   }
-  storeBooking(refreshments, movie, total) {
+  storeBooking(refreshments, movie, refreshmentsTotal, total) {
     var email = localStorage.getItem('email');
     email = 'john@movbook.com'
-    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, mealCostLKR: refreshmentsTotal, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
     console.log(body)
-    return this.http.post<any>(this.BASE_URL + "api/booking/add", body);
+    return this.http.post<any>(this.BASE_URL + "api/bookings/add", body);
   }
 
 

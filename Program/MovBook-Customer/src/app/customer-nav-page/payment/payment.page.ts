@@ -55,6 +55,12 @@ export class PaymentPage implements OnInit {
   adultQuantity: any;
   childQuantity: any;
   seatNumbers: any;
+  slotObjectId: any;
+  location: any;
+  reservedDate: any;
+  hall: any;
+  timeSlot: any;
+  posterLink: any;
 
   constructor(private customerService: CustomerService, private modalCtrl: ModalController,
     public http: HttpClient,
@@ -67,14 +73,22 @@ export class PaymentPage implements OnInit {
     var ticketData = this.id;
     movieSelectionData = ticketData
     this.customerService.allticketInformation.subscribe(ticketData => {
-      movieSelectionData = ticketData
       movieTotal = ticketData['ticketDetalis']['totalAmount']
       billTotal += movieTotal
       this.Total = billTotal
+      this.slotObjectId = ticketData['slotID']
+      this.location = ticketData['showingMovieInfo']['cinemaLocation']['cinemaLocationName'];
+      this.reservedDate = ticketData['showingMovieInfo']['showingSlots']['0']['showingDate']
+      this.hall = ticketData['hallInformaion']['0']['cinemaHallName']
+      this.timeSlot = ticketData['timeSlot']['state']['Time']
       this.title = ticketData['movieInfo']['movieTitle'];
+      this.posterLink = ticketData['movieInfo']['posterLink'];
       this.adultQuantity = ticketData['ticketDetalis']['adultTickets'];
       this.childQuantity = ticketData['ticketDetalis']['childrenTickets'];
       this.seatNumbers = ticketData['ticketDetalis']['seatNumbers'];
+
+      movieSelectionData = ({ 'movieTotal': movieTotal, 'location': this.location, 'reservedDate': this.reservedDate, 'hall': this.hall, 'timeSlot': this.timeSlot, 'title': this.title, 'posterLink': this.posterLink, 'adultQuantity': this.adultQuantity, 'childQuantity': this.childQuantity, 'seatNumbers': this.seatNumbers, 'slotObjectId': this.slotObjectId })
+      console.log(movieSelectionData)
     })
     this.getBeverages();
   }
@@ -109,6 +123,7 @@ export class PaymentPage implements OnInit {
   }
 
 
+  /** Booking of Ticket and Payment Service */
   book() {
     this.createPaymentIntent(billTotal)
       .pipe(
@@ -137,7 +152,7 @@ export class PaymentPage implements OnInit {
           await alert.present();
         } else if (result.paymentIntent.status === "succeeded") {
 
-          this.customerService.storeBooking(this.Refreshments, movieSelectionData, billTotal).subscribe(
+          this.customerService.storeBooking(this.Refreshments, movieSelectionData, refreshmentsTotal, billTotal).subscribe(
             async (data) => {
               const alert = await this.alertCtrl.create({
                 header: 'Payment Sucessful',
@@ -164,8 +179,4 @@ export class PaymentPage implements OnInit {
       { amount }
     );
   }
-  beverages(beverage) {
-    console.log(beverage.title);
-  }
-
 }

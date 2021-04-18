@@ -7,7 +7,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { ContactUsComponentComponent } from './home-nav-page/contact-us-component/contact-us-component.component';
 import { TermsAndConditionsComponent } from './home-nav-page/terms-and-conditions/terms-and-conditions.component';
-AngularFireModule.initializeApp(environment.firebase)
+AngularFireModule.initializeApp(environment)
 const { FirebaseRemoteConfig } = Plugins;
 FirebaseRemoteConfig.initializeFirebase({
   apiKey: "AIzaSyDgIZg9bO1QslkIm_c00Ivp4Qql-C-lyKI",

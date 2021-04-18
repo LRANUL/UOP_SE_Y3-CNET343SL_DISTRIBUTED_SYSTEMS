@@ -73,7 +73,7 @@
           <div style="padding-left: 5px;" *ngFor="let items of Refreshments">
             <ion-label>{{items}}
             </ion-label>
-            <ion-icon name="remove-circle" (click)="beverageRemove()" color="danger" style="height:25px"></ion-icon>
+            <ion-icon name="remove-circle" (click)="beverageRemove(items)" color="danger" style="height:25px"></ion-icon>
           </div>
           <ion-item>
             <ion-label>Total: {{Total}}</ion-label>

@@ -74,7 +74,7 @@ app.use("/api/operators", operatorRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
 app.use("/api/showing-cinema-hall", showingCinemaHall)
 app.use("/api/booking-history", bookingHistory);
-app.use("/api/booking", bookingRoutes);
+app.use("/api/bookings", bookingRoutes);
 app.use("/api/booking-details", bookingDetails);
 app.use("/api/omdb/upcoming-movies", upcomingMovieSearchResults);
 app.use("/api/customers", customerRoutes);
