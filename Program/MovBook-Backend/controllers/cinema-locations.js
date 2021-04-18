@@ -55,8 +55,8 @@ exports.retrieveListCinemaLocations = async (req, res, next) => {
 // Function - Retrieving count of cinema location using route, 'BASE_URL/api/cinema-location/count'
 exports.retrieveCinemaLocationsCount = async (req, res, next) => {
 
-  // Using mongoose find() and count() functionalities to get the count of cinema location
-  await cinemaLocationModel.find().count().exec((error, returnedData) => {
+  // Using mongoose countDocuments() functionality to get the count of cinema locations
+  await cinemaLocationModel.countDocuments((error, returnedData) => {
     
     // If condition - checking whether an error occurred during the query execution
     if (error) {

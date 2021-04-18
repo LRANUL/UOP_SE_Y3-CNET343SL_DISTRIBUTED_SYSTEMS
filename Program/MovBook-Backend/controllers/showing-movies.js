@@ -120,55 +120,82 @@ exports.getShowingMovieByMovieObjectId = async (req, res, next) => {
 // Route: 'BASE_URL/api/showing-movies/showing-movies-by-months'
 exports.getShowingMoviesByMonths = async (req, res, next) => {
 
+  // Declaration - to store an array of the count of showing movies
+  let countOfShowingMovieSlotsArray = new Array(7);
+  // Assigning the current date time
   let currentDateTime = new Date();
-  currentDateTime.setMonth(currentDateTime.getMonth() - 1);
-  let month = (new Date(currentDateTime).toLocaleString('default', { month: 'short' }));
-  let year = (new Date(currentDateTime).toLocaleString('default', { year: 'numeric' }));
-  let regexPatternString = `([${month}])\\w+[ ]\\d\\d\\,[ ][${year}]+`;
-  let regexPatternObject = new RegExp(regexPatternString);
+  // To store the status of retrieving the count of showing movie slots from the database
+  let showingMovieSlotsCountRetrieved = false;
+  
+  // For Loop - Initializing the 'countOfShowingMovieSlotsArray' array indexes
+  for (let countIndex = 0; countIndex < 7; countIndex++)
+    countOfShowingMovieSlotsArray[countIndex] = 0;
 
-  // Using mongoose aggregate() functionality to get the showing slots for each month for the past 12 months
-  await showingMovieModel.aggregate(
-    [
-        { "$match": 
-          { 
+  // For Loop - Iterating through to retrieve the count of showing movies for the past six mouths
+  // Including this month, the loop will iterate seven times
+  for (let monthIndex = 6; monthIndex > 0; monthIndex--) {
+
+    // If the month is not the current month ('monthIndex' == 7), the month will be decremented to the previous month
+    if(monthIndex != 6){
+      currentDateTime.setMonth(currentDateTime.getMonth() - 1);
+    }
+  
+    // Extracting the month value from the 'currentDateTime', Sample: Mar
+    let month = (new Date(currentDateTime).toLocaleString('default', { month: 'short' }));
+    // Extracting the year value from the 'currentDateTime', Sample: 2021
+    let year = (new Date(currentDateTime).toLocaleString('default', { year: 'numeric' }));
+    // Assigning the regular expression to search for the showing movies for each month
+    let regexPatternString = `([${month}])\\w+[ ]\\d\\d\\,[ ][${year}]+`;
+    // Converting regular expression from string to regex object
+    let regexPatternObject = new RegExp(regexPatternString);
+
+    // Using mongoose aggregate() functionality to get the count of showing slots for each month
+    await showingMovieModel.aggregate(
+      [
+        { 
+          $unwind: "$showingSlots" 
+        }, 
+        { 
+          $match: { 
             "showingSlots.showingDate": { 
               $regex: regexPatternObject 
             }  
-          } 
+          }
+        },
+        { 
+          $project: { "_id": 0 }
         },
         { "$group": { 
-            "_id": "$_id",
-            "showingDate": { "$first": "$showingSlots.showingDate" }
+            "_id": "$showingSlots",
+            "count": { "$sum": 1 }
         }}
-    ],
-    function(error, returnedData) {
-
-    // If condition - checking whether an error occurred during the query execution
-    if (error) {
+    ]).exec().then((returnedData) => {
+      // Assigning the number of showing slot object retrieved to an array element
+      countOfShowingMovieSlotsArray[monthIndex] = returnedData.length;
+      showingMovieSlotsCountRetrieved = true;
+    }).catch((error) => {
       res.status(500).json({
-        message:
-          "Unable to retrieve showing movies",
-      });
-    }
-    else {
-      // If condition - checking whether the length of the returned data is zero (no data is returned)
-      // and the relevant message passed to the client-side
-      if (returnedData.length == 0) {
-        res.status(200).json({
           message:
-            "No showing movies available"
+            "Unable to retrieve count of showing movie slots", 
+            error
         });
-      }
-      else {
-        res.status(200).json({
-          message:
-            "Showing movies retrieved",
-          returnedData
-        });
-      }
-    }
-  })
+    });
+  }
+  
+  if(showingMovieSlotsCountRetrieved == true){
+    // Returning a response to the client with the count of showing movie slots
+    res.status(200).json({
+      message:
+        "Showing movie slots count retrieved",
+        countOfShowingMovieSlotsArray
+    });
+  }
+  else{
+    res.status(500).json({
+      message:
+        "Unable to retrieve count of showing movie slots"
+    });
+  }
 };
 
 exports.getShowingMovieByMovieId = async (req, res, next) => {

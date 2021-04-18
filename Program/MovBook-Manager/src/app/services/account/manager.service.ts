@@ -291,6 +291,10 @@ export class ManagerService {
   retrieveShowingMovieByMovieObjectId(movieObjectId: string) {
     return this.httpClient.get(this.BASE_URL + "api/showing-movies/by-movie-object-id/" + movieObjectId);
   }
+  // GET - Retrieve count of showing movie slots for each months for the past six months
+  retrieveCountShowingMonths() {
+    return this.httpClient.get(this.BASE_URL + "api/showing-movies/showing-movies-by-months");
+  }
 
   /**
    * Showing Cinema Hall

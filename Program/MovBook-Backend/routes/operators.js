@@ -52,10 +52,9 @@ router.get('/', (req, res, next) => {
 router.get('/count-operator-accounts/account-status/:AccountStatus', (req, res, next) => {
   // Extracting the retrieved accountStatus from the URL
   let passedAccountStatus = req.params.accountStatus;
-  // Using mongoose find() and count() functionalities to get the count of refreshments
-  Operators.find({
-    'accountStatus': passedAccountStatus
-  }).count().exec((error, returnedData) => {
+  // Using mongoose countDocuments() functionality to get the count of refreshments
+  Operators.countDocuments({ 'accountStatus': passedAccountStatus }, (error, returnedData) => {
+
     // If condition - checking whether an error occurred during the query execution
     if (error) {
       res.status(500).json({

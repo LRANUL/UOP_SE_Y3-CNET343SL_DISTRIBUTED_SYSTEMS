@@ -42,8 +42,8 @@ router.get('', (req, res, next) => {
 
 // Get Count of Refreshments
 router.get('/count', (req, res, next) => {
-  // Using mongoose find() and count() functionalities to get the count of refreshments
-  Refreshments.find().count().exec((error, returnedData) => {
+  // Using mongoose countDocuments() functionality to get the count of refreshments
+  Refreshments.countDocuments((error, returnedData) => {
     // If condition - checking whether an error occurred during the query execution
     if (error) {
       res.status(500).json({

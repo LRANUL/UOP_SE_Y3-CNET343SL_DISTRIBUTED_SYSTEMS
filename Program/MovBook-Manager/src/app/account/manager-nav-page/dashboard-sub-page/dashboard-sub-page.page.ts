@@ -12,8 +12,14 @@ import { MovieDetailsModalPage } from '../browse-upcoming-movies-sub-page/movie-
 })
 export class DashboardSubPagePage implements OnInit {
 
+  // Declaration - to store count of showing movie slots
+  countShowingMoviesSlotsMonths = new Array();
+
   // Declaration | Initialization - Stores current date and time
   currentDateTime: String;
+
+  // Declaration - to store an array month name for the past six months
+  monthNamesSixMonths = new Array();
 
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerLatestMovies' block
   loadingSpinnerLatestMovies: Boolean = false;
@@ -21,6 +27,12 @@ export class DashboardSubPagePage implements OnInit {
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerDashboard' block
   loadingSpinnerDashboard: Boolean = false;
 
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerMovieShowingsChart' block
+  loadingSpinnerMovieShowingsChart: Boolean = false;
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerBookingsChart' block
+  loadingSpinnerBookingsChart: Boolean = false;
+  
   // Declaration - to store list of recent movies
   listOfLatestMovies = new Array();
 
@@ -55,6 +67,12 @@ export class DashboardSubPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    // Initiating the movie showings chart
+    this.movieShowingsAreaChart();
+
+    // Retrieving the count of showing movie slot upon page render
+    this.retrieveCountOfShowingMoviesMonths();
 
     // Retrieving the current date time upon page render
     this.getCurrentDateTime();
@@ -107,14 +125,13 @@ export class DashboardSubPagePage implements OnInit {
 
 
   ionViewWillEnter(){
-    // Initiating the movie showings chart
-    this.MovieShowingsAreaChart();
-
     // Initiating the bookings chart
     this.BookingsAreaChart();
   }
 
 
+  // Function - Retrieving current data time and generating new format
+  // sample: 09:40 AM | Mar 18, 2021
   getCurrentDateTime(){
     let currentDateTimeDate = new Date();
     this.currentDateTime = 
@@ -133,52 +150,160 @@ export class DashboardSubPagePage implements OnInit {
     await alert.present();
   }
 
+  
+  // Function - Retrieving count of showing movie slots for each month for the past six months
+  retrieveCountOfShowingMoviesMonths(): Promise<any>{
 
-  // Movie Showing area chart implementation
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Assigning 'loadingSpinnerMovieShowingsChart' to true (starts loading spinner)
+    this.loadingSpinnerMovieShowingsChart = true;
+
+    return new Promise((resolve,reject)=>{
+
+      // Adding new showing experience
+      this.managerService.retrieveCountShowingMonths()
+        .subscribe((countShowingMoviesResponse: any) => {
+
+        if(countShowingMoviesResponse.message == "Showing movie slots count retrieved"){
+          // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+          this.loadingSpinnerDashboard = false;
+
+          // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+          this.loadingSpinnerMovieShowingsChart = false;
+
+          resolve(countShowingMoviesResponse.countOfShowingMovieSlotsArray);
+        }
+        else if(countShowingMoviesResponse.message == "Unable to retrieve count of showing movie slots"){
+          // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+          this.loadingSpinnerDashboard = false;
+
+          // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+          this.loadingSpinnerMovieShowingsChart = false;
+
+          console.log("Unable to retrieve count of showing movie slots");
+
+          reject(false);
+        }
+      }, (error: ErrorEvent) => {
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerMovieShowingsChart = false;
+
+        console.log("Unable to retrieve count of showing movie slots: ", error);
+
+        reject(false);
+      });
+    });
+
+  }
+
+
+  // Function - Generate month name for the past six months
+  generateMonthNames() {
+
+    // Assigning the current date time
+    let currentDateTime = new Date();
+    // To store generated month name during each iteration in the for loop
+    let monthName;
+    
+    // Extracting the month value from the 'currentDateTime', Sample: Mar
+    let month = (new Date(currentDateTime).toLocaleString('default', { month: 'short' }));
+    // Extracting the year value from the 'currentDateTime', Sample: 2021
+    let year = (new Date(currentDateTime).toLocaleString('default', { year: 'numeric' }));
+
+    // For loop - Initializing 'monthNamesSixMonths' array elements
+    for (let monthNameIndex = 0; monthNameIndex < 7; monthNameIndex++)
+      this.monthNamesSixMonths[monthNameIndex] = "";
+      
+    // For loop - Iterating through the past six months to generate the month names and assign to the 
+    // 'monthNamesSixMonths' array
+    for (let monthIndex = 6; monthIndex >= 0; monthIndex--) {
+
+      // After the one iteration has completed the date value will decrement one month in each iteration
+      if(monthIndex != 6){
+        currentDateTime.setMonth(currentDateTime.getMonth() - 1);
+      }
+      
+      // Extracting the month and year values from the 'currentDateTime', Sample: Mar 2021
+      monthName = (new Date(currentDateTime).toLocaleString('default', { month: 'short' })) + " " +
+                  (new Date(currentDateTime).toLocaleString('default', { year: 'numeric' }));
+
+      // Assigning the month name to the 'monthNamesSixMonths' array index
+      this.monthNamesSixMonths[monthIndex] = monthName;
+    }
+  }
+
+
+  // Movie Showing line chart implementation
   movieShowingsLines: any;
   movieShowingsColorArray: any;
   
   @ViewChild('movieShowingsAreaChart', {static: true}) movieShowingsLineChart;
 
-  MovieShowingsAreaChart() {
-    this.movieShowingsLines = new Chart(this.movieShowingsLineChart.nativeElement, {
-      type: 'line',
-      data: {
-        labels: ['Oct 2021', 'Nov 2021', 'Dec 2021', 'Jan 2021', 'Feb 2021', 'Mar 2021', 'Apr 2021'],
-        datasets: [{
-          label: 'Movie Showings',
-          fill: false,
-          data: [0, 0, 0, 0, 0, 1, 46],
-          borderColor: 'rgb(62, 128, 236)',
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: false
+  async movieShowingsAreaChart() {
+
+    // Generating month names for the past six months
+    this.generateMonthNames();
+
+    // Waiting until the chart data is retrieved from the database
+    await this.retrieveCountOfShowingMoviesMonths().then((countOfShowingMovieSlots) => {
+
+      // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+      this.loadingSpinnerDashboard = true;
+
+      // Configurations for rendering the chart
+      this.movieShowingsLines = new Chart(this.movieShowingsLineChart.nativeElement, {
+        type: 'line',
+        data: {
+          labels: this.monthNamesSixMonths,
+          datasets: [{
+            label: 'Movie Showings',
+            fill: false,
+            data: countOfShowingMovieSlots,
+            borderColor: 'rgb(62, 128, 236)',
+            borderWidth: 3
+          }]
         },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: false,
-              display: true
-            },
-            gridLines: {
-              display: true,
-            },
-          }],
-          xAxes: [{
-            ticks: {
-              display: true
-            },
-            gridLines: {
-              display: true,
-            },
-          }],
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false,
+                display: true
+              },
+              gridLines: {
+                display: true,
+              },
+            }],
+            xAxes: [{
+              ticks: {
+                display: true
+              },
+              gridLines: {
+                display: true,
+              },
+            }],
+          }
         }
-      }
+      });
+
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
+
+    }).catch((error) => {
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
+
+      console.log(error);
     });
   }
 
@@ -337,8 +462,8 @@ export class DashboardSubPagePage implements OnInit {
         console.log("Unable to retrieve count of wait listed movies");
       }
     }, (error: ErrorEvent) => {
-      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
-      this.loadingSpinnerLatestMovies = false;
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
 
       console.log("Unable to retrieve count of wait listed movies");
     });
@@ -376,8 +501,8 @@ export class DashboardSubPagePage implements OnInit {
         console.log("Unable to retrieve count of upcoming movies");
       }
     }, (error: ErrorEvent) => {
-      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
-      this.loadingSpinnerLatestMovies = false;
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
 
       console.log("Unable to retrieve count of upcoming movies");
     });
@@ -415,8 +540,8 @@ export class DashboardSubPagePage implements OnInit {
         console.log("Unable to retrieve count of now showing movies");
       }
     }, (error: ErrorEvent) => {
-      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
-      this.loadingSpinnerLatestMovies = false;
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
 
       console.log("Unable to retrieve count of now showing movies");
     });
@@ -455,8 +580,8 @@ export class DashboardSubPagePage implements OnInit {
       }
 
     }, (error: ErrorEvent) => {
-      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
-      this.loadingSpinnerLatestMovies = false;
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
 
       console.log("Unable to retrieve count of cinema halls: ", error);
     });
@@ -495,8 +620,8 @@ export class DashboardSubPagePage implements OnInit {
       }
 
     }, (error: ErrorEvent) => {
-      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
-      this.loadingSpinnerLatestMovies = false;
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
 
       console.log("Unable to retrieve count of cinema locations: ", error);
     });
@@ -535,8 +660,8 @@ export class DashboardSubPagePage implements OnInit {
       }
 
     }, (error: ErrorEvent) => {
-      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
-      this.loadingSpinnerLatestMovies = false;
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
 
       console.log("Unable to retrieve count of refreshments: ", error);
     });
@@ -575,8 +700,8 @@ export class DashboardSubPagePage implements OnInit {
       }
 
     }, (error: ErrorEvent) => {
-      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
-      this.loadingSpinnerLatestMovies = false;
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
 
       console.log("Unable to retrieve count of enabled accounts: ", error);
     });
@@ -615,8 +740,8 @@ export class DashboardSubPagePage implements OnInit {
       }
 
     }, (error: ErrorEvent) => {
-      // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
-      this.loadingSpinnerLatestMovies = false;
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
 
       console.log("Unable to retrieve count of disabled accounts: ", error);
     });

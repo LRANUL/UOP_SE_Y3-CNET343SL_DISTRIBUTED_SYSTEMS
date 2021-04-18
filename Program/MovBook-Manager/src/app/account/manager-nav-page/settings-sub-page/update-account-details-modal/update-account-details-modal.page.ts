@@ -14,6 +14,9 @@ export class UpdateAccountDetailsModalPage implements OnInit {
 
   // Declaration - FormGroup to handle updateAccountDetailsForm form
   updateAccountDetailsForm: FormGroup;
+
+  // Declaration - Stores the newly entered email address
+  formEmailAddress: String;
   
   constructor(
     private modalController: ModalController,
@@ -43,6 +46,12 @@ export class UpdateAccountDetailsModalPage implements OnInit {
   // Implementation to close 'Update Account Details' modal
   async closeUpdateAccountDetailsModal(){
     await this.modalController.dismiss();
+  }
+
+  // Setter to store entered email address
+  setFormEmailAddress(enteredEmailAddress: String){
+    this.formEmailAddress = enteredEmailAddress;
+    console.log(enteredEmailAddress);
   }
 
   // Implementation for opening the 'Verify Email Address' popover
@@ -88,6 +97,41 @@ export class UpdateAccountDetailsModalPage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+
+  // Confirm Box Implementation - Email Verification
+  async confirmBoxEmailVerification (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log("Confirm Box: Request denied");
+          }
+        },
+        {
+          text: 'Continue',
+          handler: () => {
+            console.log("Confirm Box: Request accepted");
+
+            // Sending email to the entered email address
+            this.sendEmailForEmailVerification();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
+  sendEmailForEmailVerification(){
+
+    
+
   }
 
 }

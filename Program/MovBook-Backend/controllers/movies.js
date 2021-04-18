@@ -210,9 +210,9 @@ exports.retrieveMoviesCountByStatus = async (req, res, next) => {
   // Getting passed movie status
   let passedMovieStatus = req.params.movieStatus;
 
-  // Using mongoose find() and count() functionalities to get the count of movies under a movie status
-  await movieModel.find({ "movieStatus": passedMovieStatus }).count().exec((error, returnedData) => {
-
+  // Using mongoose countDocuments() functionality to get the count of movies under a movie status
+  await movieModel.countDocuments({ "movieStatus": passedMovieStatus }, (error, returnedData) => {
+    
     // If condition - checking whether an error occurred during the query execution
     if (error) {
       res.status(500).json({

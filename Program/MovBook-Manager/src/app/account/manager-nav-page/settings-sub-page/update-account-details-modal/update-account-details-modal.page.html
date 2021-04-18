@@ -147,19 +147,26 @@
                   Email Address:
                 </ion-label>
               </ion-col>
-              <ion-col size="8" style="padding: 3%;">
+              <ion-col size="6" style="padding: 3%;">
                 <ion-item>
-                  <ion-input type="text" placeholder="Enter Email Address" clearInput formControlName="emailAddress"></ion-input>
+                  <ion-input type="text" placeholder="Enter Email Address" clearInput (ionChange)="setFormEmailAddress($event.detail.value)" formControlName="emailAddress"></ion-input>
                 </ion-item>
-                <div style="position: absolute;
-                            margin-left: 95%;
-                            margin-top: -11%;">
-                  <ion-button (click)="openVerifyEmailAddressPopover($event)">
-                    VERIFY
-                  </ion-button>
-                </div>
               </ion-col>
             </ion-row>
+            <div style="position: absolute;
+                            margin-left: 94.5%;
+                            margin-top: -11%;">
+              <ion-button style="height: 50px;" color="dark-blue-two" (click)="openVerifyEmailAddressPopover($event)">
+                ENTER PIN CODE
+              </ion-button>
+            </div>
+            <div style="position: absolute;
+                        right: 5%;
+                        margin-top: -11%;">
+              <ion-button style="height: 50px;" color="dark-blue" (click)="confirmBoxEmailVerification('Confirmation', 'An email with a pin code will be sent to the entered email address. Do you want to continue?')">
+                VERIFY <!-- RESEND EMAIL -->
+              </ion-button>
+            </div>
             <ion-row style="margin-top: 10px;">
               <ion-col size="6">
                 <ion-button color="tertiary" expand="block" type="submit" [disabled]="!updateAccountDetailsForm.valid" style="min-width: 100%;

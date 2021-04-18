@@ -105,6 +105,14 @@
                       <div style="width: 100%;
                                   height: 30vh;">
                         <canvas #movieShowingsAreaChart></canvas>  
+
+                        <!-- Loading Spinner - Retrieving latest movies upon page load -->
+                        <ion-spinner name="dots" style="height: 100px;
+                                                        width: 100px;
+                                                        position: relative;
+                                                        left: 15%;
+                                                        top: 30%;
+                                                        transform: translate(-70%,-85%);" *ngIf="loadingSpinnerMovieShowingsChart"></ion-spinner>
                       </div>
                     </ion-col>
                   </ion-row>
