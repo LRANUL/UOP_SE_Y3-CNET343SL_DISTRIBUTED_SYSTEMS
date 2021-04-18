@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap  } from '@angular/router';
+import { LoginPageRoutingModule } from 'src/app/login/login-routing.module';
 import { EmployeeService } from './../../../services/account/employee.service'
 
 @Component({

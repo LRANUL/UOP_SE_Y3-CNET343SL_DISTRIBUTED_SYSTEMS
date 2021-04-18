@@ -37,7 +37,7 @@ const onError = error => {
    debug("Listening on " + bind);
  };
 
- const port = normalizePort (process.env.PORT || 6000);
+ const port = normalizePort (process.env.PORT || 8400);
  app.set("port",port);
 console.log(port);
  const server = http.createServer(app);

@@ -50,9 +50,9 @@ export class LoginPage implements OnInit {
     const email = this.loginform.get('emailControl').value;
     const password = this.loginform.get('passwordControl').value
     console.log(email + " " + password);
-    // this.authServ.login(email,password);
+    this.authServ.login(email,password);
     // Only for Beta Test
-    this.router.navigate(['administrator']);
+    //this.router.navigate(['administrator']);
   }
 
 }

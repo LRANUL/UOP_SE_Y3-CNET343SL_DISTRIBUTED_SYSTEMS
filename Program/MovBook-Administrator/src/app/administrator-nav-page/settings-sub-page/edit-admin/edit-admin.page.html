@@ -1,7 +1,7 @@
 <ion-content>
   <ion-grid style="background-color: darkgray !important;">
 
-    
+
     <ion-row>
       <ion-col size="auto">
         <img src="assets\images\MovBook-Logo.jpeg" style="width: 200px;border-radius: 5px;margin-bottom: 10px;">
@@ -33,7 +33,7 @@
         <ion-card
           style="border-radius: 10px;background-color: transparent;margin-left: 300px;margin-right: 300px;height: 600px;overflow-y: scroll;">
 
-          <form #employeeForm="ngForm" (Submit)="onSubmit(employeeForm)">
+          <form [formGroup]="form" (submit)="onSubmit()" >
             <div class="row" style="padding-top: 20px;">
 
               <div class="col-6 col-sm-4" style="margin-left: 20px;">
@@ -43,19 +43,19 @@
               <div class="col-6 col-sm-7">
 
                 <ion-item style="border-radius: 10px;margin-top: 10px;">
-                  <ion-input name="name" type="text" placeholder="Prefix" #name="ngModel" ngModel></ion-input>
+                  <ion-input name="name" type="text" placeholder="Prefix" formControlName="prefix"></ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input name="name" type="text" placeholder="First Name" #name="ngModel" ngModel></ion-input>
+                  <ion-input name="name" type="text" placeholder="First Name" formControlName="fName"></ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input name="name" type="text" placeholder="Middle Name" #name="ngModel" ngModel></ion-input>
+                  <ion-input name="name" type="text" placeholder="Middle Name" formControlName="mName"></ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input name="name" type="text" placeholder="Last Name" #name="ngModel" ngModel></ion-input>
+                  <ion-input name="name" type="text" placeholder="Last Name" formControlName="lName"></ion-input>
                 </ion-item>
               </div>
 
@@ -67,7 +67,7 @@
 
               <div class="col-6 col-sm-7">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="email" type="email" placeholder="manager@email.com" #email="ngModel" ngModel>
+                  <ion-input name="email" type="email" placeholder="manager@email.com" formControlName="email">
                   </ion-input>
                 </ion-item>
               </div>
@@ -75,12 +75,12 @@
               <div class="w-100 d-none d-md-block" style="margin-top: 15px;"></div>
 
               <div class="col-6 col-sm-4" style="margin-left: 20px;">
-                <h6 style="color: black;">Password*</h6>
+                <h6 style="color: black;">New Password</h6>
               </div>
 
               <div class="col-6 col-sm-7">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="password" type="password" placeholder="Password" #password="ngModel" ngModel>
+                  <ion-input name="password" type="password" placeholder="The new Password" formControlName="newPassword">
                   </ion-input>
                 </ion-item>
               </div>
@@ -88,12 +88,12 @@
               <div class="w-100 d-none d-md-block" style="margin-top: 15px;"></div>
 
               <div class="col-6 col-sm-4" style="margin-left: 20px;">
-                <h6 style="color: black;">Retype Password*</h6>
+                <h6 style="color: black;">Current Password</h6>
               </div>
 
               <div class="col-6 col-sm-7">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="password" type="password" placeholder="Retype Password" #password="ngModel" ngModel>
+                  <ion-input name="password" type="password" placeholder="The current password" formControlName="oldPassword">
                   </ion-input>
                 </ion-item>
               </div>
@@ -107,7 +107,7 @@
 
               <div class="col-6 col-sm-5">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="phone" type="text" placeholder="Phone No" #phone="ngModel" ngModel></ion-input>
+                  <ion-input name="phone" type="text" placeholder="Phone No" formControlName="phone"></ion-input>
                 </ion-item>
               </div>
 
@@ -118,17 +118,17 @@
               </div>
               <div class="col-6 col-sm-7">
                 <ion-item style="border-radius: 10px;">
-                  <ion-input name="address" type="text" placeholder="Street Address" #address="ngModel" ngModel>
+                  <ion-input name="address" type="text" placeholder="Street Address" formControlName="address">
                   </ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px; margin-top: 5px;">
-                  <ion-input name="address" type="text" placeholder="City" #address="ngModel" ngModel>
+                  <ion-input name="address" type="text" placeholder="City" formControlName="city">
                   </ion-input>
                 </ion-item>
 
                 <ion-item style="border-radius: 10px;margin-top: 5px;">
-                  <ion-input name="address" type="text" placeholder="Postal Code" #address="ngModel" ngModel>
+                  <ion-input name="address" type="text" placeholder="Postal Code" formControlName="postCode">
                   </ion-input>
                 </ion-item>
               </div>
@@ -149,8 +149,8 @@
               </div>
 
               <div class="col-6 col-sm-6">
-                <ion-button size="medium" type="button" expand=""
-                  style="color: rgb(90, 90, 90);float: right;margin-right: 150px;" (click)="resetForm(employeeForm)">
+                <ion-button size="medium" type="submit" expand=""
+                  style="color: rgb(90, 90, 90);float: right;margin-right: 150px;" >
                   Update</ion-button>
               </div>
 

@@ -17,12 +17,10 @@ export class AuthService{
 
       login(email:string,passwrd:string){
         const loginData= {email:email , password: passwrd };
-          this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,name:string}>("http://localhost:5000/api/logins/manager-login",loginData).subscribe(res =>{
+          this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,name:string}>("http://localhost:8400/api/logins/manager-login",loginData).subscribe(res =>{
               const token = res.token;
-              console.log("*********")
               this.token =token
               if(this.token){
-                console.log("*********")
                 this.userEmail =res.email;
                 this.userName = res.name;
                 this.userId = res.userId;
@@ -35,7 +33,6 @@ export class AuthService{
                 this.router.navigate(['/manager/dashboard']);
               }
               console.log(res);
-
           })
       }
 

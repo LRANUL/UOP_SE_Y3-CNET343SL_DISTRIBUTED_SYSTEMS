@@ -2,20 +2,23 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const AdminSchema = mongoose.Schema({
-    Prefix: { type: String, required: true},
-    FirstName: { type: String, required: true },
-    MiddleName: { type: String, required: true },
-    LastName: { type: String, required: true },
-    Email: { type: String, required: true, unique: true },
-    Password: { type: String, required: true },
-    RetypePassword: { type: String, required: true},
-    Phone: { type: Number, required: true },
-    StreetAddress: { type: String, required: true },
-    City: { type: String, required: true},
-    PostalCode: { type: String, required: true },
+    name: {
+        prefix: { type: String, required: true },
+        firstName: { type: String, required: true },
+        middleName: { type: String, required: true },
+        lastName: { type: String, required: true },
+    },
+    registeredDateTime:{ type: Date, required: true },
+    emailAddress: { type: String, required: true, unique: true },    
+    phoneNumber: { type: Number, required: true },
+    address: {
+        streetAddress: { type: String, required: true },
+        city: { type: String, required: true },
+        postalZipCode: { type: String, required: true },
+    }
 
 })
 
 
 AdminSchema.plugin(uniqueValidator);
-module.exports = mongoose.model('Admin', AdminSchema);
+module.exports = mongoose.model('admin', AdminSchema);

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const userSchema =mongoose.Schema({ // removed the required in some fields for testing purposes 
+const loginSchema =mongoose.Schema({ // removed the required in some fields for testing purposes 
   email: {type : String, required:true , unique:true},
   password: {type : String, required:true },
   name: {type : String  }, 
@@ -14,5 +14,5 @@ const userSchema =mongoose.Schema({ // removed the required in some fields for t
 })
 
 
-userSchema.plugin(uniqueValidator);
-module.exports = mongoose.model('User',userSchema); 
+loginSchema.plugin(uniqueValidator);
+module.exports = mongoose.model('login',loginSchema); 

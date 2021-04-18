@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from './../../services/account/employee.service'
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -15,11 +15,16 @@ export class SettingsSubPagePage implements OnInit {
   admin_FirstName: any;
   admin_LastName: any;
   admin_Email: any;
-
+  form:FormGroup
 
   constructor(private employeeService: EmployeeService,private authServ:AuthService) { }
 
   ngOnInit() {
+
+    this.form = new FormGroup({
+      'email':new FormControl(null,{validators:[Validators.required,Validators.email]}),
+      'password':new FormControl(null,{validators:[Validators.required]})
+    });
 
         //sidebar Details
         // var Email = "wef";
@@ -49,7 +54,7 @@ export class SettingsSubPagePage implements OnInit {
         this.admin_Email = userEMail;
   }
 
-  onSubmit(form : NgForm){
+  onSubmit(){
 
     // if(this.email_admin == this.emailValidation){
     //   console.log("Data Matched");
@@ -57,7 +62,7 @@ export class SettingsSubPagePage implements OnInit {
     //   console.log(this.email_admin)
     //   console.log("Data not Matching")
     // }
-
+    this.authServ.LoginCheck(this.form.value.email, this.form.value.password)
   }
 
   logout(){

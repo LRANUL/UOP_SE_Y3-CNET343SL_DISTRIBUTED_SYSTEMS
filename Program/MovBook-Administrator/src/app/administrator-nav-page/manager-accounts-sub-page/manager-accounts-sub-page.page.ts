@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { EmployeeService } from './../../services/account/employee.service'
 import { Subscription } from 'rxjs'
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -19,8 +20,11 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
 
   managerSubscription: Subscription;
 
+  logout(){
+    this.authServ.logOut();
+  }
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,private authServ:AuthService) { }
   //constructor() { }
 
   //Angular Page
@@ -77,9 +81,10 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
 
         const userEMail = localStorage.getItem("email");
         const name = localStorage.getItem("name");
+        const lname = localStorage.getItem("lastName");
         console.log(name + userEMail);
         this.admin_FirstName = name
-        this.admin_LastName = name
+        this.admin_LastName = lname
         this.admin_Email = userEMail;
 
 

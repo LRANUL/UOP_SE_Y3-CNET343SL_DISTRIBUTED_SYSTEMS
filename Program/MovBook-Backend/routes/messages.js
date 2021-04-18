@@ -51,4 +51,16 @@ router.post('/sent', (req, res, next) => {
         res.json(Message);
     });
 });
+// Get all indiviual msgs 
+router.get('/:email', (req, res, next) => {
+    Messages.find({email: req.params.email})
+        .then((data) => {
+            console.log(data);
+            res.send(data)
+        }).catch(err => {
+            res.status(404).json({
+                message: err.message
+            })
+        })
+});
 module.exports = router;

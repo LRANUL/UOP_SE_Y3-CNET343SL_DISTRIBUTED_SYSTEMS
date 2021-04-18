@@ -296,7 +296,7 @@ router.post("/change-password",(req , res, next)=>{
         return res.status(401).json({message:"Unregisterd Email!"}); 
       }
       fetchedUSer = user;
-     return bcrypt.compare(req.body.resetToken,user.passwordResetToken)
+     return bcrypt.compare(req.body.oldPassword,user.password)
     })
     .then(bcryptResult =>{
       if(!bcryptResult){

@@ -17,6 +17,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable'
+import { admin } from 'src/app/models/account/admin';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,12 @@ export class EmployeeService {
     return this.currentUpdateDetails.asObservable();
   }
 
+  updateAdmin(admin:admin){
+    this.http.put(this.BASE_URL+"api/admin/update",admin).subscribe((res)=>{
+      console.log(res);
+    })
+  }
+
   selectedEmployee: Employee;
   employees: Employee[];
 
@@ -43,9 +50,10 @@ export class EmployeeService {
 
 
   //sidebar and profile details for admin
-  getDetails(Email) {
+  getDetails(Email:string) {
     //return this.http.get(this.baseUrl + "api/adminDetails?email=" + email);
-    return this.http.get(this.BASE_URL + "api/managers?Email=" + Email);
+    console.log("hiii email |"+Email);
+    return this.http.get<admin>(this.BASE_URL + "api/admin/" + Email);
   }
 
 
@@ -109,8 +117,8 @@ export class EmployeeService {
 
   //Update Manager
   updateManager(
-    prefix: string, FirstName: string, MiddleName: string, LastName: string, 
-    email: string, Phone: string, 
+    prefix: string, FirstName: string, MiddleName: string, LastName: string,
+    email: string, Phone: string,
     StreetAddress: string, City: string, PostalCode: string, id: string) {
 
     let updatedData: Employee;

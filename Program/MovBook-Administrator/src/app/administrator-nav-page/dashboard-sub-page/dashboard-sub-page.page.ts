@@ -62,9 +62,10 @@ export class DashboardSubPagePage implements OnInit {
 
         const userEMail = localStorage.getItem("email");
         const name = localStorage.getItem("name");
+        const lname = localStorage.getItem("lastName");
         console.log(name + userEMail);
         this.admin_FirstName = name
-        this.admin_LastName = name
+        this.admin_LastName = lname
         this.admin_Email = userEMail;
     //sidebar details
     // var Email = "wef";

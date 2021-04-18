@@ -7,17 +7,11 @@
               <ion-card-header>
                 <ion-grid>
                   <ion-row>
-                    <ion-col  size-md="5" offset-md="3.5">
-                      <ion-avatar style="width: 100px; height: 100px; margin: auto;">
-                      <img src="../../assets/images/profile.png">
-                    </ion-avatar>
+                    <ion-col  size-md="5" offset-md="3">
+                      <ion-img src="assets/icon/MovBook-Logo.png" style="height: 100px;"></ion-img>
                     </ion-col>
                   </ion-row>
-                  <ion-row>
-                    <ion-col size-md="5" offset-md="4.2" style="text-align: center;">
-                      <ion-label style="margin-left: 15px; font-size: x-large; font-weight: bolder;">Welcome Back!!!</ion-label>
-                    </ion-col>
-                  </ion-row>
+
                 </ion-grid>
               </ion-card-header>
               <ion-card-content>
@@ -41,7 +35,7 @@
                           <ion-label position="floating">Password</ion-label>
                           <ion-input type="password" formControlName="passwordControl" required></ion-input>
                         </ion-item>
-                        <div *ngIf="password.touched">
+                        <div *ngIf="password.touched && password.invalid">
                           <ion-label style="color: red;" position="stacked">Password is required</ion-label>
                           <br>
                         </div>
@@ -52,8 +46,7 @@
                         <div>
                             <ion-col size-md="6" style="padding-right: 100px;">
                               <ion-button  size="medium" type="submit" [disabled]="loginform.invalid" expand="block">Login</ion-button>
-                            <br>
-                              <ion-button size="medium" expand="block" (click)="signup()">Sign Up</ion-button>
+
                               <br>
                               <ion-button size="medium" expand="block" [routerLink]="['/','login','forget-password']">Forgot Password ?</ion-button>
 
