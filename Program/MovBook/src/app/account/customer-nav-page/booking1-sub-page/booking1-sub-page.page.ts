@@ -271,9 +271,9 @@ export class Booking1SubPagePage implements OnInit {
   }
 
   data = [];
-  bookingTicket(Seatid, SeatNumber, SeatStatus)
+  bookingTicket(Seatid, SeatNumber, SeatStatus, seatUnavailable)
   {
-    if(SeatStatus != "Booked")
+    if(SeatStatus != "null" && seatUnavailable != true)
     {
     let seatElement = document.getElementById(Seatid);
 
@@ -292,7 +292,7 @@ export class Booking1SubPagePage implements OnInit {
     seatElement.style.border = "5px solid #ffffff";
     seatElement.style.background = "#ffffff";
     }
-    else if(checkValue == false && SeatStatus != "Booked")
+    else if(checkValue == false && SeatStatus != "null")
     {
       this.data.push(SeatNumber);
       this.numberoftickets++

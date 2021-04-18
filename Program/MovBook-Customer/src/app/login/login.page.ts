@@ -43,8 +43,8 @@ export class LoginPage implements OnInit {
 
   login()
   {
-  console.log("vds");
    console.log(this.loginform.value)
+   this.router.navigate(['/customer/home'])
   }
 
   signup()

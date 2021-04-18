@@ -20,7 +20,7 @@ export class Booking1SubPagePage implements OnInit {
   seatUnavailable: any;
 
   time;
-    
+
     constructor(private route: Router, private toastCtrl: ToastController,private modalCtrl: ModalController, private customerService: CustomerService, private router: ActivatedRoute) {
     this.router.queryParams.subscribe(params => {
       if (this.route.getCurrentNavigation().extras.state) {
@@ -273,9 +273,11 @@ export class Booking1SubPagePage implements OnInit {
   }
 
   data = [];
-  bookingTicket(Seatid, SeatNumber, SeatStatus)
+  bookingTicket(Seatid, SeatNumber, SeatStatus, seatUnavailable)
   {
-    if(SeatStatus != "Booked")
+    console.log(SeatStatus);
+    console.log(Seatid);
+    if(SeatStatus == "null" && seatUnavailable != true)
     {
     let seatElement = document.getElementById(Seatid);
 
@@ -294,7 +296,7 @@ export class Booking1SubPagePage implements OnInit {
     seatElement.style.border = "5px solid #ffffff";
     seatElement.style.background = "#ffffff";
     }
-    else if(checkValue == false && SeatStatus != "Booked")
+    else if(checkValue == false && SeatStatus == "null")
     {
       this.data.push(SeatNumber);
       this.numberoftickets++
@@ -550,7 +552,7 @@ export class Booking1SubPagePage implements OnInit {
     console.log(this.allticketInformation);
     this.sendTicketDetails(this.allticketInformation)
 
- 
+
     return await (await Payment).present();
   }
   sendTicketDetails(allticketInformation) {

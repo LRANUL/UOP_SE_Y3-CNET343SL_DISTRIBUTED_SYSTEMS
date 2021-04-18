@@ -43,6 +43,7 @@
          </ion-card-content>
        </ion-card>
        <br>
+       <ion-img src="../../assets/images/movie-screen.png" style="height: 110px;"></ion-img>
        <ion-grid>
          <ion-row>
            <ion-col>
@@ -50,7 +51,7 @@
              <table style="border: none;
              position: relative;
              left: 49%;
-             transform: translateX(-49%);">
+             transform: translateX(-49%); margin-left: 2%;">
                <tr *ngFor="let in of covertNumberToArray(NoOfRows); let row = index" >
                  <td class="seatingGridTableTableData" *ngFor="let in of covertNumberToArray(NoOfColumns); let column = index">
                   <div class="seatingGridTableOuterDiv">
@@ -65,7 +66,7 @@
                           'seatingGridTableInnerDiv': !Details.seatUnavailable,
                           'bookedSeatingGridTableInnerDiv': Details.seatStatus != 'null' && !Details.seatUnavailable
                           }" id="{{ Details?.seatId }}">
-                          <p class="seatingGridTableInnerDivP" *ngIf="!Details.seatUnavailable" (click)="bookingTicket(Details.seatId, Details.seatNumber, Details.seatStatus)">
+                          <p class="seatingGridTableInnerDivP" (click)="bookingTicket(Details.seatId, Details.seatNumber, Details.seatStatus, Details.seatUnavailable)">
                            <br>
                             {{Details.seatNumber}}
                           </p>
@@ -78,7 +79,7 @@
              </table>
              </div>
              <br>
-            <ion-img src="../../assets/images/movie-screen.png" style="height: 100px;"></ion-img>
+             <br>
                 <ion-grid>
                   <ion-row>
                     <ion-col size-md="8"  offset-md="2">
