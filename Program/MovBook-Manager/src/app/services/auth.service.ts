@@ -35,7 +35,13 @@ export class AuthService{
               console.log(res);
           })
       }
-
+      LoginCheck(email:string, password:string){
+        const loginDetails ={email:email , password:password}
+        this.httpCli.post('http://localhost:8400/api/logins/Admin-login-check',loginDetails).subscribe((res)=>{
+        console.log(res);
+        this.router.navigate(['/']);
+        })
+      }
       onEmailSent(email:string){
         const emailSent = {email:email}
         this.httpCli.post<{message:string}>('http://localhost:5000/api/users/forgotPassword',emailSent).subscribe(res=>{
