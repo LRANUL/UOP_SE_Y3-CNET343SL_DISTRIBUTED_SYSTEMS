@@ -291,7 +291,7 @@ export class ManagerService {
   retrieveShowingMovieByMovieObjectId(movieObjectId: string) {
     return this.httpClient.get(this.BASE_URL + "api/showing-movies/by-movie-object-id/" + movieObjectId);
   }
-  // GET - Retrieve count of showing movie slots for each months for the past six months
+  // GET - Retrieve count of showing movie slots for each months for the past six months (including the current month (seven months))
   retrieveCountShowingMonths() {
     return this.httpClient.get(this.BASE_URL + "api/showing-movies/showing-movies-by-months");
   }
@@ -308,5 +308,14 @@ export class ManagerService {
   updateShowingCinemaHallDetails(updatedCinemaHallDetails: any) {
     return this.httpClient.put(this.BASE_URL + "api/showing-cinema-halls/update-showing-cinema-hall", updatedCinemaHallDetails);
   }
+
+  /**
+   * Bookings
+   */
+  // GET - Retrieve count of bookings for each months for the past six months (including the current month (seven months))
+  retrieveCountBookingMonths() {
+    return this.httpClient.get(this.BASE_URL + "api/bookings/count-bookings-by-months");
+  }
+
 
 }

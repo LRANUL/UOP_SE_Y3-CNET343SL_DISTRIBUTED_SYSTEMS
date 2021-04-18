@@ -116,7 +116,8 @@ exports.getShowingMovieByMovieObjectId = async (req, res, next) => {
   })
 };
 
-// Function - Retrieve number of showing movie slots per mouth for the previous 6 months using route,
+// Function - Retrieve number of showing movie slots per mouth for the previous six months 
+// (including the current month (seven months)) using route,
 // Route: 'BASE_URL/api/showing-movies/showing-movies-by-months'
 exports.getShowingMoviesByMonths = async (req, res, next) => {
 
@@ -131,11 +132,11 @@ exports.getShowingMoviesByMonths = async (req, res, next) => {
   for (let countIndex = 0; countIndex < 7; countIndex++)
     countOfShowingMovieSlotsArray[countIndex] = 0;
 
-  // For Loop - Iterating through to retrieve the count of showing movies for the past six mouths
-  // Including this month, the loop will iterate seven times
+  // For Loop - Iterating through to retrieve the count of showing movies for the past six months
+  // Including this month, the loop will iterate six times
   for (let monthIndex = 6; monthIndex > 0; monthIndex--) {
 
-    // If the month is not the current month ('monthIndex' == 7), the month will be decremented to the previous month
+    // If the month is not the current month ('monthIndex' == 6), the month will be decremented to the previous month
     if(monthIndex != 6){
       currentDateTime.setMonth(currentDateTime.getMonth() - 1);
     }
@@ -182,6 +183,7 @@ exports.getShowingMoviesByMonths = async (req, res, next) => {
     });
   }
   
+  // Checking whether the retrieval of showing movie slot count was successful
   if(showingMovieSlotsCountRetrieved == true){
     // Returning a response to the client with the count of showing movie slots
     res.status(200).json({

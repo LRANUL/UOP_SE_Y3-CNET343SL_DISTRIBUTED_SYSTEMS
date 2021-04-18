@@ -95,7 +95,7 @@
                                           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                                           font-weight: 500;
                                           color: #000000;">
-                          Movie Showings
+                          Movie Showing Slots
                         </ion-label>
                       </div>
                     </ion-col>
@@ -104,15 +104,15 @@
                     <ion-col>
                       <div style="width: 100%;
                                   height: 30vh;">
+                        <!-- Line Chart - Movie Showings -->
                         <canvas #movieShowingsAreaChart></canvas>  
-
-                        <!-- Loading Spinner - Retrieving latest movies upon page load -->
-                        <ion-spinner name="dots" style="height: 100px;
-                                                        width: 100px;
+                        <!-- Loading Spinner - Retrieving count of showing movie slots upon page load -->
+                        <ion-spinner name="crescent" style="height: 50px;
+                                                        width: 50px;
                                                         position: relative;
                                                         left: 15%;
-                                                        top: 30%;
-                                                        transform: translate(-70%,-85%);" *ngIf="loadingSpinnerMovieShowingsChart"></ion-spinner>
+                                                        top: 15%;
+                                                        transform: translate(-85%,-85%);" *ngIf="loadingSpinnerMovieShowingsChart"></ion-spinner>
                       </div>
                     </ion-col>
                   </ion-row>
@@ -145,7 +145,15 @@
                     <ion-col>
                       <div style="width: 100%;
                                   height: 30vh;">
-                        <canvas #bookingsAreaChart></canvas>  
+                        <!-- Line Chart - Bookings -->
+                        <canvas #bookingsAreaChart></canvas>
+                        <!-- Loading Spinner - Retrieving count of bookings upon page load -->
+                        <ion-spinner name="crescent" style="height: 50px;
+                                                        width: 50px;
+                                                        position: relative;
+                                                        left: 15%;
+                                                        top: 15%;
+                                                        transform: translate(-85%,-85%);" *ngIf="loadingSpinnerBookingsChart"></ion-spinner>
                       </div>
                     </ion-col>
                   </ion-row>
@@ -180,13 +188,13 @@
                       <ion-col>
 
                         <!-- Loading Spinner - Retrieving latest movies upon page load -->
-                        <ion-spinner name="dots" style="height: 100px;
-                                                        width: 100px;
+                        <ion-spinner name="crescent" style="height: 30px;
+                                                        width: 30px;
                                                         position: relative;
                                                         left: 50%;
-                                                        top: 50%;
-                                                        transform: translate(-50%,-50%);
-                                                        margin-top: 20px;" *ngIf="loadingSpinnerLatestMovies"></ion-spinner>
+                                                        top: 75%;
+                                                        transform: translate(-50%,-25%);
+                                                        margin-top: 5%;" *ngIf="loadingSpinnerLatestMovies"></ion-spinner>
 
                         <ion-slides [options]="latestMoviesSliderConfig">
                           <ion-slide *ngFor="let movie of listOfLatestMovies">
@@ -195,7 +203,7 @@
                                                         margin: 0;">
                                 <div style="min-width: 14vh;
                                             height: 22vh;
-                                            background-color: #159292;">
+                                            background-color: #374d58;">
                                   <div style="width: 100%; 
                                               border-radius: 5px;">
                                     <img src="{{ movie?.posterLink }}" style="max-width:auto;

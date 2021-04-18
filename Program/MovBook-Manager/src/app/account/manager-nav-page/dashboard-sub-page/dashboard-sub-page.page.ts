@@ -18,8 +18,8 @@ export class DashboardSubPagePage implements OnInit {
   // Declaration | Initialization - Stores current date and time
   currentDateTime: String;
 
-  // Declaration - to store an array month name for the past six months
-  monthNamesSixMonths = new Array();
+  // Declaration - to store an array month name for the past six months (including the current month (seven months))
+  monthNamesSevenMonths = new Array();
 
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerLatestMovies' block
   loadingSpinnerLatestMovies: Boolean = false;
@@ -68,8 +68,11 @@ export class DashboardSubPagePage implements OnInit {
 
   ngOnInit() {
 
-    // Initiating the movie showings chart
+    // Initiating the movie showings line chart
     this.movieShowingsAreaChart();
+
+    // Initiating the bookings line chart
+    this.BookingsAreaChart();
 
     // Retrieving the count of showing movie slot upon page render
     this.retrieveCountOfShowingMoviesMonths();
@@ -124,12 +127,6 @@ export class DashboardSubPagePage implements OnInit {
   }
 
 
-  ionViewWillEnter(){
-    // Initiating the bookings chart
-    this.BookingsAreaChart();
-  }
-
-
   // Function - Retrieving current data time and generating new format
   // sample: 09:40 AM | Mar 18, 2021
   getCurrentDateTime(){
@@ -151,7 +148,7 @@ export class DashboardSubPagePage implements OnInit {
   }
 
   
-  // Function - Retrieving count of showing movie slots for each month for the past six months
+  // Function - Retrieving count of showing movie slots for each month for the past six months (including the current month (seven months))
   retrieveCountOfShowingMoviesMonths(): Promise<any>{
 
     // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
@@ -170,7 +167,7 @@ export class DashboardSubPagePage implements OnInit {
           // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
           this.loadingSpinnerDashboard = false;
 
-          // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+          // Assigning 'loadingSpinnerMovieShowingsChart' to false (stops loading spinner)
           this.loadingSpinnerMovieShowingsChart = false;
 
           resolve(countShowingMoviesResponse.countOfShowingMovieSlotsArray);
@@ -179,7 +176,7 @@ export class DashboardSubPagePage implements OnInit {
           // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
           this.loadingSpinnerDashboard = false;
 
-          // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+          // Assigning 'loadingSpinnerMovieShowingsChart' to false (stops loading spinner)
           this.loadingSpinnerMovieShowingsChart = false;
 
           console.log("Unable to retrieve count of showing movie slots");
@@ -190,7 +187,7 @@ export class DashboardSubPagePage implements OnInit {
         // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
         this.loadingSpinnerDashboard = false;
 
-        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        // Assigning 'loadingSpinnerMovieShowingsChart' to false (stops loading spinner)
         this.loadingSpinnerMovieShowingsChart = false;
 
         console.log("Unable to retrieve count of showing movie slots: ", error);
@@ -202,7 +199,7 @@ export class DashboardSubPagePage implements OnInit {
   }
 
 
-  // Function - Generate month name for the past six months
+  // Function - Generate month name for the past six months (including the current month (seven months))
   generateMonthNames() {
 
     // Assigning the current date time
@@ -215,12 +212,12 @@ export class DashboardSubPagePage implements OnInit {
     // Extracting the year value from the 'currentDateTime', Sample: 2021
     let year = (new Date(currentDateTime).toLocaleString('default', { year: 'numeric' }));
 
-    // For loop - Initializing 'monthNamesSixMonths' array elements
+    // For loop - Initializing 'monthNamesSevenMonths' array elements
     for (let monthNameIndex = 0; monthNameIndex < 7; monthNameIndex++)
-      this.monthNamesSixMonths[monthNameIndex] = "";
+      this.monthNamesSevenMonths[monthNameIndex] = "";
       
     // For loop - Iterating through the past six months to generate the month names and assign to the 
-    // 'monthNamesSixMonths' array
+    // 'monthNamesSevenMonths' array
     for (let monthIndex = 6; monthIndex >= 0; monthIndex--) {
 
       // After the one iteration has completed the date value will decrement one month in each iteration
@@ -232,8 +229,8 @@ export class DashboardSubPagePage implements OnInit {
       monthName = (new Date(currentDateTime).toLocaleString('default', { month: 'short' })) + " " +
                   (new Date(currentDateTime).toLocaleString('default', { year: 'numeric' }));
 
-      // Assigning the month name to the 'monthNamesSixMonths' array index
-      this.monthNamesSixMonths[monthIndex] = monthName;
+      // Assigning the month name to the 'monthNamesSevenMonths' array index
+      this.monthNamesSevenMonths[monthIndex] = monthName;
     }
   }
 
@@ -246,10 +243,11 @@ export class DashboardSubPagePage implements OnInit {
 
   async movieShowingsAreaChart() {
 
-    // Generating month names for the past six months
+    // Generating month names for the past six months (including the current month (seven months))
     this.generateMonthNames();
 
     // Waiting until the chart data is retrieved from the database
+    // Retrieving count of bookings from the database
     await this.retrieveCountOfShowingMoviesMonths().then((countOfShowingMovieSlots) => {
 
       // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
@@ -259,7 +257,7 @@ export class DashboardSubPagePage implements OnInit {
       this.movieShowingsLines = new Chart(this.movieShowingsLineChart.nativeElement, {
         type: 'line',
         data: {
-          labels: this.monthNamesSixMonths,
+          labels: this.monthNamesSevenMonths,
           datasets: [{
             label: 'Movie Showings',
             fill: false,
@@ -308,51 +306,123 @@ export class DashboardSubPagePage implements OnInit {
   }
 
 
+  // Function - Retrieving count of bookings for each month for the past six months (including the current month (seven months))
+  retrieveCountOfBookingsMonths(): Promise<any>{
+
+    // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+    this.loadingSpinnerDashboard = true;
+
+    // Assigning 'loadingSpinnerBookingsChart' to true (starts loading spinner)
+    this.loadingSpinnerBookingsChart = true;
+
+    return new Promise((resolve,reject)=>{
+
+      // Adding new showing experience
+      this.managerService.retrieveCountBookingMonths()
+        .subscribe((countBookingsResponse: any) => {
+
+        if(countBookingsResponse.message == "Bookings count retrieved"){
+          // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+          this.loadingSpinnerDashboard = false;
+
+          // Assigning 'loadingSpinnerBookingsChart' to false (stops loading spinner)
+          this.loadingSpinnerBookingsChart = false;
+
+          resolve(countBookingsResponse.countOfBookingsArray);
+        }
+        else if(countBookingsResponse.message == "Unable to retrieve count of bookings"){
+          // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+          this.loadingSpinnerDashboard = false;
+
+          // Assigning 'loadingSpinnerBookingsChart' to false (stops loading spinner)
+          this.loadingSpinnerBookingsChart = false;
+
+          console.log("Unable to retrieve count of bookings");
+
+          reject(false);
+        }
+      }, (error: ErrorEvent) => {
+        // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+        this.loadingSpinnerDashboard = false;
+
+        // Assigning 'loadingSpinnerBookingsChart' to false (stops loading spinner)
+        this.loadingSpinnerBookingsChart = false;
+
+        console.log("Unable to retrieve count of bookings: ", error);
+
+        reject(false);
+      });
+    });
+
+  }
+
+
   // Booking area chart implementation
   bookingLines: any;
   bookingColorArray: any;
   
   @ViewChild('bookingsAreaChart', {static: true}) bookingLineChart;
 
-  BookingsAreaChart() {
-    this.bookingLines = new Chart(this.bookingLineChart.nativeElement, {
-      type: 'line',
-      data: {
-        labels: ['Oct 2021', 'Nov 2021', 'Dec 2021', 'Jan 2021', 'Feb 2021', 'Mar 2021', 'Apr 2021'],
-        datasets: [{
-          label: 'Bookings',
-          fill: false,
-          data: [0, 0, 0, 0, 0, 0, 13],
-          borderColor: 'rgb(62, 128, 236)',
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: false
+  async BookingsAreaChart() {
+
+    // Generating month names for the past six months (including the current month (seven months))
+    this.generateMonthNames();
+
+    // Waiting until the chart data is retrieved from the database
+    // Retrieving count of bookings from the database
+    await this.retrieveCountOfBookingsMonths().then((countOfBookings) => {
+
+      // Assigning 'loadingSpinnerDashboard' to true (starts loading spinner)
+      this.loadingSpinnerDashboard = true;
+
+      this.bookingLines = new Chart(this.bookingLineChart.nativeElement, {
+        type: 'line',
+        data: {
+          labels: this.monthNamesSevenMonths,
+          datasets: [{
+            label: 'Bookings',
+            fill: false,
+            data: countOfBookings,
+            borderColor: 'rgb(62, 128, 236)',
+            borderWidth: 3
+          }]
         },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: false,
-              display: true
-            },
-            gridLines: {
-              display: true,
-            },
-          }],
-          xAxes: [{
-            ticks: {
-              display: true
-            },
-            gridLines: {
-              display: true,
-            },
-          }],
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false,
+                display: true
+              },
+              gridLines: {
+                display: true,
+              },
+            }],
+            xAxes: [{
+              ticks: {
+                display: true
+              },
+              gridLines: {
+                display: true,
+              },
+            }],
+          }
         }
-      }
+      });
+
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
+
+    }).catch((error) => {
+      // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
+      this.loadingSpinnerDashboard = false;
+
+      console.log(error);
     });
   }
 
