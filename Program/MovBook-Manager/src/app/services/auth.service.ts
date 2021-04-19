@@ -2,9 +2,16 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject } from 'rxjs'
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
+
+
+
+
+
 
 @Injectable({ providedIn:'root' })
 export class AuthService{
+  private BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
     private AuthStatus =false;
     private token:string;
     private authStatusListener =new Subject<boolean>();
@@ -53,12 +60,6 @@ export class AuthService{
       })
     }
 
-    sendNewPassword(password:string, token:string, email:string){
-    const passwordData = {password:password, passwordToken:token , email:email};
-      this.httpCli.post<{message:string}>('http://localhost:5000/api/logins/new-password',passwordData).subscribe(res=>{
-        console.log(res);
-      })
-    }
 
     LoginCheck(email:string, password:string){
       const loginDetails ={email:email , password:password}
@@ -68,6 +69,10 @@ export class AuthService{
       })
     }
 
+    verifyLoginCredentials(email:string, password:string){
+      const loginDetails = { email: email, password: password }
+      return this.httpCli.post(this.BASE_URL + "api/logins/manager-login-check",loginDetails);
+    }
     getToken(){
       return this.token;
     }
@@ -105,7 +110,7 @@ export class AuthService{
       if(expiresIn > 0){
         this.token = authInfo.token;
         this.AuthStatus = true;
-        this.loginId = authInfo.userId;
+        this.loginId = authInfo.loginId;
         this.userEmail = authInfo.email;
         this.userName = authInfo.name;
         this.lastName = authInfo.lName
@@ -120,17 +125,17 @@ export class AuthService{
     private getAuthData(){
       const token = localStorage.getItem("token");
       const expirationDate =localStorage.getItem("expiration");
-      const userId =localStorage.getItem("userId");
+      const loginId =localStorage.getItem("userId");
       const userEMail = localStorage.getItem("email");
       const fname = localStorage.getItem("name");
       const mName = localStorage.getItem("middleName");
       const lName = localStorage.getItem("lastName");
       const prefix = localStorage.getItem("prefix");
-      if(!token || !expirationDate || !userId || !userEMail){return;}
+      if(!token || !expirationDate || !loginId || !userEMail){return;}
       return{
         token:token,
         expirationDate:new Date(expirationDate),
-        userId:userId,
+        loginId:loginId,
         email:userEMail,
         name:fname,
         mName:mName,
@@ -146,6 +151,7 @@ export class AuthService{
       })
     }
 
+
     private setAuthTimer(duration:number){
       console.log("AuthTimer" + duration);
       this.tokenTimer = setTimeout(()=>{
@@ -156,7 +162,7 @@ export class AuthService{
     private clearAuthData(){
       localStorage.removeItem("token");
       localStorage.removeItem("expiration");
-      localStorage.removeItem("userId");
+      localStorage.removeItem("loginId");
       localStorage.removeItem("email");
       localStorage.removeItem("name");
       localStorage.removeItem('middleName');
@@ -168,12 +174,12 @@ export class AuthService{
     private saveAuthData(token:string,expirationDate:Date,userId:string,email:string,name:string,mName:string,lName:string,prefix:string){
       localStorage.setItem('token', token);
       localStorage.setItem('expiration', expirationDate.toISOString());
-      localStorage.setItem('userId',userId);
+      localStorage.setItem('loginId',userId);
       localStorage.setItem('email',email);
       localStorage.setItem('name',name);
       localStorage.setItem('middleName',mName);
       localStorage.setItem('lastName',lName);
-      localStorage.setItem('prefix',lName);
+      localStorage.setItem('prefix',prefix);
 
     }
 

@@ -50,7 +50,7 @@ export class SettingsSubPagePage implements OnInit {
       emailAddress: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
-    
+
   }
 
   // Alert Box Implementation
@@ -145,7 +145,7 @@ export class SettingsSubPagePage implements OnInit {
         {
           text: 'Continue',
           handler: () => {
-            
+
             this.removeShowingExperience(showingExperienceId);
 
           }
@@ -190,7 +190,7 @@ export class SettingsSubPagePage implements OnInit {
     }, (error: ErrorEvent) => {
       // Assigning 'loadingSpinnerRemoveShowingExperience' to true (stops loading spinner)
       this.loadingSpinnerRemoveShowingExperience = false;
-      
+
       // Showing error message box to the user
       this.alertNotice("ERROR", "Unable to remove showing experience, apologies for the inconvenience. Please contact administrator.");
 
@@ -201,7 +201,7 @@ export class SettingsSubPagePage implements OnInit {
 
   // Retrieving list of showing experiences from the database
   retrieveShowingExperiences() {
-    
+
     // Assigning 'loadingSpinnerShowingExperience' to true (starts loading spinner)
     this.loadingSpinnerShowingExperience = true;
 
@@ -255,7 +255,7 @@ export class SettingsSubPagePage implements OnInit {
   }
 
 
-  // Function - Verifying entered login credentials 
+  // Function - Verifying entered login credentials
   verifyLoginCredentials(loginCredentialsFormData) {
 
     // Assigning 'loadingSpinnerVerifyCredentials' to true (starts loading spinner)
