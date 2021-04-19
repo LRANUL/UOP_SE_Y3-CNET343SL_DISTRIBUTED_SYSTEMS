@@ -13,6 +13,8 @@ export class ManagerNavPagePage implements OnInit {
   selectedSubPagePath = '';
   name: string;
   email: string;
+  lName:string;
+  fName:String
 
   constructor(
     private router: Router,
@@ -26,11 +28,11 @@ export class ManagerNavPagePage implements OnInit {
   }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
+    this.fName = localStorage.getItem('name');
+    this.lName= localStorage.getItem('lastName')
     this.email = localStorage.getItem('email');
     // Remove after getting login credentials
-    this.name = 'Mr. Lucas Anderson';
-    this.email = 'lucasanderson@gmail.com';
+    this.name = this.fName+" "+this.lName;
   }
 
   // Logout Alert Box Implementation

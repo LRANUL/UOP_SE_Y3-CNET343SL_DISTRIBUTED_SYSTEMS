@@ -4,7 +4,7 @@ module.exports = (req,res,next)=>{
   
   try{
     const token = req.headers.authorization.split(" ")[1]; 
-    jwt.verify(token,"the_key_that_is_used_to_create_a_uniquie_key_it_should_be_longer_than_this" );
+    jwt.verify(token,"The_admin_secrets_4" );
     next();
   }
   catch(err){

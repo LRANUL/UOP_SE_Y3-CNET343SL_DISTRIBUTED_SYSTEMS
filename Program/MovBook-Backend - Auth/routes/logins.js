@@ -186,108 +186,146 @@ router.put('/:id' ,(req,res,next)=>{
 });
 
 //Customer login
+
 router.post("/customer-login",(req,res,next)=>{
-  let fetchedUSer;
-  logins.findOne({ email:req.body.email })
-    .then(user =>{
-      console.log(user);
-      if(!user){
-        return res.status(401).json({message:"Unregisterd Email!"}); 
-      }
-      if(user.type != "Customer"){
-        return res.status(401).json({message:"user type mismatch"}); 
-      }else{
-        fetchedUSer = user;
-        return bcrypt.compare(req.body.password ,user.password);
-      }
-      
-    })
-    .then(bcryptResult =>{
-      if(bcryptResult == true){
-        const token = jwt.sign({email: fetchedUSer.email , userId: fetchedUSer._id},
-                            'the_key_that_is_used_to_create_a_uniquie_key_it_should_be_longer_than_this',
-                              {expiresIn: "1h"}); 
-      res.status(200).json({ token: token ,expiresIn:3600, userId:fetchedUSer._id,email:fetchedUSer.email,name:fetchedUSer.name});
-      console.log(fetchedUSer._id + ' ' +'Customer Logged in');
-      }
-      else if(bcryptResult == false){
-        return res.status(401).json({ message:"Wrong user Password"});
-      }
-    })
-    .catch(err =>{
-      return res.status(401).json({ message:"Auth failed"})
-    })
-});
+    let fetchedUSer;
+    logins.findOne({ email:req.body.email })
+      .then(user =>{
+        if(!user){
+          return res.status(401).json({message:"Unregisterd Email!"}); 
+        }
+        if(user.type != "Customer"){
+          return res.status(401).json({message:"user type mismatch"}); 
+        }else{
+          fetchedUSer = user;
+          return bcrypt.compare(req.body.password ,user.password);
+        }
+      })
+      .then(bcryptResult =>{
+         
+        if(bcryptResult == true){
+           
+              const token = jwt.sign({email: fetchedUSer.email , userId: fetchedUSer._id},
+                  'The_Customers_secrets_1',
+                    {expiresIn: "1h"}); 
+              res.status(200).json({
+                  token: token ,
+                  expiresIn:3600, 
+                  userId:fetchedUSer._id,
+                  email:fetchedUSer.email,
+                  prefix:fetchedUSer.name.split(" ")[0],
+                  fName:fetchedUSer.name.split(" ")[1],
+                  mName:fetchedUSer.name.split(" ")[2],
+                  lName:fetchedUSer.name.split(" ")[3] 
+                })
+            
+               
+              console.log(fetchedUSer._id + ' ' +'customer Logged in');
+              
+          
+        }
+        else if(bcryptResult == false){
+          return res.status(401).json({ message:"Wrong user Password"});
+        }
+      })
+      .catch(err =>{
+        return res.status(401).json({ message:"Authentication failed"})
+      })
+  });
 
 
 //manager login
 router.post("/manager-login",(req,res,next)=>{
-  let fetchedUSer;
-  logins.findOne({ email:req.body.email })
-    .then(user =>{
-      if(!user){
-        return res.status(401).json({message:"Unregisterd Email!"}); 
-      }
-      if(!user.type == "manager"){
-        return res.status(401).json({message:"user type mismatch"}); 
-      }else{
-        fetchedUSer = user;
-       
-        return bcrypt.compare(req.body.password ,user.password);
-      }
-      
-    })
-    .then(bcryptResult =>{
-      if(bcryptResult == true){
-        const token = jwt.sign({email: fetchedUSer.email , userId: fetchedUSer._id},
-                            'the_key_that_is_used_to_create_a_uniquie_key_it_should_be_longer_than_this',
-                              {expiresIn: "1h"}); 
-      res.status(200).json({ token: token ,expiresIn:3600, userId:fetchedUSer._id,email:fetchedUSer.email,name:fetchedUSer.name});
-      console.log(fetchedUSer._id + ' ' +'manager Logged in');
-      }
-      else if(bcryptResult == false){
-        return res.status(401).json({ message:"Wrong user Password"});
-      }
-    })
-    .catch(err =>{
-      return res.status(401).json({ message:"Auth failed"})
-    })
-});
+    let fetchedUSer;
+    logins.findOne({ email:req.body.email })
+      .then(user =>{
+        if(!user){
+          return res.status(401).json({message:"Unregisterd Email!"}); 
+        }
+        if(user.type != "Manager"){
+          return res.status(401).json({message:"user type mismatch"}); 
+        }else{
+          fetchedUSer = user;
+          return bcrypt.compare(req.body.password ,user.password);
+        }
+      })
+      .then(bcryptResult =>{
+         
+        if(bcryptResult == true){
+           
+              const token = jwt.sign({email: fetchedUSer.email , userId: fetchedUSer._id},
+                  'The_manager_secrets_2',
+                    {expiresIn: "1h"}); 
+              res.status(200).json({
+                  token: token ,
+                  expiresIn:3600, 
+                  userId:fetchedUSer._id,
+                  email:fetchedUSer.email,
+                  prefix:fetchedUSer.name.split(" ")[0],
+                  fName:fetchedUSer.name.split(" ")[1],
+                  mName:fetchedUSer.name.split(" ")[2],
+                  lName:fetchedUSer.name.split(" ")[3] 
+                })
+            
+               
+              console.log(fetchedUSer._id + ' ' +'manager Logged in');
+              
+          
+        }
+        else if(bcryptResult == false){
+          return res.status(401).json({ message:"Wrong user Password"});
+        }
+      })
+      .catch(err =>{
+        return res.status(401).json({ message:"Authentication failed"})
+      })
+  });
 
 //operator -login
 router.post("/operator-login",(req,res,next)=>{
-  let fetchedUSer;
-  logins.findOne({ email:req.body.email })
-    .then(user =>{
-      console.log(user);
-      if(!user){
-        return res.status(401).json({message:"Unregisterd Email!"}); 
-      }
-      if(!user.type == "Operator"){
-        return res.status(401).json({message:"user type mismatch"}); 
-      }else{
-        fetchedUSer = user;
-        return bcrypt.compare(req.body.password ,user.password);
-      }
-      
-    })
-    .then(bcryptResult =>{
-      if(bcryptResult == true){
-        
-        const token = jwt.sign({email: fetchedUSer.email , userId: fetchedUSer._id},
-                            'the_key_that_is_used_to_create_a_uniquie_key_it_should_be_longer_than_this',
-                              {expiresIn: "1h"}); 
-      res.status(200).json({ token: token ,expiresIn:3600, userId:fetchedUSer._id,email:fetchedUSer.email,name:fetchedUSer.name});
-      console.log(fetchedUSer._id + ' ' +'Operator Logged in');
-      }
-      else if(bcryptResult == false){
-        return res.status(401).json({ message:"Wrong user Password"});
-      }
-    })
-    .catch(err =>{
-      return res.status(401).json({ message:"Auth failed"})
-    })
-});
+    let fetchedUSer;
+    logins.findOne({ email:req.body.email })
+      .then(user =>{
+        if(!user){
+          return res.status(401).json({message:"Unregisterd Email!"}); 
+        }
+        if(user.type != "Operator"){
+          return res.status(401).json({message:"user type mismatch"}); 
+        }else{
+          fetchedUSer = user;
+          return bcrypt.compare(req.body.password ,user.password);
+        }
+      })
+      .then(bcryptResult =>{
+         
+        if(bcryptResult == true){
+           
+              const token = jwt.sign({email: fetchedUSer.email , userId: fetchedUSer._id},
+                  'The_operator_secrets_3',
+                    {expiresIn: "1h"}); 
+              res.status(200).json({
+                  token: token ,
+                  expiresIn:3600, 
+                  userId:fetchedUSer._id,
+                  email:fetchedUSer.email,
+                  prefix:fetchedUSer.name.split(" ")[0],
+                  fName:fetchedUSer.name.split(" ")[1],
+                  mName:fetchedUSer.name.split(" ")[2],
+                  lName:fetchedUSer.name.split(" ")[3] 
+                })
+               
+              console.log(fetchedUSer._id + ' ' +'Operator Logged in');
+              
+          
+        }
+        else if(bcryptResult == false){
+          return res.status(401).json({ message:"Wrong user Password"});
+        }
+      })
+      .catch(err =>{
+        return res.status(401).json({ message:"Authentication failed"})
+      })
+  });
 
 //admin -login
 router.post("/Admin-login",(req,res,next)=>{
@@ -310,7 +348,7 @@ router.post("/Admin-login",(req,res,next)=>{
       if(bcryptResult == true){
          admin.findOne({ emailAddress:req.body.email }).then((response)=>{
             const token = jwt.sign({email: fetchedUSer.email , userId: fetchedUSer._id},
-                'the_key_that_is_used_to_create_a_uniquie_key_it_should_be_longer_than_this',
+                'The_admin_secrets_4',
                   {expiresIn: "1h"}); 
             res.status(200).json({ 
                 token: token ,expiresIn:3600, 
@@ -537,6 +575,7 @@ router.post("/customer-login-check",(req,res,next)=>{
     })
 });
 
+
 //manager-login-check
 router.post("/manager-login-check",(req,res,next)=>{
   let fetchedUSer;
@@ -547,17 +586,16 @@ router.post("/manager-login-check",(req,res,next)=>{
         return res.status(401).json({message:"Enter the correct Email"}); 
       }
       if(user.type != "Manager"){
-        return res.status(401).json({message:"User type mismatch"}); 
+        return res.status(401).json({message:"user type mismatch"}); 
       }else{
         fetchedUSer = user;
         return bcrypt.compare(req.body.password ,user.password);
       }
-      
     })
     .then(bcryptResult =>{
       if(bcryptResult == true){
         
-      res.status(200).json({ message:"Login Check Successful"});
+      res.status(200).json({ message:"Login Check Success!! "});
      
       }
       else if(bcryptResult == false){
