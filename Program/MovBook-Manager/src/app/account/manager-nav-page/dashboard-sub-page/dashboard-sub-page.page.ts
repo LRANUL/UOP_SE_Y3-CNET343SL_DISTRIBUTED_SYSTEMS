@@ -11,6 +11,7 @@ import { MovieDetailsModalPage } from '../browse-upcoming-movies-sub-page/movie-
   styleUrls: ['./dashboard-sub-page.page.scss'],
 })
 export class DashboardSubPagePage implements OnInit {
+  name:string;
 
   // Declaration - to store count of showing movie slots
   countShowingMoviesSlotsMonths = new Array();
@@ -32,7 +33,7 @@ export class DashboardSubPagePage implements OnInit {
 
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerBookingsChart' block
   loadingSpinnerBookingsChart: Boolean = false;
-  
+
   // Declaration - to store list of recent movies
   listOfLatestMovies = new Array();
 
@@ -44,7 +45,7 @@ export class DashboardSubPagePage implements OnInit {
 
   // Declaration | Initialization - to store count of movies as 'countOfMoviesNowShowing'
   countOfMoviesNowShowing: Number = 0;
-  
+
   // Declaration | Initialization - to store count of cinema halls
   countOfCinemaHalls: Number = 0;
 
@@ -59,7 +60,7 @@ export class DashboardSubPagePage implements OnInit {
 
   // Declaration | Initialization - to store count of disabled operator accounts
   countOfDisabledOperatorAccounts: Number = 0;
-  
+
   constructor(
     private managerService: ManagerService,
     private alertController: AlertController,
@@ -67,7 +68,7 @@ export class DashboardSubPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.name = localStorage.getItem('name');
     // Initiating the movie showings line chart
     this.movieShowingsAreaChart();
 
@@ -79,7 +80,7 @@ export class DashboardSubPagePage implements OnInit {
 
     // Retrieving the current date time upon page render
     this.getCurrentDateTime();
-    
+
     // Five Second Timer
     interval(5000).subscribe(timer => {
       // Retrieving the current date time upon page render
@@ -91,7 +92,7 @@ export class DashboardSubPagePage implements OnInit {
 
     // Retrieving count of movies assigned as 'WaitListed' upon page render
     this.retrieveCountOfMoviesWaitListed();
-    
+
     // Retrieving count of movies assigned as 'Upcoming' upon page render
     this.retrieveCountOfMoviesNowShowing();
 
@@ -115,7 +116,7 @@ export class DashboardSubPagePage implements OnInit {
 
   }
 
-  
+
   // Latest Movies Slider Configurations
   latestMoviesSliderConfig = {
     spaceBetween: 0,
@@ -131,8 +132,8 @@ export class DashboardSubPagePage implements OnInit {
   // sample: 09:40 AM | Mar 18, 2021
   getCurrentDateTime(){
     let currentDateTimeDate = new Date();
-    this.currentDateTime = 
-      currentDateTimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | " + 
+    this.currentDateTime =
+      currentDateTimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | " +
       currentDateTimeDate.toLocaleString('default', { day: '2-digit', month: 'short', year: 'numeric' });
   }
 
@@ -147,7 +148,7 @@ export class DashboardSubPagePage implements OnInit {
     await alert.present();
   }
 
-  
+
   // Function - Retrieving count of showing movie slots for each month for the past six months (including the current month (seven months))
   retrieveCountOfShowingMoviesMonths(): Promise<any>{
 
@@ -206,7 +207,7 @@ export class DashboardSubPagePage implements OnInit {
     let currentDateTime = new Date();
     // To store generated month name during each iteration in the for loop
     let monthName;
-    
+
     // Extracting the month value from the 'currentDateTime', Sample: Mar
     let month = (new Date(currentDateTime).toLocaleString('default', { month: 'short' }));
     // Extracting the year value from the 'currentDateTime', Sample: 2021
@@ -215,8 +216,8 @@ export class DashboardSubPagePage implements OnInit {
     // For loop - Initializing 'monthNamesSevenMonths' array elements
     for (let monthNameIndex = 0; monthNameIndex < 7; monthNameIndex++)
       this.monthNamesSevenMonths[monthNameIndex] = "";
-      
-    // For loop - Iterating through the past six months to generate the month names and assign to the 
+
+    // For loop - Iterating through the past six months to generate the month names and assign to the
     // 'monthNamesSevenMonths' array
     for (let monthIndex = 6; monthIndex >= 0; monthIndex--) {
 
@@ -224,7 +225,7 @@ export class DashboardSubPagePage implements OnInit {
       if(monthIndex != 6){
         currentDateTime.setMonth(currentDateTime.getMonth() - 1);
       }
-      
+
       // Extracting the month and year values from the 'currentDateTime', Sample: Mar 2021
       monthName = (new Date(currentDateTime).toLocaleString('default', { month: 'short' })) + " " +
                   (new Date(currentDateTime).toLocaleString('default', { year: 'numeric' }));
@@ -238,7 +239,7 @@ export class DashboardSubPagePage implements OnInit {
   // Movie Showing line chart implementation
   movieShowingsLines: any;
   movieShowingsColorArray: any;
-  
+
   @ViewChild('movieShowingsAreaChart', {static: true}) movieShowingsLineChart;
 
   async movieShowingsAreaChart() {
@@ -360,7 +361,7 @@ export class DashboardSubPagePage implements OnInit {
   // Booking area chart implementation
   bookingLines: any;
   bookingColorArray: any;
-  
+
   @ViewChild('bookingsAreaChart', {static: true}) bookingLineChart;
 
   async BookingsAreaChart() {
@@ -480,7 +481,7 @@ export class DashboardSubPagePage implements OnInit {
 
         // Assigning 'loadingSpinnerDashboard' to false (stops loading spinner)
         this.loadingSpinnerDashboard = false;
-        
+
         // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
         this.loadingSpinnerLatestMovies = false;
 
@@ -495,7 +496,7 @@ export class DashboardSubPagePage implements OnInit {
 
       // Assigning 'loadingSpinnerLatestMovies' to false (stops loading spinner)
       this.loadingSpinnerLatestMovies = false;
-      
+
       console.log("Unable to retrieve latest movies");
     });
 
@@ -540,7 +541,7 @@ export class DashboardSubPagePage implements OnInit {
 
   }
 
-  
+
   // Function - Retrieving count of movies as 'Upcoming'
   retrieveCountOfMoviesUpcoming(){
 

@@ -6,7 +6,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      
+
       <div>
 
         <ion-grid style="height: 100%;
@@ -16,7 +16,7 @@
                           background-color: #e3eaee;
                           border-radius: 10px;">
             <ion-col size="4">
-              
+
               <ion-grid>
                 <ion-row>
                   <ion-col size="4">
@@ -40,7 +40,7 @@
                                         font-weight: 600;
                                         padding-top: 10%;
                                         color: #000000;">
-                        Hello Lucas
+                        Hello {{ name }}
                       </ion-label>
                     </ion-row>
                     <ion-row>
@@ -55,11 +55,11 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
-              
+
             </ion-col>
             <ion-col size="4">
 
-              <ion-img src="assets/images/account/manager/dashboard-sub-page/ripple-loader.svg" 
+              <ion-img src="assets/images/account/manager/dashboard-sub-page/ripple-loader.svg"
                 style="width: 150px;
                       position: absolute;
                       top: 50%;
@@ -105,7 +105,7 @@
                       <div style="width: 100%;
                                   height: 30vh;">
                         <!-- Line Chart - Movie Showings -->
-                        <canvas #movieShowingsAreaChart></canvas>  
+                        <canvas #movieShowingsAreaChart></canvas>
                         <!-- Loading Spinner - Retrieving count of showing movie slots upon page load -->
                         <ion-spinner name="crescent" style="height: 50px;
                                                         width: 50px;
@@ -125,7 +125,7 @@
                           height: auto;
                           border-radius: 10px;
                           background-color: #ffffff;">
-                
+
                 <ion-grid>
                   <ion-row>
                     <ion-col>
@@ -199,19 +199,19 @@
                         <ion-slides [options]="latestMoviesSliderConfig">
                           <ion-slide *ngFor="let movie of listOfLatestMovies">
                             <ion-card (click)=" this.newsService.onGoToTopStoryPage(item)">
-                              <ion-card-content style="padding: 0; 
+                              <ion-card-content style="padding: 0;
                                                         margin: 0;">
                                 <div style="min-width: 14vh;
                                             height: 22vh;
                                             background-color: #374d58;">
-                                  <div style="width: 100%; 
+                                  <div style="width: 100%;
                                               border-radius: 5px;">
                                     <img src="{{ movie?.posterLink }}" style="max-width:auto;
                                                                                   max-height:22vh;" />
                                   </div>
                                 </div>
-                                <ion-button expand="block" 
-                                            type="submit" (click)="openMovieDetailsModal(movie?.imdb.imdbId)" 
+                                <ion-button expand="block"
+                                            type="submit" (click)="openMovieDetailsModal(movie?.imdb.imdbId)"
                                             style="--border-radius: 40px;
                                                     position: absolute;
                                                     bottom: 5px;
@@ -225,7 +225,7 @@
                             </ion-card>
                           </ion-slide>
                         </ion-slides>
-  
+
                       </ion-col>
                     </ion-row>
                   </div>
@@ -253,7 +253,7 @@
                     </ion-row>
                     <ion-row>
                       <ion-col>
-  
+
                         <ion-grid>
                           <ion-row style="margin-top: 1.5%;">
                             <ion-col size="6">
@@ -464,7 +464,7 @@
                             </ion-col>
                           </ion-row>
                         </ion-grid>
-  
+
                       </ion-col>
                     </ion-row>
                   </div>
@@ -478,7 +478,7 @@
                               height: auto;
                               background-color: #ffffff;
                               border-radius: 10px;">
-                          
+
                           <ion-grid>
                             <ion-row>
                               <ion-col>
