@@ -3,9 +3,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-
 const loginsRoutes = require("./routes/logins");
-
+const emailVerifications = require("./routes/email-verifications");
 
 const app = express();
 
@@ -49,6 +48,7 @@ app.use((req, res, next) => {
 
 
 app.use("/api/logins", loginsRoutes);
+app.use("/api/email-verifications", emailVerifications);
 
 
 module.exports = app;

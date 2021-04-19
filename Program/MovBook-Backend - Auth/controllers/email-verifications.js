@@ -74,9 +74,9 @@ exports.createNewEmailVerification = async (req, res, next) => {
 };
 
 // Verifying the authentication pin code using route,
-// 'BASE_URL/api/email-verifications/verify?:emailVerificationObjectId&:enteredVerificationPinCode'
+// 'BASE_URL/api/email-verifications/verify/:emailVerificationObjectId/:enteredVerificationPinCode'
 exports.verifyEmailAddress = async (req, res, next) => {
-console.log(req.params);
+
   // Extracting emailVerificationObjectId from the request body
   let passedEmailVerificationObjectId = req.params.emailVerificationObjectId;
 

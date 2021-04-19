@@ -8,7 +8,7 @@ const emailVerificationsController = require("../controllers/email-verifications
 router.post("/create", emailVerificationsController.createNewEmailVerification);
 
 // GET - Verifying authentication pin code | 
-// Route: 'BASE_URL/api/email-verifications/verify?:emailVerificationObjectId&:enteredVerificationPinCode'
+// Route: 'BASE_URL/api/email-verifications/verify/:emailVerificationObjectId/:enteredVerificationPinCode'
 router.get("/verify/:emailVerificationObjectId/:enteredVerificationPinCode", emailVerificationsController.verifyEmailAddress);
 
 

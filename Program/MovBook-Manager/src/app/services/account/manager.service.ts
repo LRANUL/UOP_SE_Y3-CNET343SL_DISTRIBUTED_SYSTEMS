@@ -16,6 +16,7 @@ import { ShowingMovie } from 'src/app/models/account/manager/showing-movie';
 export class ManagerService {
 
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
+  private ADMIN_BACKEND_BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
 
   constructor(
     private httpClient: HttpClient
@@ -326,11 +327,11 @@ export class ManagerService {
       loginObjectId: loggedInUserEmailAddress,
       enteredEmailAddress: newEmailAddress
     }
-    return this.httpClient.post(this.BASE_URL + "api/email-verifications/create", verificationDetails);
+    return this.httpClient.post(this.ADMIN_BACKEND_BASE_URL + "api/email-verifications/create", verificationDetails);
   }
   // GET - Checking the validity of the entered verification pin code
   verifyVerificationPinCode(emailVerificationObjectId: String, enteredVerificationPinCode: String) {
-    return this.httpClient.get(this.BASE_URL + "api/email-verifications/verify/" + emailVerificationObjectId + "/" + enteredVerificationPinCode);
+    return this.httpClient.get(this.ADMIN_BACKEND_BASE_URL + "api/email-verifications/verify/" + emailVerificationObjectId + "/" + enteredVerificationPinCode);
   }
 
 
