@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const emailVerificationScheme = mongoose.Schema({
   loginObjectId: { type: String, required: true },
   pinCode: { type: String, required: true },
-  generatedDateTime: { type: String, required: true }
+  generatedDateTimeServer: { type: String, required: true }
 })
 
 module.exports = mongoose.model('emailVerifications', emailVerificationScheme); 

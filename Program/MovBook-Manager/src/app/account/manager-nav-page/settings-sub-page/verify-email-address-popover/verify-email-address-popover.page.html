@@ -9,6 +9,11 @@
             </ion-button>
           </ion-col>
         </ion-row>
+        <!-- Loading Spinner - Pin Code Verification -->
+        <ion-spinner name="crescent" style="height: 30px;
+                                            width: 30px;
+                                            position: absolute;
+                                            right: 5%;" *ngIf="loadingSpinnerPinCodeVerification"></ion-spinner>
         <ion-row>
           <ion-col>
             <ion-label style="font-size: 18px">
@@ -29,7 +34,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-input type="number" placeholder="Pin Code" clearInput formControlName="pinCode"></ion-input>
+            <ion-input type="text" placeholder="Pin Code" clearInput formControlName="pinCode"></ion-input>
           </ion-col>
         </ion-row>
       </ion-grid>

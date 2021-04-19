@@ -317,5 +317,21 @@ export class ManagerService {
     return this.httpClient.get(this.BASE_URL + "api/bookings/count-bookings-by-months");
   }
 
+  /**
+   * Email Verification
+   */
+  // POST - Adding new email verification
+  verifyEmailAddress(loggedInUserEmailAddress: String, newEmailAddress: String) {
+    let verificationDetails = {
+      loginObjectId: loggedInUserEmailAddress,
+      enteredEmailAddress: newEmailAddress
+    }
+    return this.httpClient.post(this.BASE_URL + "api/email-verifications/create", verificationDetails);
+  }
+  // GET - Checking the validity of the entered verification pin code
+  verifyVerificationPinCode(emailVerificationObjectId: String, enteredVerificationPinCode: String) {
+    return this.httpClient.get(this.BASE_URL + "api/email-verifications/verify/" + emailVerificationObjectId + "/" + enteredVerificationPinCode);
+  }
+
 
 }

@@ -547,7 +547,7 @@ router.post("/manager-login-check",(req,res,next)=>{
         return res.status(401).json({message:"Enter the correct Email"}); 
       }
       if(user.type != "Manager"){
-        return res.status(401).json({message:"user type mismatch"}); 
+        return res.status(401).json({message:"User type mismatch"}); 
       }else{
         fetchedUSer = user;
         return bcrypt.compare(req.body.password ,user.password);
@@ -557,7 +557,7 @@ router.post("/manager-login-check",(req,res,next)=>{
     .then(bcryptResult =>{
       if(bcryptResult == true){
         
-      res.status(200).json({ message:"Login Check Success!! "});
+      res.status(200).json({ message:"Login Check Successful"});
      
       }
       else if(bcryptResult == false){

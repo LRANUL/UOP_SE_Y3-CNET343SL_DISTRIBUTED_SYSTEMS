@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, AlertController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AddNewShowingExperienceModalPage } from './add-new-showing-experience-modal/add-new-showing-experience-modal.page';
 import { EditShowingExperienceModalPage } from './edit-showing-experience-modal/edit-showing-experience-modal.page';
 import { UpdateAccountDetailsModalPage } from './update-account-details-modal/update-account-details-modal.page';
@@ -12,6 +14,9 @@ import { UpdateAccountDetailsModalPage } from './update-account-details-modal/up
 })
 export class SettingsSubPagePage implements OnInit {
 
+  // Declaration - FormGroup to handle loginCredentialsVerificationForm form
+  loginCredentialsVerificationForm: FormGroup;
+
   // Declaration | Initialization - to handle visibility of 'noShowingExperienceAvailableText' block
   noShowingExperienceAvailableText: Boolean = false;
 
@@ -21,19 +26,30 @@ export class SettingsSubPagePage implements OnInit {
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerRemoveShowingExperience' block
   loadingSpinnerRemoveShowingExperience: Boolean = false;
 
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerVerifyCredentials' block
+  loadingSpinnerVerifyCredentials: Boolean = false;
+
   // Declaration - To store retrieved showing experiences
   showingExperienceList = new Array();
 
   constructor(
+    private formBuilder: FormBuilder,
     private modalController: ModalController,
     private managerService: ManagerService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
 
     // Retrieving showing experiences upon page render
     this.retrieveShowingExperiences();
+
+    // Assigning 'loginCredentialsVerificationForm' form validation
+    this.loginCredentialsVerificationForm = this.formBuilder.group({
+      emailAddress: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
     
   }
 
@@ -68,11 +84,6 @@ export class SettingsSubPagePage implements OnInit {
         this.retrieveShowingExperiences();
       }
     }
-
-    /**
-     * TODO: REMOVE THIS AFTER AUTH IS COMPLETE
-     */
-    this.openUpdateAccountDetailsModal();
   }
 
   // Function - Implementation for opening the 'Edit Showing Experience' modal
@@ -105,10 +116,13 @@ export class SettingsSubPagePage implements OnInit {
   }
 
   // Function - Implementation for opening the 'Update Account Details' modal
-  async openUpdateAccountDetailsModal(){
+  async openUpdateAccountDetailsModal(enterEmailAddress: String){
     const updateAccountDetailsModal = await this.modalController.create({
       component: UpdateAccountDetailsModalPage,
       cssClass: 'update-account-details-modal',
+      componentProps: {
+        passingEnteredEmailAddress: enterEmailAddress
+      },
       // Disabling modal closing from any outside clicks
       backdropDismiss: false,
     });
@@ -239,5 +253,47 @@ export class SettingsSubPagePage implements OnInit {
     });
 
   }
+
+
+  // Function - Verifying entered login credentials 
+  verifyLoginCredentials(loginCredentialsFormData) {
+
+    // Assigning 'loadingSpinnerVerifyCredentials' to true (starts loading spinner)
+    this.loadingSpinnerVerifyCredentials = true;
+
+    this.authService.verifyLoginCredentials(loginCredentialsFormData.emailAddress, loginCredentialsFormData.password)
+      .subscribe((verificationResponse: any) => {
+
+      if(verificationResponse.message == "Login Check Successful"){
+        // Assigning 'loadingSpinnerVerifyCredentials' to false (stops loading spinner)
+        this.loadingSpinnerVerifyCredentials = false;
+
+        // Resetting the 'loginCredentialsVerificationForm' form
+        this.loginCredentialsVerificationForm.reset();
+
+        // Opening 'openUpdateAccountDetailsModal' modal to allow user to edit the account details
+        this.openUpdateAccountDetailsModal(loginCredentialsFormData.emailAddress);
+      }
+      else{
+        // Assigning 'loadingSpinnerVerifyCredentials' to false (stops loading spinner)
+        this.loadingSpinnerVerifyCredentials = false;
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", verificationResponse.message);
+
+        console.log("Unable to verify credentials: ", verificationResponse.message);
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerVerifyCredentials' to false (stops loading spinner)
+      this.loadingSpinnerVerifyCredentials = false;
+
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to verify credentials, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to verify credentials: ", error);
+    });
+  }
+
 
 }
