@@ -223,6 +223,18 @@ export class UpdateAccountDetailsModalPage implements OnInit {
           // Enabling form submit
           this.updateAccountDetailsForm.valid;
         }
+        else if(verificationResponse.message == "Email Already Exists"){
+          // Assigning 'loadingSpinnerVerifyNewEmail' to false (stops loading spinner)
+          this.loadingSpinnerVerifyNewEmail = false;
+  
+          // Showing error message box to the user
+          this.alertNotice("Email Exists", "Entered email address is already existing.");
+  
+          console.log("Email address exists");
+  
+          // Enabling form submit
+          this.updateAccountDetailsForm.valid;
+        }
         else if(verificationResponse.message == "Unable to create email verification"){
           // Assigning 'loadingSpinnerVerifyNewEmail' to false (stops loading spinner)
           this.loadingSpinnerVerifyNewEmail = false;

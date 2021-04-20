@@ -127,8 +127,8 @@
                     <ion-col size-md="6" offset-md="3">
                       <form [formGroup]="loginform" (ngSubmit)="onLogin()">
                         <ion-item>
-                          <ion-label position="floating">Username</ion-label>
-                          <ion-input type="email" placeholder="example@email.com" formControlName="emailControl" required></ion-input>
+                          <ion-label position="floating">Email Address</ion-label>
+                          <ion-input type="email" placeholder="example@email.com" formControlName="emailControl" clearInput required></ion-input>
                         </ion-item>
                          <div *ngIf="email.touched && email.errors">
                           <ion-label style="color: red;" position="stacked">E-mail is required</ion-label>
@@ -140,7 +140,7 @@
                          </div>
                         <ion-item>
                           <ion-label position="floating">Password</ion-label>
-                          <ion-input type="password" formControlName="passwordControl" required></ion-input>
+                          <ion-input type="password" formControlName="passwordControl" clearInput required></ion-input>
                         </ion-item>
                         <div *ngIf="password.touched && password.invalid">
                           <ion-label style="color: red;" position="stacked">Password is required</ion-label>
