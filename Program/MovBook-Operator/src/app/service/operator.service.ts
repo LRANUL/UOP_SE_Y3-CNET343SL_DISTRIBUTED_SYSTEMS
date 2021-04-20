@@ -62,13 +62,16 @@ export class OperatorService {
   }
   storeBooking(refreshments, movie, refreshmentsTotal, total) {
     var email = localStorage.getItem('email');
-    email = 'john@movbook.com'
     const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, mealCostLKR: refreshmentsTotal, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
     console.log(body)
-    this.http.put(this.BASE_URL + "api/loyalty/add", { points: 100, email: email })
     return this.http.post<any>(this.BASE_URL + "api/bookings/add", body);
   }
-
+  addPoints(billTotal) {
+    var email = localStorage.getItem('email');
+    var points = billTotal/10;
+    const body = { points: points, email: email }
+    return this.http.put(this.BASE_URL + "api/loyalty/add", body)
+  }
 
   /* BOOKING P1 FUNCTIONS*/
   public updatedBookedtickets: bookedTickets

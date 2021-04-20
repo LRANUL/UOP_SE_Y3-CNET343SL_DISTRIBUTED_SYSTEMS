@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { OperatorService } from "./../../service/operator.service";
+import { AuthService } from '../../service/auth.service';
 
 
 @Component({
@@ -24,15 +25,16 @@ export class SettingSubPagePage implements OnInit {
     public operatorService: OperatorService,
     public toastController: ToastController,
     public alertController: AlertController,
+    private authServ: AuthService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
+    var fname = localStorage.getItem('name');
+    var lname = localStorage.getItem('lastName');
     this.email = localStorage.getItem('email');
-    // Remove after getting login credentials
-    this.name = 'John Steve';
-    this.email = 'john@movbook.com';
+    this.name = fname+" "+ lname;
+
     this.operatorService.getProfile(this.email).subscribe(
       (data) => {
         console.log(data)
@@ -48,6 +50,8 @@ export class SettingSubPagePage implements OnInit {
       }
     );
   }
+  /** Update Operator email */
+
   async updateEmail() {
     const alert = await this.alertController.create({
       header: "Email Update",
@@ -101,6 +105,7 @@ export class SettingSubPagePage implements OnInit {
     });
     await alert.present();
   }
+  /** Update operator password*/
 
   async updatePassword() {
     const alert = await this.alertController.create({
@@ -137,6 +142,11 @@ export class SettingSubPagePage implements OnInit {
       ],
     });
     await alert.present();
+  }
+  
+  /** Logout operator */
+  logout(){
+    this.authServ.logOut();
   }
   /** Navigation */
   goToDashboard() {

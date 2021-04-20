@@ -78,11 +78,12 @@ export class MovieBookingSubPagePage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
+    var fname = localStorage.getItem('name');
+    var lname = localStorage.getItem('lastName');
     this.email = localStorage.getItem('email');
-    // Remove after getting login credentials
-    this.name = 'John Steve';
-    this.email = 'john@movbook.com';
+    this.name = fname+" "+ lname;
+  /** Get movies data to app */
+
     this.operatorService.getMovies().subscribe(
       (data) => {
         this.Movies = data['returnedData'];
@@ -92,15 +93,8 @@ export class MovieBookingSubPagePage implements OnInit {
         console.log(error);
       }
     );
-    this.operatorService.getBeverages().subscribe(
-      (data) => {
-        this.Beverages = data;
-        console.log(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  /** Get refreshments data to app */
+    this.getBeverages()
   }
   getBeverages() {
     this.operatorService.getBeverages().subscribe(
@@ -114,7 +108,8 @@ export class MovieBookingSubPagePage implements OnInit {
     );
   }
 
-  
+  /** Update Refreshments cart */
+
   beverageUpdate(beverage) {
 
     let name: string = beverage.name
@@ -127,6 +122,8 @@ export class MovieBookingSubPagePage implements OnInit {
     this.Total = billTotal;
     console.log("Total:" + billTotal)
   }
+  /** Refreshments cart management*/
+
   beverageRemove(item) {
     refreshmentsTotal -= refreshmentsLastItem
     this.Refreshments.pop('item');
@@ -134,10 +131,10 @@ export class MovieBookingSubPagePage implements OnInit {
     this.Total = billTotal;
     console.log("Total:" + billTotal)
   }
-/** 
- * Getting Data from Booking Part 1 (includes venue and movie selection) 
- * to Proceed with Booking Part 2 (includes Payment processing and Refreshments selection) 
- * */
+  /** 
+   * Getting Data from Booking Part 1 (includes venue and movie selection) 
+   * to Proceed with Booking Part 2 (includes Payment processing and Refreshments selection) 
+   * */
   async selectMovie(id) {
     const locationTime = this.modalCtrl.create({
       component: LocationAndTimeSubPagePage,
@@ -199,13 +196,16 @@ export class MovieBookingSubPagePage implements OnInit {
 
           this.operatorService.storeBooking(this.Refreshments, movieSelectionData, refreshmentsTotal, billTotal).subscribe(
             async (data) => {
-              const alert = await this.alertCtrl.create({
-                header: 'Payment Sucessful',
-                subHeader: 'Booking Stored',
-                backdropDismiss: true,
-                message: 'Payment received booking data stored.',
-              })
-              await alert.present();
+              this.operatorService.addPoints(billTotal).subscribe(
+                async (data) => {
+                  const alert = await this.alertCtrl.create({
+                    header: 'Payment Sucessful',
+                    subHeader: 'Booking Stored',
+                    backdropDismiss: true,
+                    message: 'Payment received booking data stored.',
+                  })
+                  await alert.present();
+                })
             },
             (error) => {
               console.log(error);
@@ -224,7 +224,7 @@ export class MovieBookingSubPagePage implements OnInit {
       { amount }
     );
   }
- 
+
   /** Navigation */
   goToDashboard() {
     this.router.navigate(['operator']);

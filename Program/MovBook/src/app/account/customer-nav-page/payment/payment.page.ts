@@ -153,13 +153,16 @@ export class PaymentPage implements OnInit {
 
           this.customerService.storeBooking(this.Refreshments, movieSelectionData, refreshmentsTotal, billTotal).subscribe(
             async (data) => {
-              const alert = await this.alertCtrl.create({
-                header: 'Payment Sucessful',
-                subHeader: 'Booking Stored',
-                backdropDismiss: true,
-                message: 'Payment received booking data stored.',
-              })
-              await alert.present();
+              this.customerService.addPoints(billTotal).subscribe(
+                async (data) => {
+                  const alert = await this.alertCtrl.create({
+                    header: 'Payment Sucessful',
+                    subHeader: 'Booking Stored',
+                    backdropDismiss: true,
+                    message: 'Payment received booking data stored.',
+                  })
+                  await alert.present();
+                })
             },
             (error) => {
               console.log(error);

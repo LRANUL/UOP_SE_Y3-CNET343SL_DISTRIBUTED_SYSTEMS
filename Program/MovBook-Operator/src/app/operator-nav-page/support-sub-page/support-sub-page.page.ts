@@ -27,12 +27,11 @@ export class SupportSubPagePage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.name = localStorage.getItem('name');
+    var fname = localStorage.getItem('name');
+    var lname = localStorage.getItem('lastName');
     this.email = localStorage.getItem('email');
-    // Remove after getting login credentials
-    this.name = 'John Steve';
-    this.email = 'john@movbook.com';
-
+    this.name = fname+" "+ lname;
+/** Checks offer status */
     await this.getMessages();
     this.operatorService.getOfferStatus().subscribe(
       (data) => {
@@ -63,6 +62,7 @@ export class SupportSubPagePage implements OnInit {
       }
     );
   }
+  /** Sets Promotion to Operator preference */
   updatePromotion(promotion) {
     this.operatorService.setOfferStatus(promotion).subscribe(
       (data) => {
@@ -73,6 +73,8 @@ export class SupportSubPagePage implements OnInit {
       }
     );
   }
+  /** Sets Maintenance Lock to Operator preference */
+
   updateMaintainence(maintainence) {
     this.operatorService.setMaintenanceStatus(maintainence).subscribe(
       (data) => {
@@ -83,6 +85,8 @@ export class SupportSubPagePage implements OnInit {
       }
     );
   }
+  /** Get support messages */
+
   async getMessages() {
     (await this.operatorService.getMessages()).subscribe(
       (data) => {
@@ -94,11 +98,14 @@ export class SupportSubPagePage implements OnInit {
       }
     );
   }
+
   selectMessage(messages) {
     this.selectedMessage = messages._id
     this.selectedMessageEmail = messages.email
     this.selectedMessageSubject = messages.subject
   }
+  /** Send feedback from Operator to customer */
+
   sendReply() {
     this.operatorService.sendMessage(this.selectedMessage, this.MessageResponse).subscribe(
       async (data) => {
@@ -106,16 +113,17 @@ export class SupportSubPagePage implements OnInit {
         if (data == 'Message Sent') {
           this.getMessages();
           // Data clean 
-          this.selectedMessage = null
-          this.selectedMessageEmail = null
-          this.selectedMessageSubject = null
-          this.MessageResponse = null
+          
           const alert = await this.alertController.create({
             header: 'Reponse sent',
             message: 'Reply was sent to ' + this.selectedMessageEmail,
           });
 
           await alert.present();
+          this.selectedMessage = null
+          this.selectedMessageEmail = null
+          this.selectedMessageSubject = null
+          this.MessageResponse = null
         }
         else if (data == 'Not Updated"') {
           const alert = await this.alertController.create({
