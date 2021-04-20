@@ -22,13 +22,15 @@ export class ManageStockSubPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
+    var fname = localStorage.getItem('name');
+    var lname = localStorage.getItem('lastName');
     this.email = localStorage.getItem('email');
-    // Remove after getting login credentials
-    this.name = 'John Steve';
-    this.email = 'john@movbook.com';
+    this.name = fname+" "+ lname;
+
     this.getBeverages();
   }
+  /** Get refreshments list */
+
   getBeverages() {
     this.operatorService.getBeverages().subscribe(
       (data) => {
@@ -43,6 +45,8 @@ export class ManageStockSubPagePage implements OnInit {
   beverageUpdate(beverage) {
     this.selectedBeverage = beverage.name
   }
+  /** Update Refreshments stock level */
+
   updateStock() {
     this.operatorService.updateStock(this.selectedBeverage, this.Quantity).subscribe(
       async (data) => {

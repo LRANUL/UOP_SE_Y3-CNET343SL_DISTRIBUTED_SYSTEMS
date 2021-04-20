@@ -27,10 +27,16 @@ export class CustomerService {
   }
   storeBooking(refreshments, movie, refreshmentsTotal, total) {
     var email = localStorage.getItem('email');
-    email = 'john@movbook.com'
     const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, mealCostLKR: refreshmentsTotal, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
     console.log(body)
     return this.http.post<any>(this.BASE_URL + "api/bookings/add", body);
+  }
+
+  addPoints(billTotal) {
+    var email = localStorage.getItem('email');
+    var points = billTotal/10;
+    const body = { points: points, email: email }
+    return this.http.put(this.BASE_URL + "api/loyalty/add", body)
   }
   public moviesUpdated = {
     movieObjectId: '',

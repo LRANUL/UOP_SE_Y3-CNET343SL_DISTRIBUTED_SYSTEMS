@@ -24,8 +24,9 @@ export class DashboardSubPagePage implements OnInit {
     this.lname = localStorage.getItem('lastName');
     this.email = localStorage.getItem('email');
     console.log(this.fname)
-    // Remove after getting login credentials
     this.name = this.fname+" "+this.lname;
+  /** Get movies list */
+
     this.operatorService.getMovies().subscribe(
       (data) => {
         this.Movies = data['returnedData'];
