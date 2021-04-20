@@ -1,301 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="img/Logo.png">
-    <style>
-    /* Container needed to position the button. Adjust the width as needed */
-        .container {
-          position: relative;
-          width: 25%;
-        }
-        
-        /* Make the image responsive */
-        .container img {
-          width: 100;
-          height: 100;
-        }
-        
-        /* Style the button and place it in the middle of the container/image */
-        .container .btn {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          -ms-transform: translate(-50%, -50%);
-          background-color: #555;
-          color: white;
-          font-size: 16px;
-          padding: 12px 24px;
-          border: none;
-          cursor: pointer;
-          border-radius: 5px;
-        }
-        
-        .container .btn:hover {
-          background-color: black;
-        }
-        </style>
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    <title>MovBook</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-
-</head>
-
-
-<body>
-
-    <nav class="navbar navbar-expand-md">
-        <a class="navbar-brand" href="index.html"><img src="img/MovBook-Logo.jpeg"  width="170" 
-            height="50"/></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i>
-      </button>
-
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="movies.html"><i class="fas fa-film"></i> Movies</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-language"></i>Language</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="index.html">English</a>
-                        <a class="dropdown-item" href="#">සිංහල</a>
-                        <a class="dropdown-item" href="#">தமிழ்</a>
-                      
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+        <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+        <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+      <ion-button slot="start" color="light">
+        <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+      </ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-grid>
+    <ion-row>
+        <ion-col>
+            <ion-grid>
+              <ion-row>
+                  <ion-col>
+                    <div style="position: relative; background-color:darkgray">
+                        <ion-title style="font-size: x-large; font-weight: bolder;"> Upcoming Movies</ion-title>
+                        <br>
+                        <ion-slides [options]="sliderConfig">
+                            <ion-slide *ngFor="let movie of upcomingShowingMovies">
+                                  <img src="{{movie.posterLink}}" style="width: 90%;">
+                            </ion-slide>
+                        </ion-slides>
                     </div>
-                </li>
-               
-            </ul>
-            <a class="nav-button" href="index.html"><i class="fas fa-user-circle"></i> Login</a>
-        </div>
-    </nav>
-
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="img/wp7999745.jpg" height="760" alt="Raya And The Last Dragon">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg" alt="Avengers: Infinity War">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="img/The croods na new age.jpg" alt="The Croods A New Age">
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-    </div>
-    <!-- Icons Grid -->
-    <section class="features-icons bg-light text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                        <div class="features-icons-icon d-flex">
-                            <i class="fas fa-money-bill-alt m-auto main-icons"></i>
+                  </ion-col>
+              </ion-row>
+              <br>
+              <ion-row>
+                  <ion-col size-md="10"  offset-md="1">
+                      <ion-card>
+                    <ion-grid style="text-align: center;">
+                        <ion-row>
+                            <ion-col>
+                                <ion-icon name="cash-outline" style="font-size: xx-large;"></ion-icon>
+                                <ion-title>Best Prices</ion-title>
+                                <ion-label>
+                                    sdvsdvsvsvsvsvdsvsdvsvdsvsdvss
+                                </ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-icon name="globe-outline" style="font-size: xx-large;"></ion-icon>
+                                <ion-title>Booking</ion-title>
+                                <ion-label>
+                                    sdvsdvsvsvsvsvdsvsdvsvdsvsdvss
+                                </ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-icon name="headset-outline" style="font-size: xx-large;"></ion-icon>
+                                <ion-title>Professional Support</ion-title>
+                                <ion-label>
+                                    sdvsdvsvsvsvsvdsvsdvsvdsvsdvss
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                      </ion-card>
+                  </ion-col>
+              </ion-row>
+              <br>
+            <ion-row>
+                <br>
+                  <ion-col>
+                    <ion-title style="font-size: x-large; font-weight: bolder;"> Now Showing Movies</ion-title>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size-md="10"  offset-md="1">
+                    <ion-card>
+                        <div style="height: 500px; overflow-y: auto; padding-top: 20px;">
+                            <ion-grid>
+                                <ion-row *ngFor="let movie of nowShowingMovies">
+                                <ion-col size-md="5"  offset-md="0.5">
+                                  <img src="{{movie.posterLink}}">     
+                                </ion-col>
+                                <ion-col>
+                                    <br>
+                                   <ion-label style="font-size: x-large;"><strong> Name: </strong>{{movie.movieTitle}}</ion-label>
+                                   <br>
+                                   <ion-label style="font-size: large;"><strong>Rated: </strong>{{movie.rated}}</ion-label>
+                                   <br>
+                                   <ion-label style="font-size: large;"><strong> Release Date: </strong>{{movie.releasedDate}}</ion-label>
+                                   <br>
+                                   <ion-label style="font-size: large;"><strong>Run Time: </strong>{{movie.movieRuntime}}</ion-label>
+                                   <br>
+                                   <ion-label style="font-size: large;"><strong>Genre: </strong>{{movie.genre}}</ion-label>
+                                   <br>
+                                   <ion-label style="font-size: large;"><strong>Plot: </strong>{{movie.plot}}</ion-label>
+                                   <br>
+                                   <ion-label style="font-size: large;"><strong>Actors: </strong>{{movie.actors}}</ion-label>
+                                   <br>
+                                   <ion-label style="font-size: large;"><strong> Awards: </strong>{{movie.awards}}</ion-label>
+                                   <br>
+                                   <br>
+                                   <ion-button expand="block">Book Ticket</ion-button>
+                                </ion-col>
+                                </ion-row>
+                            </ion-grid>
                         </div>
-                        <h3>Best Prices</h3>
-                        <p class="lead mb-0">Looking for <span class="fancy-underline">cheaper</span> tickets, This is the best place you are looking for!</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                        <div class="features-icons-icon d-flex">
-                            <i class="fas fa-mobile-alt m-auto main-icons"></i>
-                        </div>
-                        <h3>Phone Booking</h3>
-                        <p class="lead mb-0">Book tickets from <span class="fancy-underline">anywhere</span> in the world with our mobile app!</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                        <div class="features-icons-icon d-flex">
-                            <i class="fas fa-headphones m-auto main-icons"></i>
-                        </div>
-                        <h3>Professional Support</h3>
-                        <p class="lead mb-0">Have questions? Our professional support <span class="fancy-underline">team</span> is 24/7 always here!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="download store-download text-center" id="download">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <h2 class="section-heading">Now you can buy tickets on Your Fingertip!</h2>
-                    <p>Just download our mobile apps and Start purchase your movie tickets!</p>
-                    <div class="badges">
-                        <a class="badge-link" href="https://play.google.com/store/apps"><img src="img/google-play.png" alt=""></a>
-                        <a class="badge-link" href="https://www.apple.com/app-store/"><img src="img/appstore.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--About movie start-->
-    <section class="about-movie">
-        <div class="row">
-            <div class="container">
-                <img src="img/raya about.jpeg" alt="raya" width="300" height="300">
-                <button class="btn">About</button>
-              </div>
-              <div class="container">
-                <img src="img/Avengers about.jpg" alt="Avengers" width="300" height="300">
-                <button class="btn">About</button>
-              </div>
-              <div class="container">
-                <img src="img/Croods a new age.jpg" alt="Croods a new age" width="300" height="300">
-                <button class="btn">About</button>
-              </div>
-    </div>
-           
-            
-    </section>
-    <br><br><br><br><br><br><br><br>
-    <!--About movie end-->
-        
-        
-    <!-- Action button -->
-    <section class="get-started">
-        <div class="get-started-content">
-            <div class="container">
-                <h2>what are you waiting?<br>See what are the latest movies </h2>
-                <a href="movies.html" class="browsing-button">Let's Get Started!</a>
-            </div>
-        </div>
-        <div class="overlay"></div>
-    </section>
-    <!-- /Action button -->
-    <!-- Sponsors -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <a href="#">
-              <img class="img-fluid d-block mx-auto" src="img/universal.png" alt="Sponsor 1">
-            </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a href="#">
-              <img class="img-fluid d-block mx-auto" src="img/warner.png" alt="Sponsor 2">
-            </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a href="#">
-              <img class="img-fluid d-block mx-auto" src="img/disney.png" alt="Sponsor 3">
-            </a>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <a href="#">
-              <img class="img-fluid d-block mx-auto" src="img/byalk.png" alt="Sponsor Myself">
-            </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /Sponsors -->
-    <!-- Newsletter -->
-    <section class="newsletter text-white text-center">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-9 mx-auto">
-                    <h2 class="mb-4">Please contact me!</h2>
-                </div>
-                <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                    <form>
-                        <div class="form-row">
-                            <div class="col-12 col-md-9 mb-2 mb-md-0">
-                                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <button type="submit" class="btn btn-block btn-lg btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /Newsletter -->
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-                    <ul class="list-inline mb-2">
-                        <li class="list-inline-item">
-                            <a href="About.html">About us</a>
-                        </li>
-                        <li class="list-inline-item">&sdot;</li>
-                        <li class="list-inline-item">
-                            <a href="About.html">Refunds</a>
-                        </li>
-                        <li class="list-inline-item">&sdot;</li>
-                        <li class="list-inline-item">
-                            <a href="About.html">Terms and Privacy</a>
-                        </li>
-                        <li class="list-inline-item">&sdot;</li>
-                        <li class="list-inline-item">
-                            <a href="contact.html">Contact</a>
-                        </li>
-                    </ul>
-                   
-                </div>
-                <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item mr-3 ">
-                            <a href="https://lk.linkedin.com/" class="footer-fb">
-                  <i class="fab fa-linkedin fa-2x fa-fw"></i>
-                </a>
-                        </li>
-                        <li class="list-inline-item mr-3">
-                            <a href="https://twitter.com/" class="footer-tw">
-                  <i class="fab fa-twitter fa-2x fa-fw"></i>
-                </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://www.instagram.com/" class="footer-in">
-                  <i class="fab fa-instagram fa-2x fa-fw"></i>
-                </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- /Footer -->
-    <!-- Bootstrap core JavaScript-->
-   
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-
-</body>
-
-</html>
+                    </ion-card>      
+                </ion-col>
+            </ion-row>
+            </ion-grid>
+        </ion-col>
+    </ion-row>
+    </ion-grid>
+    </ion-content>
+    <ion-footer>
+        <ion-grid>
+            <ion-row>
+                <ion-col size-md="0.5" offset-md="0.5" (click)="homeNav()">
+                   <ion-label style="color: white;"><strong>Home</strong></ion-label> 
+                </ion-col>
+                <ion-col size-md="0.7" (click)="aboutusNav()">
+                    <ion-label style="color: white;"><strong>About Us</strong></ion-label>
+                </ion-col>
+                <ion-col size-md="1.2" (click)="openmodalterms()">
+                    <ion-label style="color: white;"><strong>Terms & Conditions</strong></ion-label>  
+                </ion-col>
+                <ion-col (click)="openmodalCustomer()">
+                    <ion-label style="color: white;"><strong>Contact Us</strong></ion-label>  
+                </ion-col>
+                    <ion-col>
+                      <ion-grid>
+                          <ion-row style="float: right;">
+                              <ion-col size-md="4" >
+                                <a href="https://www.instagram.com/movbook.lk/">
+                                    <ion-icon name="logo-instagram" style="font-size: x-large; padding-right: 20px;"></ion-icon>
+                                    </a>
+                              </ion-col>
+                              <ion-col size-md="4">
+                                <a href="https://twitter.com/movbook_lk">
+                                    <ion-icon name="logo-twitter" style="font-size: x-large;  padding-right: 20px;"></ion-icon>
+                                    </a>
+                            </ion-col>
+                            <ion-col size-md="4">
+                                <a href="https://www.facebook.com/mov.book.5/">
+                                    <ion-icon name="logo-facebook" style="font-size: x-large;  padding-right: 20px;"></ion-icon>
+                                  </a>
+                            </ion-col>
+                          </ion-row>
+                      </ion-grid>
+                    </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-footer>

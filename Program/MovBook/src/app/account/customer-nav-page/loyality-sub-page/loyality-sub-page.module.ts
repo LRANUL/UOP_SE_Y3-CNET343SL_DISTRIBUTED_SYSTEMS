@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { LoyalitySubPagePageRoutingModule } from './loyality-sub-page-routing.module';
 
 import { LoyalitySubPagePage } from './loyality-sub-page.page';
-import { HeaderComponent } from '../header/header.component';
 
 @NgModule({
   imports: [
@@ -16,6 +15,6 @@ import { HeaderComponent } from '../header/header.component';
     IonicModule,
     LoyalitySubPagePageRoutingModule
   ],
-  declarations: [LoyalitySubPagePage, HeaderComponent]
+  declarations: [LoyalitySubPagePage]
 })
 export class LoyalitySubPagePageModule {}

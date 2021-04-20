@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { LocationAndTimeSubPagePageRoutingModule } from './location-and-time-sub-page-routing.module';
 
 import { LocationAndTimeSubPagePage } from './location-and-time-sub-page.page';
-import { HeaderComponent } from '../header/header.component';
 import { TooltipsModule } from 'ionic-tooltips';
 
 @NgModule({
@@ -18,6 +17,6 @@ import { TooltipsModule } from 'ionic-tooltips';
     LocationAndTimeSubPagePageRoutingModule,
     TooltipsModule
   ],
-  declarations: [LocationAndTimeSubPagePage, HeaderComponent]
+  declarations: [LocationAndTimeSubPagePage]
 })
 export class LocationAndTimeSubPagePageModule {}

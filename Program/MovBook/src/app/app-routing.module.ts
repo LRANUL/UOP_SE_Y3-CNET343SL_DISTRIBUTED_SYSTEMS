@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./auth/login-modal/login-modal.module').then( m => m.LoginModalPageModule)
   },
   {
+    path: 'about us',
+    loadChildren: () => import('./home-nav-page/about-us-sub-page/about-us-sub-page.module').then( m => m.AboutUsSubPagePageModule)
+  },
+  {
     path: 'customer-registration',
     loadChildren: () => import('./auth/customer-registration-modal/customer-registration-modal.module').then( m => m.CustomerRegistrationModalPageModule)
   },
