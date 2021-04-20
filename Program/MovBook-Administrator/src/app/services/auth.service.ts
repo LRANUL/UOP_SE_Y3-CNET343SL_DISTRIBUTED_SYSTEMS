@@ -47,14 +47,14 @@ export class AuthService{
 
       onEmailSent(email:string){
         const emailSent = {email:email}
-        this.httpCli.post<{message:string}>('http://localhost:5000/api/logins/forgotPassword',emailSent).subscribe(res=>{
+        this.httpCli.post<{message:string}>('http://localhost:8400/api/logins/forgotPassword',emailSent).subscribe(res=>{
           console.log(res);
         })
       }
 
       sendNewPassword(password:string, token:string, email:string){
       const passwordData = {password:password, passwordToken:token , email:email};
-        this.httpCli.post<{message:string}>('http://localhost:5000/api/logins/new-password',passwordData).subscribe(res=>{
+        this.httpCli.post<{message:string}>('http://localhost:8400/api/logins/new-password',passwordData).subscribe(res=>{
           console.log(res);
         })
       }

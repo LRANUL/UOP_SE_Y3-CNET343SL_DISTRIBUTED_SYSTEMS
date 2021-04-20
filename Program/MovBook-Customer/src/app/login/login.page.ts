@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
 
   loginform: FormGroup;
-  constructor(public formBuilder: FormBuilder, private router: Router) {
+  constructor(public formBuilder: FormBuilder, private router: Router, private authServ:AuthService) {
     this.loginform = formBuilder.group({
       emailControl: [
         "",[
@@ -21,7 +22,7 @@ export class LoginPage implements OnInit {
       ],
       passwordControl: [
         "",[
-          Validators.minLength(8),
+          Validators.minLength(6),
           Validators.pattern("[0-9a-z-A-Z@.#*$!?&+-/]*"),
           Validators.required
         ]
@@ -41,10 +42,17 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  login()
-  {
-   console.log(this.loginform.value)
-   this.router.navigate(['/customer/home'])
+
+
+  onLogin(){
+    if(!this.loginform.valid){ return; }
+    const email = this.loginform.get('emailControl').value;
+    const password =this.loginform.get('passwordControl').value
+    console.log(email + " " +password);
+    this.authServ.login(email,password);
+    this.loginform.reset();
+     // Only for Beta Test
+     //this.router.navigate(['manager/dashboard']);
   }
 
   signup()

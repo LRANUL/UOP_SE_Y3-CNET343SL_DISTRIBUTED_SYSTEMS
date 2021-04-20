@@ -43,9 +43,10 @@ export class ProfileSubPagePage implements OnInit {
 
   ngOnInit() {
     this.getuser(this.temoryid);
+    this.user.name
   }
 
-  temoryid: string = "test@test.com";
+  temoryid: string = localStorage.getItem('email');
 
   async editprofilemodal()
   {

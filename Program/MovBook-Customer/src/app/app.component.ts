@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 import '@capacitor-community/firebase-remote-config';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './services/auth.service';
 AngularFireModule.initializeApp(environment.firebase)
 const { FirebaseRemoteConfig } = Plugins;
 FirebaseRemoteConfig.initializeFirebase({
@@ -28,9 +29,10 @@ FirebaseRemoteConfig.initializeFirebase({
 export class AppComponent {
   remoteConfig: any = null;
 
-  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController) { }
+  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController,private authServ:AuthService) { }
   /** REMOTE CONFIG FIREBASE */
   async ngOnInit() {
+    this.authServ.autoAuthUser();
     const { FirebaseRemoteConfig } = Plugins;
     this.remoteConfig = FirebaseRemoteConfig as any;
     await this.remoteConfig.initialize({ minimumFetchIntervalInSeconds: 3600 });

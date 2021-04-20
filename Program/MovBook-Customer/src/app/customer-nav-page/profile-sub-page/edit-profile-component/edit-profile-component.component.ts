@@ -48,7 +48,7 @@ export class EditProfileComponentComponent implements OnInit {
   UAddress;
   Uemail;
 
-  temoryid = "test@test.com";
+  temoryid = localStorage.getItem('email');
 
   closemodal()
   {
