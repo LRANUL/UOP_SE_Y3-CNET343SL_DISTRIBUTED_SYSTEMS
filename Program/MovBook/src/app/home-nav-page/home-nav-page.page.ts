@@ -61,6 +61,11 @@ export class HomeNavPagePage implements OnInit {
       this.router.navigate(['/home']);
   }
 
+  venuAndLocationNav(id)
+    {
+      this.router.navigate(['customer/Venue Selection/',id]);
+    }
+
     getmovie()
     {
      this.customerService.getShowingMovies();
