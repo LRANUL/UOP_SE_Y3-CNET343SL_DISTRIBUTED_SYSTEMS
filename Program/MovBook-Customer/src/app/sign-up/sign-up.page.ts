@@ -12,6 +12,11 @@ export class SignUpPage implements OnInit {
   signUpform: FormGroup;
   constructor(public formBuilder: FormBuilder, private router: Router) {
     this.signUpform = formBuilder.group({
+      prefix: [
+        "",[
+          Validators.required
+        ]
+      ],
       firstNameControl: [
         "",[
           Validators.required
@@ -66,6 +71,10 @@ export class SignUpPage implements OnInit {
       ]
     });
    }
+
+   get prefix(){
+    return this.signUpform.get('prefix');
+  }
 
   get firstName(){
     return this.signUpform.get('firstNameControl');

@@ -13,8 +13,8 @@ export class PasswordChangeComponentComponent implements OnInit {
   ngOnInit() {}
   email:string = localStorage.getItem('email');
 
-  oldpassword:string = "123456";
-  newpassword:string = "12345678";
+  oldpassword:string = "";
+  newpassword:string = "";
 
   passwordchange()
   {
@@ -28,5 +28,4 @@ export class PasswordChangeComponentComponent implements OnInit {
     this.newpassword = "";
     this.modalcntrl.dismiss();
   }
-
 }
