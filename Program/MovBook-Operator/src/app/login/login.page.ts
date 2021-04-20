@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
       passwordControl: [
         "",
         [
-          Validators.minLength(6),
+          Validators.minLength(4),
           Validators.pattern("[0-9a-z-A-Z@.#*$!?&+-/]*"),
           Validators.required
         ]
@@ -60,9 +60,9 @@ export class LoginPage implements OnInit {
     if (!this.loginform.valid) { return; }
     const email = this.loginform.get('emailControl').value;
     const password = this.loginform.get('passwordControl').value
-    // this.authServ.login(email, password);
+    this.authServ.login(email, password);
     // Only for Beta Test
-    this.router.navigate(['operator']);
+    // this.router.navigate(['operator']);
     this.loginform.reset();
   }
 

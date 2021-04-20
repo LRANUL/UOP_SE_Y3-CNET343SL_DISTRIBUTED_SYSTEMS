@@ -65,6 +65,7 @@ export class OperatorService {
     email = 'john@movbook.com'
     const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, mealCostLKR: refreshmentsTotal, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
     console.log(body)
+    this.http.put(this.BASE_URL + "api/loyalty/add", { points: 100, email: email })
     return this.http.post<any>(this.BASE_URL + "api/bookings/add", body);
   }
 
