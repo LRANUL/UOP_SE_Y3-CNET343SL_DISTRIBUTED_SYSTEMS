@@ -1,26 +1,28 @@
 const mongoose = require('mongoose');
 
 const bookingHistorySchema =mongoose.Schema({
-  customerObjectId : {type : String, required:true },
+  email : {type : String, required:true },
   movieTickets: {
-   movieTicketsId: {type : String, required:true },
-   movieObjectId: {type : String, required:true },
-   movieName: {type : String, required:true },
-   moviePoster: {type : String, required:true },
-   hallName: {type : String, required:true },
-   location: {type : String, required:true },
-   seatNumber: {type : Number, required:true },
-   hallId: {type : String, required:true },
-   timeSlot: {type : String, required:true },
-   date: {type : Date, required:true },
-   ticketCostLKR: {type : Number, required:true }
+    movieObjectId : {type : String, required:true },
+    childQuantity: {type : String, required:true },
+    adultQuantity: {type : String, required:true },
+    posterLink: {type : String, required:true },
+    title: {type : String, required:true },
+    timeSlot : {type : String, required:true },
+    hall: {type : String, required:true },
+    location: {type : String, required:true },
+    movieTotal: {type : String, required:true },
+    seatNumbers : {type : String, required:true },
+    slotObjectID : {type : String, required:true },
+    ticketCostLKR : {type : String, required:true }
   },
   foodAndBeverages: {
-    foodAndBeverageObjectId: {type : String, required:true },
-    quantity: {type : Number, required:true },
-    mealCostLKR: {type : Number, required:true }
+    foodAndBeverageObjectId : {type : String, required:true },
+    item: {type : String, required:true }
   },
-  totalCostLKR: {type : Number, required:true }
+  purchaseDate : {type : String, required:true },
+  mealCostLKR : {type : String, required:true },
+  totalCostLKR : {type : String, required:true }
 })
 
 module.exports = mongoose.model('bookings',bookingHistorySchema); 

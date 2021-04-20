@@ -134,25 +134,28 @@
   
   export interface bookedTickets
   {
-  customerObjectId : string,
-  movieTickets : {
-   movieObjectId : string,
-   movieName: string,
-   moviePoster: string,
-   seatNumber : string,
-   hallName: string,
-   location: string,
-   hallId : string,
-   timeSlot : string,
-   date : string,
-   ticketCostLKR : string
-  },
-  foodAndBeverages : {
-    foodAndBeverageObjectId : string,
-    quantity : string,
-    mealCostLKR : string
-  },
-  totalCostLKR : string
+    email : string,
+    movieTickets : {
+     movieObjectId : string,
+     childQuantity: string,
+     adultQuantity: string,
+     posterLink: string,
+     title: string,
+     timeSlot : string,
+     hall: string,
+     location: string,
+     movieTotal: string,
+     seatNumbers : string,
+     slotObjectID : string,
+     ticketCostLKR : string
+    },
+    foodAndBeverages : {
+      foodAndBeverageObjectId : string,
+      item: any
+    },
+    purchaseDate : string,
+    mealCostLKR : string,
+    totalCostLKR : string
   }
   
   export interface bookedTicketsDetails{

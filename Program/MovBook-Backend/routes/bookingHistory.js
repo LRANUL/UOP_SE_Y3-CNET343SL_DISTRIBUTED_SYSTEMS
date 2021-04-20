@@ -5,8 +5,8 @@ const router = express.Router();
 const booking = require("../models/bookingHistory");
 
 //get user data with email
-router.get('/:id' ,(req,res,next)=>{
-    booking.find({customerObjectId: req.params.id})
+router.get('/:email' ,(req,res,next)=>{
+    booking.find({email: req.params.email})
       .then((tickets)=>{
         if(tickets)
       {
