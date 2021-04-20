@@ -66,6 +66,8 @@ export class LoginPage implements OnInit {
 
     this.loginform.reset();
 
+
+
     // this.loginform.reset();
 
   }
