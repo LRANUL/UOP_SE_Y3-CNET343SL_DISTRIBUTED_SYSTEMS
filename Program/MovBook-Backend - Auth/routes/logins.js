@@ -616,7 +616,7 @@ router.post("/manager-login-check",(req,res,next)=>{
     .then(bcryptResult =>{
       if(bcryptResult == true){
         
-      res.status(200).json({ message:"Login Check Success!! "});
+      res.status(200).json({ message:"Login Check Successful"});
      
       }
       else if(bcryptResult == false){

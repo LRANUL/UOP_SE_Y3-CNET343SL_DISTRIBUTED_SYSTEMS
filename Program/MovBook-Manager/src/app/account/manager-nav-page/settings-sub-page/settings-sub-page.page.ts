@@ -264,32 +264,21 @@ export class SettingsSubPagePage implements OnInit {
     this.authService.verifyLoginCredentials(loginCredentialsFormData.emailAddress, loginCredentialsFormData.password)
       .subscribe((verificationResponse: any) => {
 
-      if(verificationResponse.message == "Login Check Successful"){
-        // Assigning 'loadingSpinnerVerifyCredentials' to false (stops loading spinner)
-        this.loadingSpinnerVerifyCredentials = false;
+      // Assigning 'loadingSpinnerVerifyCredentials' to false (stops loading spinner)
+      this.loadingSpinnerVerifyCredentials = false;
 
-        // Resetting the 'loginCredentialsVerificationForm' form
-        this.loginCredentialsVerificationForm.reset();
+      // Resetting the 'loginCredentialsVerificationForm' form
+      this.loginCredentialsVerificationForm.reset();
 
-        // Opening 'openUpdateAccountDetailsModal' modal to allow user to edit the account details
-        this.openUpdateAccountDetailsModal(loginCredentialsFormData.emailAddress);
-      }
-      else{
-        // Assigning 'loadingSpinnerVerifyCredentials' to false (stops loading spinner)
-        this.loadingSpinnerVerifyCredentials = false;
-
-        // Showing error message box to the user
-        this.alertNotice("ERROR", verificationResponse.message);
-
-        console.log("Unable to verify credentials: ", verificationResponse.message);
-      }
+      // Opening 'openUpdateAccountDetailsModal' modal to allow user to edit the account details
+      this.openUpdateAccountDetailsModal(loginCredentialsFormData.emailAddress);
 
     }, (error: ErrorEvent) => {
       // Assigning 'loadingSpinnerVerifyCredentials' to false (stops loading spinner)
       this.loadingSpinnerVerifyCredentials = false;
 
       // Showing error message box to the user
-      this.alertNotice("ERROR", "Unable to verify credentials, apologies for the inconvenience. Please contact administrator.");
+      this.alertNotice("ERROR", "Unable to verify credentials");
 
       console.log("Unable to verify credentials: ", error);
     });
