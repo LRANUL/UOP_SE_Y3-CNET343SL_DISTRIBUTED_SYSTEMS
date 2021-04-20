@@ -25,25 +25,33 @@ export class ProfileSubPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    var emailAddress = 'lucasanderson@gmail.com'
+this.prefix=localStorage.getItem('email');
+this.firstName=localStorage.getItem('email');
+this.middleName=localStorage.getItem('middleName');
+this.lastName=localStorage.getItem('lastName');
+this.emailAddress=localStorage.getItem('email');
+
+
+
+    var emailAddress = localStorage.getItem('email')
     localStorage.getItem('email')
-    this.managerService.getProfile(emailAddress).subscribe(
-      (data) => {
-        this.prefix = data['Prefix'];
-        this.firstName = data['FirstName'];
-        this.middleName = data['MiddleName'];
-        this.lastName = data['LastName'];
-        this.emailAddress = data['Email'];
-        this.phone = data['Phone'];
-        this.streetAddress = data['StreetAddress'];
-        this.city = data['City'];
-        this.postalCode = data['PostalCode'];
-        this.registeredDateTime = data['RegisteredDateTime'];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // this.managerService.getProfile(emailAddress).subscribe(
+    //   (data) => {
+    //     this.prefix = data['Prefix'];
+    //     this.firstName = data['FirstName'];
+    //     this.middleName = data['MiddleName'];
+    //     this.lastName = data['LastName'];
+    //     this.emailAddress = data['Email'];
+    //     this.phone = data['Phone'];
+    //     this.streetAddress = data['StreetAddress'];
+    //     this.city = data['City'];
+    //     this.postalCode = data['PostalCode'];
+    //     this.registeredDateTime = data['RegisteredDateTime'];
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
 }

@@ -29,7 +29,7 @@ export class AuthService{
 
     login(email:string,passwrd:string){
       const loginData= {email:email , password: passwrd };
-        this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,fName:string,mName:string,lName:string,prefix:string}>(this.BASE_URL+"/api/logins/manager-login",loginData).subscribe(res =>{
+        this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,fName:string,mName:string,lName:string,prefix:string}>(this.BASE_URL+"api/logins/operator-login",loginData).subscribe(res =>{
         console.log(res);
         const token = res.token;
             this.token =token

@@ -16,7 +16,7 @@ import { CustomerService } from 'src/app/services/account/customer.service';
 export class BookedTicketsSubPagePage implements OnInit {
   bookedticket;
   bookedTicketInfo = new Array();
-  temoryemail = "john@movbook.com";
+  temoryemail = localStorage.getItem('email');
 
   constructor(private customerService: CustomerService) {}
 
