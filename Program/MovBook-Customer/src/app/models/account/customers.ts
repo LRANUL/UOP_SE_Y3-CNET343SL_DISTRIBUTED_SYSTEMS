@@ -67,24 +67,27 @@ export interface profile{
 
 export interface bookedTickets
 {
-customerObjectId : string,
+email : string,
 movieTickets : {
  movieObjectId : string,
- movieName: string,
- moviePoster: string,
- seatNumber : string,
- hallName: string,
- location: string,
- hallId : string,
+ childQuantity: string,
+ adultQuantity: string,
+ posterLink: string,
+ title: string,
  timeSlot : string,
- date : string,
+ hall: string,
+ location: string,
+ movieTotal: string,
+ seatNumbers : string,
+ slotObjectID : string,
  ticketCostLKR : string
 },
 foodAndBeverages : {
   foodAndBeverageObjectId : string,
-  quantity : string,
-  mealCostLKR : string
+  item: any
 },
+purchaseDate : string,
+mealCostLKR : string,
 totalCostLKR : string
 }
 

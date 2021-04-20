@@ -22,14 +22,19 @@ export class DashboardSubPagePage implements OnInit {
 
   jsonResponse: any;
   headers: any;
-  splitStatus:any;
-  splitAddress:any;
+  splitStatus: any;
+  splitAddress: any;
+
+  jsonResponseStripe: any;
+  headersStripe: any;
+  splitStatusStripe: any;
+  splitAddressStripe: any;
 
 
   jsonResponseManager: any;
   headersManager: any;
-  splitStatusManager:any;
-  splitAddressManager:any;
+  splitStatusManager: any;
+  splitAddressManager: any;
 
 
   bars: any;
@@ -42,7 +47,7 @@ export class DashboardSubPagePage implements OnInit {
   public headerStat: any;
   public errorMsg;
 
-  constructor(private employeeService: EmployeeService, private handle: EmployeeService , private authServ:AuthService) { }
+  constructor(private employeeService: EmployeeService, private handle: EmployeeService, private authServ: AuthService) { }
 
   //BarChart Function
   ionViewDidEnter() {
@@ -60,34 +65,13 @@ export class DashboardSubPagePage implements OnInit {
     const token = localStorage.getItem("token");
 
 
-        const userEMail = localStorage.getItem("email");
-        const name = localStorage.getItem("name");
-        const lname = localStorage.getItem("lastName");
-        console.log(name + userEMail);
-        this.admin_FirstName = name
-        this.admin_LastName = lname
-        this.admin_Email = userEMail;
-    //sidebar details
-    // var Email = "wef";
-    // this.employeeService.getDetails(Email).subscribe(
-    //   (data) => {
-    //     //console.log(data);
-
-    //     //name/email = backend
-    //     // this.name_admin = data['name'];
-    //     // this.email_admin = data['email'];
-    //     this.admin_Prefix = data['Prefix'];
-    //     this.admin_FirstName = data['FirstName'];
-    //     this.admin_LastName = data['LastName'];
-    //     this.admin_Email = data['Email'];
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
-
-
-
+    const userEMail = localStorage.getItem("email");
+    const name = localStorage.getItem("name");
+    const lname = localStorage.getItem("lastName");
+    console.log(name + userEMail);
+    this.admin_FirstName = name
+    this.admin_LastName = lname
+    this.admin_Email = userEMail;
 
 
     //omdb statistic
@@ -97,7 +81,7 @@ export class DashboardSubPagePage implements OnInit {
         console.log(res);
         let value = JSON.stringify(res);
         this.jsonResponse = res['Response'];
-        if(res['Response'] == "True"){
+        if (res['Response'] == "True") {
           var status = "Status Code 200"
           this.splitStatus = status;
           this.splitAddress = "api/omdb/upcoming-movies/search/tenet";
@@ -116,8 +100,39 @@ export class DashboardSubPagePage implements OnInit {
         this.headers = this.errorMsg.split(":")
         this.splitAddress = this.headers[2];
         this.jsonResponse = "Server Error"
-
       },
+
+    );
+
+
+    //Stripe statistic
+    this.employeeService.statusStripe().subscribe(
+      (res) => {
+        //console.log("********////////////////////********");
+        console.log(res);
+        let value = JSON.stringify(res);
+        this.jsonResponseStripe = res['Response'];
+        if (res['Response'] == "True") {
+          var status = "Status Code 200"
+          this.splitStatusStripe = status;
+          this.splitAddressStripe = "https://movbook-admin.herokuapp.com/api/stripe-status";
+        }
+
+      });
+
+
+    this.employeeService.statusStripe().subscribe((data) =>
+      this.headerStat = data,
+      error => {
+        this.errorMsg = error;
+
+        this.headersStripe = this.errorMsg.split(":")
+        this.splitStatusStripe = this.headersStripe[2];
+        this.headersStripe = this.errorMsg.split(":")
+        this.splitAddressStripe = this.headersStripe[1];
+        this.jsonResponseStripe = "Server Error"
+      },
+
     );
 
 
@@ -130,7 +145,7 @@ export class DashboardSubPagePage implements OnInit {
         let value = JSON.stringify(res);
         this.jsonResponseManager = res['message'];
         // console.log(value)
-        if(res['message'] == "Data Retrieved"){
+        if (res['message'] == "Data Retrieved") {
           var status = "Status Code 200"
           this.splitStatusManager = status;
           //this.splitAddressManager = "api/managers/get/";
@@ -138,14 +153,14 @@ export class DashboardSubPagePage implements OnInit {
 
       });
 
-//Error Handling
+    //Error Handling
     this.employeeService.managerStatus().subscribe((data) =>
       this.headerStat = data,
       error => {
         this.errorMsg = error;
 
-       this.headersManager = this.errorMsg.split(":")
-       console.log(this.headersManager)
+        this.headersManager = this.errorMsg.split(":")
+        console.log(this.headersManager)
         this.splitStatusManager = this.headersManager[3];
         console.log(this.splitStatusManager)
         this.headersManager = this.errorMsg.split(":")

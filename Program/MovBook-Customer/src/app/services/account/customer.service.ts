@@ -21,6 +21,7 @@ export class CustomerService {
   gettickets(){
     return this.currentBookedtickets.asObservable();
   }
+
   getBeverages() {
     return this.http.get(this.BASE_URL + "api/refreshments");
   }
@@ -248,9 +249,9 @@ getloyality(email:string)
   return this.http.get<{message: string, users}>(this.BASE_URL +"api/loyalty/" + email)
 }
 
-getbookinghistory(id: string)
+getbookinghistory(email: string)
 {
-  return this.http.get<{message : string, tickets : any}>(this.BASE_URL +"api/booking-history/" + id).subscribe(res=>{
+  return this.http.get<{message : string, tickets : any}>(this.BASE_URL +"api/booking-history/" + email).subscribe(res=>{
   this.updatedBookedtickets = res.tickets;
   this.currentBookedtickets.next(this.updatedBookedtickets);
 })

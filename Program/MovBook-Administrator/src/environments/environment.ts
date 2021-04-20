@@ -6,10 +6,11 @@ export const environment = {
   production: false,
 
   //Development URL
-  //MOVBOOK_BACKEND_URL: "http://localhost:5000/"
+  //MOVBOOK_BACKEND_URL: "http://localhost:5000/",
 
   //production URL
   MOVBOOK_BACKEND_URL: "https://movbook-app.herokuapp.com/",
+  MOVBOOK_AUTH_URL: "https://movbook-admin.herokuapp.com/", 
   MOVBOOK_BACKEND_ADMIN_SERVER_URL:"https://movbook-admin.herokuapp.com/",
 
 };

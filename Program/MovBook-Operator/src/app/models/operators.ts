@@ -1,3 +1,4 @@
+/** Interface for Movie documents */
 export interface movie {
   id? : string,
   movieObjectId: string,
@@ -23,7 +24,7 @@ export interface movie {
   childrenTicketFeeLKR: string
 }]
 }
-
+/** Interface for location Details */
 export interface locationDetails{
   cinemaLocationObjectId : string,
   cinemaLocationName : string,
@@ -33,7 +34,7 @@ export interface locationDetails{
     postalCode: any
   }
 }
-
+/** Interface for Session details */
 export interface sessionDetails{
   slotObjectId: string,
   showingDate: string,
@@ -43,7 +44,7 @@ export interface sessionDetails{
   adultsTicketFeeLKR: string,
   childrenTicketFeeLKR: string
 }
-
+/** Interface for profile details and updates */
 export interface profile{
   id?: string,
   name:
@@ -64,7 +65,7 @@ export interface profile{
     },
   phone: string,
 }
-
+/** Interface for ticket booking */
 export interface bookedTickets
 {
 customerObjectId : string,
@@ -87,7 +88,7 @@ foodAndBeverages : {
 },
 totalCostLKR : string
 }
-
+/** Interface for Booking details for Part 1 */
 export interface bookedTicketsDetails{
 location : string,
 hall : string,

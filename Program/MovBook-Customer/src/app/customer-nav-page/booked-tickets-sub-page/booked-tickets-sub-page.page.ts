@@ -16,7 +16,7 @@ import { CustomerService } from 'src/app/services/account/customer.service';
 export class BookedTicketsSubPagePage implements OnInit {
   bookedticket;
   bookedTicketInfo = new Array();
-  temoryemail = '601b954d9e31d20c746f6840';
+  temoryemail = localStorage.getItem('email');
 
   constructor(private customerService: CustomerService) {}
 
@@ -24,12 +24,15 @@ export class BookedTicketsSubPagePage implements OnInit {
     this.getbookedtickets(this.temoryemail);
   }
 
+  totalTickets;
   checker = false;
-  getbookedtickets(id) {
-    this.customerService.getbookinghistory(id);
+  getbookedtickets(email) {
+    this.customerService.getbookinghistory(email);
     this.customerService.gettickets().subscribe((data: bookedTickets) => {
       this.bookedticket = data;
-      console.log(this.bookedticket);
+      let adult = data[0].movieTickets.adultQuantity;
+      let children = data[0].movieTickets.childQuantity;
+      this.totalTickets = +adult + +children;
     });
   }
 }

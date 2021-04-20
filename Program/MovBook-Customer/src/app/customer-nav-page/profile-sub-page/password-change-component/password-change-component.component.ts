@@ -11,9 +11,10 @@ export class PasswordChangeComponentComponent implements OnInit {
   constructor(private modalcntrl: ModalController) { }
 
   ngOnInit() {}
+  email:string = localStorage.getItem('email');
 
-  oldpassword:string = "";
-  newpassword:string = "";
+  oldpassword:string = "123456";
+  newpassword:string = "12345678";
 
   passwordchange()
   {

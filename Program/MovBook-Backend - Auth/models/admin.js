@@ -8,7 +8,7 @@ const AdminSchema = mongoose.Schema({
         middleName: { type: String, required: true },
         lastName: { type: String, required: true },
     },
-    registeredDateTime:{ type: Date, required: true },
+    registeredDateTime:{ type: Date, required: true }, 
     emailAddress: { type: String, required: true, unique: true },    
     phoneNumber: { type: Number, required: true },
     address: {

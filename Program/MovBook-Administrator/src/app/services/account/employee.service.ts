@@ -152,6 +152,7 @@ export class EmployeeService {
 
   statusStripe() {
     return this._http.get("https://movbook-admin.herokuapp.com/api/stripe-status")
+    .catch(this.errorHandler);
   }
 
   managerStatus() {

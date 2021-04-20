@@ -12,12 +12,14 @@ const manager = require("../models/managers");
 const nodemailer =require("nodemailer");
 const sendgridTransport =require("nodemailer-sendgrid-transport");
 
-const transporter = nodemailer.createTransport(sendgridTransport({
-  auth:{
-    api_key:"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"
-  }
-}))
+// const transporter = nodemailer.createTransport(sendgridTransport({
+//   auth:{
+//     api_key:"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"
+//   }
+// }))
 
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //creating user with pasword and email 
 router.post("/signup",(req , res, next)=>{
@@ -373,44 +375,63 @@ router.post("/Admin-login",(req,res,next)=>{
 
 //password forget
 router.post("/forgotPassword",(req , res, next)=>{
-  console.log(req.body.email)
-      const email = req.body.email;
-      
-      
-      logins.findOne({email:email})
-        .then(result =>{
-          if(!result){
-           return res.status(404).json({message:"invalid email"});
-          }
+
+    console.log(req.body.email)
+    const email = req.body.email;
+        
+    Users.findOne({email:email})
+      .then(result =>{
+  
+      if(!result){
+        return res.status(404).json({message:"invalid email"});
+      }
           
-            const resetToken = jwt.sign({email: req.body.email },'password-reset',{expiresIn: "1h"}); 
-            console.log(email);
-            transporter.sendMail({
-              to:email,
-              from:"ishancbandara@gmail.com",
-              subject:"password reset",
-              html:"<a href='http://localhost:49624/new-password/"+email+"/"+resetToken+"'>click on this link to change your password</a>"
-              
-            }).then((reply)=>{
-              
-              const datenow = new Date();
-              let tokenExiration =datenow.setHours(datenow.getHours()+2);
-              
-              logins.updateOne({email: email}, {passwordResetToken:resetToken,passwordTokenExpitation:tokenExiration})
-                .then((data) => {
-                    
-                        res.status(201).json({message:"password token updated"});
-                    })
-            })
-            
-          
-          
+      const resetToken = jwt.sign({email: req.body.email },'password-reset',{expiresIn: "1h"}); 
+      console.log(email);
+  
+      // Defining email template ID
+      let passwordResetEmailTemplateId = "d-5a26f36338554f03bda21ffb765699f1";
+  
+      // Defining dynamic values for the email template
+      let dynamicTemplateData = {
+        passwordResetLink: `http://localhost:49624/new-password/${email}/${resetToken}`
+      };
+  
+      // Email configuration to send a valid email
+      const emailConfigurations = {
+        to: passedEmailAddress,
+        from: { 
+          name: "MovBook Team", 
+          email: "movbook.team@gmail.com" 
+        },
+        templateId: passwordResetEmailTemplateId,
+        dynamic_template_data: dynamicTemplateData
+      };
+  
+      // Sending new email through Send Grid
+      sgMail.send(emailConfigurations).then((emailResponse) => {
+        
+        const datenow = new Date();
+        let tokenExiration =datenow.setHours(datenow.getHours()+2);
+        
+        Users.updateOne({email: email}, {passwordResetToken:resetToken,passwordTokenExpitation:tokenExiration})
+          .then((data) => {
+            res.status(201).json({message:"password token updated"});
         })
-    
-      .catch(err =>{
-        res.status(500).json({ error:err })
+        console.log("Password Resent Email Sent: ", { passwordResetEmailTemplateId, dynamicTemplateData });
+        console.log('Email Response: ', emailResponse);
+  
+      })
+      .catch((error) => {
+        console.error("Error (send grid error): ", error.toString());
+        res.status(500).json({ error: error })
       });
-});
+    })
+    .catch(err =>{
+      res.status(500).json({ error:err })
+    });
+    
+  });
 
 
 //change password

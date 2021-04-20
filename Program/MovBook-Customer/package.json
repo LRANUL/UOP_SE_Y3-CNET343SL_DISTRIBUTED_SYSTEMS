@@ -29,6 +29,7 @@
     "firebase": "^8.3.0",
     "ionic-tooltips": "^4.0.0-beta.0",
     "ionic4-tooltips": "^2.0.2",
+    "ngx-autosize": "^1.8.4",
     "ngx-stripe": "^11.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

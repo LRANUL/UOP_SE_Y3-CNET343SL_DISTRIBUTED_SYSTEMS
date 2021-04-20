@@ -4,11 +4,6 @@ import { Subject } from 'rxjs'
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 
-
-
-
-
-
 @Injectable({ providedIn:'root' })
 export class AuthService{
   private BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
@@ -29,7 +24,7 @@ export class AuthService{
 
     login(email:string,passwrd:string){
       const loginData= {email:email , password: passwrd };
-        this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,fName:string,mName:string,lName:string,prefix:string}>(this.BASE_URL+"api/logins/operator-login",loginData).subscribe(res =>{
+        this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,fName:string,mName:string,lName:string,prefix:string}>(this.BASE_URL +'api/logins/customer-login',loginData).subscribe(res =>{
         console.log(res);
         const token = res.token;
             this.token =token
@@ -46,7 +41,7 @@ export class AuthService{
               this.saveAuthData(token, expirationDate,this.loginId,this.userEmail,this.userName,this.middleName,this.lastName,this.prefix);
               this.authStatusListener.next(true);
               this.AuthStatus = true;
-              this.router.navigate(['/operator']);
+              this.router.navigate(['/customer/home']);
             }
             console.log(res);
 
@@ -55,21 +50,15 @@ export class AuthService{
 
     onEmailSent(email:string){
       const emailSent = {email:email}
-      this.httpCli.post<{message:string}>(this.BASE_URL+'/api/logins/forgotPassword',emailSent).subscribe(res=>{
+      this.httpCli.post<{message:string}>(this.BASE_URL +'api/logins/forgotPassword',emailSent).subscribe(res=>{
         console.log(res);
       })
     }
 
-
-    LoginCheck(email:string, password:string){
-      const loginDetails ={email:email , password:password}
-      this.httpCli.post(this.BASE_URL+'/api/logins/Admin-login-check',loginDetails).subscribe((res)=>{
-      console.log(res);
-      this.router.navigate(['/administrator/settings-sub-page/edit-admin']);
-      })
+    verifyLoginCredentials(email:string, password:string){
+      const loginDetails = { email: email, password: password }
+      return this.httpCli.post(this.BASE_URL + "api/logins/manager-login-check",loginDetails);
     }
-
-
     getToken(){
       return this.token;
     }
@@ -93,7 +82,6 @@ export class AuthService{
       this.authStatusListener.next(false);
       this.router.navigate(['/']);
     }
-
 
     autoAuthUser(){
       const authInfo = this.getAuthData();
@@ -143,7 +131,7 @@ export class AuthService{
 
     onUpdatePassword(newPassword:string, oldPassword:string, email:string){
       const passwordData = {newPassword:newPassword,oldPassword:oldPassword, email:email}
-      this.httpCli.post("http://localhost:8400/api/logins/change-password", passwordData).subscribe((res)=>{
+      this.httpCli.post(this.BASE_URL +'api/logins/change-password', passwordData).subscribe((res)=>{
       console.log(res);
       })
     }
@@ -165,7 +153,6 @@ export class AuthService{
       localStorage.removeItem('middleName');
       localStorage.removeItem('lastName');
       localStorage.removeItem('prefix');
-
     }
 
     private saveAuthData(token:string,expirationDate:Date,userId:string,email:string,name:string,mName:string,lName:string,prefix:string){
@@ -177,7 +164,6 @@ export class AuthService{
       localStorage.setItem('middleName',mName);
       localStorage.setItem('lastName',lName);
       localStorage.setItem('prefix',prefix);
-
     }
 
 
