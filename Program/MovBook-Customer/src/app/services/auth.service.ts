@@ -7,6 +7,7 @@ import { environment } from "src/environments/environment";
 @Injectable({ providedIn:'root' })
 export class AuthService{
   private BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
+  private secodary_url = environment.MOVBOOK_BACKEND_URL
     private AuthStatus =false;
     private token:string;
     private authStatusListener =new Subject<boolean>();
@@ -20,6 +21,17 @@ export class AuthService{
 
     constructor(private httpCli:HttpClient, private router:Router){}
 
+    createuser(email:string, password:string,prefix:string, fname:string,lName:string,mName:string,streetAddress:string, city:string, postalCode:string, phone:number){
+      const AuthData = {email:email , password: password,prefix:prefix, fName: fname,lName:lName, city:city,postalCode:postalCode,streetAddress:streetAddress, phone:phone  };
+      const customer = {email:email,password:password,fname:fname ,lName:lName,mName:mName,prefix:prefix,city:city,postalCode:postalCode,streetAddress:streetAddress, phone:phone}
+      console.log(AuthData);
+      this.httpCli.post(this.BASE_URL +"api/logins/signup",AuthData).subscribe(response =>{
+          this.httpCli.post(this.secodary_url +"api/customers/signup",customer).subscribe(res=>{
+            console.log(res);
+          })
+      })
+      this.router.navigate(['/login']);
+    }
 
 
     login(email:string,passwrd:string){

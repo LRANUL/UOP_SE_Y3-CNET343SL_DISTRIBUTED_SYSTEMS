@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class SignUpPage implements OnInit {
 
   signUpform: FormGroup;
-  constructor(public formBuilder: FormBuilder, private router: Router) {
+  constructor(public formBuilder: FormBuilder, private router: Router,private authServ:AuthService) {
     this.signUpform = formBuilder.group({
       prefix: [
         "",[
@@ -123,6 +124,19 @@ export class SignUpPage implements OnInit {
   signUp()
   {
    console.log(this.signUpform.value)
+   const email = this.signUpform.get('emailControl').value;
+    const password =this.signUpform.get('passwordControl').value;
+    const prefix =this.signUpform.get('prefix').value;
+    const firstName =this.signUpform.get('firstNameControl').value;
+    const middleName =this.signUpform.get('middleNameControl').value;
+    const lastName =this.signUpform.get('lastNameControl').value;
+    const streetAddress =this.signUpform.get('streetAddressControl').value;
+    const city =this.signUpform.get('cityControl').value;
+    const postalZipCode =this.signUpform.get('postalCodeControl').value;
+    const phone =this.signUpform.get('phoneControl').value;
+
+    this.authServ.createuser(email,password,prefix,firstName,lastName,middleName,streetAddress,city,postalZipCode,phone);
+
   }
 
   login()
