@@ -77,7 +77,9 @@ export class SettingSubPagePage implements OnInit {
             this.operatorService.updateEmail(this.email, alertData.email).subscribe(
               async (data) => {
                 console.log(data)
-                this.operatorService.updateAuthEmail({email:alertData.email},this.email).subscribe((res)=>{console.log(res)})
+
+                this.operatorService.updateAuthEmail({email:alertData.email},this.Email).subscribe((res)=>{console.log(res)});
+
                 if (data == 'Updated Email') {
                   this.ngOnInit();
                   const alert = await this.alertController.create({
@@ -135,8 +137,8 @@ export class SettingSubPagePage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            let oldpassword = alertData.oldpassword; 
-            let newpassword = alertData.newpassword; 
+            let oldpassword = alertData.oldpassword;
+            let newpassword = alertData.newpassword;
             this.authServ.onUpdatePassword(newpassword,oldpassword,this.email)
             const alert = await this.alertController.create({
               header: 'Password Updated',

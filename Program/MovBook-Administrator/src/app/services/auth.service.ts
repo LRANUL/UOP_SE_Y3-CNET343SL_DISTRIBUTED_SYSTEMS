@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject } from 'rxjs'
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn:'root' })
 export class AuthService{
@@ -15,14 +16,14 @@ export class AuthService{
     private middleName:string;
     private lastName:string;
     private prefix:string;
-
+    private BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
     constructor(private httpCli:HttpClient, private router:Router){}
 
 
 
       login(email:string,passwrd:string){
         const loginData= {email:email , password: passwrd };
-          this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,fName:string,mName:string,lName:string,prefix:string}>("http://localhost:8400/api/logins/Admin-login",loginData).subscribe(res =>{
+          this.httpCli.post<{token:string,expiresIn:number,userId:string,email:string,fName:string,mName:string,lName:string,prefix:string}>(this.BASE_URL +"api/logins/Admin-login",loginData).subscribe(res =>{
               const token = res.token;
               this.token =token
               if(this.token){
@@ -47,21 +48,21 @@ export class AuthService{
 
       onEmailSent(email:string){
         const emailSent = {email:email}
-        this.httpCli.post<{message:string}>('http://localhost:8400/api/logins/forgotPassword',emailSent).subscribe(res=>{
+        this.httpCli.post<{message:string}>(this.BASE_URL +'api/logins/forgotPassword',emailSent).subscribe(res=>{
           console.log(res);
         })
       }
 
       sendNewPassword(password:string, token:string, email:string){
       const passwordData = {password:password, passwordToken:token , email:email};
-        this.httpCli.post<{message:string}>('http://localhost:8400/api/logins/new-password',passwordData).subscribe(res=>{
+        this.httpCli.post<{message:string}>(this.BASE_URL +'api/logins/new-password',passwordData).subscribe(res=>{
           console.log(res);
         })
       }
 
       LoginCheck(email:string, password:string){
         const loginDetails ={email:email , password:password}
-        this.httpCli.post('http://localhost:8400/api/logins/Admin-login-check',loginDetails).subscribe((res)=>{
+        this.httpCli.post(this.BASE_URL +'api/logins/Admin-login-check',loginDetails).subscribe((res)=>{
         console.log(res);
         this.router.navigate(['/administrator/settings-sub-page/edit-admin']);
         })
