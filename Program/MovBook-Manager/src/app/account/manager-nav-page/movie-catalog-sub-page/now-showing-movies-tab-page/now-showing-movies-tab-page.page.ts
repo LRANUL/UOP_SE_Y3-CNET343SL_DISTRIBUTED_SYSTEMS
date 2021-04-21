@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { MovieDetailsModalPage } from '../../browse-upcoming-movies-sub-page/movie-details-modal/movie-details-modal.page';
+import { ViewShowingModalPage } from '../view-showing-modal/view-showing-modal.page';
 
 @Component({
   selector: 'app-now-showing-movies-tab-page',
@@ -51,7 +52,7 @@ export class NowShowingMoviesTabPagePage implements OnInit {
     await alert.present();
   }
 
-  // Implementation for opening the 'Movie Details Modal' modal
+  // Implementation for opening the 'Movie Details Modal'
   async openMovieDetailsModal(movieImdbId: string){
     const movieDetailsModal = await this.modalController.create({
       component: MovieDetailsModalPage,
@@ -65,6 +66,20 @@ export class NowShowingMoviesTabPagePage implements OnInit {
     movieDetailsModal.present();
   }
   
+  // Implementation for opening the 'View Showing Modal'
+  async openViewShowingModal(selectedMovieObjectId: string){
+    const viewShowingModal = await this.modalController.create({
+      component: ViewShowingModalPage,
+      cssClass: 'cinema-halls-modal',
+      componentProps: {
+        passingMovieObjectId: selectedMovieObjectId
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    viewShowingModal.present();
+  }
+
   // Retrieve all available movies under 'NowShowing'
   retrieveMoviesAsNowShowing(){
 

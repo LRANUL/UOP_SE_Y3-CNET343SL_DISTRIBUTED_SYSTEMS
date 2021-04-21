@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { bookedTickets, movie} from 'src/app/models/account/customers';
 import { Movie } from 'src/app/models/account/movie';
 import { environment } from "src/environments/environment";
@@ -11,6 +11,10 @@ import { environment } from "src/environments/environment";
 export class CustomerService {
 
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
+  private secodary_url = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
+
+  allticketInformation: BehaviorSubject<any> = new BehaviorSubject(null);
+  ticketInformation = this.allticketInformation.asObservable();
   constructor(private http: HttpClient) { }
 
   public updatedBookedtickets : bookedTickets
@@ -20,6 +24,22 @@ export class CustomerService {
     return this.currentBookedtickets.asObservable();
   }
 
+  getBeverages() {
+    return this.http.get(this.BASE_URL + "api/refreshments");
+  }
+  storeBooking(refreshments, movie, refreshmentsTotal, total) {
+    var email = localStorage.getItem('email');
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, mealCostLKR: refreshmentsTotal, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
+    console.log(body)
+    return this.http.post<any>(this.BASE_URL + "api/bookings/add", body);
+  }
+
+  addPoints(billTotal) {
+    var email = localStorage.getItem('email');
+    var points = billTotal/10;
+    const body = { points: points, email: email }
+    return this.http.put(this.BASE_URL + "api/loyalty/add", body)
+  }
   public moviesUpdated = {
     movieObjectId: '',
     cinemaHallObjectId: '',
@@ -100,7 +120,7 @@ export class CustomerService {
         seatNumber: '',
         seatUnavailable: '',
         seatStatus : '',
-        seatType : '',
+        seatActive : '',
         customerObjectId : '',
       }
     ]
@@ -209,9 +229,9 @@ export class CustomerService {
         }
 
 
-getUser(id:string)
+getUser(email :string)
 {
-  return this.http.get<{message: string, users: any}>(this.BASE_URL + "/api/customers/" + id)
+  return this.http.get<{message: string, users: any}>(this.BASE_URL + "api/customers/" + email)
 }
 
 private listeners = new Subject<any>();
@@ -229,6 +249,7 @@ updateuser(value, id)
   console.log(value);
   this.http.put<{message: string}>(this.BASE_URL +"api/customers/" + id, value).subscribe((responsestatus) => {
     console.log(responsestatus);
+    this.http.put(this.secodary_url +"api/logins/customer/" + id, value).subscribe((responsestatus) =>{console.log(responsestatus)})
 });
 }
 
@@ -237,26 +258,18 @@ getloyality(email:string)
   return this.http.get<{message: string, users}>(this.BASE_URL +"api/loyalty/" + email)
 }
 
-getbookinghistory(id: string)
+getbookinghistory(email: string)
 {
-  return this.http.get<{message : string, tickets : any}>(this.BASE_URL +"api/booking-history/" + id).subscribe(res=>{
+  return this.http.get<{message : string, tickets : any}>(this.BASE_URL +"api/booking-history/" + email).subscribe(res=>{
   this.updatedBookedtickets = res.tickets;
   this.currentBookedtickets.next(this.updatedBookedtickets);
 })
 }
 
 getshowingmoviedetails(id: string)
-{
-  return this.http.get<{tickets:movie}>(this.BASE_URL +"api/booking-details/" + id).subscribe(res=>{
+{ //change made
+  return this.http.get<{tickets:movie}>(this.BASE_URL +"api/showing-movies/" + id).subscribe(res=>{
     console.log(res.tickets)
-    this.moviesUpdated = res.tickets;
-    this.currentmovies.next(this.moviesUpdated);
-  })
-}
-
-getSelectedShowingMovieDetails(location: string)
-{
-  return this.http.get<{tickets:movie}>(this.BASE_URL +'api/booking-details/location/' + location).subscribe(res=>{
     this.moviesUpdated = res.tickets;
     this.currentmovies.next(this.moviesUpdated);
   })
@@ -270,7 +283,7 @@ retrieveCinemaHall(id){
 }
 
 retrieveShowingCinemaHall(id){
-  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +'api/showing-cinema-hall/' + id).subscribe(res=>{
+  return this.http.get<{message: string, returnedData: any}>(this.BASE_URL +'api/showing-cinema-halls/' + id).subscribe(res=>{
     console.log(res.returnedData);
     this.showinghallupdated = res.returnedData;
     this.showingcinemahall.next(this.showinghallupdated);
@@ -299,20 +312,6 @@ retrieveAllExperience(){
   });
 }
 
-getmoviedetails(id: string)
-{
-  // have to write the code to get the movie here
-}
-
-getmovieexperience(experience: string)
-{
-  return this.http.get<{message : string, tickets : any}>(this.BASE_URL + "api/booking-details/experience/" + experience).subscribe(res=>{
-  console.log(res.tickets);
-  this.moviesUpdated= res.tickets;
-  this.currentmovies.next(this.moviesUpdated);
-})
-}
-
 getmovielocation(location: string)
 {
   return this.http.get<{message : string, returnedData : any}>(this.BASE_URL + "api/cinema-locations/find/location/" + location).subscribe(res=>{
@@ -330,8 +329,8 @@ getShowingMovies()
 }
 
 getSpecificShowingMovie(showingId: string)
-{
-  return this.http.get<{message : string, tickets : movie}>(this.BASE_URL + "api/booking-details/id/" + showingId).subscribe(res=>{
+{//change made
+  return this.http.get<{message : string, tickets : movie}>(this.BASE_URL + "api/showing-movies/id/" + showingId).subscribe(res=>{
     console.log(res.tickets);
     this.movieShowingUpdated = res.tickets;
     this.Showingmovie.next(this.movieShowingUpdated);

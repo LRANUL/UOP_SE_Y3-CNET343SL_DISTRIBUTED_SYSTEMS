@@ -70,7 +70,8 @@ export class MovieDetailsModalPage implements OnInit {
       componentProps: {
         passingMovieImdbId: this.passedMovieImdbId,
         passingMovieDetails: this.MovieDetails,
-        passingMovieCondition: "New-Movie"
+        passingMovieCondition: "New-Movie",
+        passingModalOpenPath: "Movie-Details-Modal-Page"
       },
       event: evt
     });

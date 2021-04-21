@@ -1,13 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>loyality-sub-page</ion-title>
-  </ion-toolbar>
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+        <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+        <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+      <ion-button slot="start" color="light">
+        <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+      </ion-button>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
   <div style="padding-top: 30px;">
-    <ion-header style="text-align: center; font-size: xx-large;">Loyality Information</ion-header>
+    <ion-title style="text-align: center; font-size: xx-large;">Loyality Information</ion-title>
   </div>
-  <ion-grid> 
+  <ion-grid>
     <ion-row>
       <ion-col size-md="10" offset-md="1">
         <div style="padding-top: 20px; padding-left: 20px;">
@@ -19,7 +24,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="10" offset-md="1">
-        <ion-card> 
+        <ion-card>
           <ion-card-content>
             Loyality ID: {{loyality.email}}
             <br>
@@ -48,9 +53,9 @@
       <ion-col size-md="10" offset-md="1">
         <div style="padding-top: 4px; padding-left: 20px;">
           <ion-text>
-          We at MovBook values our customers very much, So while providing a quality service to you we also have a customer loyality program. 
+          We at MovBook values our customers very much, So while providing a quality service to you we also have a customer loyality program.
           In this program the Loyal customers are rewarded. What the loyality program does is it provides benefits and offers to the clients who uses our services
-          to book and watch movies which is available to you from our multiple locations island wide. The loaylity services provide variety benefits for our users, One of 
+          to book and watch movies which is available to you from our multiple locations island wide. The loaylity services provide variety benefits for our users, One of
           the main thing you can do with loyality points is that you can change those points into a cash voucher from which you can buy tickets and bevarages from our cinema halls.
           </ion-text>
           <br>

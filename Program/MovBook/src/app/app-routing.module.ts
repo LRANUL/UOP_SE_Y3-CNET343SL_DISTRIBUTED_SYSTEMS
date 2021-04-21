@@ -16,21 +16,21 @@ const routes: Routes = [
     loadChildren: () => import('./auth/login-modal/login-modal.module').then( m => m.LoginModalPageModule)
   },
   {
+    path: 'about us',
+    loadChildren: () => import('./home-nav-page/about-us-sub-page/about-us-sub-page.module').then( m => m.AboutUsSubPagePageModule)
+  },
+  {
     path: 'customer-registration',
     loadChildren: () => import('./auth/customer-registration-modal/customer-registration-modal.module').then( m => m.CustomerRegistrationModalPageModule)
   },
-  {
-    path: 'administrator',
-    loadChildren: () => import('./account/administrator-nav-page/administrator-nav-page.module').then( m => m.AdministratorNavPagePageModule)
-  },
-  {
-    path: 'manager',
-    loadChildren: () => import('./account/manager-nav-page/manager-nav-page.module').then( m => m.ManagerNavPagePageModule)
-  },
-  {
-    path: 'operator',
-    loadChildren: () => import('./account/operator-nav-page/operator-nav-page.module').then( m => m.OperatorNavPagePageModule)
-  },
+  // {
+  //   path: 'administrator',
+  //   loadChildren: () => import('./account/administrator-nav-page/administrator-nav-page.module').then( m => m.AdministratorNavPagePageModule)
+  // },
+  // {
+  //   path: 'operator',
+  //   loadChildren: () => import('./account/operator-nav-page/operator-nav-page.module').then( m => m.OperatorNavPagePageModule)
+  // },
   {
     path: 'customer',
     loadChildren: () => import('./account/customer-nav-page/customer-nav-page.module').then( m => m.CustomerNavPagePageModule)

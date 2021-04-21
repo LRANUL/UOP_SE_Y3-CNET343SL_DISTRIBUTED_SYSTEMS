@@ -6,7 +6,644 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      
+
+      <div>
+
+        <ion-grid style="height: 100%;
+                        width: 100%;">
+          <ion-row style="width: 100%;
+                          height: auto;
+                          background-color: #e3eaee;
+                          border-radius: 10px;">
+            <ion-col size="4">
+
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="4">
+                    <div style="width: 150px;
+                          height: 150px;
+                          margin-top: -10px;
+                          margin-left: -10px;
+                          background-color: white;
+                          border-radius: 10px;">
+                      <ion-img src="assets/images/account/manager/dashboard-sub-page/working-image.jpg" style="width: 90%;
+                                                                                                                    position: relative;
+                                                                                                                    top: 50%;
+                                                                                                                    left: 50%;
+                                                                                                                    transform: translate(-50%, -50%);"></ion-img>
+                    </div>
+                  </ion-col>
+                  <ion-col size="8" style="height: 100%;">
+                    <ion-row>
+                      <ion-label style="font-size: 20px;
+                                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                        font-weight: 600;
+                                        padding-top: 10%;
+                                        color: #000000;">
+                        Hello {{ name }}
+                      </ion-label>
+                    </ion-row>
+                    <ion-row>
+                      <ion-label style="font-size: 20px;
+                                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                        font-weight: 300;
+                                        padding-top: 1%;
+                                        color: #000000;">
+                        Welcome to your manager dashboard
+                      </ion-label>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-col>
+            <ion-col size="4">
+
+              <ion-img src="assets/images/account/manager/dashboard-sub-page/ripple-loader.svg"
+                style="width: 150px;
+                      position: absolute;
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);" *ngIf="loadingSpinnerDashboard"></ion-img>
+
+            </ion-col>
+            <ion-col size="4">
+              <ion-label style="font-size: 25px;
+                                font-weight: 600;
+                                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                position: absolute;
+                                right: 5%;
+                                color: #000000;">
+                {{currentDateTime}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <div style="width: 100%;
+                          height: auto;
+                          border-radius: 10px;
+                          background-color: #ffffff;">
+
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <div style="padding-top: 10px;
+                                  padding-left: 20px;
+                                  padding-bottom: 10px;">
+                        <ion-label style="font-size: 20px;
+                                          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                          font-weight: 500;
+                                          color: #000000;">
+                          Movie Showing Slots
+                        </ion-label>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <div style="width: 100%;
+                                  height: 30vh;">
+                        <!-- Line Chart - Movie Showings -->
+                        <canvas #movieShowingsAreaChart></canvas>
+                        <!-- Loading Spinner - Retrieving count of showing movie slots upon page load -->
+                        <ion-spinner name="crescent" style="height: 50px;
+                                                        width: 50px;
+                                                        position: relative;
+                                                        left: 15%;
+                                                        top: 15%;
+                                                        transform: translate(-85%,-85%);" *ngIf="loadingSpinnerMovieShowingsChart"></ion-spinner>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <div style="width: 100%;
+                          height: auto;
+                          border-radius: 10px;
+                          background-color: #ffffff;">
+
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <div style="padding-top: 10px;
+                                  padding-left: 20px;
+                                  padding-bottom: 10px;">
+                        <ion-label style="font-size: 20px;
+                                          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                          font-weight: 500;
+                                          color: #000000;">
+                          Bookings
+                        </ion-label>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <div style="width: 100%;
+                                  height: 30vh;">
+                        <!-- Line Chart - Bookings -->
+                        <canvas #bookingsAreaChart></canvas>
+                        <!-- Loading Spinner - Retrieving count of bookings upon page load -->
+                        <ion-spinner name="crescent" style="height: 50px;
+                                                        width: 50px;
+                                                        position: relative;
+                                                        left: 15%;
+                                                        top: 15%;
+                                                        transform: translate(-85%,-85%);" *ngIf="loadingSpinnerBookingsChart"></ion-spinner>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col size="4">
+
+                  <div style="background-color: #ffffff;
+                              border-radius: 10px;
+                              height: 30.5vh;">
+                    <ion-row>
+                      <ion-col>
+                        <div style="padding-top: 10px;
+                                    padding-left: 20px;">
+                          <ion-label style="font-size: 20px;
+                                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                            font-weight: 500;
+                                            color: #000000;">
+                            Latest Movies
+                          </ion-label>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col>
+
+                        <!-- Loading Spinner - Retrieving latest movies upon page load -->
+                        <ion-spinner name="crescent" style="height: 30px;
+                                                        width: 30px;
+                                                        position: relative;
+                                                        left: 50%;
+                                                        top: 75%;
+                                                        transform: translate(-50%,-25%);
+                                                        margin-top: 5%;" *ngIf="loadingSpinnerLatestMovies"></ion-spinner>
+
+                        <ion-slides [options]="latestMoviesSliderConfig">
+                          <ion-slide *ngFor="let movie of listOfLatestMovies">
+                            <ion-card (click)=" this.newsService.onGoToTopStoryPage(item)">
+                              <ion-card-content style="padding: 0;
+                                                        margin: 0;">
+                                <div style="min-width: 14vh;
+                                            height: 22vh;
+                                            background-color: #374d58;">
+                                  <div style="width: 100%;
+                                              border-radius: 5px;">
+                                    <img src="{{ movie?.posterLink }}" style="max-width:auto;
+                                                                                  max-height:22vh;" />
+                                  </div>
+                                </div>
+                                <ion-button expand="block"
+                                            type="submit" (click)="openMovieDetailsModal(movie?.imdb.imdbId)"
+                                            style="--border-radius: 40px;
+                                                    position: absolute;
+                                                    bottom: 5px;
+                                                    left: 5px;"
+                                            color="tertiary">
+                                  <ion-label>
+                                    <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/more-details-icon.png" style="width: 25px;"></ion-img>
+                                  </ion-label>
+                                </ion-button>
+                              </ion-card-content>
+                            </ion-card>
+                          </ion-slide>
+                        </ion-slides>
+
+                      </ion-col>
+                    </ion-row>
+                  </div>
+
+                </ion-col>
+                <ion-col size="5">
+
+                  <div style="background-color: #ffffff;
+                              border-radius: 10px;
+                              height: auto;">
+                    <ion-row>
+                      <ion-col>
+                        <div style="padding-top: 10px;
+                                    padding-left: 20px;
+                                    background-color: #ffffff;
+                                    border-radius: 10px;">
+                          <ion-label style="font-size: 20px;
+                                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                            font-weight: 500;
+                                            color: #000000;">
+                            Showing Preparation Stats
+                          </ion-label>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col>
+
+                        <ion-grid>
+                          <ion-row style="margin-top: 1.5%;">
+                            <ion-col size="6">
+                              <div style="width: 100%;
+                                          height: auto;
+                                          border: 1px solid #ccc;
+                                          border-radius: 10px;">
+                                <ion-grid>
+                                  <ion-row>
+                                    <ion-col size="10">
+                                      <div style="padding: 10px;
+                                                  border-radius: 10px;
+                                                  background-color: #035aa6;
+                                                  color: #ffffff;">
+                                        <ion-label style="letter-spacing: 1px;
+                                                          font-size: 15px;
+                                                          display: flex;
+                                                          align-items: center;
+                                                          justify-content: center;">
+                                          Movies in Wait List
+                                        </ion-label>
+                                      </div>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                      <div style="position: absolute;
+                                                  top: 50%;
+                                                  left: 50%;
+                                                  transform: translate(-50%, -50%);
+                                                  border-radius: 5px;">
+                                        <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                            font-weight: 200;">
+                                          {{countOfMoviesWaitListed}}
+                                        </ion-badge>
+                                      </div>
+                                    </ion-col>
+                                  </ion-row>
+                                </ion-grid>
+                              </div>
+                            </ion-col>
+                            <ion-col size="6">
+                              <div style="width: 100%;
+                                          height: auto;
+                                          border: 1px solid #ccc;
+                                          border-radius: 10px;">
+                                <ion-grid>
+                                  <ion-row>
+                                    <ion-col size="10">
+                                      <div style="padding: 10px;
+                                                  border-radius: 10px;
+                                                  background-color: #035aa6;
+                                                  color: #ffffff;">
+                                        <ion-label style="letter-spacing: 1px;
+                                                          font-size: 15px;
+                                                          display: flex;
+                                                          align-items: center;
+                                                          justify-content: center;">
+                                          Available Movies
+                                        </ion-label>
+                                      </div>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                      <div style="position: absolute;
+                                                  top: 50%;
+                                                  left: 50%;
+                                                  transform: translate(-50%, -50%);
+                                                  border-radius: 5px;">
+                                        <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                            font-weight: 200;">
+                                          {{countOfMoviesWaitListed + countOfMoviesUpcoming + countOfMoviesNowShowing}}
+                                        </ion-badge>
+                                      </div>
+                                    </ion-col>
+                                  </ion-row>
+                                </ion-grid>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                          <ion-row style="margin-top: 2%;">
+                            <ion-col size="6">
+                              <div style="width: 100%;
+                                          height: auto;
+                                          border: 1px solid #ccc;
+                                          border-radius: 10px;">
+                                <ion-grid>
+                                  <ion-row>
+                                    <ion-col size="10">
+                                      <div style="padding: 10px;
+                                                  border-radius: 10px;
+                                                  background-color: #035aa6;
+                                                  color: #ffffff;">
+                                        <ion-label style="letter-spacing: 1px;
+                                                          font-size: 15px;
+                                                          display: flex;
+                                                          align-items: center;
+                                                          justify-content: center;">
+                                          Movies in Upcoming
+                                        </ion-label>
+                                      </div>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                      <div style="position: absolute;
+                                                  top: 50%;
+                                                  left: 50%;
+                                                  transform: translate(-50%, -50%);
+                                                  border-radius: 5px;">
+                                        <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                            font-weight: 200;">
+                                          {{countOfMoviesUpcoming}}
+                                        </ion-badge>
+                                      </div>
+                                    </ion-col>
+                                  </ion-row>
+                                  <ion-row style="margin-top: 3%;">
+                                    <ion-col size="10">
+                                      <div style="padding: 10px;
+                                                  border-radius: 10px;
+                                                  background-color: #035aa6;
+                                                  color: #ffffff;">
+                                        <ion-label style="letter-spacing: 1px;
+                                                          font-size: 15px;
+                                                          display: flex;
+                                                          align-items: center;
+                                                          justify-content: center;">
+                                          Movies in Now Showing
+                                        </ion-label>
+                                      </div>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                      <div style="position: absolute;
+                                                  top: 50%;
+                                                  left: 50%;
+                                                  transform: translate(-50%, -50%);
+                                                  border-radius: 5px;">
+                                        <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                            font-weight: 200;">
+                                          {{countOfMoviesNowShowing}}
+                                        </ion-badge>
+                                      </div>
+                                    </ion-col>
+                                  </ion-row>
+                                </ion-grid>
+                              </div>
+                            </ion-col>
+                            <ion-col size="6">
+                              <div style="width: 100%;
+                                          height: auto;
+                                          border: 1px solid #ccc;
+                                          border-radius: 10px;">
+                                <ion-grid>
+                                  <ion-row>
+                                    <ion-col size="10">
+                                      <div style="padding: 10px;
+                                                  border-radius: 10px;
+                                                  background-color: #035aa6;
+                                                  color: #ffffff;">
+                                        <ion-label style="letter-spacing: 1px;
+                                                          font-size: 15px;
+                                                          display: flex;
+                                                          align-items: center;
+                                                          justify-content: center;">
+                                          Cinema Halls
+                                        </ion-label>
+                                      </div>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                      <div style="position: absolute;
+                                                  top: 50%;
+                                                  left: 50%;
+                                                  transform: translate(-50%, -50%);
+                                                  border-radius: 5px;">
+                                        <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                            font-weight: 200;">
+                                          {{countOfCinemaHalls}}
+                                        </ion-badge>
+                                      </div>
+                                    </ion-col>
+                                  </ion-row>
+                                  <ion-row style="margin-top: 3%;">
+                                    <ion-col size="10">
+                                      <div style="padding: 10px;
+                                                  border-radius: 10px;
+                                                  background-color: #035aa6;
+                                                  color: #ffffff;">
+                                        <ion-label style="letter-spacing: 1px;
+                                                          font-size: 15px;
+                                                          display: flex;
+                                                          align-items: center;
+                                                          justify-content: center;">
+                                          Cinema Locations
+                                        </ion-label>
+                                      </div>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                      <div style="position: absolute;
+                                                  top: 50%;
+                                                  left: 50%;
+                                                  transform: translate(-50%, -50%);
+                                                  border-radius: 5px;">
+                                        <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                            font-weight: 200;">
+                                          {{countOfCinemaLocations}}
+                                        </ion-badge>
+                                      </div>
+                                    </ion-col>
+                                  </ion-row>
+                                </ion-grid>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+
+                      </ion-col>
+                    </ion-row>
+                  </div>
+
+                </ion-col>
+                <ion-col size="3">
+
+                  <div>
+                    <ion-row>
+                      <div style="width: 100%;
+                              height: auto;
+                              background-color: #ffffff;
+                              border-radius: 10px;">
+
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col>
+                                <div style="padding-left: 20px;">
+                                  <ion-label style="font-size: 20px;
+                                                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                                    font-weight: 500;
+                                                    color: #000000;">
+                                    Food & Beverages Stats
+                                  </ion-label>
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>
+                                <div style="width: 100%;
+                                            height: auto;
+                                            border: 1px solid #ccc;
+                                            border-radius: 10px;">
+
+                                  <ion-grid>
+                                    <ion-row>
+                                      <ion-col size="10">
+                                        <div style="padding: 10px;
+                                                border-radius: 10px;
+                                                background-color: #035aa6;
+                                                color: #ffffff;">
+                                          <ion-label style="letter-spacing: 1px;
+                                                          font-size: 15px;
+                                                          display: flex;
+                                                          align-items: center;
+                                                          justify-content: center;">
+                                            Available Snack Items
+                                          </ion-label>
+                                        </div>
+                                      </ion-col>
+                                      <ion-col size="2">
+                                        <div style="position: absolute;
+                                                top: 50%;
+                                                left: 50%;
+                                                transform: translate(-50%, -50%);
+                                                border-radius: 5px;">
+                                          <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                              font-weight: 200;">
+                                            {{countOfRefreshments}}
+                                          </ion-badge>
+                                        </div>
+                                      </ion-col>
+                                    </ion-row>
+                                  </ion-grid>
+
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+
+                        </div>
+                    </ion-row>
+                    <ion-row>
+                      <div style="width: 100%;
+                              height: auto;
+                              background-color: #ffffff;
+                              border-radius: 10px;
+                              margin-top: 20px;">
+
+                        <ion-grid>
+                          <ion-row>
+                            <ion-col>
+                              <div style="padding-left: 20px;">
+                                <ion-label style="font-size: 20px;
+                                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                                  font-weight: 500;
+                                                  color: #000000;">
+                                  Operator Account Stats
+                                </ion-label>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                          <ion-row>
+                            <ion-col>
+                              <div style="width: 100%;
+                                          height: auto;
+                                          border: 1px solid #ccc;
+                                          border-radius: 10px;">
+
+                                <ion-grid>
+                                  <ion-row>
+                                    <ion-col size="10">
+                                      <div style="padding: 10px;
+                                          border-radius: 10px;
+                                          background-color: #035aa6;
+                                          color: #ffffff;">
+                                        <ion-label style="letter-spacing: 1px;
+                                                      font-size: 15px;
+                                                      display: flex;
+                                                      align-items: center;
+                                                      justify-content: center;">
+                                          Enabled Accounts
+                                        </ion-label>
+                                      </div>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                      <div style="position: absolute;
+                                          top: 50%;
+                                          left: 50%;
+                                          transform: translate(-50%, -50%);
+                                          border-radius: 5px;">
+                                        <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                            font-weight: 200;">
+                                          {{countOfEnabledOperatorAccounts}}
+                                        </ion-badge>
+                                      </div>
+                                    </ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col size="10">
+                                      <div style="padding: 10px;
+                                          border-radius: 10px;
+                                          background-color: #035aa6;
+                                          color: #ffffff;">
+                                        <ion-label style="letter-spacing: 1px;
+                                                      font-size: 15px;
+                                                      display: flex;
+                                                      align-items: center;
+                                                      justify-content: center;">
+                                          Disabled Accounts
+                                        </ion-label>
+                                      </div>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                      <div style="position: absolute;
+                                          top: 50%;
+                                          left: 50%;
+                                          transform: translate(-50%, -50%);
+                                          border-radius: 5px;">
+                                        <ion-badge color="dark-blue" style="font-size: 20px;
+                                                                            font-weight: 200;">
+                                          {{countOfDisabledOperatorAccounts}}
+                                        </ion-badge>
+                                      </div>
+                                    </ion-col>
+                                  </ion-row>
+                                </ion-grid>
+
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+
+                      </div>
+                    </ion-row>
+                  </div>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </ion-row>
+
+
+
+        </ion-grid>
+
+      </div>
+
 
     </ion-card-content>
   </ion-card>

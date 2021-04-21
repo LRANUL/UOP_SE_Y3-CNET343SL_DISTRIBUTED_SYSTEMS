@@ -10,6 +10,8 @@ import { OperatorService } from "./../../service/operator.service";
 export class DashboardSubPagePage implements OnInit {
   Movies: Object;
   name: string;
+  fname:string;
+  lname: string;
   email: string;
   constructor(
     private menu: MenuController,
@@ -18,11 +20,13 @@ export class DashboardSubPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
+    this.fname = localStorage.getItem('name');
+    this.lname = localStorage.getItem('lastName');
     this.email = localStorage.getItem('email');
-    // Remove after getting login credentials
-    this.name = 'John Steve';
-    this.email = 'john@movbook.com';
+    console.log(this.fname)
+    this.name = this.fname+" "+this.lname;
+  /** Get movies list */
+
     this.operatorService.getMovies().subscribe(
       (data) => {
         this.Movies = data['returnedData'];

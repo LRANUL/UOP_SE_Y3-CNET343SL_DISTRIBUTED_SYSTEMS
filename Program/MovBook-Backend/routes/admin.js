@@ -1,13 +1,22 @@
 const express = require("express");
+const admin = require("../models/admin");
 
 const router = express.Router();
 
 //const Managers = require("../models/users");
-const Admin = require("../models/admin");
 
 
 
+//update Admin by email
+router.put('/update', (req, res) => {
+    console.log("********")
+    console.log(req.body);
+    console.log("adminUpdate")
+     admin.updateOne({emailAddress:req.body.emailAddress},req.body).then(()=>{
+        res.status(201).json({ message:"Admin details updated!! "});
+     })
 
+});
 //update
 router.put('/update/:id', (req, res) => {
     console.log(req.params.id)
@@ -40,9 +49,10 @@ router.put('/update/:id', (req, res) => {
 
 
 //sidebar Admin Details
-router.get('', (req, res, next) => {
-    var Email = req.query.Email || "";
-    Admin.findOne({ Email: Email })
+router.get('/:Email', (req, res, next) => {
+    var Email = req.params.Email ;
+    console.log(Email);
+    admin.findOne({ emailAddress: Email })
         .then((data) => {
             console.log(data);
             res.send(data)

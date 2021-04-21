@@ -4,6 +4,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddLocationModalPage } from './add-location-modal/add-location-modal.page';
 import { CinemaHallsModalPage } from './cinema-halls-modal/cinema-halls-modal.page';
+import { EditLocationModalPage } from './edit-location-modal/edit-location-modal.page';
 
 @Component({
   selector: 'app-locations-halls-sub-page',
@@ -17,6 +18,9 @@ export class LocationsHallsSubPagePage implements OnInit {
 
   // Declaration - stores list of cinema locations
   cinemaLocationList = [];
+
+  // Declaration - stores used selected Cinema Location's object ID
+  selectedCinemaLocationObjectId;
 
   // Declaration - stores the search results for the user selected cinema location
   searchResultCinemaLocation;
@@ -81,6 +85,45 @@ export class LocationsHallsSubPagePage implements OnInit {
       if(data == true){
         // Retrieving updated list of cinema locations
         this.retrieveCinemaLocations();
+      }
+    }
+  }
+
+  // Function - Implementation for opening the 'Edit Location' modal
+  async openEditLocationModal(cinemaLocationDetails: any){
+    const editLocationModal = await this.modalController.create({
+      component: EditLocationModalPage,
+      cssClass: 'add-location-modal',
+      componentProps: {
+        passingCinemaLocation: cinemaLocationDetails
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    editLocationModal.present();
+
+    // Collecting response data when modal is dismissed
+    const { data } = await editLocationModal.onDidDismiss();
+
+    // If Condition - checking whether there is data in the response 'data' object
+    if(data != null){
+      // If condition - checking whether response data contains true
+      if(data == true){
+        if(this.handleUserSelectedCinemaLocation == true){
+          // Re-initializing array
+          this.cinemaLocationList = [];
+          this.listOfAmountOfCinemaHalls = new Array();
+          // Retrieving updated list of cinema locations
+          this.retrieveCinemaLocations();
+          this.searchCinemaLocation(this.selectedCinemaLocationObjectId);
+        }
+        else{
+          // Re-initializing array
+          this.cinemaLocationList = [];
+          this.listOfAmountOfCinemaHalls = new Array();
+          // Retrieving updated list of cinema locations
+          this.retrieveCinemaLocations();
+        }
       }
     }
   }
@@ -171,14 +214,17 @@ export class LocationsHallsSubPagePage implements OnInit {
   }
 
   // Filtering the cinema locations to render the user selected cinema location
-  searchCinemaLocation(searchCinemaLocationFormData){
+  searchCinemaLocation(selectedCinemaLocationObjectId){
+    
+    // Defining 'selectedCinemaLocationObjectId' with the user selected cinema location name
+    this.selectedCinemaLocationObjectId = selectedCinemaLocationObjectId;
 
     // Hiding visibility to 'handleUserSelectedCinemaLocation' block
     this.handleUserSelectedCinemaLocation = false
 
     for (let cinemaLocationIndex = 0; cinemaLocationIndex < this.cinemaLocationList.length; cinemaLocationIndex++) {
 
-      if(this.cinemaLocationList[cinemaLocationIndex].cinemaLocationName == searchCinemaLocationFormData.cinemaLocationName){
+      if(this.cinemaLocationList[cinemaLocationIndex]._id == selectedCinemaLocationObjectId){
 
         this.searchResultCinemaLocation = this.cinemaLocationList[cinemaLocationIndex];
 

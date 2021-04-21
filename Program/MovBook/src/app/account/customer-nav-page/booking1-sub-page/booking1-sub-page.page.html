@@ -1,3 +1,13 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+        <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+        <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+      <ion-button slot="start" color="light">
+        <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+      </ion-button>
+    </ion-toolbar>
+</ion-header>
 <ion-content>
   <ion-grid>
     <ion-row>
@@ -8,28 +18,31 @@
            <ion-grid>
              <ion-row>
                <ion-col>
-                <ion-card-title>Move Name</ion-card-title>
+                <ion-card-title>{{movieDetails.movieTitle}}</ion-card-title>
                </ion-col>
                <ion-col size-md="1"  offset-md="0.5">
                 <span>{{counter.min}} : {{counter.sec}}</span>
                </ion-col>
              </ion-row>
-           </ion-grid>  
+           </ion-grid>
          </ion-card-header>
          <ion-card-content>
          <ion-grid>
           <ion-row>
-            <ion-col size-md="4">
+            <ion-col size-md="15">
               <ion-grid>
                 <ion-row>
-                  <ion-col>
-                   Location
+                  <ion-col size-md="2">
+                    {{movies.cinemaLocation.cinemaLocationName}}, {{movies.cinemaLocation.cinemaLocationAddress.city}}
                   </ion-col>
-                  <ion-col>
-                    time
+                  <ion-col size-md="2">
+                    {{hallName}}
                   </ion-col>
-                  <ion-col>
-                    Emperience
+                  <ion-col size-md="2">
+                    {{time}}
+                  </ion-col>
+                  <ion-col size-md="2">
+                    {{movies.showingSlots[0].showingExperience}} Experience
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -39,32 +52,61 @@
          </ion-card-content>
        </ion-card>
        <br>
+       <ion-img src="../../assets/images/movie-screen.png" style="height: 110px;"></ion-img>
        <ion-grid>
          <ion-row>
            <ion-col>
-            <ion-img src="../../assets/images/movie-screen.png" style="height: 100px;"></ion-img>
+            <div>
+             <table style="border: none;
+             position: relative;
+             left: 49%;
+             transform: translateX(-49%); margin-left: 2%;">
+               <tr *ngFor="let in of covertNumberToArray(NoOfRows); let row = index" >
+                 <td class="seatingGridTableTableData" *ngFor="let in of covertNumberToArray(NoOfColumns); let column = index">
+                  <div class="seatingGridTableOuterDiv">
+                    <ng-container *ngFor="let Details of seatData">
+                      <ng-template
+                        *ngIf="Details?.seatId == cinemaLocationId + '|0|' + preIncrementValue(row) + '|' + preIncrementValue(column);
+                              then showSeatDetails;">
+                      </ng-template>
+                      <ng-template #showSeatDetails>
+                        <div [ngClass]="{
+                          'seatingGridTableInnerDivUnavailableSeat': Details.seatUnavailable,
+                          'seatingGridTableInnerDiv': !Details.seatUnavailable,
+                          'bookedSeatingGridTableInnerDiv': Details.seatStatus != 'null' && !Details.seatUnavailable
+                          }" id="{{ Details?.seatId }}">
+                          <p class="seatingGridTableInnerDivP" (click)="bookingTicket(Details.seatId, Details.seatNumber, Details.seatStatus, Details.seatUnavailable)">
+                           <br>
+                            {{Details.seatNumber}}
+                          </p>
+                        </div>
+                      </ng-template>
+                    </ng-container>
+                  </div>
+                 </td>
+               </tr>
+             </table>
+             </div>
+             <br>
+             <br>
                 <ion-grid>
                   <ion-row>
-                    <ion-col size-md="7"  offset-md="2.5">
+                    <ion-col size-md="8"  offset-md="2">
                       <ion-card>
                         <ion-card-content>
                       <ion-grid>
                         <ion-row>
                           <ion-col>
-                            <img src="../../assets/images/blue.jpg" style="height: 10px;">
+                            <img src="../../assets/images/red.jpg" style="height: 10px;">
                             Reserved Seats
                           </ion-col>
                           <ion-col>
-                            <img src="../../assets/images/pink.jpg" style="height: 10px;">
+                            <img src="../../assets/images/blue.jpg" style="height: 10px;">
                             Selected Seats
                           </ion-col>
                           <ion-col>
                             <img src="../../assets/images/white.png" style="height: 10px;">
                             Available Seats
-                          </ion-col>
-                          <ion-col>
-                            <img src="../../assets/images/red.jpg" style="height: 10px;">
-                            Unavailable Seats
                           </ion-col>
                         </ion-row>
                       </ion-grid>
@@ -90,7 +132,7 @@
                     <ion-col size-md="10">
                       <ion-grid>
                         <ion-row>
-                          <ion-col size-md="3">
+                          <ion-col size-md="4">
                             <ion-item>
                            <ion-card-subtitle>Adult Tickets: </ion-card-subtitle>
                          </ion-item>
@@ -98,7 +140,7 @@
                           <ion-col size-md="4">
                            <ion-item>
                              <ion-icon name="remove-outline" (click)="removeticket()"></ion-icon>
-                             <ion-label style="text-align: center;">{{adulttickets}}</ion-label>        
+                             <ion-label style="text-align: center;">{{adulttickets}}</ion-label>
                              <ion-icon name="add-circle-outline" (click)="addticket()"></ion-icon>
                             </ion-item>
                           </ion-col>
@@ -110,7 +152,7 @@
                     <ion-col size-md="10">
                      <ion-grid>
                        <ion-row>
-                         <ion-col size-md="3">
+                         <ion-col size-md="4">
                            <ion-item>
                           <ion-card-subtitle>Children Tickets: </ion-card-subtitle>
                         </ion-item>
@@ -118,7 +160,7 @@
                          <ion-col size-md="4">
                           <ion-item>
                             <ion-icon name="remove-outline" (click)=" childrenremoveticket()"></ion-icon>
-                            <ion-label style="text-align: center;">{{childrenTickets}}</ion-label>        
+                            <ion-label style="text-align: center;">{{childrenTickets}}</ion-label>
                             <ion-icon name="add-circle-outline" (click)="childrenaddticket()"></ion-icon>
                            </ion-item>
                          </ion-col>
@@ -131,16 +173,16 @@
                <ion-col>
                 <br>
                 <ion-item>
-                  <ion-card-subtitle>Ticket Price for Adult - 800</ion-card-subtitle>
+                  <ion-card-subtitle>Ticket Price for Adult - {{Aprice}}</ion-card-subtitle>
                 </ion-item>
                <br>
                <ion-item>
-                <ion-card-subtitle>Ticket Price for child - 600</ion-card-subtitle>
-               </ion-item>     
+                <ion-card-subtitle>Ticket Price for child - {{Cprice}}</ion-card-subtitle>
+               </ion-item>
                <br>
                <ion-item>
                 <ion-card-header>Your Total Ammount : Rs.{{totalammount}}</ion-card-header>
-               </ion-item>       
+               </ion-item>
                </ion-col>
              </ion-row>
            </ion-grid>
@@ -153,7 +195,7 @@
              <ion-grid>
                <ion-row>
                  <ion-col>
-                  <ion-button expand="block">Continue</ion-button>
+                  <ion-button expand="block" (click)="continue()">Continue</ion-button>
                  </ion-col>
                  <ion-col>
                   <ion-button expand="block" (click)="cancel()"> Cancel</ion-button>
@@ -167,4 +209,4 @@
     </ion-row>
   </ion-grid>
   </ion-content>
-  
+

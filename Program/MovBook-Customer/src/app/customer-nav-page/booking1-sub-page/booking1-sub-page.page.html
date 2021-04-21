@@ -43,13 +43,15 @@
          </ion-card-content>
        </ion-card>
        <br>
+       <ion-img src="../../assets/images/hall-screen.png" style="height: 100px;"></ion-img>
        <ion-grid>
          <ion-row>
            <ion-col>
+            <div style="overflow-x: auto;">
              <table style="border: none;
              position: relative;
              left: 49%;
-             transform: translateX(-49%);">
+             transform: translateX(-49%);" class="table">
                <tr *ngFor="let in of covertNumberToArray(NoOfRows); let row = index" >
                  <td class="seatingGridTableTableData" *ngFor="let in of covertNumberToArray(NoOfColumns); let column = index">
                   <div class="seatingGridTableOuterDiv">
@@ -60,11 +62,11 @@
                       </ng-template>
                       <ng-template #showSeatDetails>
                         <div [ngClass]="{
-                          'seatingGridTableInnerDivUnavailableSeat': Details.seatUnavailable != 'false',
-                          'seatingGridTableInnerDiv': Details.seatUnavailable != 'true',
-                          'bookedSeatingGridTableInnerDiv': Details.seatStatus != 'null' && Details.seatUnavailable != 'true'
+                          'seatingGridTableInnerDivUnavailableSeat': Details.seatUnavailable,
+                          'seatingGridTableInnerDiv': !Details.seatUnavailable,
+                          'bookedSeatingGridTableInnerDiv': Details.seatStatus != 'null' && !Details.seatUnavailable
                           }" id="{{ Details?.seatId }}">
-                          <p class="seatingGridTableInnerDivP" *ngIf="Details.seatUnavailable != 'true'" (click)="bookingTicket(Details.seatId, Details.seatNumber, Details.seatStatus)">
+                          <p class="seatingGridTableInnerDivP" (click)="bookingTicket(Details.seatId, Details.seatNumber, Details.seatStatus, Details.seatUnavailable)">
                             {{Details.seatNumber}}
                           </p>
                         </div>
@@ -74,11 +76,12 @@
                  </td>
                </tr>
              </table>
+             </div>
              <br>
-            <ion-img src="../../assets/images/movie-screen.png" style="height: 100px;"></ion-img>
+             <br>
                 <ion-grid>
                   <ion-row>
-                    <ion-col size-md="5"  offset-md="3.5">
+                    <ion-col size-md="8"  offset-md="2">
                       <ion-card>
                         <ion-card-content>
                       <ion-grid>
@@ -119,12 +122,12 @@
                     <ion-col size-md="10">
                       <ion-grid>
                         <ion-row>
-                          <ion-col size-md="3">
+                          <ion-col size-md="6">
                             <ion-item>
                            <ion-card-subtitle>Adult Tickets: </ion-card-subtitle>
                          </ion-item>
                           </ion-col>
-                          <ion-col size-md="4">
+                          <ion-col size-md="8">
                            <ion-item>
                              <ion-icon name="remove-outline" (click)="removeticket()"></ion-icon>
                              <ion-label style="text-align: center;">{{adulttickets}}</ion-label>
@@ -139,12 +142,12 @@
                     <ion-col size-md="10">
                      <ion-grid>
                        <ion-row>
-                         <ion-col size-md="3">
+                         <ion-col size-md="6">
                            <ion-item>
                           <ion-card-subtitle>Children Tickets: </ion-card-subtitle>
                         </ion-item>
                          </ion-col>
-                         <ion-col size-md="4">
+                         <ion-col size-md="8">
                           <ion-item>
                             <ion-icon name="remove-outline" (click)=" childrenremoveticket()"></ion-icon>
                             <ion-label style="text-align: center;">{{childrenTickets}}</ion-label>

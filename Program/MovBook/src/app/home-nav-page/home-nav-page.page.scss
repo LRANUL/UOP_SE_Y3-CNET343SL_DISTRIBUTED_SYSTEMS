@@ -1,0 +1,644 @@
+body {
+    background: darkgrey;
+}
+
+.container {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* begin navbar */
+
+nav {
+    background: #fff;
+    background: linear-gradient(90deg, #fff 100%);
+}
+
+.nav-item a {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: #000000;
+    margin-right: 20px
+}
+
+.nav-item a i {
+    margin-right: 5px
+}
+
+.nav-item a:hover {
+    color: #fb32b9;
+}
+
+.navbar-toggler {
+    color: #fff;
+}
+
+.nav-button {
+    border-radius: 2px;
+    background: #fff;
+    padding: 5px 10px 5px;
+    color: #000000;
+    font-family: 'Roboto', sans-serif;
+    transition: all 0.4s;
+}
+
+.nav-button:hover {
+    background: #000000;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.4s;
+}
+
+.nav-item .dropdown-menu {
+    background: #fff;
+}
+/* end navbar */
+
+/* start main */
+
+.container .alert {
+    background: rgb(197, 17, 47);
+    background: linear-gradient(90deg, rgb(209, 9, 9) 0%, rgb(196, 13, 13) 100%);
+}
+
+.alert-primary {
+    color: #d8d8d8 !important;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.features-icons {
+
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+}
+
+.features-icons .features-icons-item {
+    max-width: 20rem;
+    font-family: 'Roboto', sans-serif;
+    color: #111;
+}
+
+.features-icons .features-icons-item .features-icons-icon {
+    height: 7rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon i {
+    font-size: 4.5rem;
+    transition: all 0.2s;
+}
+
+.features-icons .features-icons-item:hover .features-icons-icon i {
+    font-size: 5rem;
+    transition: all 0.2s;
+}
+
+.fancy-underline {
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to right, #ee1616 0%, #fcf833 100%);
+    border-image-slice: 1;
+}
+
+.main-icons {
+    color: #000000;
+}
+
+.store-download {
+    background: #fff;
+    background: linear-gradient(90deg, #fff 100%);
+}
+
+section.download {
+    position: relative;
+    padding: 150px 0;
+}
+
+section.download h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #000000;
+    font-weight: 600;
+    font-size: 50px;
+    margin-top: 0;
+}
+
+section.download p {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 10px;
+    color: #000000;
+}
+
+section.download .badges .badge-link {
+    display: block;
+    margin-bottom: 25px;
+}
+
+section.download .badges .badge-link:last-child {
+    margin-bottom: 0;
+}
+
+section.download .badges .badge-link img {
+    height: 60px;
+}
+
+@media (min-width: 768px) {
+    section.download .badges .badge-link {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    section.download h2 {
+        font-size: 70px;
+    }
+}
+
+
+section.get-started {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    padding: 250px 0;
+    background-image: url("https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2019%2F09%2F15c35_sq2701_s130_f216_2k_finalr-2000.jpg");
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+section.get-started .get-started-content {
+    position: relative;
+    z-index: 1;
+}
+
+section.get-started .get-started-content h2 {
+    font-size: 50px;
+    max-width: 700px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #d8d8d8;
+    opacity: 0.9;
+}
+
+@media (min-width: 768px) {
+    section.get-started .get-started-content h2 {
+        font-size: 65px;
+    }
+}
+
+section.get-started .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.browsing-button {
+    padding: 15px 20px 15px;
+    border-radius: 25px;
+    background: rgb(29, 17, 185);
+    background: linear-gradient(90deg, rgb(31, 5, 124) 0%, rgb(38, 113, 211) 100%);
+    font-family: 'Roboto', sans-serif;
+    color: #d8d8d8;
+    font-size: 17px;
+}
+
+.browsing-button:hover {
+    text-decoration: none;
+    background: rgb(29, 17, 185);
+    background: linear-gradient(90deg, rgb(31, 5, 124) 0%, rgb(38, 113, 211) 100%);
+    color: #d8d8d8;
+}
+
+.newsletter {
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    background-color: #343a40;
+    background: url("https://img4.goodfon.com/wallpaper/nbig/8/a1/the-croods-2-animated-film-animated-movie-the-croods-family.jpg") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+}
+
+.newsletter .overlay {
+    position: absolute;
+    background-color: #212529;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+}
+
+nav .breadcrumb {
+    border-radius: 0;
+    background: #1b1b1b;
+}
+
+.breadcrumb-item a {
+    font-family: 'Roboto', sans-serif;
+    color: #cfcfcf;
+}
+
+.breadcrumb-item a:hover {
+    color: #c90087;
+    text-decoration: none;
+}
+
+.list {
+    display: block;
+    background-color: rgba(255, 255, 255, .8);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+    border-radius: 2px;
+    transition: all .2s ease-in-out;
+    margin-top: 40px;
+}
+
+.list-header {
+    display: block;
+    float: left;
+    width: 35%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 2px 0 0 2px;
+}
+
+.list-header img {
+    width: 100%;
+}
+
+.list-header .list-header-image:after {
+    display: block;
+    content: '';
+    background-color: rgba(0, 0, 0, .4);
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    width: 100px;
+    height: 100px;
+    box-shadow: 0 0 200px 100px rgba(0, 0, 0, .58);
+    z-index: 1;
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transition: all .8s;
+    -moz-transition: all .8s;
+    -webkit-transition: all .8s;
+    -o-transition: all .8s;
+}
+
+.list-content {
+    display: block;
+    margin-left: 35%;
+    padding: 15px;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+}
+
+.list-meta {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 100%;
+}
+
+.list-meta .list-meta-item {
+    display: inline-block;
+    margin-right: 18px;
+    color: #9A9A9A;
+}
+
+.list:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+.list:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23);
+}
+
+
+
+@media only screen and (max-width: 991px) {
+    .list-header {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .list-content {
+        display: block;
+        width: 100%;
+        margin-left: 0;
+        padding: 15px;
+        clear: both;
+    }
+}
+
+.text-black {
+    font-family: 'Roboto', sans-serif;
+    color: purple;
+}
+
+.text-black:hover {
+    color: #c90087;
+    text-decoration: none;
+}
+
+.movie_card {
+    background: rgb(64, 26, 130);
+    background: linear-gradient(90deg, rgba(64, 26, 130, 1) 0%, rgba(201, 0, 135, 1) 100%);
+    background-image: url('https://image.tmdb.org/t/p/original/w4XWDm9xsarp0aVxnoDDeRl7HFY.jpg');
+    position: relative;
+    display: block;
+    width: 1200px;
+    height: 450px;
+    margin: 100px auto;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: all 0.4s;
+}
+
+.movie_card:hover {
+    transform: scale(1.02);
+    transition: all 0.4s;
+}
+
+.info_section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-blend-mode: multiply;
+    z-index: 2;
+    border-radius: 10px;
+}
+
+.movie_header {
+    position: relative;
+    padding: 25px;
+    height: 40%;
+}
+
+.movie_header h1 {
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+}
+
+.movie_header .minutes {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    margin-top: 10px;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.movie_header .type {
+    font-family: 'Roboto', sans-serif;
+    display: inline-block;
+    color: #cee4fd;
+    margin-left: 10px;
+}
+
+.movie_header .movie-poster {
+    position: relative;
+    float: left;
+    margin-right: 20px;
+    height: 120px;
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
+}
+
+.movie_desc {
+    font-family: 'Roboto', sans-serif;
+    padding: 25px;
+    height: 50%;
+}
+
+.movie_desc .text {
+    margin-top: -30px;
+    color: #cfd6e1;
+}
+
+.trailer {
+    background: transparent;
+    color: #fff !important;
+    border: 1px solid purple;
+    padding: 10px 20px 10px;
+    border-radius: 4px;
+    margin-left: 25px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.trailer:hover {
+    text-decoration: none;
+    background: purple;
+    color: #fff !important;
+}
+
+.buy-ticket {
+    background: purple;
+    color: #fff !important;
+    padding: 10px 20px 10px;
+    border-radius: 4px;
+    margin-left: 25px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.buy-ticket:hover {
+    text-decoration: none;
+    background: #fff;
+    color: purple !important;
+}
+
+.movie-buttons {
+    margin-bottom: -50px;
+}
+
+.movie-buttons button {
+    font-family: 'Roboto', sans-serif;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px
+}
+
+.btn-recommend {
+    background: #c90087;
+    color: #fff;
+}
+
+.btn-recommend:hover {
+    background: #e52da9;
+}
+
+.btn-watchlist {
+    background: #3d60d3;
+    color: #fff;
+}
+
+.btn-watchlist:hover {
+    background: #6282eb;
+}
+
+.btn-unlike {
+    background: #f31750;
+    color: #fff;
+}
+
+.btn-unlike:hover {
+    background: #f4416f;
+}
+
+@media screen and (min-width: 768px) {
+    .movie_header {
+        width: 60%;
+    }
+
+    .movie_desc {
+        width: 50%;
+    }
+
+    .info_section {
+        background: linear-gradient(to right, #0d0d0c 50%, transparent 100%);
+    }
+
+    .blur_back {
+        width: 80%;
+        background-position: -100% 10% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .movie_card {
+        width: 95%;
+        margin: 70px auto;
+        min-height: 350px;
+        height: auto;
+    }
+    
+    .trailer,
+    .buy-ticket {
+        margin-left: 0;
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+
+    .blur_back {
+        width: 100%;
+        background-position: 50% 50% !important;
+    }
+
+    .movie_header {
+        width: 100%;
+        margin-top: 85px;
+    }
+
+    .movie_desc {
+        width: 100%;
+    }
+
+    .info_section {
+        background: linear-gradient(to top, rgb(20, 20, 19) 50%, transparent 100%);
+        display: inline-grid;
+    }
+}
+
+.container .page-text {
+    text-align: justify !important;
+    line-height: 30px;
+}
+
+div#letstalk {
+	padding: 15px 60px;
+	background: transparent;
+	max-width: 800px;
+	border: 1px solid #E8ECEC;
+	border-radius: 4px;
+	box-shadow: 0 4px 10px 4px rgba(176, 195, 210, 0.3); 
+}
+
+.form-group {
+	margin-bottom: 20px !important;
+}
+form select, .form_custom select {
+    padding: 0px !important;
+    font-size: 13px;
+}
+
+.form-control {
+    width: 100%;
+    height: 75px;
+    color: #555;
+    border: none !important;
+    background-color: transparent;
+    border-bottom: 1px solid #423A6B !important;
+}
+
+.contact-submit {
+   background: rgb(29, 17, 185);
+    background: linear-gradient(90deg, rgb(31, 5, 124) 0%, rgb(38, 113, 211) 100%);
+    border: none;
+    border-radius: 2px;
+    width: 100%;
+    height: 50px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.contact-submit:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.footer-fb:hover {
+    color: #3B5998 !important;
+    border: none !important;
+}
+
+.footer-tw:hover {
+    color: #08a0e9 !important;
+    border: none !important;
+}
+
+.footer-in:hover {
+    color: #DD2A7B !important;
+    border: none !important;
+}
+
+footer.footer {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.footer a {
+    font-family: 'Roboto', sans-serif;
+    color:#000000
+}
+
+.footer p {
+    color: #000000;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footer a:hover {
+    color: #000000;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to right, #ebb431 0%, #c90087 100%);
+    border-image-slice: 1;
+    text-decoration: none;
+}
+
+.footer {
+    background: #fff;
+    background: linear-gradient(90deg, #fff 100%);
+    color: transparent;
+}

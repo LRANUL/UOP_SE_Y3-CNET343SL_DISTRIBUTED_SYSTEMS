@@ -1,3 +1,13 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+        <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+        <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+      <ion-button slot="start" color="light">
+        <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+      </ion-button>
+    </ion-toolbar>
+</ion-header>
 <ion-content>
   <div style="padding-top: 30px;">
     <ion-header style="text-align: center; font-size: xx-large; padding-bottom: 20px;">Booking History</ion-header>
@@ -5,32 +15,36 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="10" offset-md="1">
-        <div *ngFor="let tickets of bookedTickets">
-        <ion-card>
+        <div>
+        <ion-card *ngFor="let tickets of bookedticket">
           <ion-row>
             <ion-col>
-          <ion-grid>
-            <ion-row>
-              <ion-col offset-md="0.4">
-                <img src="{{tickets.imgUrl}}" style="height: 130px;">
-              </ion-col>
-              <ion-col size-md="4" offset-md="1">
-                <ion-card-header>
-                  <ion-card-title>Movie Name: {{tickets.movieName}}</ion-card-title>
-                  <ion-card-subtitle>Location: {{tickets.location}}</ion-card-subtitle>
-                  <ion-card-subtitle>Time: {{tickets.time}}</ion-card-subtitle>
-                  <ion-card-subtitle>Movie Hall: {{tickets.hall}}</ion-card-subtitle>
-                  <ion-card-subtitle>Seat Number: {{tickets.seatNumber}}</ion-card-subtitle>
-                </ion-card-header>
-              </ion-col> 
-            </ion-row>
-          </ion-grid>
+                <ion-grid>
+                    <ion-row>
+                      <ion-col offset-md="0.4">
+                        <img src="{{tickets.movieTickets.posterLink}}" style="height: 250px; width: 200px;">
+                      </ion-col>
+                      <ion-col size-md="4" offset-md="1">
+                        <ion-card-header>
+                          <ion-card-title>Movie Name: {{tickets.movieTickets.title}}</ion-card-title>
+                          <ion-card-subtitle>Location: {{tickets.movieTickets.location}}</ion-card-subtitle>
+                          <ion-card-subtitle>Time: {{tickets.movieTickets.timeSlot}}</ion-card-subtitle>
+                          <ion-card-subtitle>Movie Hall: {{tickets.movieTickets.hall}}</ion-card-subtitle>
+                          <ion-card-subtitle>Seat Number: {{tickets.movieTickets.seatNumbers}}</ion-card-subtitle>
+                          <ion-card-subtitle>Ticket Cost: {{tickets.movieTickets.movieTotal}}</ion-card-subtitle>
+                          <ion-card-subtitle>Meal Cost: {{tickets.mealCostLKR}}</ion-card-subtitle>
+                          <ion-card-subtitle>Number Of Tickets: {{totalTickets}}</ion-card-subtitle>
+                          <ion-card-subtitle>Purchased Date: {{tickets.purchaseDate}}</ion-card-subtitle>
+                        </ion-card-header>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
             </ion-col>
             </ion-row>
             <ion-item-divider>
               <ion-card-content>
                 <ion-label>
-                  Total cost Of Tickets: {{tickets.totalCost}} 
+                  Total cost Of Tickets: {{tickets.totalCostLKR}}
                 </ion-label>
               </ion-card-content>
             </ion-item-divider>

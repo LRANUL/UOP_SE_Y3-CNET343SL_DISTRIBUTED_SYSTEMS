@@ -3,7 +3,8 @@
 
   <!-- SEARCH BY MOVIE NAME TITLE -->
   <ion-title style="margin-top: 2%;
-                    letter-spacing: 1px;"><b>SEARCH BY MOVIE TITLE</b></ion-title>
+                    letter-spacing: 1px;
+                    color: #374d58;"><b>SEARCH BY MOVIE TITLE</b></ion-title>
 
   <!-- Loading Spinner - Add movie to wait list -->
   <ion-spinner name="crescent" style="height: 50px;
@@ -42,7 +43,7 @@
           </ion-col>
           <ion-col size="2">
             <div>
-              <ion-button expand="block" type="submit" [disabled]="!searchUpcomingMoviesForm.valid">
+              <ion-button expand="block" type="submit" [disabled]="!searchUpcomingMoviesForm.valid" style="--border-radius: 10px;">
                 <ion-label>
                   <ion-img src="assets/images/account/manager/browse-upcoming-movies-sub-page/search-icon.png" style="width: 25px;
                                                                                                                       margin-left: 0px;"></ion-img>

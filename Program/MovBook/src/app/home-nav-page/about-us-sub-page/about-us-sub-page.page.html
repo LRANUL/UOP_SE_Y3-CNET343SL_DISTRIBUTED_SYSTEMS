@@ -1,9 +1,103 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>about-us-sub-page</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <img src="../../../../assets/images/MovBook-Logo.jpeg" style="width: 160px;border-radius: 5px;margin-bottom: 10px; padding-left: 10px;">
+        <ion-icon name="person-circle-outline" slot="end" style="padding-right: 15px; font-size: 30px"></ion-icon>
+        <ion-icon name="log-out-outline" slot="end" style="padding-right: 20px; padding-left: 15px; font-size: 30px;"></ion-icon>
+      <ion-button slot="start" color="light">
+        <ion-menu-button menu = "menuCustomer"></ion-menu-button>
+      </ion-button>
+    </ion-toolbar>
+</ion-header>  
 <ion-content>
-
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" offset-md="5.5">
+          <ion-label style="font-weight: 500; font-size: xx-large; text-align: center;">About Us</ion-label>
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+      <ion-grid>
+      <ion-row>
+        <ion-col size-md="7">
+          <ion-card>
+            <ion-card-content>
+              <ion-card-title >Our Vision</ion-card-title>
+             <ion-label>
+                Our vision is to get away from your busy life and make your life<br> as a enjoyble person and fulfill your life with entertainment and<br> 
+                make your busy life easer and also give chance to book movie<br> ticket without standing 
+                on queue and also make a envirement<br> familier for you.  
+             </ion-label>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="7" offset-md="5">
+          <ion-card>
+            <ion-card-content>
+               <ion-card-title>Our Mission</ion-card-title>
+               <ion-label>
+                Our mission is make closer the new technology to your fingertips and<br>
+                get away from your busy life and make your life easer and enjoyble.<br> The main Purpose 
+                of our service is save time because you can<br> book your favourite movie ticket without standing on queue.
+              </ion-label>
+            </ion-card-content>
+         </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-label style="font-weight: 500; font-size: xx-large;">Terms and Privacy</ion-label>
+          <ul>
+            <li>A superstar customer will be allowed 1 transaction cancellation in 6 months.</li>
+            <li>Once you can cancel the ticket, the cancellation amount will be refunded to the source of payment in 4-5 working days, some bank may take 10 working days.</li>
+            <li>Internet handling charges are not refunded</li>
+            <li>You can't cancel a ticket if you have applied an offer code, payback or loyalty points are applied in the transaction.</li>
+            <li>Applied offers, payback and, or, any loyalty points will not be refunded.</li>
+            <li>Tickets need to be canceled at least 20 minutes prior to the show timing.</li>
+            <li>On cancellation of tickets, 30 percent of the base ticket will be deducted as cancellation fee.</li>
+            <li>The cancellation feature will not be available where users split the transaction with each other.</li>
+          </ul>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-content>
+<ion-footer>
+    <ion-grid>
+        <ion-row>
+            <ion-col size-md="0.5" offset-md="0.5">
+               <ion-label style="color: white;"><strong>Home</strong></ion-label> 
+            </ion-col>
+            <ion-col size-md="0.7" (click)="aboutusNav()">
+                <ion-label style="color: white;"><strong>About Us</strong></ion-label>
+            </ion-col>
+            <ion-col size-md="1.2" (click)="openmodalterms()">
+                <ion-label style="color: white;"><strong>Terms & Conditions</strong></ion-label>  
+            </ion-col>
+            <ion-col (click)="openmodalCustomer()">
+                <ion-label style="color: white;"><strong>Contact Us</strong></ion-label>  
+            </ion-col>
+                <ion-col>
+                  <ion-grid>
+                      <ion-row style="float: right;">
+                          <ion-col size-md="4" >
+                            <a href="https://www.instagram.com/movbook.lk/">
+                                <ion-icon name="logo-instagram" style="font-size: x-large; padding-right: 20px;"></ion-icon>
+                                </a>
+                          </ion-col>
+                          <ion-col size-md="4">
+                            <a href="https://twitter.com/movbook_lk">
+                                <ion-icon name="logo-twitter" style="font-size: x-large;  padding-right: 20px;"></ion-icon>
+                                </a>
+                        </ion-col>
+                        <ion-col size-md="4">
+                            <a href="https://www.facebook.com/mov.book.5/">
+                                <ion-icon name="logo-facebook" style="font-size: x-large;  padding-right: 20px;"></ion-icon>
+                              </a>
+                        </ion-col>
+                      </ion-row>
+                  </ion-grid>
+                </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

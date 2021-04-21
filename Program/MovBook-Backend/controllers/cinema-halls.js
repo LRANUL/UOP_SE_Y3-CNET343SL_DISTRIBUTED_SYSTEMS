@@ -13,22 +13,22 @@ exports.createCinemaHall = async (req, res, next) => {
     seatingGridNoOfColumns: req.body.noOfColumns,
     seatingDetails: req.body.seatingDetails
   }).save((error, returnedData) => {
-    
+
     // If condition - Response will be sent accordingly if an error occurs
-    if(error){
+    if (error) {
       res.status(500).json({
         message:
           "Error - Unable to add cinema hall"
       });
     }
-    else{
+    else {
       res.status(200).json({
         message:
           "Cinema hall created",
         returnedData
       });
     }
-  
+
   })
 };
 
@@ -43,23 +43,23 @@ exports.retrieveCinemaHalls = async (req, res, next) => {
   await cinemaHallModel.find({ cinemaLocationObjectId: cinemaLocationId }, (error, returnedData) => {
 
     // If condition - checking whether an error has occurred and the relevant message is passed to the client-side
-    if(error){
+    if (error) {
       res.status(500).json({
         message:
           "Error - Unable to retrieve cinema halls"
       });
     }
-    else{
+    else {
 
       // If condition - checking whether the length of the returned data is zero (no data is returned)
       // and the relevant message passed to the client-side
-      if(returnedData.length == 0){
+      if (returnedData.length == 0) {
         res.status(200).json({
           message:
             "No cinema halls available for cinema location"
         });
       }
-      else{
+      else {
         res.status(200).json({
           message:
             "Cinema halls Retrieved",
@@ -72,23 +72,131 @@ exports.retrieveCinemaHalls = async (req, res, next) => {
   })
 };
 
-// to get one cinema hall
+
+// Function - Retrieve one cinema hall by cinemaHallObjectId using route, 
+// 'BASE_URL/api/cinema-halls/hall/:id'
 exports.retrieveCinemaHall = async (req, res, next) => {
-  cinemaHallModel.findById(req.params.id)
-  .then((returnedData)=>{
-    if(returnedData)
-  {
-    res.status(200).json({
-      message: "Cinema halls Retrieved",
-      returnedData
+
+  // Extracting cinemaHallObjectId from the URL
+  let cinemaHallObjectId = req.params.id;
+
+  await cinemaHallModel.findById(cinemaHallObjectId)
+    .then((returnedData) => {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No cinema halls available for cinema location"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Cinema hall retrieved",
+          returnedData
+        });
+      }
+    }).catch(err => {
+      res.status(500).json({
+        message:
+          "Error - Unable to retrieve cinema hall: ", err
+      });
     })
-  }else
-  {
-    res.status(404).json({
-      message: "Unable to retrieve cinema hall"
-    })
-  } 
-  }).catch(err => {
-   console.log(err);
+};
+
+// Function - Retrieving the count of cinema halls | Route: 'BASE_URL/api/cinema-halls/count/cinema-halls'
+exports.retrieveCinemaHallsCount = async (req, res, next) => {
+
+  // Using mongoose countDocuments() functionality to get the count of cinema halls
+  await cinemaHallModel.countDocuments((error, returnedData) => {
+    
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to retrieve count of cinema halls",
+      });
+    }
+    else {
+      // If condition - checking whether the length of the returned data is zero (no data is returned)
+      // and the relevant message passed to the client-side
+      if (returnedData.length == 0) {
+        res.status(200).json({
+          message:
+            "No cinema halls available"
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Count of cinema halls retrieved",
+          returnedData
+        });
+      }
+    }
   })
+};
+  
+// Function - Update showing experience using route, 'BASE_URL/api/cinema-halls/update-cinema-hall'
+exports.updateCinemaHallDetails = async (req, res, next) => {
+
+  // Extracting the 'cinemaHallObjectId' from the sent request body
+  let cinemaHallObjectId = req.body._id;
+
+  // Using mongoose findOneAndUpdate() functionality to update cinema hall
+  await cinemaHallModel.findOneAndUpdate(
+    {
+      _id: cinemaHallObjectId
+    },
+    {
+      cinemaHallName: req.body.cinemaHallName,
+      seatingDetails: req.body.seatingDetails
+    }, (error, returnedData) => {
+
+      // If condition - checking whether an error occurred during the query execution
+      if (error) {
+        res.status(500).json({
+          message:
+            "Unable to update cinema hall",
+        });
+      }
+      else {
+        res.status(200).json({
+          message:
+            "Cinema hall updated",
+          returnedData
+        });
+      }
+
+    })
+
+};
+
+// Function - Remove cinema hall details from the database
+exports.removeCinemaHall = async (req, res, next) => {
+
+  // Extracting passed cinemaHallObjectId from the URL
+  let passedCinemaHallObjectId = req.params.cinemaHallObjectId;
+
+  // Using mongoose findByIdAndDelete() functionality to remove the cinema hall according to the passed cinemaHallObjectId
+  await cinemaHallModel.deleteOne({ '_id': passedCinemaHallObjectId }, (error, returnedData) => {
+
+    // If condition - checking whether an error occurred during the query execution
+    if (error) {
+      res.status(500).json({
+        message:
+          "Unable to remove cinema hall",
+      });
+    }
+    else {
+      res.status(200).json({
+        message:
+          "Cinema hall removed",
+        returnedData
+      });
+    }
+
+  })
+
 };

@@ -1,3 +1,9 @@
+/**
+ * 
+ * DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS
+ * 
+ */
+
 const mongoose = require('mongoose');
 
 const bookingDetailsSchema =mongoose.Schema({

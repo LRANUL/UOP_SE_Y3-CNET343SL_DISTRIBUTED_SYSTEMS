@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { EmployeeService } from './../../services/account/employee.service'
 import { Subscription } from 'rxjs'
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -19,8 +20,11 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
 
   managerSubscription: Subscription;
 
+  logout(){
+    this.authServ.logOut();
+  }
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,private authServ:AuthService) { }
   //constructor() { }
 
   //Angular Page
@@ -31,17 +35,17 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
 
 
   //Angular Page
-  Prefix: any;
-  FirstName: any;
-  MiddleName: any;
-  LastName: any;
-  Email: any;
-  Password: any;
-  RetypePassword: any;
-  Phone: any;
-  StreetAddress: any;
-  City: any;
-  PostalCode: any;
+  prefix: any;
+  firstName: any;
+  middleName: any;
+  lastName: any;
+  email: any;
+  password: any;
+  retypePassword: any;
+  phone: any;
+  streetAddress: any;
+  city: any;
+  postalCode: any;
 
 
   // name: any;
@@ -57,25 +61,33 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
   ngOnInit() {
 
     //sidebar Details
-    var Email = "wef";
-    this.employeeService.getDetails(Email).subscribe(
-      (data) => {
-        //console.log(data);
+    // var Email = "wef";
+    // this.employeeService.getDetails(Email).subscribe(
+    //   (data) => {
+    //     //console.log(data);
 
-        //name/email = backend
-        // this.name_admin = data['name'];
-        // this.email_admin = data['email'];
-        this.admin_Prefix = data['Prefix'];
-        this.admin_FirstName = data['FirstName'];
-        this.admin_LastName = data['LastName'];
-        this.admin_Email = data['Email'];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    //     //name/email = backend
+    //     // this.name_admin = data['name'];
+    //     // this.email_admin = data['email'];
+    //     this.admin_Prefix = data['Prefix'];
+    //     this.admin_FirstName = data['FirstName'];
+    //     this.admin_LastName = data['LastName'];
+    //     this.admin_Email = data['Email'];
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
 
-    
+        const userEMail = localStorage.getItem("email");
+        const name = localStorage.getItem("name");
+        const lname = localStorage.getItem("lastName");
+        console.log(name + userEMail);
+        this.admin_FirstName = name
+        this.admin_LastName = lname
+        this.admin_Email = userEMail;
+
+
 
     //pass the data to the list
     this.employeeService.getManagerDetails();
@@ -106,17 +118,26 @@ export class ManagerAccountsSubPagePage implements OnInit, OnDestroy {
     if (form)
       form.reset();
     this.employeeService.selectedEmployee = {
-      Prefix: "",
-      FirstName: "",
-      MiddleName: "",
-      LastName: "",
-      Email: "",
-      Password: "",
-      RetypePassword: "",
-      Phone: null,
-      StreetAddress: "",
-      City: "",
-      PostalCode: "",
+      email: "",
+      name: {
+        prefix: "",
+        firstName: "",
+        middleName: "",
+        lastName: ""
+      },
+      // Prefix: "",
+      // FirstName: "",
+      // MiddleName: "",
+      // LastName: "",
+
+      password: "",
+      retypePassword: "",
+      phone: null,
+      address: {
+        streetAddress: "",
+        city: "",
+        postalCode: ""
+      },
     }
 
   }

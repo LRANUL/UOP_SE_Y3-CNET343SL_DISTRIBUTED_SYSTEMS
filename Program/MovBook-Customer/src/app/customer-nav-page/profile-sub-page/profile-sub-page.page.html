@@ -3,28 +3,33 @@
   <br>
   <ion-grid>
     <ion-row>
-      <ion-col size-md="5.5" offset-md="5.6">
-              <ion-avatar style="height: 110px; width: 110px; text-align: center;">
-                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-md="5" offset-md="5.8">
+              <ion-avatar style="height: 110px; width: 110px;">
+                <img src="../../../assets/images/profile.png">
               </ion-avatar>
-      </ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
     </ion-row>
     <ion-row>
-    <ion-col size-md="5" offset-md="5">
-             <ion-label style="text-align: center; font-weight: bold; font-size: x-large;">{{user.email}}</ion-label>
-    </ion-col>
+      <ion-grid>
+        <ion-row>
+          <ion-col  size-md="5" offset-md="5">
+            <ion-label style="font-weight: bold; font-size: x-large;">{{user.email}}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-row>
   </ion-grid>
   <br>
   <ion-grid>
     <ion-row>
       <ion-col size-md="10" offset-md="1">
-        <br>
           <ion-title>Your Profile details</ion-title>
       </ion-col>
     </ion-row>
-  </ion-grid>
-  <ion-grid>
     <ion-row>
       <ion-col size-md="10" offset-md="1">
         <ion-card>

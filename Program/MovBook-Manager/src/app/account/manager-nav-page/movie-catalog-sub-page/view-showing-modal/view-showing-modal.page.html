@@ -1,0 +1,221 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><b>MOVIE SHOWINGS</b></ion-title>
+    <div style="width: 200px;
+                position: absolute;
+                right: 200px;
+                top: 7px;">
+      <ion-button
+        shape="block"
+        color="green"
+        (click)="openAddNewShowingModal()">
+        <ion-label>
+          <ion-img src="assets/images/account/manager/locations-halls-sub-page/add-cinema-location-icon.png" style="width: 25px;
+                                                                                                                    margin-right: 5px;"></ion-img>
+        </ion-label>
+        <ion-label>
+          ADD NEW SHOWING
+        </ion-label>
+      </ion-button>
+    </div>
+    <ion-button
+      (click)="closeViewShowingModal()" 
+      slot="end" 
+      shape="round" 
+      fill="outline" 
+      color="danger" 
+      id="closeViewShowingModalButton">
+      <ion-icon name="close-outline" style="font-size: 30px;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card style="height: 685px;">
+    <ion-card-content>
+      
+      <!-- List of cinema location names -->
+      <div style="width: 100%;
+                  background-color: rgb(241, 241, 241);
+                  overflow-x: auto;
+                  border-radius: 10px;">
+
+        <table>
+          <tbody>
+            <tr>
+              <td *ngFor="let cinemaLocations of listOfCinemaLocations">
+                <ion-button color="{{ cinemaLocations.cinemaLocationObjectId == activeCinemaLocationObjectId ? 'light-blue' : 'dark-blue' }}" 
+                  style="height: 50px;
+                        min-width: 300px;
+                        --border-radius: 10px;
+                        margin-right: 10px;" 
+                  (click)="setActiveCinemaLocationObjectId(cinemaLocations.cinemaLocationObjectId)"
+                  disabled="{{ cinemaLocations.cinemaLocationObjectId == activeCinemaLocationObjectId ? 'true' : 'false' }}"
+                >
+                  <ion-label style="color: #ffffff;
+                                    font-size: 20px;">{{cinemaLocations.cinemaLocationName}}</ion-label>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Loading Spinner - CINEMA LOCATIONS -->
+        <div *ngIf="loadingSpinnerCinemaLocations">
+          <ion-spinner name="dots" style="height: 50px;
+                                      width: 50px;
+                                      position: relative;
+                                      left: 50%;
+                                      transform: translateX(-50%);"></ion-spinner>
+        </div>
+      </div>
+
+      <!-- List of cinema hall names -->
+      <div style="width: 100%;
+                  background-color: rgb(241, 241, 241);
+                  overflow-x: auto;
+                  border-radius: 10px;
+                  margin-top: 10px;">
+
+        <table>
+          <tbody>
+            <tr>
+              <td *ngFor="let cinemaHall of listOfCinemaHalls">
+                <ion-button color="{{ cinemaHall.cinemaHallObjectId == activeCinemaHallObjectId ? 'light-blue' : 'dark-blue-one' }}" 
+                    style="height: 50px;
+                          min-width: 300px;
+                          --border-radius: 10px;
+                          margin-right: 10px;" 
+                    (click)="setActiveCinemaHallObjectId(cinemaHall.cinemaHallObjectId)"
+                    disabled="{{ cinemaHall.cinemaHallObjectId == activeCinemaHallObjectId ? 'true' : 'false' }}"
+                  >
+                  <ion-label style="color: #ffffff;
+                                    font-size: 20px;">{{cinemaHall.cinemaHallName}}</ion-label>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Loading Spinner - CINEMA HALLS -->
+        <div *ngIf="loadingSpinnerCinemaHalls">
+          <ion-spinner name="dots" style="height: 50px;
+                                      width: 50px;
+                                      position: relative;
+                                      left: 50%;
+                                      transform: translateX(-50%);"></ion-spinner>
+        </div>
+      </div>
+
+      <!-- List of showing dates -->
+      <div style="width: 100%;
+                  background-color: rgb(241, 241, 241);
+                  overflow-x: auto;
+                  border-radius: 10px;
+                  margin-top: 10px;">
+
+        <table>
+          <tbody>
+            <tr>
+              <td *ngFor="let showingDate of listOfSlotDates">
+                <ion-button color="{{ showingDate.showingDate == activeShowingDate ? 'light-blue' : 'dark-blue-two' }}" style="height: 50px;
+                                                      min-width: 300px;
+                                                      --border-radius: 10px;
+                                                      margin-right: 10px;"
+                    (click)="setActiveShowingDate(showingDate)"
+                    disabled="{{ showingDate.showingDate == activeShowingDate ? 'true' : 'false' }}"
+                  >
+                  <ion-label style="color: #ffffff;
+                                    font-size: 20px;">{{showingDate.showingDate}}</ion-label>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Loading Spinner - SHOWING DATES -->
+        <div *ngIf="loadingSpinnerShowingDates">
+          <ion-spinner name="dots" style="height: 50px;
+                                      width: 50px;
+                                      position: relative;
+                                      left: 50%;
+                                      transform: translateX(-50%);"></ion-spinner>
+        </div>
+      </div>
+
+      <!-- List of showing time slots -->
+      <div style="width: 100%;
+                  background-color: rgb(241, 241, 241);
+                  overflow-x: auto;
+                  border-radius: 10px;
+                  margin-top: 10px;">
+
+        <table>
+          <tbody>
+            <tr>
+              <td *ngFor="let showingTime of listOfSlotTimes">
+                <ion-button color="{{ showingTime.slotStartTime + ' | ' + showingTime.slotEndTime == activeShowingTime ? 'light-blue' : 'dark-blue-three' }}" 
+                    style="height: 50px;
+                          min-width: 300px;
+                          --border-radius: 10px;
+                          margin-right: 10px;"
+                    (click)="setActiveShowingTime(showingTime.slotStartTime + ' | ' + showingTime.slotEndTime)"
+                    disabled="{{ showingTime.slotStartTime + ' | ' + showingTime.slotEndTime == activeShowingTime ? 'true' : 'false' }}"
+                  >
+                  <ion-label style="color: #ffffff;
+                                    font-size: 20px;">{{showingTime.slotStartTime}} | {{showingTime.slotEndTime}} </ion-label>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Loading Spinner - SOWING TIME SLOTS -->
+        <div *ngIf="loadingSpinnerShowingTimeSlots">
+          <ion-spinner name="dots" style="height: 50px;
+                                      width: 50px;
+                                      position: relative;
+                                      left: 50%;
+                                      transform: translateX(-50%);"></ion-spinner>
+        </div>
+      </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+          </ion-col>
+          <ion-col size="4">
+            <!-- COMING SOON TEXT -->
+            <div style="background-color: #ffffff;
+                        width: 55%;
+                        height: 100px;
+                        border-radius: 10px;
+                        position: absolute;
+                        left: 50%;
+                        top: 80%;
+                        transform: translate(-50%,-20%);
+                        margin-top: 20px;
+                        box-shadow: 5px 3px 18px #888888;">
+              <ion-label style="position: absolute;
+                              left: 47%;
+                              top: 50%;
+                              transform: translate(-53%,-50%);
+                              font-size: 20px;
+                              font-weight: 600;
+                              font-family: Arial, Helvetica, sans-serif;
+                              color: #000000;">
+                COMING SOON
+              </ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="4">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>

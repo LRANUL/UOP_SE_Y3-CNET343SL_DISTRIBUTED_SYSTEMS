@@ -5,7 +5,7 @@
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content style="padding-bottom: 0px;" >
+    <ion-content style="padding-bottom: 0px;">
       <ion-list>
       <ion-menu-toggle>
         <ion-item routerLink="customer/home">
@@ -21,6 +21,11 @@
         <ion-item routerLink="customer/booked-tickets">
           <ion-icon name="ticket-outline" slot="start"></ion-icon>
           <ion-label>Booked Tickets</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/chat">
+          <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
+          <ion-label>Message</ion-label>
         </ion-item>
         <br>
         <ion-item routerLink="customer/loyality">
@@ -41,6 +46,11 @@
         <ion-item routerLink="customer/home" (click)="openTermsmodal()">
           <ion-icon name="document-lock-outline" slot="start"></ion-icon>
           <ion-label>Terms and Conditions</ion-label>
+        </ion-item>
+        <br>
+        <ion-item routerLink="customer/home" (click)=" logout()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          <ion-label>LogOut</ion-label>
         </ion-item>
       </ion-menu-toggle>
       </ion-list>

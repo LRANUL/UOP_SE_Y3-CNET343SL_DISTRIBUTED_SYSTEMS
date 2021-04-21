@@ -1,0 +1,62 @@
+<ion-list style="min-width: 250px">
+  <form [formGroup]="verifyEmailAddressForm" (ngSubmit)="doVerifyEmailAddress(verifyEmailAddressForm.value)">
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button (click)="closeVerifyEmailAddressPopover()" color="danger">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <!-- Loading Spinner - Pin Code Verification -->
+        <ion-spinner name="crescent" style="height: 30px;
+                                            width: 30px;
+                                            position: absolute;
+                                            right: 5%;" *ngIf="loadingSpinnerPinCodeVerification"></ion-spinner>
+        <ion-row>
+          <ion-col>
+            <ion-label style="font-size: 18px">
+              Pin code sent
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label style="font-size: 18px">
+              <b>Enter pin code:</b>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-input type="text" placeholder="Pin Code" clearInput formControlName="pinCode"></ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button 
+              color="tertiary" 
+              expand="block"
+              type="submit"
+              [disabled]="!verifyEmailAddressForm.valid"
+              style="position: absolute;
+                    min-width: 100px;
+                    margin-top: -5%;"
+            >
+              VERIFY
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </form>
+</ion-list>

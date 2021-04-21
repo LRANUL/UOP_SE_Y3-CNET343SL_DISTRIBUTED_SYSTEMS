@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import { ManagerService } from 'src/app/services/account/manager.service';
 import { AddHallModalPage } from '../add-hall-modal/add-hall-modal.page';
+import { EditHallModalPage } from '../edit-hall-modal/edit-hall-modal.page';
 
 @Component({
   selector: 'app-cinema-halls-modal',
@@ -18,6 +19,9 @@ export class CinemaHallsModalPage implements OnInit {
 
   // Declaration | Initialization - to handle visibility of 'loadingSpinnerCinemaHalls' block
   loadingSpinnerCinemaHalls: Boolean = false;
+
+  // Declaration | Initialization - to handle visibility of 'loadingSpinnerHallRemove' block
+  loadingSpinnerHallRemove: Boolean = false;
 
   // Declaration - stores the initially loaded and user selected cinema hall object Id
   activeCinemaHallObjectId;
@@ -37,12 +41,17 @@ export class CinemaHallsModalPage implements OnInit {
   constructor(
     private navParams: NavParams,
     private modalController: ModalController,
-    private managerService: ManagerService
+    private managerService: ManagerService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
+
     // Assigning variable with passed 'passingCinemaLocationObjectId'
     this.passedCinemaLocationObjectId = this.navParams.get('passingCinemaLocationObjectId');
+
+    // Assigning variable with passed 'passingCinemaHallObjectId'
+    this.activeCinemaHallObjectId = this.navParams.get('passingCinemaHallObjectId');
 
     // Retrieving cinema hall details
     this.retrieveCinemaHallDetails();
@@ -67,6 +76,33 @@ export class CinemaHallsModalPage implements OnInit {
       backdropDismiss: false,
     });
     addHallModal.present();
+  }
+
+  // Function - Implementation for opening the 'Edit Hall' modal
+  async openEditHallModal(){
+    this.closeCinemaHallsModal();
+    const editHallModal = await this.modalController.create({
+      component: EditHallModalPage,
+      cssClass: 'cinema-halls-modal',
+      componentProps: {
+        passingCinemaLocationObjectId: this.passedCinemaLocationObjectId,
+        passingCinemaHallObjectId: this.activeCinemaHallObjectId,
+        passingListOfCinemaHall: this.cinemaHallList
+      },
+      // Disabling modal closing from any outside clicks
+      backdropDismiss: false,
+    });
+    editHallModal.present();
+  }
+
+  // Function -  Alert Box Implementation
+  async alertNotice (title: string, content: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   // Function - Coverts a number value to any array
@@ -99,23 +135,32 @@ export class CinemaHallsModalPage implements OnInit {
     this.loadingSpinnerCinemaHalls = true;
 
     // Retrieving cinema halls from the server-side application
-    this.managerService.retrieveCinemaHalls(this.passedCinemaLocationObjectId).subscribe((res) => {
+    this.managerService.retrieveCinemaHalls(this.passedCinemaLocationObjectId)
+      .subscribe((cinemaHallsResponse: any) => {
 
-      // Assigning retrieved list of cinema locations to 'cinemaHallList' array
-      this.cinemaHallList = res;
-
-      // TODO:
-      // if(this.cinemaHallList.message == ""){}
-
-      // Reassigning returnData array from 'cinemaHallList' to 'cinemaHallList'
-      this.cinemaHallList = this.cinemaHallList.returnedData;
-      
-      // Assigning default active cinema hall object Id
-      this.setActiveCinemaHallObjectId(this.cinemaHallList[0]._id);
+      if(cinemaHallsResponse.message == "Cinema halls Retrieved"){
+        // Assigning returnData array from 'cinemaHallsResponse' to 'cinemaHallList'
+        this.cinemaHallList = cinemaHallsResponse.returnedData;
+        
+        // Assigning default active cinema hall object Id
+        this.setActiveCinemaHallObjectId(this.cinemaHallList[0]._id);
+      }
+      else if(cinemaHallsResponse.message == "No cinema halls available for cinema location"){
+        // Showing error message box to the user
+        this.alertNotice("No Cinema Halls", "No cinema hall available for this cinema location.");
+      }
 
       // Disabling 'loadingSpinnerCinemaHalls' loading spinner
       this.loadingSpinnerCinemaHalls = false;
 
+    }, (error: ErrorEvent) => {
+      // Disabling 'loadingSpinnerCinemaHalls' loading spinner
+      this.loadingSpinnerCinemaHalls = false;
+
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to retrieve cinema hall details, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to retrieve cinema hall details");
     });
 
   }
@@ -168,5 +213,76 @@ export class CinemaHallsModalPage implements OnInit {
     }
     
   }
+
+  // Confirm Box Implementation - Remove cinema hall
+  async confirmBoxRemoveHall (title: string, content: string, cinemaHallObjectId: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: content,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log("Confirm Box: Request denied");
+          }
+        },
+        {
+          text: 'Continue',
+          handler: () => {
+            console.log("Confirm Box: Request accepted");
+
+            // Edit cinema hall details
+            this.removeCinemaHall(cinemaHallObjectId);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // Function - Remove cinema hall from the database
+  removeCinemaHall(cinemaHallObjectId){
+
+    // Assigning 'loadingSpinnerHallRemove' to true (starts loading spinner)
+    this.loadingSpinnerHallRemove = true;
+
+    // Adding new showing experience
+    this.managerService.removeCinemaHall(cinemaHallObjectId)
+      .subscribe((cinemaHallRemoveResponse: any) => {
+
+      if(cinemaHallRemoveResponse.message == "Count of movies retrieved"){
+
+        // Assigning 'loadingSpinnerHallRemove' to false (stops loading spinner)
+        this.loadingSpinnerHallRemove = false;
+
+        // Showing success message box to the user
+        this.alertNotice("Removed", "Cinema hall has been successfully removed.");
+
+      }
+      else if(cinemaHallRemoveResponse.message == "Unable to retrieve count of movies"){
+
+        // Assigning 'loadingSpinnerHallRemove' to false (stops loading spinner)
+        this.loadingSpinnerHallRemove = false;
+
+        // Showing error message box to the user
+        this.alertNotice("ERROR", "Unable to remove cinema hall, apologies for the inconvenience. Please contact administrator.");
+
+        console.log("Unable to remove cinema hall");
+
+      }
+
+    }, (error: ErrorEvent) => {
+      // Assigning 'loadingSpinnerHallRemove' to false (stops loading spinner)
+      this.loadingSpinnerHallRemove = false;
+      
+      // Showing error message box to the user
+      this.alertNotice("ERROR", "Unable to remove cinema hall, apologies for the inconvenience. Please contact administrator.");
+
+      console.log("Unable to remove cinema hall");
+    });
+
+  }
+
 
 }

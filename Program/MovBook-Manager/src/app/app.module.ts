@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+
+import { AuthInterceptor } from './services/auth-interceptor';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
@@ -24,11 +26,21 @@ import { AddNewShowingModalPageModule } from './account/manager-nav-page/movie-c
 import { AddNewShowingExperienceModalPageModule } from './account/manager-nav-page/settings-sub-page/add-new-showing-experience-modal/add-new-showing-experience-modal.module';
 import { UpdateAccountDetailsModalPageModule } from './account/manager-nav-page/settings-sub-page/update-account-details-modal/update-account-details-modal.module';
 import { EditShowingExperienceModalPageModule } from './account/manager-nav-page/settings-sub-page/edit-showing-experience-modal/edit-showing-experience-modal.module';
+import { EditHallModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/edit-hall-modal/edit-hall-modal.module';
+import { RegisterOperatorAccountModalPageModule } from './account/manager-nav-page/operator-accounts-sub-page/register-operator-account-modal/register-operator-account-modal.module';
+import { VerifyEmailAddressPopoverPageModule } from './account/manager-nav-page/settings-sub-page/verify-email-address-popover/verify-email-address-popover.module';
+import { AddBeverageModalPageModule } from './account/manager-nav-page/food-and-beverages-sub-page/add-beverage-modal/add-beverage-modal.module';
+import { EditLocationModalPageModule } from './account/manager-nav-page/locations-halls-sub-page/edit-location-modal/edit-location-modal.module';
+import { ViewShowingModalPageModule } from './account/manager-nav-page/movie-catalog-sub-page/view-showing-modal/view-showing-modal.module';
+import { UpdateBeverageModalPageModule } from './account/manager-nav-page/food-and-beverages-sub-page/update-beverage-modal/update-beverage-modal.module';
+import { ErrorInterceptor } from './services/account/error-interceptor';
+import { ChangePasswordModalPageModule } from './account/manager-nav-page/settings-sub-page/change-password-modal/change-password-modal.module';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -43,10 +55,31 @@ import { EditShowingExperienceModalPageModule } from './account/manager-nav-page
       AddNewShowingModalPageModule,
       AddNewShowingExperienceModalPageModule,
       UpdateAccountDetailsModalPageModule,
-      EditShowingExperienceModalPageModule
+      EditShowingExperienceModalPageModule,
+      EditHallModalPageModule,
+      RegisterOperatorAccountModalPageModule,
+      VerifyEmailAddressPopoverPageModule,
+      AddBeverageModalPageModule,
+      EditLocationModalPageModule,
+      ViewShowingModalPageModule,
+      UpdateBeverageModalPageModule,
+      ChangePasswordModalPageModule
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:ErrorInterceptor,
+      multi:true
+    },
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
+    }
   ],
   bootstrap: [AppComponent]
 })

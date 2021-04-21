@@ -6,7 +6,7 @@
 }
 
 .seatingGridTableOuterDiv{
-  background-color: #374d58;
+  background-color: darkgray !important;
 }
 
 .seatingGridTableOuterDivP{
@@ -49,7 +49,41 @@
 
 
 .seatingGridTableInnerDivUnavailableSeat{
-  background-color: #374d58;
-  color: #374d58;
+  background-color: #808080;
+  color: #808080;
+  border: 2px solid #9c9c9c;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+@media (max-width: 365px) {
+  .table{
+    margin-left: 30%;
+  }
+}
+
+@media (min-width: 365px) {
+  .table{
+    margin-left: 30%;
+  }
+}
+
+@media (min-width: 513px) {
+  .table{
+    margin-left: 10%;
+  }
+}
+
+  @media (max-width: 340px) {
+    .table{
+      margin-left: 50%;
+    }
+}
+
+@media (min-width: 640px) {
+  .table{
+    margin-left: 0%;
+  }
 }
 

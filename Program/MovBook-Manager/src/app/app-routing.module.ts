@@ -16,8 +16,12 @@ const routes: Routes = [
   {
     path: 'manager',
     loadChildren: () => import('./account/manager-nav-page/manager-nav-page.module').then( m => m.ManagerNavPagePageModule)
-    // canActivate:[AuthGuard]
+    , canActivate:[AuthGuard]
   }
+  // {
+  //   path: 'password-reset',
+  //   loadChildren:() => import('./login/password-reset/password-reset.module').then((m)=>{ m.PasswordResetPageModule})
+  // }
 ];
 
 @NgModule({

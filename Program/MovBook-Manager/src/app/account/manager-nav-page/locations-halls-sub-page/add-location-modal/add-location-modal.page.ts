@@ -37,7 +37,6 @@ export class AddLocationModalPage implements OnInit {
 
   // Implementation to close 'Add Location' modal and pass latest list of cinema locations back
   async closeAddLocationModal(){
-    console.log(this.addNewCinemaLocationStatus);
     await this.modalController.dismiss(this.addNewCinemaLocationStatus);
   }
 

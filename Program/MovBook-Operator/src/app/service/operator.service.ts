@@ -3,15 +3,20 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { EmailValidator } from "@angular/forms";
 import { environment } from "src/environments/environment";
-import { bookedTickets, movie} from 'src/app/models/account/operators';
+import { bookedTickets, movie } from 'src/app/models/operators';
+import { MovieBookingSubPagePage } from "../operator-nav-page/movie-booking-sub-page/movie-booking-sub-page.page";
 
 @Injectable({
   providedIn: "root",
 })
 export class OperatorService {
+  reserveSeat(seatNumbers: any) {
+    throw new Error("Method not implemented.");
+  }
   allticketInformation: BehaviorSubject<any> = new BehaviorSubject(null);
   ticketInformation = this.allticketInformation.asObservable();
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
+  private BASE_URL_ADMIN = environment.MOVBOOK_PAYMENT_URL;
 
   constructor(public http: HttpClient) { }
 
@@ -19,16 +24,16 @@ export class OperatorService {
     return this.http.get(this.BASE_URL + "api/movies");
   }
   getOfferStatus() {
-    return this.http.get(this.BASE_URL + "api/offer-status");
+    return this.http.get(this.BASE_URL_ADMIN + "api/offer-status");
   }
   setOfferStatus(value) {
-    return this.http.get(this.BASE_URL + "api/offer?value=" + value);
+    return this.http.get(this.BASE_URL_ADMIN + "api/offer?value=" + value);
   }
   getMaintenanceStatus() {
-    return this.http.get(this.BASE_URL + "api/maintenance-status");
+    return this.http.get(this.BASE_URL_ADMIN + "api/maintenance-status");
   }
   setMaintenanceStatus(value) {
-    return this.http.get(this.BASE_URL + "api/maintenance?value=" + value);
+    return this.http.get(this.BASE_URL_ADMIN + "api/maintenance?value=" + value);
   }
   getBeverages() {
     return this.http.get(this.BASE_URL + "api/refreshments");
@@ -41,35 +46,35 @@ export class OperatorService {
     return this.http.put<any>(this.BASE_URL + "api/messages/reply", body);
   }
   getProfile(email) {
-    return this.http.get(this.BASE_URL + "api/operators?email=" + email);
+    return this.http.get(this.BASE_URL + "api/operators/" + email);
   }
   getMovie(movieTitle) {
     return this.http.get(this.BASE_URL + "api/movie?title=" + movieTitle);
   }
-  updateEmail(oldEmail, newEmail){
+  updateEmail(oldEmail, newEmail) {
     const body = { oldEmail: oldEmail, newEmail: newEmail };
     return this.http.put<any>(this.BASE_URL + "api/operators/update", body);
 
   }
   updateStock(name, quantity) {
     const body = { name: name, quantity: quantity };
-    return this.http.put<any>(this.BASE_URL + "api/refreshments/update", body);
+    return this.http.put<any>(this.BASE_URL + "api/refreshments/update-stock", body);
   }
-  createBooking(movieTitle, Time, Status) {
-    return this.http
-      .post<any>(this.BASE_URL + "api/booking", {
-        title: movieTitle,
-        time: Time,
-        status: Status,
-      })
-      .subscribe(
-        (response) => console.log(response),
-        (err) => console.log(err)
-      );
+  storeBooking(refreshments, movie, refreshmentsTotal, total) {
+    var email = localStorage.getItem('email');
+    const body = { email: email, movieTickets: movie, foodAndBeverages: refreshments, mealCostLKR: refreshmentsTotal, totalCostLKR: total, purchaseDate: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString() };
+    console.log(body)
+    return this.http.post<any>(this.BASE_URL + "api/bookings/add", body);
+  }
+  addPoints(billTotal) {
+    var email = localStorage.getItem('email');
+    var points = billTotal/10;
+    const body = { points: points, email: email }
+    return this.http.put(this.BASE_URL + "api/loyalty/add", body)
   }
 
-/* BOOKING P1 FUNCTIONS*/
-public updatedBookedtickets: bookedTickets
+  /* BOOKING P1 FUNCTIONS*/
+  public updatedBookedtickets: bookedTickets
   private currentBookedtickets = new Subject();
 
   gettickets() {

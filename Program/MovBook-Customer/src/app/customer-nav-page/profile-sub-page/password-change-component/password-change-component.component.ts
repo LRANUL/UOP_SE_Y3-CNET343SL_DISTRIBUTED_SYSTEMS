@@ -11,6 +11,7 @@ export class PasswordChangeComponentComponent implements OnInit {
   constructor(private modalcntrl: ModalController) { }
 
   ngOnInit() {}
+  email:string = localStorage.getItem('email');
 
   oldpassword:string = "";
   newpassword:string = "";
@@ -27,5 +28,4 @@ export class PasswordChangeComponentComponent implements OnInit {
     this.newpassword = "";
     this.modalcntrl.dismiss();
   }
-
 }

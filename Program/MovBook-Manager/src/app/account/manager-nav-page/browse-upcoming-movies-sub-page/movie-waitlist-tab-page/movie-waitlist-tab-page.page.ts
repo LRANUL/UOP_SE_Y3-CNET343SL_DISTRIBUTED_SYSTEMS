@@ -54,7 +54,8 @@ export class MovieWaitlistTabPagePage implements OnInit {
       componentProps: {
         passingMovieImdbId: waitListedMovieImdbId,
         passingMovieDetails: waitListedMovieDetails,
-        passingMovieCondition: "Movie-Exists"
+        passingMovieCondition: "Movie-Exists",
+        passingModalOpenPath: "Movie-WaitList-Tab-Page"
       },
       event: evt
     });

@@ -7,20 +7,26 @@ const Managers = require("../models/managers");
 
 
 router.post("/post", (req, res, next) => { //to add posts to the db
-    // const post = req.body;
-    //console.log(req)
+     const post = req.body;
+    //console.log(req);
+    //console.log(req.body.name.Prefix);
     const manager = new Managers({
-        Prefix: req.body.Prefix,
-        FirstName: req.body.FirstName,
-        MiddleName: req.body.MiddleName,
-        LastName: req.body.LastName,
-        Email: req.body.Email,
-        Password: req.body.RetypePassword,
-        RetypePassword: req.body.RetypePassword,
-        Phone: req.body.Phone,
-        StreetAddress: req.body.StreetAddress,
-        City: req.body.City,
-        PostalCode: req.body.PostalCode,
+        email: req.body.email,
+        name: {
+            prefix: req.body.name.prefix,
+            firstName: req.body.name.firstName,
+            middleName: req.body.name.middleName,
+            lastName: req.body.name.lastName
+        },
+        password: req.body.password,
+        retypePassword: req.body.retypePassword,
+        phone: req.body.phone,
+
+        address: {
+            streetAddress: req.body.address.streetAddress,
+            city: req.body.address.city,
+            postalCode: req.body.address.postalCode
+        },
     });
 
     //console.log(post);
@@ -77,15 +83,20 @@ router.put('/update/:id', (req, res) => {
 
     const managerUpdate = new Managers({
         _id: req.params.id,
-        Prefix: req.body.Prefix,
-        FirstName: req.body.FirstName,
-        MiddleName: req.body.MiddleName,
-        LastName: req.body.LastName,
-        Email: req.body.Email,
-        Phone: req.body.Phone,
-        StreetAddress: req.body.StreetAddress,
-        City: req.body.City,
-        PostalCode: req.body.PostalCode,
+        name: {
+            prefix: req.body.name.prefix,
+            firstName: req.body.name.firstName,
+            middleName: req.body.name.middleName,
+            lastName: req.body.name.lastName
+        },
+        email: req.body.email,
+        phone: req.body.phone,
+
+        address: {
+            streetAddress: req.body.address.streetAddress,
+            city: req.body.address.city,
+            postalCode: req.body.address.postalCode
+        },
     });
     //console.log("******************************************************")
     //console.log(managerUpdate)

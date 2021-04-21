@@ -1,3 +1,10 @@
+/**
+ * 
+ * DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS
+ * 
+ */
+
+
 // Importing mongoose to create a model/schema
 const mongoose = require('mongoose');
 
@@ -13,7 +20,7 @@ const showingMovieHallSchema = mongoose.Schema({
       seatObjectId: {type : String, required:true},
       seatId : {type : String, required:true},
       seatNumber: {type: String, required:true},
-      seatUnavailable: {type : String, required:true},
+      seatUnavailable: {type : Boolean, required:true},
       seatStatus : {type : String, required:true},
       seatType : {type : String, required:true},
       customerObjectId : {type : String, required:true},

@@ -1,79 +1,172 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<!-- Splash Screen -->
+<div *ngIf="splashContent" style="height: 100%;
+                                  width: 100%;">
+  <ion-grid style="min-width: 100%;
+                  min-height: 100%;
+                  background-color: #374d58;">
+    <ion-row style="margin-top: 3%;">
+      <ion-col>
+        <div style="width: 24vw;
+                    height: 22vh;
+                    position: relative;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: white;
+                    border-radius: 20px;
+                    box-shadow: 0px 0px 30px #000000;">
+          <ion-img src="assets/images/Logo/MovBook-Logo-v2.png" style="width: 100%;
+                                                                  position: relative;
+                                                                  top: 50%;
+                                                                  left: 50%;
+                                                                  transform: translate(-50%, -50%);"></ion-img>
+        </div>
 
-<ion-content>
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: 15%;">
+      <ion-col size="12">
+        <ion-img src="assets/images/account/manager/login-page/ellipsis-loader.svg" style="height: 180px;
+                                                                                          width: 100%;"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row style="min-width: 20vw;
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);">
+      <ion-col size="12">
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label style="font-size: 20px;
+                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                  font-weight: 400;
+                                  letter-spacing: 1px;
+                                  color: #ffffff;
+                                  position: relative;
+                                  left: 10%;
+                                  transform: translateX(-90%);">
+                  Developed By:
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: 1%;">
+              <ion-col size="12">
+                <ion-label style="font-size: 20px;
+                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                  font-weight: 500;
+                                  letter-spacing: 2px;
+                                  position: relative;
+                                  left: 25%;
+                                  transform: translateX(-75%);
+                                  color: #ffffff;">
+                  H.V.L. HASANKA
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label style="font-size: 20px;
+                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                  font-weight: 500;
+                                  letter-spacing: 2px;
+                                  position: relative;
+                                  left: 25%;
+                                  transform: translateX(-75%);
+                                  color: #ffffff;">
+                  R.P. LADDUWAHETTY
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label style="font-size: 20px;
+                                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                  font-weight: 500;
+                                  letter-spacing: 2px;
+                                  position: relative;
+                                  left: 25%;
+                                  transform: translateX(-75%);
+                                  color: #ffffff;">
+                  M. ISHAN CHANDIKA BANDARA
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+<!-- Login Screen Content -->
+<ion-content [hidden]="!loginContent">
+  <div style="padding-top: 10%;">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-md="6" offset-md="3">
+            <ion-card  style="border-radius: 10px;">
+              <ion-card-header>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col  size-md="5" offset-md="3">
+                      <ion-img src="assets/icon/MovBook-Logo.png" style="height: 100px;"></ion-img>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size-md="5" offset-md="3" style="text-align: center;">
+                      <ion-label style="margin-left: 17px; font-size: x-large; font-weight: bolder; letter-spacing: 2px; color: #374d58">LOGIN</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size-md="6" offset-md="3">
+                      <form [formGroup]="loginform" (ngSubmit)="onLogin()">
+                        <ion-item>
+                          <ion-label position="floating">Email Address</ion-label>
+                          <ion-input type="email" placeholder="example@email.com" formControlName="emailControl" clearInput required></ion-input>
+                        </ion-item>
+                         <div *ngIf="email.touched && email.errors">
+                          <ion-label style="color: red;" position="stacked">E-mail is required</ion-label>
+                          <br>
+                         </div>
+                         <div *ngIf="email.touched && email.errors?.pattern">
+                          <ion-label style="color: red;" position="stacked">Please enter a valid email address</ion-label>
+                          <br>
+                         </div>
+                        <ion-item>
+                          <ion-label position="floating">Password</ion-label>
+                          <ion-input type="password" formControlName="passwordControl" clearInput required></ion-input>
+                        </ion-item>
+                        <div *ngIf="password.touched && password.invalid">
+                          <ion-label style="color: red;" position="stacked">Password is required</ion-label>
+                          <br>
+                        </div>
+                        <div *ngIf="password.errors?.minlength && password.touched ">
+                          <ion-label style="color: red;" position="stacked">Password needs atleast 8 characters</ion-label>
+                          <br>
+                        </div>
+                        <div>
+                            <ion-col size-md="6" style="padding-right: 100px;">
+                              <ion-button  size="medium" type="submit" [disabled]="loginform.invalid" expand="block">Login</ion-button>
+                            <br>
 
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <ion-grid>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-list>
-            <ion-item>
-              <ion-label position="floating">E-Mail</ion-label>
-              <ion-input
-                type="email"
-                ngModel
-                name="email"
-                required
-                email
-                #emailCtrl="ngModel"
-              ></ion-input>
-            </ion-item>
-            <ion-item
-              *ngIf="!emailCtrl.valid && emailCtrl.touched"
-              lines="none"
-            >
-              <ion-label>
-                Should be a valid email address.
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input
-                type="password"
-                ngModel
-                name="password"
-                required
-                minlength="6"
-                #passwordCtrl="ngModel"
-              ></ion-input>
-            </ion-item>
-            <ion-item
-              *ngIf="!passwordCtrl.valid && passwordCtrl.touched"
-              lines="none"
-            >
-              <ion-label>
-                Should at least be 6 characters long.
-              </ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-button
-            type="button"
-            color="primary"
-            fill="clear"
-            expand="block"
-            routerLink="/customer-registration">
-            Signup
-          </ion-button>
-          <ion-button
-            type="submit"
-            color="primary"
-            expand="block"
-            [disabled]="!f.valid"
-          >
-            Login
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+                              <ion-button size="medium" expand="block" [routerLink]="['/','login','password-reset']">Forgot Password ?</ion-button>
+
+                            </ion-col>
+                        </div>
+                      </form>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
 </ion-content>

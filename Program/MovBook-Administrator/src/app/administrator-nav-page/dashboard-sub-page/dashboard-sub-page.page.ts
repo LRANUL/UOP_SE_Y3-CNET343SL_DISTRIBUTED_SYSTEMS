@@ -3,6 +3,7 @@ import { AppComponent } from 'src/app/app.component';
 import { EmployeeService } from './../../services/account/employee.service'
 //import { AccountService } from '../../../services/account/account.service'
 import { Chart } from 'chart.js'
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -14,29 +15,39 @@ import { Chart } from 'chart.js'
   providers: [EmployeeService],
 })
 export class DashboardSubPagePage implements OnInit {
-   
+
 
   @ViewChild('barChart') barChart;
   @ViewChild('barChartStat') barChartStat;
 
+  jsonResponse: any;
   headers: any;
-  splitStatus:any;
-  splitAddress:any;
+  splitStatus: any;
+  splitAddress: any;
+
+  jsonResponseStripe: any;
+  headersStripe: any;
+  splitStatusStripe: any;
+  splitAddressStripe: any;
+
+
+  jsonResponseManager: any;
+  headersManager: any;
+  splitStatusManager: any;
+  splitAddressManager: any;
 
 
   bars: any;
   colorArray: any;
 
-  admin_Prefix: any;
-  admin_FirstName: any;
-  admin_LastName: any;
-  admin_Email: any;
 
-  jsonResponse: any;
+
+
+  //jsonResponse: any;
   public headerStat: any;
   public errorMsg;
 
-  constructor(private employeeService: EmployeeService,  private omdbStatus: EmployeeService, private handle: EmployeeService ) { }
+  constructor(private employeeService: EmployeeService, private handle: EmployeeService, private authServ: AuthService) { }
 
   //BarChart Function
   ionViewDidEnter() {
@@ -44,96 +55,123 @@ export class DashboardSubPagePage implements OnInit {
     this.barChartStatis();
   }
 
+  admin_Prefix: any;
+  admin_FirstName: any;
+  admin_LastName: any;
+  admin_Email: string;
 
 
   ngOnInit() {
-    //sidebar details
-    var Email = "wef";
-    this.employeeService.getDetails(Email).subscribe(
-      (data) => {
-        //console.log(data);
+    const token = localStorage.getItem("token");
 
-        //name/email = backend
-        // this.name_admin = data['name'];
-        // this.email_admin = data['email'];
-        this.admin_Prefix = data['Prefix'];
-        this.admin_FirstName = data['FirstName'];
-        this.admin_LastName = data['LastName'];
-        this.admin_Email = data['Email'];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
 
-    //MongoDB statistics
-    // this.MongoDBStatus.statusMongoDB().subscribe((res)=>{
-    //   console.log(res);
-    // })
+    const userEMail = localStorage.getItem("email");
+    const name = localStorage.getItem("name");
+    const lname = localStorage.getItem("lastName");
+    console.log(name + userEMail);
+    this.admin_FirstName = name
+    this.admin_LastName = lname
+    this.admin_Email = userEMail;
 
 
     //omdb statistic
-    this.omdbStatus.statusOMDB().subscribe(
+    this.employeeService.statusOMDB().subscribe(
       (res) => {
         //console.log("********////////////////////********");
         console.log(res);
         let value = JSON.stringify(res);
         this.jsonResponse = res['Response'];
-        if(res['Response'] == "True"){
+        if (res['Response'] == "True") {
           var status = "Status Code 200"
           this.splitStatus = status;
           this.splitAddress = "api/omdb/upcoming-movies/search/tenet";
         }
-                
+
       });
 
-    //  this.StripeStatus.statusStripe().subscribe((res)=>{
-    //    console.log(res)
-    //  })
 
-    // function splitStr(str){
-    //   var string = str.split(":")
-      
-    //   //console.log(string);
-    //   //console.log(string[0],[1],[2])
-    //   //console.log(string[3])
-    //   var responseStatus = string[3];
-    //   console.log(responseStatus)
-    //   //let headers = string[3]
-    //   this.headers = responseStatus;
-      
-    // }
-        
-
-    this.employeeService.statusOMDB()
-    .subscribe((data) => 
+    this.employeeService.statusOMDB().subscribe((data) =>
       this.headerStat = data,
       error => {
         this.errorMsg = error;
-        
+
         this.headers = this.errorMsg.split(":")
         this.splitStatus = this.headers[3];
         this.headers = this.errorMsg.split(":")
         this.splitAddress = this.headers[2];
         this.jsonResponse = "Server Error"
-        
-        //console.log(this.errorMsg)
-        //console.log("******************")
-        //let val = JSON.stringify(this.errorMsg);
-        //console.log(val)
-        // var split = this.errorMsg.split(":");
-        // var responseStatus = split[3];
-        // console.log(responseStatus);
-        
-        //var str = error;
-        //splitStr(str);
-        //console.log(x)
-       
+      },
+
+    );
+
+
+    //Stripe statistic
+    this.employeeService.statusStripe().subscribe(
+      (res) => {
+        //console.log("********////////////////////********");
+        console.log(res);
+        let value = JSON.stringify(res);
+        this.jsonResponseStripe = res['Response'];
+        if (res['Response'] == "True") {
+          var status = "Status Code 200"
+          this.splitStatusStripe = status;
+          this.splitAddressStripe = "https://movbook-admin.herokuapp.com/api/stripe-status";
+        }
+
+      });
+
+
+    this.employeeService.statusStripe().subscribe((data) =>
+      this.headerStat = data,
+      error => {
+        this.errorMsg = error;
+
+        this.headersStripe = this.errorMsg.split(":")
+        this.splitStatusStripe = this.headersStripe[2];
+        this.headersStripe = this.errorMsg.split(":")
+        this.splitAddressStripe = this.headersStripe[1];
+        this.jsonResponseStripe = "Server Error"
+      },
+
+    );
+
+
+
+    //managerStatus
+    this.employeeService.managerStatus().subscribe(
+      (res) => {
+        //console.log("********////////////////////********");
+        console.log(res);
+        let value = JSON.stringify(res);
+        this.jsonResponseManager = res['message'];
+        // console.log(value)
+        if (res['message'] == "Data Retrieved") {
+          var status = "Status Code 200"
+          this.splitStatusManager = status;
+          //this.splitAddressManager = "api/managers/get/";
+        }
+
+      });
+
+    //Error Handling
+    this.employeeService.managerStatus().subscribe((data) =>
+      this.headerStat = data,
+      error => {
+        this.errorMsg = error;
+
+        this.headersManager = this.errorMsg.split(":")
+        console.log(this.headersManager)
+        this.splitStatusManager = this.headersManager[3];
+        console.log(this.splitStatusManager)
+        this.headersManager = this.errorMsg.split(":")
+        this.splitAddressManager = this.headersManager[2];
+        this.jsonResponseManager = "Server Error"
+
       },
     );
   }
 
- 
+
 
   createBarChart() {
     this.bars = new Chart(this.barChart.nativeElement, {

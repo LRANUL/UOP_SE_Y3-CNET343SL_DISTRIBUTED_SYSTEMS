@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 import { CinemaHall } from 'src/app/models/account/manager/cinema-hall';
 import { ShowingExperience } from 'src/app/models/account/manager/showing-experience';
 import { ShowingMovie } from 'src/app/models/account/manager/showing-movie';
-import { ShowingCinemaHallList } from 'src/app/models/account/manager/showing-cinema-hall';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +16,7 @@ import { ShowingCinemaHallList } from 'src/app/models/account/manager/showing-ci
 export class ManagerService {
 
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
+  private ADMIN_BACKEND_BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
 
   constructor(
     private httpClient: HttpClient
@@ -46,7 +46,7 @@ export class ManagerService {
    * Movie
    */
   // POST - Adding movie into the database by passing to the server-side
-  addMovie(movie: MovieDetails, movieStatus: string){
+  addMovie(movie: MovieDetails, movieStatus: string) {
     return this.httpClient
       .post(this.BASE_URL + "api/movies/add-movie/" + movieStatus, movie);
   }
@@ -56,17 +56,27 @@ export class ManagerService {
       .get(this.BASE_URL + "api/movies/movie-id/" + movieImdbId);
   }
   // GET - Retrieving movie from the database by passing the movieImdbId
-  getMovieDetailsFromDB(movieImdbId: string){
+  getMovieDetailsFromDB(movieImdbId: string) {
     return this.httpClient
       .get(this.BASE_URL + "api/movies/movie-details/" + movieImdbId);
   }
   // GET - Retrieving movies by movie status by passing the movieStatus
-  getMoviesAsMovieStatus(movieStatus: string){
+  getMoviesAsMovieStatus(movieStatus: string) {
     return this.httpClient
       .get(this.BASE_URL + "api/movies/movie-status/" + movieStatus);
   }
+  // GET - Retrieving latest five movie from the database
+  getLatestFiveMovies(){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movies/latest-movies/top-five");
+  }
+  // GET - Retrieving count of movies under a movie status
+  getCountOfMoviesByMovieStatus(movieStatus: string){
+    return this.httpClient
+      .get(this.BASE_URL + "api/movies/movie-status/count/" + movieStatus);
+  }
   // PUT - Updating movie status by passing the new movie status and movie imdb ID
-  updateMovieStatus(movieImdbId: string, newMovieStatus: string){
+  updateMovieStatus(movieImdbId: string, newMovieStatus: string) {
     // Creating an object to pass the movie details
     let movieDetails = {
       movieImdbId: movieImdbId,
@@ -76,14 +86,14 @@ export class ManagerService {
       .put(this.BASE_URL + "api/movies/update-movie-status", movieDetails);
   }
   // DELETE - Remove movie by passing the movie imdb ID
-  removeMovie(movieImdbId: string){
+  removeMovie(movieImdbId: string) {
     return this.httpClient
       .delete(this.BASE_URL + "api/movies/remove-movie/" + movieImdbId);
   }
 
   /**
    * 
-   * Movie Wait List - DEPRECATED
+   * Movie Wait List - DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS 
    * 
    */
   // GET - Retrieving movie wait list from the database
@@ -109,10 +119,25 @@ export class ManagerService {
   addNewCinemaHall(cinemaHall: CinemaHall) {
     return this.httpClient.post(this.BASE_URL + "api/cinema-halls/", cinemaHall);
   }
-
   // GET - Retrieving cinema hall details from the server-side
   retrieveCinemaHalls(cinemaLocationObjectId) {
     return this.httpClient.get(this.BASE_URL + "api/cinema-halls/" + cinemaLocationObjectId);
+  }
+  // GET - Retrieving one cinema hall by cinemaHallObjectId from the server-side
+  retrieveCinemaHallById(cinemaHallObjectId: string) {
+    return this.httpClient.get(this.BASE_URL + "api/cinema-halls/hall/" + cinemaHallObjectId);
+  }
+  // PUT - Updating cinema hall details by sending the updated details to the server-side
+  updateCinemaHallDetails(updatedCinemaHallDetails: any) {
+    return this.httpClient.put(this.BASE_URL + "api/cinema-halls/update-cinema-hall", updatedCinemaHallDetails);
+  }
+  // GET - Retrieving count of cinema halls
+  retrieveCountOfCinemaHalls(){
+    return this.httpClient.get(this.BASE_URL + "api/cinema-halls/count/cinema-halls");
+  }
+  // DELETE - Remove cinema hall details from the database by sending cinemaHallObjectId to the server-side
+  removeCinemaHall(cinemaHallObjectId: string){
+    return this.httpClient.delete(this.BASE_URL + "api/cinema-halls/remove-hall/" + cinemaHallObjectId);
   }
 
   /**
@@ -122,17 +147,38 @@ export class ManagerService {
   addNewCinemaLocation(cinemaLocation: CinemaLocation) {
     return this.httpClient.post(this.BASE_URL + "api/cinema-locations", cinemaLocation);
   }
-
   // GET - Retrieving cinema locations from the server-side
   retrieveCinemaLocations() {
     return this.httpClient.get(this.BASE_URL + "api/cinema-locations");
   }
-
+  // GET - Retrieving count of cinema locations
+  retrieveCountOfCinemaLocations(){
+    return this.httpClient.get(this.BASE_URL + "api/cinema-locations/count");
+  }
+  // UPDATE - Updating cinema location details
+  updateCinemaLocation(cinemaLocationObjectId: String, updatedCinemaLocationDetails: any) {
+    let cinemaLocationObject = {
+      _id: cinemaLocationObjectId,
+      locationName: updatedCinemaLocationDetails.locationName,
+      locationAddressStreetAddress: updatedCinemaLocationDetails.locationAddressStreetAddress,
+      locationAddressCity: updatedCinemaLocationDetails.locationAddressCity,
+      locationAddressPostalCode: updatedCinemaLocationDetails.locationAddressPostalCode
+    }
+    return this.httpClient.put(this.BASE_URL + "api/cinema-locations/update", cinemaLocationObject);
+  }
 
   /** Beverages Management */
+  // POST - Add new beverage
+  addBeverage(newBeverageDetails: any) {
+    return this.httpClient.post(this.BASE_URL + "api/refreshments/add-new", newBeverageDetails);
+  }
   // GET beverages list
   getBeverages() {
     return this.httpClient.get(this.BASE_URL + "api/refreshments");
+  }
+  // GET - Retrieve count of refreshments
+  getCountOfRefreshments(){
+    return this.httpClient.get(this.BASE_URL + "api/refreshments/count");
   }
   // Update beverages quantity
   updateStock(name, quantity) {
@@ -144,30 +190,90 @@ export class ManagerService {
     const body = { name: name, price: price };
     return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-price", body);
   }
-/**
- * Profile Settings
- */
-// Get profile data
-getProfile(email){
-  return this.httpClient.get<any>(this.BASE_URL + "api/managers/" + email);
-}
+  // UPDATE - Updating refreshment name and image url
+  updateRefreshmentNameImageURL(refreshmentObjectId: String, refreshmentName: String, refreshmentImageURL: String){
+    const updatedRefreshmentDetails = {
+      refreshmentObjectId: refreshmentObjectId,
+      refreshmentName: refreshmentName,
+      refreshmentImageURL: refreshmentImageURL
+    };
+    return this.httpClient.put<any>(this.BASE_URL + "api/refreshments/update-name-image-url", updatedRefreshmentDetails);
+  }
+  // DELETE - Remove one beverage
+  removeBeverage(refreshmentObjectId: String) {
+    return this.httpClient.delete(this.BASE_URL + "api/refreshments/remove/" + refreshmentObjectId);
+  }
+
+  /** Operator Manager */
+
+  // Gets Operator Profile
+  getOperator(email) {
+    return this.httpClient.get(this.BASE_URL + "api/operators/" + email);
+  }
+  // Get operator by Details - Deprecated
+  getOperatorByDetails(searchOperatorAccountForm) {
+    const firstName = searchOperatorAccountForm.firstName
+    const prefix = searchOperatorAccountForm.namePrefix
+    const lastName = searchOperatorAccountForm.lastName
+    console.log(searchOperatorAccountForm)
+    return this.httpClient.get(this.BASE_URL + "api/operators/?firstName=" + firstName + '&' + 'lastName=' + lastName + '&' + 'prefix=' + prefix);
+  }
+  // GET - Retrieve count of operator account according account status
+  getCountOfOperatorAccounts(accountStatus: String){
+    return this.httpClient.get(this.BASE_URL + "api/operators/count-operator-accounts/account-status/" + accountStatus);
+  }
+
+  // Set Operator Account Status
+  setOperatorAccountStatus(email, status) {
+    const body = { email: email, status: status };
+    return this.httpClient.put(this.BASE_URL + "api/operators/status", body);
+  }
+  // create Operator account
+  createOperatorAccount(registrationform) {
+    const body = {
+      name: {
+        prefix: registrationform.namePrefix,
+        firstName: registrationform.firstName,
+        middleName: registrationform.middleName,
+        lastName: registrationform.lastName
+      },
+      address: {
+        streetAddress: registrationform.streetAddress,
+        city: registrationform.addressCity,
+        postalZipCode: registrationform.addressPostalCode
+      },
+      emailAddress: registrationform.emailAddress,
+      phoneNumber: registrationform.phoneNumber,
+      accountStatus: 'Enabled',
+      registeredDateTime: new Date().toLocaleDateString() + ', ' + new Date().toLocaleTimeString(),
+    };
+    return this.httpClient.post(this.BASE_URL + "api/operators/add", body);
+  }
+  /**
+   * Profile Settings
+   */
+  // Get profile data
+  getProfile(email) {
+    return this.httpClient.get<any>(this.BASE_URL + "api/managers/" + email);
+  }
+
   /**
    * Showing Experience
    */
   // POST - Passing new showing experience details to the server-side
-  addNewShowingExperience(showingExperience: ShowingExperience){
+  addNewShowingExperience(showingExperience: ShowingExperience) {
     return this.httpClient.post(this.BASE_URL + "api/showing-experiences", showingExperience);
   }
   // GET - Retrieving list showing experiences from the server-side
-  retrieveListOfShowingExperiences(){
+  retrieveListOfShowingExperiences() {
     return this.httpClient.get(this.BASE_URL + "api/showing-experiences/");
   }
   // PUT - Updating showing experience by passing details to the server-side
-  editShowingExperience(showingExperience: any){
+  editShowingExperience(showingExperience: any) {
     return this.httpClient.put(this.BASE_URL + "api/showing-experiences/update", showingExperience);
   }
   // DELETE - Remove showing experience by passing the showing experience ID
-  removeShowingExperience(showingExperienceId: string){
+  removeShowingExperience(showingExperienceId: string) {
     return this.httpClient.delete(this.BASE_URL + "api/showing-experiences/delete/" + showingExperienceId);
   }
 
@@ -175,16 +281,58 @@ getProfile(email){
    * Showing Movie
    */
   // POST - Passing new showing movie details to the server-side
-  addNewShowingMovie(showingMovieDetails: ShowingMovie){
+  addNewShowingMovie(showingMovieDetails: ShowingMovie) {
     return this.httpClient.post(this.BASE_URL + "api/showing-movies/add-new-showing-movie", showingMovieDetails);
+  }
+  // POST - Checking availability of showing movie
+  checkShowingMovieAvailability(showingMovieDetails: any) {
+    return this.httpClient.post(this.BASE_URL + "api/showing-movies/check-showing-movie-availability", showingMovieDetails);
+  }
+  // GET - Retrieve showing movie by movieObjectId
+  retrieveShowingMovieByMovieObjectId(movieObjectId: string) {
+    return this.httpClient.get(this.BASE_URL + "api/showing-movies/by-movie-object-id/" + movieObjectId);
+  }
+  // GET - Retrieve count of showing movie slots for each months for the past six months (including the current month (seven months))
+  retrieveCountShowingMonths() {
+    return this.httpClient.get(this.BASE_URL + "api/showing-movies/showing-movies-by-months");
   }
 
   /**
    * Showing Cinema Hall
    */
   // POST - Passing showing cinema hall details to the server-side
-  assignShowingCinemaHalls(showingCinemaHallList: any){
+  assignShowingCinemaHalls(showingCinemaHallList: any) {
     return this.httpClient.post(this.BASE_URL + "api/showing-cinema-halls/assign-showing-cinema-hall", showingCinemaHallList);
   }
+  /** DEPRECATED - DO NOT USE FOR FURTHER IMPLEMENTATIONS */
+  // PUT - Update showing cinema hall details by passing update details to the server-side
+  updateShowingCinemaHallDetails(updatedCinemaHallDetails: any) {
+    return this.httpClient.put(this.BASE_URL + "api/showing-cinema-halls/update-showing-cinema-hall", updatedCinemaHallDetails);
+  }
+
+  /**
+   * Bookings
+   */
+  // GET - Retrieve count of bookings for each months for the past six months (including the current month (seven months))
+  retrieveCountBookingMonths() {
+    return this.httpClient.get(this.BASE_URL + "api/bookings/count-bookings-by-months");
+  }
+
+  /**
+   * Email Verification
+   */
+  // POST - Adding new email verification
+  verifyEmailAddress(loggedInUserEmailAddress: String, newEmailAddress: String) {
+    let verificationDetails = {
+      loginObjectId: loggedInUserEmailAddress,
+      enteredEmailAddress: newEmailAddress
+    }
+    return this.httpClient.post(this.ADMIN_BACKEND_BASE_URL + "api/email-verifications/create", verificationDetails);
+  }
+  // GET - Checking the validity of the entered verification pin code
+  verifyVerificationPinCode(emailVerificationObjectId: String, enteredVerificationPinCode: String) {
+    return this.httpClient.get(this.ADMIN_BACKEND_BASE_URL + "api/email-verifications/verify/" + emailVerificationObjectId + "/" + enteredVerificationPinCode);
+  }
+
 
 }

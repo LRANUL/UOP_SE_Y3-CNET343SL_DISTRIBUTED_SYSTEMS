@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { CinemaHall, seatingData, showingCinemaHall } from 'src/app/models/account/cinema-hall';
 import { movie } from 'src/app/models/account/customers';
 import { Movie, ticketPrices } from 'src/app/models/account/movie';
 import { CustomerService } from 'src/app/services/account/customer.service';
+import { PaymentPage } from "../payment/payment.page";
 
 
 
@@ -19,7 +20,8 @@ export class Booking1SubPagePage implements OnInit {
   seatUnavailable: any;
 
   time;
-  constructor(private route: Router, private toastCtrl: ToastController, private customerService: CustomerService, private router: ActivatedRoute) {
+
+    constructor(private route: Router, private toastCtrl: ToastController,private modalCtrl: ModalController, private customerService: CustomerService, private router: ActivatedRoute) {
     this.router.queryParams.subscribe(params => {
       if (this.route.getCurrentNavigation().extras.state) {
         this.time = this.route.getCurrentNavigation().extras.state.Time;
@@ -119,7 +121,7 @@ export class Booking1SubPagePage implements OnInit {
       seatNumber: '',
       seatUnavailable: '',
       seatStatus : '',
-      seatType : '',
+      seatActive : '',
       customerObjectId : '',
     }
   ]
@@ -189,6 +191,7 @@ export class Booking1SubPagePage implements OnInit {
    this.customerService.retrieveShowingCinemaHall(id);
    this.customerService.getShowingCinemaHall().subscribe((cinemaHall: showingCinemaHall)=> {
    this.showingHallDetails = cinemaHall;
+   console.log(cinemaHall);
    this.hallinfo = cinemaHall
    this.showingMovieId = cinemaHall[0].showingMovieObjectId;
    console.log(this.showingMovieId);
@@ -241,7 +244,6 @@ export class Booking1SubPagePage implements OnInit {
     this.customerService.getmovies().subscribe((movies: Movie)=> {
       this.movieDetails = movies;
       this.allticketInformation.movieInfo = movies
-      console.log( this.movieDetails);
     })
   }
 
@@ -271,9 +273,11 @@ export class Booking1SubPagePage implements OnInit {
   }
 
   data = [];
-  bookingTicket(Seatid, SeatNumber, SeatStatus)
+  bookingTicket(Seatid, SeatNumber, SeatStatus, seatUnavailable)
   {
-    if(SeatStatus != "Booked")
+    console.log(SeatStatus);
+    console.log(Seatid);
+    if(SeatStatus == "null" && seatUnavailable != true)
     {
     let seatElement = document.getElementById(Seatid);
 
@@ -292,7 +296,7 @@ export class Booking1SubPagePage implements OnInit {
     seatElement.style.border = "5px solid #ffffff";
     seatElement.style.background = "#ffffff";
     }
-    else if(checkValue == false && SeatStatus != "Booked")
+    else if(checkValue == false && SeatStatus == "null")
     {
       this.data.push(SeatNumber);
       this.numberoftickets++
@@ -540,8 +544,18 @@ export class Booking1SubPagePage implements OnInit {
     }
   }
 
-  continue()
+  async continue()
   {
+    const Payment = this.modalCtrl.create({
+      component: PaymentPage,
+    });
     console.log(this.allticketInformation);
+    this.sendTicketDetails(this.allticketInformation)
+
+
+    return await (await Payment).present();
+  }
+  sendTicketDetails(allticketInformation) {
+    this.customerService.allticketInformation.next(allticketInformation);
   }
 }

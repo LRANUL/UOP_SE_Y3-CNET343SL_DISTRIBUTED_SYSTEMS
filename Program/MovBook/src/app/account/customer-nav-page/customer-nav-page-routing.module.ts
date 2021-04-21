@@ -13,11 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./booked-tickets-sub-page/booked-tickets-sub-page.module').then( m => m.BookedTicketsSubPagePageModule)
   },
   {
-    path: 'watchlist',
-    loadChildren: () => import('./watchlist-sub-page/watchlist-sub-page.module').then( m => m.WatchlistSubPagePageModule)
-  },
-  {
-    path: 'booking',
+    path: 'booking/:id',
     loadChildren: () => import('./booking1-sub-page/booking1-sub-page.module').then( m => m.Booking1SubPagePageModule)
   },
   {
@@ -29,18 +25,9 @@ const routes: Routes = [
     loadChildren: () => import('./profile-sub-page/profile-sub-page.module').then( m => m.ProfileSubPagePageModule)
   },
   {
-    path: 'Venue Selection',
+    path: 'Venue Selection/:id',
     loadChildren: () => import('./location-and-time-sub-page/location-and-time-sub-page.module').then( m => m.LocationAndTimeSubPagePageModule)
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./home-sub-page/home-sub-page.module').then( m => m.HomeSubPagePageModule )
-  },
-  {
-    path: 'movie details/:id',
-    loadChildren: () => import('./movie-detail-sub-page/movie-detail-sub-page.module').then( m => m.MovieDetailSubPagePageModule)
   }
-
 ];
 
 @NgModule({

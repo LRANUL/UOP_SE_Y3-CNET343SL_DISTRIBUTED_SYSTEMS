@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Update Account Details</ion-title>
+    <ion-title>UPDATE ACCOUNT DETAILS</ion-title>
     <ion-button
       (click)="closeUpdateAccountDetailsModal()" 
       slot="end" 
@@ -147,69 +147,69 @@
                   Email Address:
                 </ion-label>
               </ion-col>
-              <ion-col size="8" style="padding: 3%;">
+              <!-- Loading Spinner - Send Email Verification -->
+              <ion-spinner name="crescent" style="height: 40px;
+                                                  width: 40px;
+                                                  margin-top: 30px;
+                                                  position: absolute;
+                                                  margin-left: 27.5%;" *ngIf="loadingSpinnerVerifyNewEmail"></ion-spinner>
+              <ion-col size="6" style="padding: 3%;">
                 <ion-item>
-                  <ion-input type="text" placeholder="Enter Email Address" clearInput formControlName="emailAddress"></ion-input>
-                </ion-item>
-                <div style="position: absolute;
-                            margin-left: 95%;
-                            margin-top: -15%;">
-                  <ion-button>
-                    VERIFY
-                  </ion-button>
-                </div>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);">
-                  Old Password:
-                </ion-label>
-              </ion-col>
-              <ion-col size="8" style="padding: 3%;">
-                <ion-item>
-                  <ion-input type="password" placeholder="Enter Old Password" clearInput formControlName="oldPassword"></ion-input>
+                  <ion-input type="text" placeholder="Enter Email Address" clearInput (ionChange)="setFormEmailAddress($event.detail.value)" formControlName="emailAddress"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);">
-                  New Password:
-                </ion-label>
-              </ion-col>
-              <ion-col size="8" style="padding: 3%;">
-                <ion-item>
-                  <ion-input type="password" placeholder="Enter New Password" clearInput formControlName="newPassword"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-label class="update-account-details-form-text" style="position: absolute;
-                                                                            top: 50%;
-                                                                            transform: translateY(-50%);">
-                  Confirm New Password:
-                </ion-label>
-              </ion-col>
-              <ion-col size="8" style="padding: 3%;">
-                <ion-item>
-                  <ion-input type="password" placeholder="Enter New Password" clearInput formControlName="confirmNewPassword"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row style="margin-top: 10px;">
-              <ion-button color="tertiary" expand="block" type="submit" [disabled]="!updateAccountDetailsForm.valid" style="min-width: 250px;
-                                                                                                                              min-height: 40px;
-                                                                                                                              position: relative;
-                                                                                                                              left: 50%;
-                                                                                                                              transform: translateX(-50%);">
-                UPDATE DETAILS
+            <div style="width: 30px;
+                          height: 30px;
+                          border: 1px solid #ccc;
+                          padding: 4px;
+                          border-radius: 4px;
+                          margin-top: 30px;
+                          position: absolute;
+                          margin-left: 95%;
+                          margin-top: -9%;" *ngIf="newEmailVerificationSuccess == true">
+              <img src="assets/images/account/manager/settings-sub-page/email-veritifed-icon.png" style="width: 30px;" />
+            </div>
+            <div style="width: 30px;
+                        height: 30px;
+                        border: 1px solid #ccc;
+                        padding: 4px;
+                        border-radius: 4px;
+                        position: absolute;
+                        margin-left: 95%;
+                        margin-top: -9%;" *ngIf="newEmailVerificationSuccess == false">
+              <img src="assets/images/account/manager/settings-sub-page/email-error-icon.png" style="width: 30px;" />
+            </div>
+            <div style="position: absolute;
+                        margin-left: 94.5%;
+                        margin-top: -11%;" *ngIf="enterPinCodeButton">
+              <ion-button style="height: 50px;" color="dark-blue-two" (click)="openVerifyEmailAddressPopover($event)">
+                ENTER PIN CODE
               </ion-button>
+            </div>
+            <div style="position: absolute;
+                        right: 5%;
+                        margin-top: -11%;">
+              <ion-button style="height: 50px;" color="dark-blue" disabled="{{ verifyButtonText == 'VERIFIED' ? 'true' : 'false' }}"
+                (click)="confirmBoxEmailVerification('Confirmation', 'An email with a pin code will be sent to the entered email address. Do you want to continue?', $event)">
+                {{verifyButtonText}}
+              </ion-button>
+            </div>
+            <ion-row style="margin-top: 10px;">
+              <ion-col size="6">
+                <ion-button color="tertiary" expand="block" type="submit" [disabled]="!updateAccountDetailsForm.valid" style="min-width: 100%;
+                                                                                                                              height: 50px;
+                                                                                                                              --border-radius: 10px;">
+                  UPDATE DETAILS
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button style="min-width: 100%;
+                                  height: 50px;
+                                  --border-radius: 10px;" color="green" (click)="openChangePasswordModal()">
+                  CHANGE ACCOUNT PASSWORD
+                </ion-button>
+              </ion-col>
             </ion-row>
           </ion-grid>
         </form>

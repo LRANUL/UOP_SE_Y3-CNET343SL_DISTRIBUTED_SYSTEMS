@@ -25,6 +25,11 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+/* Applying style to make 'ion-button' case insensitive */
+ion-button {
+    text-transform: none;
+}
+
 ion-menu{
     --background: #374d58;
     --radius:25px
@@ -36,6 +41,8 @@ ion-content{
 ion-button{
     --background: #2e8ded;
 }
+
+
 
 /* Declaring new color variable - green | #009595 */
 :root {
@@ -57,6 +64,8 @@ ion-button{
     --ion-color-tint: var(--ion-color-green-tint);
 }
 
+
+
 /* Declaring new color variable - dark-blue | #335470 */
 :root {
     --ion-color-dark-blue: #335470;
@@ -76,6 +85,94 @@ ion-button{
     --ion-color-shade: var(--ion-color-dark-blue-shade);
     --ion-color-tint: var(--ion-color-dark-blue-tint);
 }
+
+
+
+/* Declaring new color variable - dark-blue-one | #1e69a8 */
+:root {
+    --ion-color-dark-blue-one: #1e69a8;
+    --ion-color-dark-blue-one-rgb: 30,105,168;
+    --ion-color-dark-blue-one-contrast: #ffffff;
+    --ion-color-dark-blue-one-contrast-rgb: 255,255,255;
+    --ion-color-dark-blue-one-shade: #1a5c94;
+    --ion-color-dark-blue-one-tint: #3578b1;
+}
+
+/* Declaring new color variable - dark-blue-one | #1e69a8 */
+.ion-color-dark-blue-one {
+    --ion-color-base: var(--ion-color-dark-blue-one);
+    --ion-color-base-rgb: var(--ion-color-dark-blue-one-rgb);
+    --ion-color-contrast: var(--ion-color-dark-blue-one-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-dark-blue-one-contrast-rgb);
+    --ion-color-shade: var(--ion-color-dark-blue-one-shade);
+    --ion-color-tint: var(--ion-color-dark-blue-one-tint);
+}
+
+
+
+/* Declaring new color variable - dark-blue-two | #0b7edb */
+:root {
+    --ion-color-dark-blue-two: #0b7edb;
+    --ion-color-dark-blue-two-rgb: 11,126,219;
+    --ion-color-dark-blue-two-contrast: #ffffff;
+    --ion-color-dark-blue-two-contrast-rgb: 255,255,255;
+    --ion-color-dark-blue-two-shade: #0a6fc1;
+    --ion-color-dark-blue-two-tint: #238bdf;
+}
+  
+/* Declaring new color variable - dark-blue-two | #0b7edb */
+.ion-color-dark-blue-two {
+    --ion-color-base: var(--ion-color-dark-blue-two);
+    --ion-color-base-rgb: var(--ion-color-dark-blue-two-rgb);
+    --ion-color-contrast: var(--ion-color-dark-blue-two-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-dark-blue-two-contrast-rgb);
+    --ion-color-shade: var(--ion-color-dark-blue-two-shade);
+    --ion-color-tint: var(--ion-color-dark-blue-two-tint);
+}
+
+
+/* Declaring new color variable - dark-blue-three | #058cfa */
+:root {
+    --ion-color-dark-blue-three: #058cfa;
+    --ion-color-dark-blue-three-rgb: 5,140,250;
+    --ion-color-dark-blue-three-contrast: #ffffff;
+    --ion-color-dark-blue-three-contrast-rgb: 255,255,255;
+    --ion-color-dark-blue-three-shade: #047bdc;
+    --ion-color-dark-blue-three-tint: #1e98fb;
+}
+
+/* Declaring new color variable - dark-blue-three | #058cfa */
+.ion-color-dark-blue-three {
+    --ion-color-base: var(--ion-color-dark-blue-three);
+    --ion-color-base-rgb: var(--ion-color-dark-blue-three-rgb);
+    --ion-color-contrast: var(--ion-color-dark-blue-three-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-dark-blue-three-contrast-rgb);
+    --ion-color-shade: var(--ion-color-dark-blue-three-shade);
+    --ion-color-tint: var(--ion-color-dark-blue-three-tint);
+}
+
+
+/* Declaring new color variable - light-blue | #2775b8 */
+:root {
+    --ion-color-light-blue: #2775b8;
+    --ion-color-light-blue-rgb: 39,117,184;
+    --ion-color-light-blue-contrast: #ffffff;
+    --ion-color-light-blue-contrast-rgb: 255,255,255;
+    --ion-color-light-blue-shade: #2267a2;
+    --ion-color-light-blue-tint: #3d83bf;
+  }
+  
+/* Declaring new color variable - light-blue | #2775b8 */
+.ion-color-light-blue {
+    --ion-color-base: var(--ion-color-light-blue);
+    --ion-color-base-rgb: var(--ion-color-light-blue-rgb);
+    --ion-color-contrast: var(--ion-color-light-blue-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-light-blue-contrast-rgb);
+    --ion-color-shade: var(--ion-color-light-blue-shade);
+    --ion-color-tint: var(--ion-color-light-blue-tint);
+}
+
+
 
 /* Declaring new color variable - white | #ffffff */
 :root {
@@ -97,6 +194,8 @@ ion-button{
     --ion-color-tint: var(--ion-color-plain-white-tint);
 }
 
+
+
 /* Declaring new color variable - darker-blue | #053781 */
 :root {
     --ion-color-darker-blue: #053781;
@@ -116,6 +215,7 @@ ion-button{
     --ion-color-shade: var(--ion-color-darker-blue-shade);
     --ion-color-tint: var(--ion-color-darker-blue-tint);
 }
+
 
 
 /* CSS styles for cinema halls modal */
@@ -157,7 +257,7 @@ ion-button{
 /* CSS styles for update account details modal */
 .update-account-details-modal .modal-wrapper {
     height: 80%;
-    width: 40%;
+    width: 55%;
     top: 10%;
     position: absolute;
     display: block;

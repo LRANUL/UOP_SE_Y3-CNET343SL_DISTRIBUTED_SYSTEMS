@@ -12,6 +12,9 @@ export class AssignHallSeatPopoverPage implements OnInit {
   // Declaration - FormGroup to handle assignSeatForm Form
   assignSeatForm: FormGroup;
 
+  // Declaration | Initialization - storing passed seatObjectId value
+  passedSeatObjectId: string = null;
+
   // Declaration | Initialization - storing passed seatId value
   passedSeatId: string = null;
 
@@ -24,6 +27,9 @@ export class AssignHallSeatPopoverPage implements OnInit {
   // Declaration | Initialization - storing passed seatUnavailable value
   passedSeatUnavailable: boolean = null;
 
+  // Declaration | Initialization - storing passed seatAllocatedPositionNo value
+  passedSeatAllocatedPositionNo: boolean = null;
+
   // Declaration | Initialization - storing passed seatActive value
   responseData = null;
 
@@ -34,10 +40,13 @@ export class AssignHallSeatPopoverPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    
+    // Assigning variable with passed 'passingSeatObjectId'
+    this.passedSeatObjectId = this.navParams.get('passingSeatObjectId') ? this.navParams.get('passingSeatObjectId') : null;
 
     // Assigning variable with passed 'passingSeatId'
     this.passedSeatId = this.navParams.get('passingSeatId');
-
+    
     // Assigning variable with passed 'passingSeatActive'
     this.passedSeatActive = this.navParams.get('passingSeatActive');
     
@@ -47,6 +56,9 @@ export class AssignHallSeatPopoverPage implements OnInit {
     // Assigning variable with passed 'passingSeatUnavailable'
     this.passedSeatUnavailable = this.navParams.get('passingSeatUnavailable');
 
+    // Assigning variable with passed 'passingSeatAllocatedPositionNo'
+    this.passedSeatAllocatedPositionNo = this.navParams.get('passingSeatAllocatedPositionNo') ? this.navParams.get('passingSeatAllocatedPositionNo') : null;
+    
     // Assigning form validation
     this.assignSeatForm = this.formBuilder.group({
       seatActive: new FormControl(false, Validators.required),
@@ -106,13 +118,34 @@ export class AssignHallSeatPopoverPage implements OnInit {
   // Function - Preparing response data according to the user populated preferences
   assignHallSeatDetails(formValue){
 
-    // Assigning user populated preferences
-    this.responseData = {
-      seatId: this.passedSeatId,
-      seatActive: formValue.seatActive,
-      seatNumber: formValue.seatNumber,
-      seatUnavailable: formValue.seatUnavailable
-    };
+    // Checking the availability of parameters and passing the relevant data through
+    if(this.passedSeatObjectId != null){
+      // Possible instance:
+      //  - 'Edit Cinema Hall' functionality
+      // If 'passedSeatObjectId' is available
+      // Assigning according to user populated preferences
+      this.responseData = {
+        _id: this.passedSeatObjectId,
+        seatId: this.passedSeatId,
+        seatActive: formValue.seatActive,
+        seatNumber: formValue.seatNumber,
+        seatUnavailable: formValue.seatActive == false ? false : formValue.seatUnavailable,
+        seatAllocatedPositionNo: this.passedSeatAllocatedPositionNo
+      };
+    }
+    else{
+      // Possible instance:
+      //  - 'Add New Cinema Hall' functionality
+      // If 'passedSeatAllocatedPositionNo' is available
+      // Assigning according to user populated preferences
+      this.responseData = {
+        seatId: this.passedSeatId,
+        seatActive: formValue.seatActive,
+        seatNumber: formValue.seatNumber,
+        seatUnavailable: formValue.seatActive == false ? false : formValue.seatUnavailable,
+        seatAllocatedPositionNo: this.passedSeatAllocatedPositionNo
+      };
+    }
 
     // Closing 'assignHallSeatPopover' popover
     this.closeAssignHallSeatPopover();

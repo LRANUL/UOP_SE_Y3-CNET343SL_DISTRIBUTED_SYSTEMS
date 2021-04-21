@@ -13,7 +13,11 @@ import { PasswordChangeComponentComponent } from './password-change-component/pa
 })
 export class ProfileSubPagePage implements OnInit {
 
-  constructor( private modalctrl: ModalController, private customerService: CustomerService) { }
+  constructor( private modalctrl: ModalController, private customerService: CustomerService) {
+    this.customerService.listen().subscribe((data: any) =>{
+      this.user = data;
+    })
+   }
 
   public users : Observable<profile[]>;
 
@@ -39,9 +43,10 @@ export class ProfileSubPagePage implements OnInit {
 
   ngOnInit() {
     this.getuser(this.temoryid);
+    this.user.name
   }
 
-  temoryid: string = "nidulatesting@movbook.com";
+  temoryid: string = localStorage.getItem('email');
 
   async editprofilemodal()
   {

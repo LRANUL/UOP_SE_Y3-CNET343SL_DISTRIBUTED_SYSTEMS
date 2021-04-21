@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let message of messages">
+      <ion-col size="9"  class="message reply">
+        <b>{{email}}</b> |
+        <span>{{message.message}}</span>
+        <div class="time ion-text-right" ion-text-right>
+          <!-- <br> {{message.createdAt | date:'short' }} -->
+        </div>
+      </ion-col>
+
+      <ion-col offset="3" size="9" *ngIf="message.response" class="message send">
+        <b>OPERATOR</b> |
+        <span>{{message.response}}</span>
+        <div class="time ion-text-right" ion-text-right>
+          <!-- <br> {{message.createdAt | date:'short' }} -->
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <form [formGroup]="form" (submit)="sendMsg()"  >
+    <ion-row align-items-center no-padding class="ion-align-items-center ion-no-padding">
+      <ion-col size="10">
+
+        <textarea formControlName="msg"  placeholder="type your msg here" autosize maxRows="3" class="msg-input"></textarea>
+      </ion-col>
+
+      <ion-col size="2">
+          <ion-button expand="block" class="send-btn" type="submit"><ion-icon name="send"></ion-icon></ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+  </ion-toolbar>
+</ion-footer>

@@ -26,11 +26,11 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 ion-menu{
-    --background: #374d58;
+    --background: darkgray !important;
     --radius:25px
 }
 ion-content{            
-    --background: #374d58;
+    --background: #808080;
 }
 //#e8e8e8;
 ion-button{
@@ -84,21 +84,16 @@ ion-button{
     display: block;  
  }
 
-/* CSS styles for cinema halls modal */
-.cinema-halls-modal .modal-wrapper {
-    height: 80%;
-    width: 60%;
-    top: 8%;
-    position: absolute; 
-    display: block;  
+.customer-contact-us-css .modal-wrapper {
+    height: 30%;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-/* CSS styles for add cinema locations modal */
-.add-location-modal .modal-wrapper {
-    height: 50%;
-    width: 40%;
-    top: 10%;
-    position: absolute;
-    display: block;
+.customer-terms-and-condition-css .modal-wrapper {
+    height: 90%;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
 }
-

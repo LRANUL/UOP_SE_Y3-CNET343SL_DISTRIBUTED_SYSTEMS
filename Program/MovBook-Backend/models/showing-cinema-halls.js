@@ -9,9 +9,9 @@ const showingCinemaHallSchema = mongoose.Schema({
   cinemaLocationObjectId: { type: String, required: true },
   showingSeatDetails: [{
     seatId: { type: String, required: true },
-    seatActive: { type: String, required: true },
+    seatActive: { type: Boolean, required: true },
     seatNumber: { type: String, required: true },
-    seatUnavailable: { type: String, required: true },
+    seatUnavailable: { type: Boolean, required: true },
     seatStatus: { type: String, required: true },
     customerObjectId: { type: String, required: true }
   }]

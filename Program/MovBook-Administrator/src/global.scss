@@ -26,11 +26,11 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 ion-menu{
-    --background: #374d58;
+    --background: darkgray !important;
     --radius:25px
 }
 ion-content{            
-    --background: #374d58;
+    --background: darkgray !important;
 }
 //#e8e8e8;
 ion-button{

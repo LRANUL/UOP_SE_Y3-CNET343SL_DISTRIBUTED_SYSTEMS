@@ -6,3 +6,38 @@ ion-card{
   --ion-background-color: #f1f1f1;
   border-radius: 15px;
 }
+
+ion-item{
+  border: #ccc solid 1px;
+  border-radius: 5px;
+  --ion-background-color: rgb(255, 255, 255);
+}
+
+ion-button{
+  margin-top: 0;
+  min-height: 50px;
+}
+
+.search-operator-account-form-text{
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  letter-spacing: 1px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.search-result-sub-heading-text{
+  font-size: 18px;
+  color: #000000;
+}
+
+.search-result-user-details-text{
+  font-size: 20px;
+  color: #000000;
+  font-weight: 500;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  position: relative;
+  right: 20%;
+}

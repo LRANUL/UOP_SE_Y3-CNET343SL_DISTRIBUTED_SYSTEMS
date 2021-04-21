@@ -3,7 +3,8 @@
 
   <!-- AVAILABLE MOVIE TITLE -->
   <ion-title style="margin-top: 2%;
-                    letter-spacing: 1px;"><b>AVAILABLE MOVIES</b></ion-title>
+                    letter-spacing: 1px;
+                    color: #374d58;"><b>AVAILABLE MOVIES</b></ion-title>
 
   <!-- MOVIE CONTAINER -->
   <div>
@@ -126,13 +127,13 @@
                                   <ion-col>
 
                                     <!-- MOVIE CATALOG TYPE SELECTION - BUTTON -->
-                                    <ion-button expand="block" style="--border-radius: 40px;" (click)="openMovieCatalogTypesPopover($event, movie?.imdb.imdbId, movie)">
+                                    <ion-button expand="block" style="--border-radius: 40px;" (click)="openViewShowingModal(movie?._id)">
                                       <ion-label>
-                                        <ion-img src="assets/images/account/manager/movie-catalog-sub-page/edit-showing-icon.png" style="width: 25px;
+                                        <ion-img src="assets/images/account/manager/movie-catalog-sub-page/view-showings-icon.png" style="width: 25px;
                                                                                                                                         margin-left: 0px;"></ion-img>
                                       </ion-label>
                                       <ion-label style="margin-left: 10px;">
-                                        EDIT SHOWING
+                                        VIEW SHOWINGS
                                       </ion-label>
                                     </ion-button>
 

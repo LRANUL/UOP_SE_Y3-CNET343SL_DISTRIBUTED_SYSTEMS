@@ -1,45 +1,150 @@
 <ion-content>
-  <ion-grid style="background-color: #374d58">
+  <ion-grid style="background-color: #374d58;">
     <ion-row>
-      <ion-col style="height:100%;width:80%;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
+      <ion-col style="width:80%;
+                      border-radius: 15px; 
+                      background-color: #e8e8e8;
+                      margin: 10px;
+                      min-height: 90%;
+                      position: relative;">
         <ion-row>
-          <h1 style="color: #374d58;"><b>Beverages</b></h1>
+          <!-- BEVERAGES TITLE -->
+          <ion-title style="margin-top: 2%;
+                            letter-spacing: 1px;
+                            color: #374d58;
+                            padding-bottom: 20px;"><b>BEVERAGES</b></ion-title>
+          <!-- ADD BEVERAGE BUTTON -->
+          <div style="position: absolute;
+                      right: 2%;
+                      top: 2%;">
+            <ion-button style="--border-radius: 40px;" color="tertiary" (click)="openAddBeverageModal()">
+              <ion-label>
+                <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/meal-icon.png" style="width: 25px;
+                                                                                                            margin-right: 5px;"></ion-img>
+              </ion-label>
+              <ion-label>
+                ADD BEVERAGE
+              </ion-label>
+            </ion-button>
+          </div>
         </ion-row>
-        <ion-row style="height: 700px;overflow-y: scroll;">
-          <ion-card *ngFor="let beverage of Beverages" style="width: 250px;height: 350px;"
-            (click)="beverageUpdate(beverage)">
+        <ion-row style="height: 87vh;
+                        overflow-y: scroll;">
+          <!-- Loading Spinner - Get Beverages -->
+          <ion-spinner name="dots" style="height: 100px;
+                                          width: 100px;
+                                          position: absolute;
+                                          left: 50%;
+                                          top: 20%;
+                                          transform: translate(-50%,-80%);
+                                          margin-top: 20px;
+                                          color: #747474;" *ngIf="loadingSpinnerGetBeverages"></ion-spinner>
+          <ion-card *ngFor="let beverage of Beverages" style="width: 250px;
+                                                              height: auto;
+                                                              background-color: #fcfcfc;" (click)="beverageUpdate(beverage)">
             <ion-img src='{{beverage.imgURL}}' style="height: 200px;"></ion-img>
-            <ion-card-title>{{beverage.name}}</ion-card-title>
+            <ion-card-title style="padding-left: 6%;">
+              {{beverage.name}}
+            </ion-card-title>
             <ion-card-content>
               <p>Price (LKR): {{beverage.price}}</p>
               <p>Quantity: {{beverage.stock}}</p>
-              <ion-button (click)="beverageUpdate(beverage)" color="success">Select</ion-button>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-button (click)="beverageUpdate(beverage)" color="success" expand="block">
+                      <ion-label>
+                        <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/select-icon.png" style="width: 25px;
+                                                                                                                        margin-right: 5px;"></ion-img>
+                      </ion-label>
+                      <ion-label>
+                        SELECT
+                      </ion-label>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-button color="warning" expand="block" (click)="openEditBeverageModal(beverage._id, beverage.name, beverage.imgURL)">
+                      <ion-label>
+                        <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/edit-icon.png" style="width: 25px;"></ion-img>
+                      </ion-label>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-button color="danger" expand="block" (click)="confirmBoxRemoveBeverage('Confirmation', 'This item will be removed, do you want to continue?', beverage._id)">
+                      <ion-label>
+                        <ion-img src="assets/images/account/manager/food-and-beverages-sub-page/remove-icon.png" style="width: 25px;"></ion-img>
+                      </ion-label>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-card-content>
           </ion-card>
         </ion-row>
       </ion-col>
-      <ion-col size="3" style="width:200px;border-radius: 25px; background-color: #e8e8e8;margin: 10px;">
+      <ion-col size="3" style="width:200px;
+                              border-radius: 15px; 
+                              background-color: #e8e8e8;
+                              margin: 10px;">
         <ion-row>
-          <h1 style="color: #374d58;"><b>Stock Quantity Update</b></h1>
+          <h1 style="color: #374d58;
+                    padding-top: 2%;
+                    padding-left: 2%;">
+            <b>Stock Quantity Update</b>
+          </h1>
         </ion-row>
         <ion-list>
-          <ion-item style="color: #ffffff;">Selection: {{selectedBeverage}}</ion-item>
-          <ion-item style="color: #ffffff;">Quantity: <ion-input style="color: #374d58;" [disabled]="selectedBeverage==undefined" type="number" name="Quantity" [(ngModel)]="Quantity" min="10" max="999" placeholder="10" required onKeyPress="if(this.value.length>=3) return false;">
+          <ion-item style="color: #ffffff;">
+            Selection: {{selectedBeverage}}
+          </ion-item>
+          <ion-item style="color: #ffffff;">
+            Quantity: 
+            <ion-input style="color: #374d58;" 
+              [disabled]="selectedBeverage==undefined" 
+              type="number" name="Quantity" 
+              [(ngModel)]="Quantity" 
+              min="10" 
+              max="999" 
+              placeholder="10" 
+              required 
+              onKeyPress="if(this.value.length>=3) return false;">
             </ion-input>
           </ion-item>
           <ion-button [disabled]="selectedBeverage==undefined || !Quantity" (click)="updateStock()" size="full">
-            Update</ion-button>
+            Update
+          </ion-button>
         </ion-list>
         <ion-row>
-          <h1 style="color: #374d58;"><b>Stock Price Update</b></h1>
+          <h1 style="color: #374d58;
+                    padding-top: 4%;
+                    padding-left: 2%;">
+            <b>Stock Price Update</b>
+          </h1>
         </ion-row>
         <ion-list>
-          <ion-item style="color: #ffffff;">Selection: {{selectedBeverage}}</ion-item>
-            <ion-item style="color: #ffffff;">Price: <ion-input style="color: #374d58;" [disabled]="selectedBeverage==undefined" type="number" name="Price" [(ngModel)]="Price" min="10" max="999" placeholder="10" required onKeyPress="if(this.value.length>=4) return false;">
+          <ion-item style="color: #ffffff;">
+            Selection: {{selectedBeverage}}
+          </ion-item>
+            <ion-item style="color: #ffffff;">
+              Price: 
+              <ion-input 
+                style="color: #374d58;" 
+                [disabled]="selectedBeverage==undefined" 
+                type="number" 
+                name="Price" 
+                [(ngModel)]="Price" 
+                min="10" 
+                max="999" 
+                placeholder="10" 
+                required 
+                onKeyPress="if(this.value.length>=4) return false;">
             </ion-input>LKR
           </ion-item>
           <ion-button [disabled]="selectedBeverage==undefined || !Price" (click)="updatePrice()" size="full">
-            Update</ion-button>
+            Update
+          </ion-button>
         </ion-list>
       </ion-col>
     </ion-row>

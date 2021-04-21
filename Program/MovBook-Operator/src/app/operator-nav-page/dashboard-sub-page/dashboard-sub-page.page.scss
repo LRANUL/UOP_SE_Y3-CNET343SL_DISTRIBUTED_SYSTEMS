@@ -1,5 +1,5 @@
 .sideMenu {
-  background-color: #374d58;
+  background-color: darkgray !important;
 }
 .profilePhoto {
   color: white;
@@ -10,7 +10,7 @@
   float: right;
 }
 ion-content{
-  --background: #374d58 !important;
+  --background: darkgray !important;
 }
 ion-button:hover {
     --ion-color: light

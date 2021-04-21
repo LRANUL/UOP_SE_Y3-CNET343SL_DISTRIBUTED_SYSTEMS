@@ -13,12 +13,20 @@ import {
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+
+let refreshmentsTotal = 0;
+let movieTotal = 0;
+let billTotal = 0;
+let refreshmentsLastItem: number;
+let movieSelectionData: Object;
+
 @Component({
   selector: "app-movie-booking-sub-page",
   templateUrl: "./movie-booking-sub-page.page.html",
   styleUrls: ["./movie-booking-sub-page.page.scss"],
 })
 export class MovieBookingSubPagePage implements OnInit {
+
   @ViewChild(StripeCardNumberComponent) card: StripeCardNumberComponent;
   cardOptions: StripeCardElementOptions = {
     style: {
@@ -39,7 +47,7 @@ export class MovieBookingSubPagePage implements OnInit {
     locale: "en",
     fonts: [{ cssSrc: "https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" }]
   };
-  private PAY_BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
+  private PAY_BASE_URL = environment.MOVBOOK_PAYMENT_URL;
 
   Movies: Object;
   Beverages: Object;
@@ -52,6 +60,15 @@ export class MovieBookingSubPagePage implements OnInit {
   adultQuantity: any;
   childQuantity: any;
   seatNumbers: any;
+  Refreshments: any = [];
+  bookQuantity: any;
+  Total: number;
+  location: any;
+  timeSlot: any;
+  posterLink: any;
+  reservedDate: any;
+  hall: any;
+  slotObjectId: any;
   constructor(private menu: MenuController,
     public operatorService: OperatorService,
     private modalCtrl: ModalController,
@@ -61,11 +78,12 @@ export class MovieBookingSubPagePage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
+    var fname = localStorage.getItem('name');
+    var lname = localStorage.getItem('lastName');
     this.email = localStorage.getItem('email');
-    // Remove after getting login credentials
-    this.name = 'John Steve';
-    this.email = 'john@movbook.com';
+    this.name = fname+" "+ lname;
+  /** Get movies data to app */
+
     this.operatorService.getMovies().subscribe(
       (data) => {
         this.Movies = data['returnedData'];
@@ -75,15 +93,8 @@ export class MovieBookingSubPagePage implements OnInit {
         console.log(error);
       }
     );
-    this.operatorService.getBeverages().subscribe(
-      (data) => {
-        this.Beverages = data;
-        console.log(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  /** Get refreshments data to app */
+    this.getBeverages()
   }
   getBeverages() {
     this.operatorService.getBeverages().subscribe(
@@ -96,19 +107,67 @@ export class MovieBookingSubPagePage implements OnInit {
       }
     );
   }
-  beverageUpdate(beverage) {
-    let count:number;
-    count++;
-    let name: string = beverage.name
-    const Refreshments = [
-      '', ''
-    ];
-    Refreshments.push(name+' '+count);
-    console.log(Refreshments)
-  }
 
-  book(amount, bookInformation) {
-    this.createPaymentIntent(amount)
+  /** Update Refreshments cart */
+
+  beverageUpdate(beverage) {
+
+    let name: string = beverage.name
+    let price: number = beverage.price
+    let quantity: number = beverage.quantity
+    refreshmentsLastItem = price * quantity
+    refreshmentsTotal += refreshmentsLastItem
+    this.Refreshments.push("Item: " + name + " x " + quantity);
+    billTotal += refreshmentsLastItem;
+    this.Total = billTotal;
+    console.log("Total:" + billTotal)
+  }
+  /** Refreshments cart management*/
+
+  beverageRemove(item) {
+    refreshmentsTotal -= refreshmentsLastItem
+    this.Refreshments.pop('item');
+    billTotal -= refreshmentsLastItem;
+    this.Total = billTotal;
+    console.log("Total:" + billTotal)
+  }
+  /** 
+   * Getting Data from Booking Part 1 (includes venue and movie selection) 
+   * to Proceed with Booking Part 2 (includes Payment processing and Refreshments selection) 
+   * */
+  async selectMovie(id) {
+    const locationTime = this.modalCtrl.create({
+      component: LocationAndTimeSubPagePage,
+      componentProps: {
+        'id': id
+      }
+    });
+    (await locationTime).onDidDismiss().then(async () => {
+      this.operatorService.allticketInformation.subscribe(ticketData => {
+        movieTotal = ticketData['ticketDetalis']['totalAmount']
+        billTotal += movieTotal
+        this.Total = billTotal
+        this.slotObjectId = ticketData['slotID']
+        this.location = ticketData['showingMovieInfo']['cinemaLocation']['cinemaLocationName'];
+        this.reservedDate = ticketData['showingMovieInfo']['showingSlots']['0']['showingDate']
+        this.hall = ticketData['hallInformaion']['0']['cinemaHallName']
+        this.timeSlot = ticketData['timeSlot']['state']['Time']
+        this.title = ticketData['movieInfo']['movieTitle'];
+        this.posterLink = ticketData['movieInfo']['posterLink'];
+        this.adultQuantity = ticketData['ticketDetalis']['adultTickets'];
+        this.childQuantity = ticketData['ticketDetalis']['childrenTickets'];
+        this.seatNumbers = ticketData['ticketDetalis']['seatNumbers'];
+
+        movieSelectionData = ({ 'movieTotal': movieTotal, 'location': this.location, 'reservedDate': this.reservedDate, 'hall': this.hall, 'timeSlot': this.timeSlot, 'title': this.title, 'posterLink': this.posterLink, 'adultQuantity': this.adultQuantity, 'childQuantity': this.childQuantity, 'seatNumbers': this.seatNumbers, 'slotObjectId': this.slotObjectId })
+        console.log(movieSelectionData)
+      })
+    });
+
+    return await (await locationTime).present();
+  }
+  /** Booking of Ticket and Payment Service */
+  book() {
+    this.createPaymentIntent(billTotal)
       .pipe(
         switchMap((payment) =>
           this.stripeService.confirmCardPayment(
@@ -133,17 +192,27 @@ export class MovieBookingSubPagePage implements OnInit {
             message: 'Bank rejected payments due to no funds',
           });
           await alert.present();
-          // console.log(result.error.message);
         } else if (result.paymentIntent.status === "succeeded") {
-          const alert = await this.alertCtrl.create({
-            header: 'Payment Sucessful',
-            subHeader: 'Booking Stored',
-            backdropDismiss: true,
-            message: 'Payment received booking data stored.',
-          });
-          await alert.present();
+
+          this.operatorService.storeBooking(this.Refreshments, movieSelectionData, refreshmentsTotal, billTotal).subscribe(
+            async (data) => {
+              this.operatorService.addPoints(billTotal).subscribe(
+                async (data) => {
+                  const alert = await this.alertCtrl.create({
+                    header: 'Payment Sucessful',
+                    subHeader: 'Booking Stored',
+                    backdropDismiss: true,
+                    message: 'Payment received booking data stored.',
+                  })
+                  await alert.present();
+                })
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
           async (err) => {
-            // console.log(err);
+            console.log(err);
           }
         }
       })
@@ -155,29 +224,7 @@ export class MovieBookingSubPagePage implements OnInit {
       { amount }
     );
   }
-  beverages(beverage) {
-    console.log(beverage.title);
 
-  }
-  async selectMovie(id) {
-    const locationTime = this.modalCtrl.create({
-      component: LocationAndTimeSubPagePage,
-      componentProps: {
-        'id': id
-      }
-    });
-    (await locationTime).onDidDismiss().then(async () => {
-      this.operatorService.allticketInformation.subscribe(ticketData => {
-        this.title = ticketData['movieInfo']['movieTitle'];
-        this.adultQuantity = ticketData['ticketDetalis']['adultTickets'];
-        this.childQuantity = ticketData['ticketDetalis']['childrenTickets'];
-        this.seatNumbers = ticketData['ticketDetalis']['seatNumbers'];
-        console.log(this.seatNumbers)
-      })
-    });
-
-    return await (await locationTime).present();
-  }
   /** Navigation */
   goToDashboard() {
     this.router.navigate(['operator']);

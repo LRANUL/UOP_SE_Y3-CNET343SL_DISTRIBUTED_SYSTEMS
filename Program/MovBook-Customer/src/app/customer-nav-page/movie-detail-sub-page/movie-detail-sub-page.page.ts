@@ -58,13 +58,21 @@ export class MovieDetailSubPagePage implements OnInit {
     website: ''
   };
 
-
+  showingCheck;
   getmovie()
   {
    this.movieId;
    this.customerService.getMovieDetail(this.movieId);
    this.customerService.getmovies().subscribe((val: Movie)=>{
      this.movieDetails = val
+     let movieDetails = val.movieStatus
+     if(movieDetails == "NowShowing")
+     {
+       this.showingCheck = true
+     }else
+     {
+       this.showingCheck = false
+     }
      console.log(this.movieDetails);
    })
   }

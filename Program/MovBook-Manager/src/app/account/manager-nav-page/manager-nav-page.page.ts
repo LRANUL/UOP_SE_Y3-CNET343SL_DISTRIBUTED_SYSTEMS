@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-manager-nav-page',
@@ -12,23 +13,26 @@ export class ManagerNavPagePage implements OnInit {
   selectedSubPagePath = '';
   name: string;
   email: string;
+  lName:string;
+  fName:String
 
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private loadingController: LoadingController
-  ) { 
+    private loadingController: LoadingController,
+    private authService:AuthService
+  ) {
     this.router.events.subscribe((event: RouterEvent) => {
       this.selectedSubPagePath = event.url;
     });
   }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
+    this.fName = localStorage.getItem('name');
+    this.lName= localStorage.getItem('lastName')
     this.email = localStorage.getItem('email');
     // Remove after getting login credentials
-    this.name = 'Mr. Lucas Anderson';
-    this.email = 'lucasanderson@gmail.com';
+    this.name = this.fName+" "+this.lName;
   }
 
   // Logout Alert Box Implementation
@@ -47,9 +51,10 @@ export class ManagerNavPagePage implements OnInit {
         {
           text: 'Continue',
           handler: () => {
-            
+
             // Showing loading spinner, logging manager out, and redirecting to the login page
             this.logoutAlertContinue();
+            this.authService.logOut()
 
           }
         }
@@ -66,9 +71,9 @@ export class ManagerNavPagePage implements OnInit {
       message: 'Logging Out..',
       duration: 3000
     });
-    
+
     /**
-     * TODO: 
+     * TODO:
      * - Update manager user account activity ('accountActivity') to OFFLINE
      * - Insert current datetime to manager user account activity logout datetime ('logoutDateTime')
      * - If no errors are occurred, redirect manager user to the login page
