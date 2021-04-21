@@ -9,7 +9,7 @@ import { message } from "../models/messages";
   })
   export class MessageService {
   email:string = "";
-  private BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
+  private BASE_URL = environment.MOVBOOK_BACKEND_URL;
 
   private newMsgListener = new Subject<message>();
 
