@@ -18,7 +18,7 @@ export class SettingSubPagePage implements OnInit {
   Phone: any;
   Address: string;
   RegisteredDateTime: any;
- 
+
 
 
   constructor(
@@ -77,6 +77,7 @@ export class SettingSubPagePage implements OnInit {
             this.operatorService.updateEmail(this.Email, alertData.email).subscribe(
               async (data) => {
                 console.log(data)
+                this.operatorService.updateAuthEmail({email:alertData.email},this.Email).subscribe((res)=>{console.log(res)})
                 if (data == 'Updated Email') {
                   this.ngOnInit();
                   const alert = await this.alertController.create({
@@ -130,7 +131,7 @@ export class SettingSubPagePage implements OnInit {
           text: "Change",
           handler: async (alertData) => {
             let password = alertData.password; // Bandara (10673936) use 'password' value for password update purpose
-            
+
             const alert = await this.alertController.create({
               header: 'Email Updated',
               message: this.Email + ' was update to ' + alertData.email,
@@ -143,7 +144,7 @@ export class SettingSubPagePage implements OnInit {
     });
     await alert.present();
   }
-  
+
   /** Logout operator */
   logout(){
     this.authServ.logOut();

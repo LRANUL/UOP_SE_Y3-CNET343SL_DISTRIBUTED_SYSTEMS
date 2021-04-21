@@ -17,6 +17,7 @@ export class OperatorService {
   ticketInformation = this.allticketInformation.asObservable();
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
   private BASE_URL_ADMIN = environment.MOVBOOK_PAYMENT_URL;
+  private secodary_url = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL
 
   constructor(public http: HttpClient) { }
 
@@ -55,6 +56,10 @@ export class OperatorService {
     const body = { oldEmail: oldEmail, newEmail: newEmail };
     return this.http.put<any>(this.BASE_URL + "api/operators/update", body);
 
+
+  }
+  updateAuthEmail(value2,id:string){
+   return this.http.put(this.secodary_url +"api/logins/operatorEmail/" + id, value2)
   }
   updateStock(name, quantity) {
     const body = { name: name, quantity: quantity };

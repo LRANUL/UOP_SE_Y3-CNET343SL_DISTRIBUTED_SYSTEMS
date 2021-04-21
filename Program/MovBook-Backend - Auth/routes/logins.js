@@ -278,6 +278,7 @@ router.post("/manager-login",(req,res,next)=>{
 
 //operator -login
 router.post("/operator-login",(req,res,next)=>{
+    console.log('hii')
     let fetchedUSer;
     logins.findOne({ email:req.body.email })
       .then(user =>{
@@ -563,6 +564,7 @@ router.post("/Admin-login-check",(req,res,next)=>{
 //operator-login-check
 router.post("/operator-login-check",(req,res,next)=>{
   let fetchedUSer;
+  console.log('hii')
   logins.findOne({ email:req.body.email })
     .then(user =>{
       console.log(user);
@@ -672,6 +674,15 @@ router.put('/customer/:id', (req, res, next) => {
 router.put('operator/:email', (req, res, next) => {
     console.log(req.body);
     console.log('Name:'+req.body.firstName);
+    logins.updateOne({ email: req.params.email },
+      req.body)
+      .then((data) => {
+        res.send(data)
+      })
+  });
+
+  //operator email edit (Own)
+router.put('/operatorEmail/:email', (req, res, next) => {
     logins.updateOne({ email: req.params.email },
       req.body)
       .then((data) => {
