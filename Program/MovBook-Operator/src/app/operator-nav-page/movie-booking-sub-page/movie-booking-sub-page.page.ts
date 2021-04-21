@@ -47,7 +47,7 @@ export class MovieBookingSubPagePage implements OnInit {
     locale: "en",
     fonts: [{ cssSrc: "https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" }]
   };
-  private PAY_BASE_URL = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
+  private PAY_BASE_URL = environment.MOVBOOK_PAYMENT_URL;
 
   Movies: Object;
   Beverages: Object;

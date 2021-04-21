@@ -16,7 +16,7 @@ export class OperatorService {
   allticketInformation: BehaviorSubject<any> = new BehaviorSubject(null);
   ticketInformation = this.allticketInformation.asObservable();
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
-  private BASE_URL_ADMIN = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
+  private BASE_URL_ADMIN = environment.MOVBOOK_PAYMENT_URL;
 
   constructor(public http: HttpClient) { }
 

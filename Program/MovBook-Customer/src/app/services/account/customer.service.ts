@@ -12,6 +12,7 @@ export class CustomerService {
 
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
   private secodary_url = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
+
   allticketInformation: BehaviorSubject<any> = new BehaviorSubject(null);
   ticketInformation = this.allticketInformation.asObservable();
   constructor(private http: HttpClient) { }
