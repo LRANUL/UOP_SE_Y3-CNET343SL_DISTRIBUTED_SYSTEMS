@@ -37,11 +37,8 @@ form: FormGroup;
   }
 
   sendMsg(){
-
     this.msgServ.sendMessage(this.form.value.msg,this.email);
-
     this.form.reset();
-
   }
 
 

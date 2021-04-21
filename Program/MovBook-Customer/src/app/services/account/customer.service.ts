@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { bookedTickets, movie} from 'src/app/models/account/customers';
+import { bookedTickets, loyality, movie} from 'src/app/models/account/customers';
 import { Movie } from 'src/app/models/account/movie';
 import { environment } from "src/environments/environment";
 
@@ -217,6 +217,19 @@ export class CustomerService {
           return this.ticketPrice.asObservable();
         }
 
+        public loyalityUpdated = {
+          email: '',
+          pointsAvailable: '',
+          totalPoints: '',
+          lastEarnedDate: ''
+          };
+          private loyality = new Subject();
+
+          getloyalitys()
+          {
+            return this.loyality.asObservable();
+          }
+
         public ExperienceUpdated = {
           showingExperience: '',
           description: ''
@@ -244,18 +257,21 @@ filter(filterBy)
  this.listeners.next(filterBy);
 }
 
-updateuser(value, id)
+updateuser(value,value2, id)
 {
   console.log(value);
   this.http.put<{message: string}>(this.BASE_URL +"api/customers/" + id, value).subscribe((responsestatus) => {
     console.log(responsestatus);
-    this.http.put(this.secodary_url +"api/logins/customer/" + id, value).subscribe((responsestatus) =>{console.log(responsestatus)})
+    this.http.put(this.secodary_url +"api/logins/customer/" + id, value2).subscribe((responsestatus) =>{console.log(responsestatus)})
 });
 }
 
 getloyality(email:string)
 {
-  return this.http.get<{message: string, users}>(this.BASE_URL +"api/loyalty/" + email)
+  return this.http.get<{message: string, users: loyality}>(this.BASE_URL +"api/loyalty/" + email).subscribe(res =>{
+    this.loyalityUpdated = res.users;
+    this.loyality.next(this.loyalityUpdated);
+  })
 }
 
 getbookinghistory(email: string)

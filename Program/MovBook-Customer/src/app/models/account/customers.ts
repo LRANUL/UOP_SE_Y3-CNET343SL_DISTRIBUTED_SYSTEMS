@@ -54,7 +54,6 @@ export interface profile{
     middleName: string,
     },
   email: string,
-  password: string,
   registeredDateTime: string,
   address:
     {
@@ -102,4 +101,11 @@ timeSlot : string,
 ticketCostLKR : string
 mealCostLKR : string
 totalCostLKR : string
+}
+
+export interface loyality{
+  email: string,
+  pointsAvailable: string,
+  totalPoints: string,
+  lastEarnedDate: string
 }

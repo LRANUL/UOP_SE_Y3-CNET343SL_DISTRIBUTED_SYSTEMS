@@ -30,7 +30,6 @@ export class ProfileSubPagePage implements OnInit {
       middleName: '',
       },
     email: '',
-    password: '',
     registeredDateTime: '',
     address:
     {
@@ -72,7 +71,6 @@ export class ProfileSubPagePage implements OnInit {
       this.user =
       {
         email: profiles.users.email,
-        password: profiles.users.email,
         name:
           {
             prefix: profiles.users.name.prefix,

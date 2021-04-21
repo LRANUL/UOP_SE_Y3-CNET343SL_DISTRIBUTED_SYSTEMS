@@ -10,7 +10,6 @@ const customerSchema =mongoose.Schema({
       lastName: {type : String},
     },
     email: {type : String, required:true , unique:true},
-    password: {type : String, required:true },
     registeredDateTime: {type : String},
     address: 
     {

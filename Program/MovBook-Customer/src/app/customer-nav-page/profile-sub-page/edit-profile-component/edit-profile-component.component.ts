@@ -25,7 +25,6 @@ export class EditProfileComponentComponent implements OnInit {
         middleName: '',
        },
       email: '',
-      password: '',
       registeredDateTime: '',
       address:
       {
@@ -35,6 +34,15 @@ export class EditProfileComponentComponent implements OnInit {
       },
       phone: '',
   };
+
+  profileAuth = {
+    name:''
+      ,
+    email: '',
+    registeredDateTime: '',
+    address:'',
+    phone: '',
+};
 
   ngOnInit() {
     this.getuser(this.temoryid);
@@ -62,7 +70,6 @@ export class EditProfileComponentComponent implements OnInit {
       this.profile =
       {
         email: profiles.users.email,
-        password: profiles.users.email,
         name:
           {
             prefix: profiles.users.name.prefix,
@@ -79,13 +86,22 @@ export class EditProfileComponentComponent implements OnInit {
           },
         phone: profiles.users.phone,
       };
+
+      this.profileAuth =
+      {
+        email: profiles.users.email,
+        name:profiles.users.name.prefix+" "+profiles.users.firstName +" "+profiles.users.name.lastName,
+        registeredDateTime: profiles.users.registeredDateTime,
+        address:profiles.users.address.city,
+        phone: profiles.users.phone,
+      };
       console.log(this.profile);
     });
   }
 
   userupdate()
   {
-    this.customerService.updateuser(this.profile, this.temoryid);
+    this.customerService.updateuser(this.profile,this.profileAuth, this.temoryid);
     this.customerService.filter(this.profile)
     this.modalcntrl.dismiss();
   }

@@ -18,7 +18,7 @@ export class SettingSubPagePage implements OnInit {
   Phone: any;
   Address: string;
   RegisteredDateTime: any;
- 
+
 
 
   constructor(
@@ -74,14 +74,17 @@ export class SettingSubPagePage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            this.operatorService.updateEmail(this.Email, alertData.email).subscribe(
+            this.operatorService.updateEmail(this.email, alertData.email).subscribe(
               async (data) => {
                 console.log(data)
+
+                this.operatorService.updateAuthEmail({email:alertData.email},this.Email).subscribe((res)=>{console.log(res)});
+
                 if (data == 'Updated Email') {
                   this.ngOnInit();
                   const alert = await this.alertController.create({
                     header: 'Email Updated',
-                    message: this.Email + ' was update to ' + alertData.email,
+                    message: this.email + ' was update to ' + alertData.email,
                   });
 
                   await alert.present();
@@ -112,9 +115,14 @@ export class SettingSubPagePage implements OnInit {
       header: "Password Update",
       inputs: [
         {
-          name: "password",
+          name: "oldpassword",
           type: "password",
-          placeholder: "Enter Password",
+          placeholder: "Enter Old Password",
+        },
+        {
+          name: "newpassword",
+          type: "password",
+          placeholder: "Enter New Password",
         },
       ],
       message: 'Enter your new password to update',
@@ -129,11 +137,11 @@ export class SettingSubPagePage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            let password = alertData.password; // Bandara (10673936) use 'password' value for password update purpose
-            
+            let oldpassword = alertData.oldpassword;
+            let newpassword = alertData.newpassword;
+            this.authServ.onUpdatePassword(newpassword,oldpassword,this.email)
             const alert = await this.alertController.create({
-              header: 'Email Updated',
-              message: this.Email + ' was update to ' + alertData.email,
+              header: 'Password Updated',
             });
 
             await alert.present();
@@ -143,7 +151,7 @@ export class SettingSubPagePage implements OnInit {
     });
     await alert.present();
   }
-  
+
   /** Logout operator */
   logout(){
     this.authServ.logOut();

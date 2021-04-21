@@ -1,0 +1,40 @@
+.message{
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 0.24rem;
+    white-space: pre-wrap;
+  }
+  
+  .reply{
+    background: var(--ion-color-tertiary);
+    color:white;
+  }
+  
+  .send{
+    background: var(--ion-color-secondary);
+    color:white;
+  }
+  
+  time{
+  color:rgb(133, 131, 131);
+  float: right;
+  font-size: small;
+  }
+  
+  .msg-input{
+    width: 100%;
+    border:1px solid var(--ion-color-medium);
+    border-radius: 1rem;
+    resize: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: black;
+    background: white;
+  }
+  
+  
+  ion-grid{
+    width: 95%;
+  margin:1rem auto;
+  }
+  

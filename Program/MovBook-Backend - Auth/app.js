@@ -11,7 +11,7 @@ const app = express();
 // Database Connectivity
 mongoose
   .connect(
-    process.env.MONGODB_ATLAS_URI_PRIMARY,
+    process.env.MONGODB_ATLAS_URI_SECONDARY,
     // Legacy Server Support Added, Server timeout set to 30 seconds
     {
       useNewUrlParser: true,
