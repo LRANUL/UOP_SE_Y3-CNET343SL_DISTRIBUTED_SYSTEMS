@@ -54,7 +54,6 @@ export interface profile{
     middleName: string,
     },
   email: string,
-  password: string,
   registeredDateTime: string,
   address:
     {

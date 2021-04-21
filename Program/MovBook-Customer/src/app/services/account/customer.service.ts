@@ -244,12 +244,12 @@ filter(filterBy)
  this.listeners.next(filterBy);
 }
 
-updateuser(value, id)
+updateuser(value,value2, id)
 {
   console.log(value);
   this.http.put<{message: string}>(this.BASE_URL +"api/customers/" + id, value).subscribe((responsestatus) => {
     console.log(responsestatus);
-    this.http.put(this.secodary_url +"api/logins/customer/" + id, value).subscribe((responsestatus) =>{console.log(responsestatus)})
+    this.http.put(this.secodary_url +"api/logins/customer/" + id, value2).subscribe((responsestatus) =>{console.log(responsestatus)})
 });
 }
 
