@@ -102,3 +102,10 @@ ticketCostLKR : string
 mealCostLKR : string
 totalCostLKR : string
 }
+
+export interface loyality{
+  email: string,
+  pointsAvailable: string,
+  totalPoints: string,
+  lastEarnedDate: string
+}

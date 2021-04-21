@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { loyality } from 'src/app/models/account/customers';
 import { CustomerService } from 'src/app/services/account/customer.service';
 
 @Component({
@@ -9,11 +10,11 @@ import { CustomerService } from 'src/app/services/account/customer.service';
 })
 export class LoyalitySubPagePage implements OnInit {
 
-  loyality ={
+  loyality: loyality ={
     email: '',
     pointsAvailable: '',
     totalPoints: '',
-    lastDatePointsEarned: ''
+    lastEarnedDate: ''
   }
 
   temporyemail = localStorage.getItem('email');
@@ -26,14 +27,18 @@ export class LoyalitySubPagePage implements OnInit {
 
   getinformation(email: any)
   {
-    this.customerService.getloyality(email).subscribe(data => {
+    this.customerService.getloyality(email)
+    this.customerService.getloyalitys().subscribe((data: loyality )=> {
+      let date = this.pipe.transform(data[0].lastEarnedDate, "mediumDate");
+      console.log(date)
       this.loyality =
       {
-        email: data.users.email,
-        pointsAvailable: data.users.pointsAvailable,
-        totalPoints: data.users.totalPoints,
-        lastDatePointsEarned: this.pipe.transform(data.users.lastEarnedDate, "mediumDate")
+        email: data[0].email,
+        pointsAvailable: data[0].pointsAvailable,
+        totalPoints: data[0].totalPoints,
+        lastEarnedDate: date
       };
+      console.log(this.loyality);
     });
   }
 

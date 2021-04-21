@@ -206,6 +206,13 @@
     production: string;
     website: string;
   }
+
+  export interface loyality{
+    email: string,
+    pointsAvailable: string,
+    totalPoints: string,
+    lastEarnedDate: string
+  }
   
   /**
    * MODEL - MovieResponse

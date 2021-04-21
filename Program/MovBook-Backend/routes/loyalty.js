@@ -7,7 +7,7 @@ const loyalty = require("../models/loyalty");
 
 //get user data with email
 router.get('/:email', (req, res, next) => {
-  loyalty.findById(req.params.email)
+  loyalty.find({email: req.params.email})
     .then((data) => {
       console.log(data);
       if (data) {

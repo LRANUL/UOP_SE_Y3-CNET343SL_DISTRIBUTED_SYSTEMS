@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { bookedTickets, movie} from 'src/app/models/account/customers';
+import { bookedTickets, loyality, movie} from 'src/app/models/account/customers';
 import { Movie } from 'src/app/models/account/movie';
 import { environment } from "src/environments/environment";
 
@@ -217,6 +217,19 @@ export class CustomerService {
           return this.ticketPrice.asObservable();
         }
 
+        public loyalityUpdated = {
+          email: '',
+          pointsAvailable: '',
+          totalPoints: '',
+          lastEarnedDate: ''
+          };
+          private loyality = new Subject();
+
+          getloyalitys()
+          {
+            return this.loyality.asObservable();
+          }
+
         public ExperienceUpdated = {
           showingExperience: '',
           description: ''
@@ -255,7 +268,10 @@ updateuser(value,value2, id)
 
 getloyality(email:string)
 {
-  return this.http.get<{message: string, users}>(this.BASE_URL +"api/loyalty/" + email)
+  return this.http.get<{message: string, users: loyality}>(this.BASE_URL +"api/loyalty/" + email).subscribe(res =>{
+    this.loyalityUpdated = res.users;
+    this.loyality.next(this.loyalityUpdated);
+  })
 }
 
 getbookinghistory(email: string)

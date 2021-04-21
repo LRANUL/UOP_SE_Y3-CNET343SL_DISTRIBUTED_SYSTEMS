@@ -214,6 +214,19 @@ export class CustomerService {
           return this.ticketPrice.asObservable();
         }
 
+            public loyalityUpdated = {
+            email: '',
+            pointsAvailable: '',
+            totalPoints: '',
+            lastEarnedDate: ''
+            };
+            private loyality = new Subject();
+  
+            getloyalitys()
+            {
+              return this.loyality.asObservable();
+            }
+
         public ExperienceUpdated = {
           showingExperience: '',
           description: ''
@@ -251,7 +264,10 @@ updateuser(value, id)
 
 getloyality(email:string)
 {
-  return this.http.get<{message: string, users}>(this.BASE_URL +"api/loyalty/" + email)
+  return this.http.get<{message: string, users}>(this.BASE_URL +"api/loyalty/" + email).subscribe(res =>{
+    this.loyalityUpdated = res.users;
+    this.loyality.next(this.loyalityUpdated);
+  })
 }
 
 getbookinghistory(email: string)
