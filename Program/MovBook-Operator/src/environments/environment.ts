@@ -7,8 +7,8 @@ export const environment = {
   // MOVBOOK_BACKEND_URL: "http://localhost:5000/",
   // MOVBOOK_BACKEND_ADMIN_SERVER_URL:"http://localhost:4242",
   MOVBOOK_BACKEND_URL: "https://movbook-app.herokuapp.com/",
-  MOVBOOK_AUTH_URL: "https://movbook-admin.herokuapp.com/",
-  MOVBOOK_BACKEND_ADMIN_SERVER_URL: "https://movbook-admin.herokuapp.com/",
+  MOVBOOK_PAYMENT_URL: "https://movbook-admin.herokuapp.com/",
+  MOVBOOK_BACKEND_ADMIN_SERVER_URL: "https://movbook-auth.herokuapp.com/",
   firebase: {
     apiKey: "AIzaSyDgIZg9bO1QslkIm_c00Ivp4Qql-C-lyKI",
     authDomain: "movbook-18609.firebaseapp.com",

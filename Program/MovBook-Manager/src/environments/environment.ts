@@ -11,8 +11,9 @@ export const environment = {
 
 
   // Production URLs
-  //MOVBOOK_BACKEND_URL: "https://movbook-app.herokuapp.com/",
-  //MOVBOOK_BACKEND_ADMIN_SERVER_URL:"https://movbook-admin.herokuapp.com/",
+  // MOVBOOK_BACKEND_URL: "https://movbook-app.herokuapp.com/",
+  // MOVBOOK_PAYMENT_URL: "https://movbook-admin.herokuapp.com/",
+  // MOVBOOK_BACKEND_ADMIN_SERVER_URL: "https://movbook-auth.herokuapp.com/",
 };
 
 /*
