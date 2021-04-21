@@ -16,7 +16,7 @@ export class LoyalitySubPagePage implements OnInit {
     lastDatePointsEarned: ''
   }
 
-  temporyemail = "6031255303a242238e0c0d67";
+  temporyemail = localStorage.getItem('email');
   pipe = new DatePipe("en-US");
   constructor(private customerService: CustomerService) { }
 
