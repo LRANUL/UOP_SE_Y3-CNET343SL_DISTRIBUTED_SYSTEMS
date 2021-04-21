@@ -6,14 +6,14 @@ export const environment = {
   production: false,
   
   // Development URLs
-  MOVBOOK_BACKEND_URL: "http://localhost:5000/",
-  MOVBOOK_BACKEND_ADMIN_SERVER_URL: "http://localhost:8400/"
+  // MOVBOOK_BACKEND_URL: "http://localhost:5000/",
+  // MOVBOOK_BACKEND_ADMIN_SERVER_URL: "http://localhost:4242/"
 
 
   // Production URLs
-  // MOVBOOK_BACKEND_URL: "https://movbook-app.herokuapp.com/",
-  // MOVBOOK_PAYMENT_URL: "https://movbook-admin.herokuapp.com/",
-  // MOVBOOK_BACKEND_ADMIN_SERVER_URL: "https://movbook-auth.herokuapp.com/",
+  MOVBOOK_BACKEND_URL: "https://movbook-app.herokuapp.com/",
+  MOVBOOK_PAYMENT_URL: "https://movbook-admin.herokuapp.com/",
+  MOVBOOK_BACKEND_ADMIN_SERVER_URL: "https://movbook-auth.herokuapp.com/",
 };
 
 /*

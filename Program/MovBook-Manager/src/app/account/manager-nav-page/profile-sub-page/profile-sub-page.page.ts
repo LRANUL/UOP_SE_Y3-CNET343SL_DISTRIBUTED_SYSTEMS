@@ -25,11 +25,11 @@ export class ProfileSubPagePage implements OnInit {
   ) { }
 
   ngOnInit() {
-this.prefix=localStorage.getItem('email');
-this.firstName=localStorage.getItem('email');
-this.middleName=localStorage.getItem('middleName');
-this.lastName=localStorage.getItem('lastName');
-this.emailAddress=localStorage.getItem('email');
+    this.prefix=localStorage.getItem('prefix');
+    this.firstName=localStorage.getItem('name');
+    this.middleName=localStorage.getItem('middleName');
+    this.lastName=localStorage.getItem('lastName');
+    this.emailAddress=localStorage.getItem('email');
 
 
 
