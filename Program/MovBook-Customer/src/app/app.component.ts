@@ -29,6 +29,9 @@ FirebaseRemoteConfig.initializeFirebase({
 export class AppComponent {
   remoteConfig: any = null;
 
+  logout(){
+    this.authServ.logOut();
+  }
   constructor(private alertCtrl: AlertController, private modalCtrl: ModalController,private authServ:AuthService) { }
   /** REMOTE CONFIG FIREBASE */
   async ngOnInit() {

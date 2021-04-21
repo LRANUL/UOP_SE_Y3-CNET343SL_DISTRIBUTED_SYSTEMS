@@ -11,6 +11,7 @@ import { environment } from "src/environments/environment";
 export class CustomerService {
 
   private BASE_URL = environment.MOVBOOK_BACKEND_URL;
+  private secodary_url = environment.MOVBOOK_BACKEND_ADMIN_SERVER_URL;
   allticketInformation: BehaviorSubject<any> = new BehaviorSubject(null);
   ticketInformation = this.allticketInformation.asObservable();
   constructor(private http: HttpClient) { }
@@ -247,6 +248,7 @@ updateuser(value, id)
   console.log(value);
   this.http.put<{message: string}>(this.BASE_URL +"api/customers/" + id, value).subscribe((responsestatus) => {
     console.log(responsestatus);
+    this.http.put(this.secodary_url +"api/logins/customer/" + id, value).subscribe((responsestatus) =>{console.log(responsestatus)})
 });
 }
 

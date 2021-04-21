@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header-component',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponentComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private authServ:AuthService) { }
 
   ngOnInit() {}
 
@@ -20,5 +21,8 @@ export class HeaderComponentComponent implements OnInit {
   messageNav()
   {
    this.router.navigate(['customer/chat'])
+  }
+  logout(){
+    this.authServ.logOut();
   }
 }

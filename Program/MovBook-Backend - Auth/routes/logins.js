@@ -655,4 +655,70 @@ router.post("/manager-login-check",(req,res,next)=>{
     })
 });
 
+//customer edit (Own)
+router.put('/customer/:id', (req, res, next) => {
+    console.log("req.body");
+    console.log('Name:'+req.body.firstName);
+    logins.updateOne({ email: req.params.id },
+      req.body)
+      .then((data) => {
+
+        res.send(data)
+      })
+  });
+
+
+//operator edit (Own)
+router.put('operator/:email', (req, res, next) => {
+    console.log(req.body);
+    console.log('Name:'+req.body.firstName);
+    logins.updateOne({ email: req.params.email },
+      req.body)
+      .then((data) => {
+        res.send(data)
+      })
+  });
+
+  //manager edit (Own)
+  router.put('manager/:email', (req, res, next) => {
+    console.log(req.body);
+    logins.updateOne({ email: req.params.email },
+      req.body)
+      .then((data) => {
+        res.send(data)
+      })
+  });
+
+//   router.put('customer/:email', (req, res, next) => {
+//     console.log(req.body);
+//     console.log('Name:'+req.body.firstName);
+//     logins.updateOne({ email: req.params.email },
+//       req.body)
+//       .then((data) => {
+
+//         res.send(data)
+//       })
+//   });
+// module.exports = router;
+
+
+// router.put('operator/:email', (req, res, next) => {
+//     console.log(req.body);
+//     console.log('Name:'+req.body.firstName);
+//     logins.updateOne({ email: req.params.email },
+//       req.body)
+//       .then((data) => {
+//         res.send(data)
+//       })
+//   });
+
+
+//   router.put('manager/:email', (req, res, next) => {
+//     console.log(req.body);
+//     logins.updateOne({ email: req.params.email },
+//       req.body)
+//       .then((data) => {
+//         res.send(data)
+//       })
+//   });
 module.exports = router;
