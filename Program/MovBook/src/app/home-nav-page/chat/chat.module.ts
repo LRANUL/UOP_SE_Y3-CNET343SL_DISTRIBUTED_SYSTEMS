@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginModalPageRoutingModule } from './login-modal-routing.module';
+import { ChatPageRoutingModule } from './chat-routing.module';
 
-import { LoginModalPage } from './login-modal.page';
+import { ChatPage } from './chat.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginModalPageRoutingModule,
+    ChatPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [LoginModalPage]
+  declarations: [ChatPage]
 })
-export class LoginModalPageModule {}
+export class ChatPageModule {}

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonContent } from '@ionic/angular';
 import { MessageService } from '../../services/messages.service';
-import { message } from '../../models/messages';
+import { message } from '../../models/account/messages';
 
 @Component({
   selector: 'app-chat',
@@ -37,8 +37,11 @@ form: FormGroup;
   }
 
   sendMsg(){
+
     this.msgServ.sendMessage(this.form.value.msg,this.email);
+
     this.form.reset();
+
   }
 
 

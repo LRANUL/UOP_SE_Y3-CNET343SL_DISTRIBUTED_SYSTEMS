@@ -1,77 +1,189 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Registration</ion-title>
-    <ion-buttons slot="primary">
-      <ion-button (click)="onAddUser()">Submit 
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <form [formGroup]="userform" (submit)="onAddUser()">
-    <ion-grid>
-      <ion-row>
-        <ion-col size-sm="6" size-md="3">
-            <ion-item>
-              <ion-label position="floating">Prefix</ion-label>
-              <ion-select formControlName="prefix">
-                <ion-select-option value="Mr.">Mr.</ion-select-option>
-                <ion-select-option value="Sir.">Sir.</ion-select-option>
-                <ion-select-option value="Ms.">Ms.</ion-select-option>
-                <ion-select-option value="Mrs.">Mrs.</ion-select-option>
-                <ion-select-option value="Miss.">Miss.</ion-select-option>
-                <ion-select-option value="Dr.">Dr.</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-item>
-            <ion-label>E-mail</ion-label>
-            <ion-input type="email" formControlName="email" autocomplete></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-item>
-            <ion-label>Password</ion-label>
-            <ion-input type="password" formControlName="password"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-item>
-            <ion-label>Re-Enter Password</ion-label>
-            <ion-input type="password"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-item>
-            <ion-label>Name</ion-label>
-            <ion-input type="text" formControlName="name"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-item>
-            <ion-label>Address</ion-label>
-            <ion-input type="text" formControlName="address"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-item>
-            <ion-label>Phone No</ion-label>
-            <ion-input type="number" formControlName="phone"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
-</ion-content>
+<ion-content >
+    <div style="padding-top: 40px;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-md="10" offset-md="1">
+              <ion-card  style="border-radius: 10px;">
+                <ion-card-header>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size-md="5" offset-md="3.5">
+                        <ion-avatar style="width: 100px; height: 100px; margin: auto;">
+                        <img src="../../assets/images/profile.png">
+                      </ion-avatar>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                          <ion-col size-md="5" offset-md="4.2" style="text-align: center">
+                          <ion-label style="margin-left: 15px; font-size: x-large; font-weight: bolder;">Sign Up</ion-label>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size-md="10" offset-md="1">
+                        <form [formGroup]="signUpform" (ngSubmit)="signUp()">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col size-md="3">
+                                <ion-item>
+                                  <ion-label position="floating">Prefix</ion-label>
+                                  <ion-select formControlName="prefix">
+                                    <ion-select-option value="Mr.">Mr.</ion-select-option>
+                                    <ion-select-option value="Sir.">Sir.</ion-select-option>
+                                    <ion-select-option value="Ms.">Ms.</ion-select-option>
+                                    <ion-select-option value="Mrs.">Mrs.</ion-select-option>
+                                    <ion-select-option value="Miss.">Miss.</ion-select-option>
+                                    <ion-select-option value="Dr.">Dr.</ion-select-option>
+                                  </ion-select>
+                                </ion-item>
+                                <div *ngIf="prefix.touched && prefix.errors">
+                                  <ion-label style="color: red;" position="stacked">Prefix is required</ion-label>
+                                  <br>
+                                </div>
+                              </ion-col>
+                              <ion-col size-md="3">
+                                <ion-item>
+                                  <ion-label position="floating">First Name</ion-label>
+                                  <ion-input formControlName="firstNameControl"></ion-input>
+                                </ion-item>
+                                <div *ngIf="firstName.touched && firstName.errors">
+                                  <ion-label style="color: red;" position="stacked">First name is required</ion-label>
+                                  <br>
+                                </div>
+                              </ion-col>
+                              <ion-col size-md="3" style="padding-left: 40px;">
+                                <ion-item>
+                                  <ion-label position="floating">Middle Name</ion-label>
+                                  <ion-input formControlName="middleNameControl"></ion-input>
+                                </ion-item>
+                                <div *ngIf="middleName.touched && middleName.errors">
+                                  <ion-label style="color: red;" position="stacked">middle name is required</ion-label>
+                                  <br>
+                                </div>
+                              </ion-col>
+                              <ion-col size-md="3" style="padding-left: 40px;">
+                                <ion-item>
+                                  <ion-label position="floating">Last Name</ion-label>
+                                  <ion-input formControlName="lastNameControl"></ion-input>
+                                </ion-item>
+                                <div *ngIf="lastName.touched && lastName.errors">
+                                  <ion-label style="color: red;" position="stacked">Last name is required</ion-label>
+                                  <br>
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col size-md="3">
+                              <ion-item>
+                                <ion-label position="floating">DOB</ion-label>
+                                <ion-datetime formControlName="DateOfBirthControl"></ion-datetime>
+                              </ion-item>
+                              <div *ngIf="dateOfBirth.touched && dateOfBirth.errors">
+                                <ion-label style="color: red;" position="stacked">Date of birth is required</ion-label>
+                                <br>
+                              </div>
+                            </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col size-md="3">
+                              <ion-item>
+                                <ion-label position="floating">Email</ion-label>
+                                <ion-input name="email" type="email" placeholder="example@email.com" formControlName="emailControl"></ion-input>
+                              </ion-item>
+                              <div *ngIf="email.touched && email.errors">
+                                <ion-label style="color: red;" position="stacked">E-mail is required</ion-label>
+                                <br>
+                              </div>
+                              <div *ngIf="email.touched && email.errors?.pattern">
+                                <ion-label style="color: red;" position="stacked">Please enter a valid email address</ion-label>
+                                <br>
+                               </div>
+                            </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col size-md="3">
+                              <ion-item>
+                                <ion-label position="floating">password</ion-label>
+                                <ion-input type="password"  formControlName="passwordControl"></ion-input>
+                              </ion-item>
+                              <div *ngIf="password.errors?.minlength && password.touched">
+                                <ion-label style="color: red;" position="stacked">Password needs atleast 8 characters</ion-label>
+                                <br>
+                              </div>
+                              <div *ngIf="password.touched && password.invalid">
+                                <ion-label style="color: red;" position="stacked">Password is required</ion-label>
+                                <br>
+                              </div>
+                            </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col size-md="3">
+                                <ion-item>
+                                  <ion-label position="floating">Street Address</ion-label>
+                                  <ion-input formControlName="streetAddressControl"></ion-input>
+                                </ion-item>
+                                <div *ngIf="streetAddress.touched && streetAddress.errors">
+                                  <ion-label style="color: red;" position="stacked">street address is required</ion-label>
+                                  <br>
+                                </div>
+                              </ion-col>
+                              <ion-col size-md="3" style="padding-left: 40px;">
+                                <ion-item>
+                                  <ion-label position="floating">City</ion-label>
+                                  <ion-input formControlName="cityControl"></ion-input>
+                                </ion-item>
+                                <div *ngIf="city.touched && city.errors">
+                                  <ion-label style="color: red;" position="stacked">city is required</ion-label>
+                                  <br>
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col size-md="3">
+                                <ion-item>
+                                  <ion-label position="floating">Postal Code</ion-label>
+                                  <ion-input formControlName="postalCodeControl"></ion-input>
+                                </ion-item>
+                                <div *ngIf="postalCode.touched && postalCode.errors">
+                                  <ion-label style="color: red;" position="stacked">postal code is required</ion-label>
+                                  <br>
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col size-md="3">
+                                <ion-item>
+                                  <ion-label position="floating">Phone Number</ion-label>
+                                  <ion-input formControlName="phoneControl"></ion-input>
+                                </ion-item>
+                                <div *ngIf="phone.touched && phone.errors">
+                                  <ion-label style="color: red;" position="stacked">phone number is required</ion-label>
+                                  <br>
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                          <div>
+                                <ion-col size-md="6" style="padding-right: 100px;">
+                                  <ion-button  size="medium" type="submit" [disabled]="signUpform.invalid" expand="block">Sign Up</ion-button>
+                                  <br>
+                                  <ion-button size="medium" expand="block" [routerLink]="['/','login']">Login</ion-button>
+                                  <br>
+                                  <ion-button  size="medium" expand="block" (click)="login()">Cancel</ion-button>
+                                </ion-col>
+                          </div>
+                        </form>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </div>
+  </ion-content>
+  
