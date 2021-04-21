@@ -143,7 +143,7 @@ export class AuthService{
 
     onUpdatePassword(newPassword:string, oldPassword:string, email:string){
       const passwordData = {newPassword:newPassword,oldPassword:oldPassword, email:email}
-      this.httpCli.post("http://localhost:8400/api/logins/change-password", passwordData).subscribe((res)=>{
+      this.httpCli.post(this.BASE_URL+'api/logins/change-password', passwordData).subscribe((res)=>{
       console.log(res);
       })
     }
